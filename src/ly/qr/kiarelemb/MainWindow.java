@@ -50,6 +50,7 @@ public class MainWindow extends QRFrame {
 		//region 左侧
 		this.mainPanel.add(ContractiblePanel.CONTRACTIBLE_PANEL, BorderLayout.WEST);
 		//endregion
+
 		setTitleCenter();
 		setCloseButtonSystemExit();
 		quickKeyLoad();

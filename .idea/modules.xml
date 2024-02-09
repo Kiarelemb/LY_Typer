@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../MyTypeTool/MyTypeTool.iml" filepath="$PROJECT_DIR$/../MyTypeTool/MyTypeTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../QR_Swing/QR_Swing.iml" filepath="$PROJECT_DIR$/../QR_Swing/QR_Swing.iml" />
       <module fileurl="file://$PROJECT_DIR$/揽月跟打器.iml" filepath="$PROJECT_DIR$/揽月跟打器.iml" />
     </modules>
   </component>

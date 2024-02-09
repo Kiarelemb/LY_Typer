@@ -5,7 +5,9 @@ import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
+import swing.qr.kiarelemb.component.basic.QRTextPane;
 
+import javax.swing.*;
 import javax.swing.plaf.basic.BasicTextPaneUI;
 import javax.swing.text.*;
 import java.awt.*;
@@ -18,7 +20,13 @@ import java.util.ArrayList;
  */
 public class JTextPanelEditorKit extends StyledEditorKit {
 
-	static class CustomUI extends BasicTextPaneUI {
+	private final QRTextPane textPane;
+
+	public JTextPanelEditorKit(QRTextPane textPane) {
+		this.textPane = textPane;
+	}
+
+	public static class CustomUI extends BasicTextPaneUI {
 
 		@Override
 		public View create(Element elem) {
@@ -28,25 +36,7 @@ public class JTextPanelEditorKit extends StyledEditorKit {
 				result = switch (kind) {
 					case AbstractDocument.ContentElementName -> new MyLabelView(elem);
 					case AbstractDocument.ParagraphElementName -> new ParagraphView(elem);
-					case AbstractDocument.SectionElementName -> new BoxView(elem, View.Y_AXIS) {
-						@Override
-						protected void layoutMinorAxis(int targetSpan, int axis, int[] offsets, int[] spans) {
-							try {
-								super.layoutMinorAxis(targetSpan, axis, offsets, spans);
-							} catch (Exception e) {
-								System.out.println("BoxView exception in layoutMinorAxis");
-							}
-						}
-
-						@Override
-						public void replace(int index, int length, View[] elems) {
-							try {
-								super.replace(index, length, elems);
-							} catch (Exception e) {
-								System.out.println("BoxView exception in replace");
-							}
-						}
-					};
+					case AbstractDocument.SectionElementName -> new BoxView(elem, View.Y_AXIS);
 					case StyleConstants.ComponentElementName -> new ComponentView(elem);
 					case StyleConstants.IconElementName -> new IconView(elem);
 					default -> new LabelView(elem);
@@ -58,7 +48,7 @@ public class JTextPanelEditorKit extends StyledEditorKit {
 		}
 	}
 
-	static class MyLabelView extends LabelView {
+	public static class MyLabelView extends LabelView {
 
 		public MyLabelView(Element arg0) {
 			super(arg0);
@@ -98,13 +88,8 @@ public class JTextPanelEditorKit extends StyledEditorKit {
 					Font font = TextStyleManager.getTipStyleFont();
 					g.setFont(font);
 					final int x;
-					if (TypingData.paintCode) {
-						//编码居中
-						x = (r.x + r.x + r.width - QRFontUtils.getTextInWidth(TextPane.TEXT_PANE, font, s)) / 2;
-					} else {
-						//选重居中
-						x = (x1 + x2) / 2;
-					}
+					int textInWidth = QRFontUtils.getTextInWidth(TextPane.TEXT_PANE, font, s);
+					x = r.x + (r.width - textInWidth) / 2;
 					g.drawString(s, x, y2);
 				}
 			}
@@ -123,9 +108,9 @@ public class JTextPanelEditorKit extends StyledEditorKit {
 		}
 	}
 
-	public static void changeFontColor(ArrayList<TipPhraseStyleData> tpsd) {
+	public void changeFontColor(ArrayList<TipPhraseStyleData> tpsd) {
 		SimpleAttributeSet attrs = new SimpleAttributeSet();
-		StyledDocument doc = (StyledDocument) TextPane.TEXT_PANE.getDocument();
+		StyledDocument doc = (StyledDocument) textPane.getDocument();
 		// 添加剩下字体
 		for (final TipPhraseStyleData data : tpsd) {
 			if (data == null) {
@@ -158,5 +143,6 @@ public class JTextPanelEditorKit extends StyledEditorKit {
 	@Override
 	public ViewFactory getViewFactory() {
 		return new CustomUI();
+//		return super.getViewFactory();
 	}
 }

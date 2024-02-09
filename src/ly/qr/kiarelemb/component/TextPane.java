@@ -30,6 +30,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.*;
 
 /**
@@ -40,7 +42,6 @@ import java.util.concurrent.*;
  **/
 public class TextPane extends QRTextPane {
 	private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
-	private static final ThreadPoolExecutor setTextThread = QRThreadBuilder.singleThread("setText");
 	public static final int TYPING_FINISH_MARK_OVER_DO_NOTING = 0;
 	public static final int TYPING_FINISH_MARK_OVER_NO_WRONG = 1;
 	public static final int TYPING_FINISH_MARK_OVER_NO_WRONG_INTELLIGENCE = 2;
@@ -49,13 +50,14 @@ public class TextPane extends QRTextPane {
 	private final LinkedList<QRActionRegister> setTextBeforeActions = new LinkedList<>();
 	private final LinkedList<QRActionRegister> setTextFinishedActions = new LinkedList<>();
 	public static final TextPane TEXT_PANE = new TextPane();
-
+	private final JTextPanelEditorKit textPanelEditorKit;
 
 	private TextPane() {
 		addMouseListener();
 		addKeyListener();
 //		addMouseMotionListener();
-		setEditorKit(new JTextPanelEditorKit());
+		textPanelEditorKit = new JTextPanelEditorKit(this);
+		setEditorKit(textPanelEditorKit);
 		setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
 		this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));
 		this.setTextBeforeActions.add(e -> {
@@ -123,13 +125,17 @@ public class TextPane extends QRTextPane {
 		super.setText("");
 		printProcessAfterSetText();
 		setCaretPosition(0);
-		QRComponentUtils.runActions(this.setTextFinishedActions);
-		this.scrollPane.locationFresh();
-		indexesUpdate();
-		this.revalidate();
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions);
+				TextPane.TEXT_PANE.scrollPane.locationFresh();
+				indexesUpdate();
+			}
+		}, 100);
 	}
 
-	double count = 0;
+//	double count = 0;
 
 	private void printProcessAfterSetText() {
 		if (TypingData.tipEnable && AbstractTextTip.TEXT_TIP.loaded() && !TextLoad.TEXT_LOAD.isEnglish()) {
@@ -151,7 +157,7 @@ public class TextPane extends QRTextPane {
 				} else {
 					print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
 				}
-				JTextPanelEditorKit.changeFontColor(tpsd);
+				textPanelEditorKit.changeFontColor(tpsd);
 			}
 		} else {
 			if (TextLoad.TEXT_LOAD.isEnglish()) {
@@ -162,18 +168,6 @@ public class TextPane extends QRTextPane {
 			defaultStyle.addAttribute("UnderlineOpen", false);
 			print(TextLoad.TEXT_LOAD.formattedActualText(), defaultStyle, 0);
 		}
-//		if (Keys.boolValue(Keys.TEXT_TIP_ENABLE) && TextTip.TEXT_TIP.loaded()&& !TextLoad.TEXT_LOAD.isEnglish()) {
-//			//添加词提
-//			if (tw == null) {
-//				tw = new QRTipWindow(this);
-//				tw.setVisible(true);
-//			}
-//			tw.setRectangle(null);
-//			tw.update();
-//		} else {
-//			tipWindowClose();
-//		}
-
 	}
 
 	private boolean getTextLoadUpdate(String text) {
@@ -232,7 +226,7 @@ public class TextPane extends QRTextPane {
 		if (this.writeBlock) {
 			return;
 		}
-		System.out.println("text = " + text);
+//		System.out.println("text = " + text);
 		int index = TypingData.currentTypedIndex;
 		final String originText;
 		int length = text.length();
@@ -333,14 +327,6 @@ public class TextPane extends QRTextPane {
 		TyperTextPane.TYPER_TEXT_PANE.runTypeActions();
 //		inputFollowedWindowsUpdate();
 //		textTipUpdate(true);
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		try {
-			super.paintComponent(g);
-		} catch (Exception ignore) {
-		}
 	}
 
 	public void typeEnding() {
@@ -473,11 +459,6 @@ public class TextPane extends QRTextPane {
 	}
 
 	@Override
-	protected void mouseEnter(MouseEvent e) {
-//		grabFocus();
-	}
-
-	@Override
 	public void setLineSpacing(float lineSpacing) {
 		if (lineSpacing > 1.5f || lineSpacing < 0.5f) {
 			lineSpacing = 0.8f;
@@ -490,15 +471,4 @@ public class TextPane extends QRTextPane {
 		this.textFont = QRFontUtils.getFontInSize(Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
 		super.componentFresh();
 	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		try {
-			return super.getPreferredSize();
-		} catch (Exception e) {
-			simpleRestart();
-			return new Dimension(this.getWidth(), this.getHeight());
-		}
-	}
-
 }
