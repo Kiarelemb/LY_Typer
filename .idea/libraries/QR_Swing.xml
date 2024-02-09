@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="QR_Swing">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../QR_Swing/QR_Swing.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

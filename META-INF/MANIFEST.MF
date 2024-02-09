@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Main-Class: ly.qr.kiarelemb.Enter
+Class-Path: ./lib/QR_Method.jar ./lib/antlr-2.7.4.jar ./lib/apache-ant-z
+ ip.jar ./lib/chardet-1.0.jar ./lib/commons-collections4-4.4.jar ./lib/c
+ ommons-io-2.11.0.jar ./lib/commons-lang3-3.9.jar ./lib/cpdetector_1.0.1
+ 0.jar ./lib/heaven-0.1.143.jar ./lib/jna-5.10.0.jar ./lib/mobi-api4java
+ -qr.jar ./lib/nlp-common-0.0.4.jar ./lib/org-jboss-netty.jar ./lib/syst
+ em-hook-3.8.jar ./lib/QR_Swing.jar
+
