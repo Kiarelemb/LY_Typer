@@ -330,15 +330,7 @@ public class ContractiblePanel extends QRContractiblePanel {
 
 		}
 
-		public void update(int a, int b) {
-			setText(a + " : " + b);
-		}
-
-		public void update(double a, double b) {
-			setText(a + " : " + b);
-		}
-
-		public void update(String a, String b) {
+		public void update(Object a, Object b) {
 			setText(a + " : " + b);
 		}
 	}
