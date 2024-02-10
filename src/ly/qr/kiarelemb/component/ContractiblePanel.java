@@ -284,11 +284,11 @@ public class ContractiblePanel extends QRContractiblePanel {
 		TipData.StandardData data = tipData.data;
 		double stan = QRMathUtils.doubleFormat((tipData.codes.length() + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
 		double single = QRMathUtils.doubleFormat((tipData.singleCodeNum + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
-		double singleCounts = 100 * QRMathUtils.doubleFormat((data.singleCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4);
-		double phraseCounts = 100 * QRMathUtils.doubleFormat((data.phraseCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4);
+		String singleCounts = 100 * QRMathUtils.doubleFormat((data.singleCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4) + "%";
+		String phraseCounts = 100 * QRMathUtils.doubleFormat((data.phraseCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4) + "%";
 		stanSingleLabel.update(stan, single);
 		firstMultiLabel.update(data.first(), data.multi());
-		singlePhraseLabel.update(singleCounts + "%", phraseCounts + "%");
+		singlePhraseLabel.update(singleCounts, phraseCounts);
 		oneLabel.update(data.oneFirst(), data.oneMulti());
 		twoLabel.update(data.twoFirst(), data.twoMulti());
 		threeLabel.update(data.threeFirst(), data.threeMulti());
@@ -324,10 +324,9 @@ public class ContractiblePanel extends QRContractiblePanel {
 	 * 标顶数据栏使用的标签
 	 */
 	public static class DoubleNumLabel extends QRLabel {
-		private static final Font FONT = QRFontUtils.getFont(TextStyleManager.PREFERRED_ENGLISH_FONT_NAME, QRColorsAndFonts.DEFAULT_FONT_MENU.getSize());
 
 		public DoubleNumLabel() {
-
+			update("0", "0");
 		}
 
 		public void update(Object a, Object b) {
