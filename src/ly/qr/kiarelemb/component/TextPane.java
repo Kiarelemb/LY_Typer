@@ -25,7 +25,6 @@ import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -50,13 +49,13 @@ public class TextPane extends QRTextPane {
 	private final LinkedList<QRActionRegister> setTextBeforeActions = new LinkedList<>();
 	private final LinkedList<QRActionRegister> setTextFinishedActions = new LinkedList<>();
 	public static final TextPane TEXT_PANE = new TextPane();
-	private final JTextPanelEditorKit textPanelEditorKit;
+	private final TextPanelEditorKit textPanelEditorKit;
 
 	private TextPane() {
 		addMouseListener();
 		addKeyListener();
 //		addMouseMotionListener();
-		textPanelEditorKit = new JTextPanelEditorKit(this);
+		textPanelEditorKit = new TextPanelEditorKit(this);
 		setEditorKit(textPanelEditorKit);
 		setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
 		this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));

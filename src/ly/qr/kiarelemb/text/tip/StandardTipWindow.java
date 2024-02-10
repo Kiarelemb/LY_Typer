@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.text.tip;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.JTextPanelEditorKit;
+import ly.qr.kiarelemb.component.TextPanelEditorKit;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class StandardTipWindow extends QRDialog {
 	private final QRTextPane centerTextPane;
-	private final JTextPanelEditorKit textPanelEditorKit;
+	private final TextPanelEditorKit textPanelEditorKit;
 
 	public StandardTipWindow() {
 		super(MainWindow.INSTANCE);
@@ -49,6 +49,7 @@ public class StandardTipWindow extends QRDialog {
 
 		centerTextPane = new QRTextPane(){
 
+			@Override
 			public void setParagraphAttributes(AttributeSet attr, boolean replace) {
 				StyledDocument doc = getStyledDocument();
 				doc.setParagraphAttributes(0, getText().length(), attr, replace);
@@ -62,7 +63,7 @@ public class StandardTipWindow extends QRDialog {
 
 			}
 		};
-		textPanelEditorKit = new JTextPanelEditorKit(centerTextPane);
+		textPanelEditorKit = new TextPanelEditorKit(centerTextPane);
 		centerTextPane.setEditorKit(textPanelEditorKit);
 		centerTextPane.setEditableFalseButCursorEdit();
 		this.mainPanel.add(centerTextPane.addScrollPane(1), BorderLayout.CENTER);

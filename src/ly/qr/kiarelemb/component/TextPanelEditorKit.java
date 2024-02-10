@@ -7,7 +7,6 @@ import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import swing.qr.kiarelemb.component.basic.QRTextPane;
 
-import javax.swing.*;
 import javax.swing.plaf.basic.BasicTextPaneUI;
 import javax.swing.text.*;
 import java.awt.*;
@@ -18,11 +17,11 @@ import java.util.ArrayList;
  * @date 2021/11/14 14:23
  * @apiNote
  */
-public class JTextPanelEditorKit extends StyledEditorKit {
+public class TextPanelEditorKit extends StyledEditorKit {
 
 	private final QRTextPane textPane;
 
-	public JTextPanelEditorKit(QRTextPane textPane) {
+	public TextPanelEditorKit(QRTextPane textPane) {
 		this.textPane = textPane;
 	}
 
@@ -98,10 +97,7 @@ public class JTextPanelEditorKit extends StyledEditorKit {
 		@Override
 		public float getMinimumSpan(int axis) {
 			return switch (axis) {
-				case View.X_AXIS ->
-//                    System.out.println("getStartOffset() = " + getStartOffset());
-//                    System.out.println("getEndOffset() = " + getEndOffset());
-						0;
+				case View.X_AXIS -> 0;
 				case View.Y_AXIS -> super.getMinimumSpan(axis);
 				default -> throw new IllegalArgumentException("Invalid axis: " + axis);
 			};

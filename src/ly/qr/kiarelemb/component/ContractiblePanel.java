@@ -168,7 +168,6 @@ public class ContractiblePanel extends QRContractiblePanel {
 		QRLabel paraForeLabelTip = new QRLabel("段前：");
 		QRLabel paraBackLabelTip = new QRLabel("段尾：");
 
-
 		paraLabelTip.setBounds(15, 20, 55, 30);
 		paraLabel.setBounds(70, 20, 155, 30);
 		wordNumLabelTip.setBounds(15, 60, 55, 30);
