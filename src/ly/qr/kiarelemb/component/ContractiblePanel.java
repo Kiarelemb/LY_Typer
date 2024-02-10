@@ -5,14 +5,11 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
-import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
-import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.combination.QRContractiblePanel;
 import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
-import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
