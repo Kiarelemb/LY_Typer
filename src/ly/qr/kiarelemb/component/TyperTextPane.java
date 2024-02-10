@@ -9,6 +9,7 @@ import method.qr.kiarelemb.utils.QRRandomUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
+import swing.qr.kiarelemb.component.basic.QRScrollPane;
 import swing.qr.kiarelemb.component.basic.QRTextPane;
 import swing.qr.kiarelemb.component.listener.QRGlobalKeyboardHookListener;
 import swing.qr.kiarelemb.inter.QRActionRegister;
@@ -204,6 +205,11 @@ public class TyperTextPane extends QRTextPane {
 	@Override
 	protected void mouseEnter(MouseEvent e) {
 		grabFocus();
+	}
+
+	@Override
+	public QRScrollPane addScrollPane() {
+		return super.addScrollPane(1);
 	}
 
 	@Override

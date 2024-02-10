@@ -113,6 +113,8 @@ public abstract class AbstractTextTip {
 		int first = 0;
 		int multi = 0;
 
+		int singleCounts = 0;
+		int phraseCounts = 0;
 		int oneFirst = 0;
 		int oneMulti = 0;
 		int twoFirst = 0;
@@ -150,6 +152,7 @@ public abstract class AbstractTextTip {
 				if (code.endsWith("_") && code.length() == maxLen && i != this.subscriptInstances.length - 1) {
 					code = code.substring(0, this.codeLength);
 				}
+				phraseCounts += words.length();
 				int codeLen = code.length();
 				char c = code.charAt(codeLen - 1);
 				if (c != '_' && regex.indexOf(c) != -1) {
@@ -214,9 +217,9 @@ public abstract class AbstractTextTip {
 				if (code.endsWith("_") && code.length() == maxLen && i != this.subscriptInstances.length - 1) {
 					code = code.substring(0, this.codeLength);
 				}
+				singleCounts++;
 				int codeLen = code.length();
 				char c = code.charAt(codeLen - 1);
-
 				if (c != '_' && regex.indexOf(c) != -1) {
 					int clen = codeLen - 1;
 					switch (clen) {
@@ -281,7 +284,7 @@ public abstract class AbstractTextTip {
 		}
 		totalCounts = codeChars.length;
 
-		TipData.StandardData data = new TipData.StandardData(first, multi, oneFirst, oneMulti, twoFirst, twoMulti, threeFirst, threeMulti, fourFirst, fourMulti, totalCounts, leftCounts, rightCounts, spaceCounts);
+		TipData.StandardData data = new TipData.StandardData(first, multi, singleCounts, phraseCounts, oneFirst, oneMulti, twoFirst, twoMulti, threeFirst, threeMulti, fourFirst, fourMulti, totalCounts, leftCounts, rightCounts, spaceCounts);
 		return new TipData(tcsd, tpsd, codes, QRArrayUtils.listToArr(indexes), singleLength, data);
 	}
 

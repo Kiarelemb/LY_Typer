@@ -69,17 +69,6 @@ public class TextPane extends QRTextPane {
 		});
 	}
 
-	@Override
-	public QRScrollPane addScrollPane() {
-		if (this.scrollPane == null) {
-			this.scrollPane = new QRScrollPane();
-			this.scrollPane.setViewportView(this);
-			//单次滚动5行
-			int line = 1;
-			this.scrollPane.setScrollSmoothly(line);
-		}
-		return this.scrollPane;
-	}
 
 	@Override
 	public void setText(String text) {
@@ -464,6 +453,11 @@ public class TextPane extends QRTextPane {
 			lineSpacing = 0.8f;
 		}
 		super.setLineSpacing(lineSpacing);
+	}
+
+	@Override
+	public QRScrollPane addScrollPane() {
+		return super.addScrollPane(1);
 	}
 
 	@Override

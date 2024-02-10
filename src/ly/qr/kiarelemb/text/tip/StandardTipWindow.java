@@ -65,7 +65,7 @@ public class StandardTipWindow extends QRDialog {
 		textPanelEditorKit = new JTextPanelEditorKit(centerTextPane);
 		centerTextPane.setEditorKit(textPanelEditorKit);
 		centerTextPane.setEditableFalseButCursorEdit();
-		this.mainPanel.add(centerTextPane, BorderLayout.CENTER);
+		this.mainPanel.add(centerTextPane.addScrollPane(1), BorderLayout.CENTER);
 
 		//底部面板
 

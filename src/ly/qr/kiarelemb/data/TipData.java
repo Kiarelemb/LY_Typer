@@ -121,16 +121,22 @@ public class TipData {
 		return mid;
 	}
 
+
 	@Override
 	public String toString() {
-		return this.tcsd + " " +
-				this.tpsd + " " +
-				this.codes + " " +
-				Arrays.toString(this.indexes) + " ";
+		return "TipData{" +
+				"tcsd=" + tcsd +
+				", tpsd=" + tpsd +
+				", codes='" + codes + '\'' +
+				", indexes=" + Arrays.toString(indexes) +
+				", singleCodeNum=" + singleCodeNum +
+				", data=" + data +
+				'}';
 	}
 
-	public static record StandardData(int first, int multi, int oneFirst, int oneMulti, int twoFirst, int twoMulti,
-	                                  int threeFirst, int threeMulti, int fourFirst, int fourMulti, int totalCounts,
-	                                  int leftCounts, int rightCounts, int spaceCounts) {
+	public static record StandardData(int first, int multi, int singleCounts, int phraseCounts, int oneFirst,
+	                                  int oneMulti, int twoFirst, int twoMulti, int threeFirst, int threeMulti,
+	                                  int fourFirst, int fourMulti, int totalCounts, int leftCounts, int rightCounts,
+	                                  int spaceCounts) {
 	}
 }

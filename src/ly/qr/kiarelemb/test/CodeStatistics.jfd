@@ -49,8 +49,8 @@ new FormModel {
 				"text": "text"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 15
-				"y": 95
-				"width": 275
+				"y": 135
+				"width": 220
 				"height": 20
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
@@ -60,7 +60,7 @@ new FormModel {
 				"width": 85
 				"height": 30
 				"x": 15
-				"y": 120
+				"y": 160
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "oneLabel"
@@ -70,7 +70,7 @@ new FormModel {
 				"width": 115
 				"height": 30
 				"x": 110
-				"y": 120
+				"y": 160
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "twoLabelTip"
@@ -79,7 +79,7 @@ new FormModel {
 				"width": 85
 				"height": 30
 				"x": 15
-				"y": 160
+				"y": 200
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "twoLabel"
@@ -88,7 +88,7 @@ new FormModel {
 				"width": 115
 				"height": 30
 				"x": 110
-				"y": 160
+				"y": 200
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "threeLabelTip"
@@ -97,7 +97,7 @@ new FormModel {
 				"width": 85
 				"height": 30
 				"x": 15
-				"y": 200
+				"y": 240
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "threeLabel"
@@ -107,7 +107,7 @@ new FormModel {
 				"width": 115
 				"height": 30
 				"x": 110
-				"y": 200
+				"y": 240
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "fourLabelTip"
@@ -116,7 +116,7 @@ new FormModel {
 				"width": 85
 				"height": 30
 				"x": 15
-				"y": 240
+				"y": 280
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "fourLabel"
@@ -125,7 +125,7 @@ new FormModel {
 				"width": 115
 				"height": 30
 				"x": 110
-				"y": 240
+				"y": 280
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel" ) {
 				name: "separator2"
@@ -134,7 +134,7 @@ new FormModel {
 				"width": 220
 				"height": 20
 				"x": 15
-				"y": 275
+				"y": 315
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "allSpaceLabelTip"
@@ -143,7 +143,7 @@ new FormModel {
 				"width": 85
 				"height": 30
 				"x": 15
-				"y": 300
+				"y": 340
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "allSpaceLabel"
@@ -153,7 +153,7 @@ new FormModel {
 				"width": 115
 				"height": 30
 				"x": 110
-				"y": 300
+				"y": 340
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "leftRightLabelTip"
@@ -162,7 +162,7 @@ new FormModel {
 				"width": 85
 				"height": 30
 				"x": 15
-				"y": 340
+				"y": 380
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "leftRightLabel"
@@ -171,20 +171,38 @@ new FormModel {
 				"width": 115
 				"height": 30
 				"x": 110
-				"y": 340
+				"y": 380
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRRoundButton" ) {
 				name: "viewTypeImageBtn"
 				"text": "查看标顶打法"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 15
-				"y": 385
+				"y": 425
 				"width": 220
 				"height": 30
 			} )
+			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
+				name: "singlePhraseLabelTip"
+				"text": "单量 : 词量"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 85
+				"height": 30
+				"x": 15
+				"y": 100
+			} )
+			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
+				name: "singlePhraseLabel"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 115
+				"height": 30
+				"x": 110
+				"y": 100
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 75, 40 )
-			"size": new java.awt.Dimension( 250, 435 )
+			"size": new java.awt.Dimension( 250, 475 )
 		} )
 	}
 }

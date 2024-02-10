@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../MyTypeTool" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../QR_Swing" vcs="Git" />
   </component>
 </project>
