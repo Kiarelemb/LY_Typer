@@ -8,6 +8,7 @@ import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRFileUtils;
+import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.inter.QRActionRegister;
@@ -114,7 +115,8 @@ public abstract class AbstractTextTip {
 		int multi = 0;
 
 		int singleCounts = 0;
-		int phraseCounts = 0;
+		int phraseNum = 0;
+		int allTypeNum = 0;
 		int oneFirst = 0;
 		int oneMulti = 0;
 		int twoFirst = 0;
@@ -130,7 +132,7 @@ public abstract class AbstractTextTip {
 		int spaceCounts = 0;
 		String regex = this.selection.startsWith("_") ? this.selection : "_".concat(this.selection);
 
-		for (int i = 0; i < this.subscriptInstances.length; i++) {
+		for (int i = 0, l = this.subscriptInstances.length; i < l; i++) {
 			//词组的输出
 			if (this.subscriptInstances[i].isUseSign()) {
 				//先取出有词组的每个单字
@@ -152,7 +154,7 @@ public abstract class AbstractTextTip {
 				if (code.endsWith("_") && code.length() == maxLen && i != this.subscriptInstances.length - 1) {
 					code = code.substring(0, this.codeLength);
 				}
-				phraseCounts += words.length();
+				phraseNum++;
 				int codeLen = code.length();
 				char c = code.charAt(codeLen - 1);
 				if (c != '_' && regex.indexOf(c) != -1) {
@@ -270,6 +272,7 @@ public abstract class AbstractTextTip {
 				foreI += word.length();
 				singleLength += code.length();
 			}
+			allTypeNum++;
 		}
 		final String codes = allCodes.toString();
 		char[] codeChars = codes.toCharArray();
@@ -283,8 +286,8 @@ public abstract class AbstractTextTip {
 			}
 		}
 		totalCounts = codeChars.length;
-
-		TipData.StandardData data = new TipData.StandardData(first, multi, singleCounts, phraseCounts, oneFirst, oneMulti, twoFirst, twoMulti, threeFirst, threeMulti, fourFirst, fourMulti, totalCounts, leftCounts, rightCounts, spaceCounts);
+		double phraseTypeCounts = 100 * QRMathUtils.doubleFormat((phraseNum + 0.0) / allTypeNum, 4);
+		TipData.StandardData data = new TipData.StandardData(first, multi, singleCounts, phraseTypeCounts, oneFirst, oneMulti, twoFirst, twoMulti, threeFirst, threeMulti, fourFirst, fourMulti, totalCounts, leftCounts, rightCounts, spaceCounts);
 		return new TipData(tcsd, tpsd, codes, QRArrayUtils.listToArr(indexes), singleLength, data);
 	}
 

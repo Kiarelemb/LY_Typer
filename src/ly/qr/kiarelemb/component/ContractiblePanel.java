@@ -240,26 +240,26 @@ public class ContractiblePanel extends QRContractiblePanel {
 		this.standardDataPanel.add(viewTypeImageBtn);
 
 		stanSingleLabelTip.setBounds(15, 20, 85, 30);
-		stanSingleLabel.setBounds(110, 20, 115, 30);
+		stanSingleLabel.setBounds(110, 20, 125, 30);
 		firstMultiLabelTip.setBounds(15, 60, 85, 30);
-		firstMultiLabel.setBounds(110, 60, 115, 30);
+		firstMultiLabel.setBounds(110, 60, 125, 30);
 		separator1.setBounds(15, 135, 220, 20);
 		oneLabelTip.setBounds(15, 160, 85, 30);
-		oneLabel.setBounds(110, 160, 115, 30);
+		oneLabel.setBounds(110, 160, 125, 30);
 		twoLabelTip.setBounds(15, 200, 85, 30);
-		twoLabel.setBounds(110, 200, 115, 30);
+		twoLabel.setBounds(110, 200, 125, 30);
 		threeLabelTip.setBounds(15, 240, 85, 30);
-		threeLabel.setBounds(110, 240, 115, 30);
+		threeLabel.setBounds(110, 240, 125, 30);
 		fourLabelTip.setBounds(15, 280, 85, 30);
-		fourLabel.setBounds(110, 280, 115, 30);
+		fourLabel.setBounds(110, 280, 125, 30);
 		separator2.setBounds(15, 315, 220, 20);
 		allSpaceLabelTip.setBounds(15, 340, 85, 30);
-		allSpaceLabel.setBounds(110, 340, 115, 30);
+		allSpaceLabel.setBounds(110, 340, 125, 30);
 		leftRightLabelTip.setBounds(15, 380, 85, 30);
-		leftRightLabel.setBounds(110, 380, 115, 30);
+		leftRightLabel.setBounds(110, 380, 125, 30);
 		viewTypeImageBtn.setBounds(15, 425, 220, 30);
 		singlePhraseLabelTip.setBounds(15, 100, 85, 30);
-		singlePhraseLabel.setBounds(110, 100, 115, 30);
+		singlePhraseLabel.setBounds(110, 100, 125, 30);
 	}
 
 	private static void paraInfoUpdate() {
@@ -280,11 +280,12 @@ public class ContractiblePanel extends QRContractiblePanel {
 		TipData.StandardData data = tipData.data;
 		double stan = QRMathUtils.doubleFormat((tipData.codes.length() + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
 		double single = QRMathUtils.doubleFormat((tipData.singleCodeNum + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
-		String singleCounts = 100 * QRMathUtils.doubleFormat((data.singleCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4) + "%";
-		String phraseCounts = 100 * QRMathUtils.doubleFormat((data.phraseCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4) + "%";
+		double singleCounts = 100 * QRMathUtils.doubleFormat((data.singleCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4);
 		stanSingleLabel.update(stan, single);
 		firstMultiLabel.update(data.first(), data.multi());
-		singlePhraseLabel.update(singleCounts, phraseCounts);
+		singlePhraseLabel.update(
+				QRMathUtils.toString(singleCounts, 2, false) + "%",
+				QRMathUtils.toString(data.phraseTypeCounts(), 2, false) + "%");
 		oneLabel.update(data.oneFirst(), data.oneMulti());
 		twoLabel.update(data.twoFirst(), data.twoMulti());
 		threeLabel.update(data.threeFirst(), data.threeMulti());

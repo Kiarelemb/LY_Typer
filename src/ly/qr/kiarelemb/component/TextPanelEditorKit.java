@@ -86,9 +86,8 @@ public class TextPanelEditorKit extends StyledEditorKit {
 					g.setColor(tipForeground);
 					Font font = TextStyleManager.getTipStyleFont();
 					g.setFont(font);
-					final int x;
 					int textInWidth = QRFontUtils.getTextInWidth(TextPane.TEXT_PANE, font, s);
-					x = r.x + (r.width - textInWidth) / 2;
+					final int x = r.x + (r.width - textInWidth) / 2;
 					g.drawString(s, x, y2);
 				}
 			}
@@ -139,6 +138,5 @@ public class TextPanelEditorKit extends StyledEditorKit {
 	@Override
 	public ViewFactory getViewFactory() {
 		return new CustomUI();
-//		return super.getViewFactory();
 	}
 }
