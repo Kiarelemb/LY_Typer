@@ -6,7 +6,6 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
-import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
@@ -41,9 +40,6 @@ public class TipPanel extends QRPanel {
 		this.singlePanel.add(this.singleWordCodeLabel);
 		this.phrasePanel.add(this.phraseWordLabel);
 		this.phrasePanel.add(this.phraseWordCodeLabel);
-		Font enFont = QRFontUtils.getFont(TextStyleManager.PREFERRED_ENGLISH_FONT_NAME, 20);
-		this.singleWordCodeLabel.setFont(enFont);
-		this.phraseWordCodeLabel.setFont(enFont);
 		layoutUpdate();
 		//每次输入或回改需要更改词提
 		QRActionRegister updateAction = e -> tipUpdate();
@@ -96,7 +92,7 @@ public class TipPanel extends QRPanel {
 			add(this.phrasePanel, BorderLayout.SOUTH);
 		} else {
 			add(this.singlePanel, BorderLayout.WEST);
-			add(this.phrasePanel, BorderLayout.EAST);
+			add(this.phrasePanel, BorderLayout.CENTER);
 		}
 		pack();
 	}

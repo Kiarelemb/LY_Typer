@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRRandomUtils;
@@ -80,16 +81,22 @@ public class TyperTextPane extends QRTextPane {
 			return;
 		}
 		int keyCode = e.getKeyCode();
-		if ((e.getModifiersEx() != 0 && !QRStringUtils.isEnglish(e.getKeyChar())) || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
+		if (e.getModifiersEx() != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
+			return;
+		}
+		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
 			return;
 		}
 		if (TypingData.typing && !TypingData.typeEnd) {
 			try {
-				if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+				char keyChar = e.getKeyChar();
+				if (keyChar == KeyEvent.VK_BACK_SPACE) {
 					TextPane.TEXT_PANE.deleteUpdates(e);
+
 				} else {
-					TextPane.TEXT_PANE.insertUpdates(e.getKeyChar());
+					TextPane.TEXT_PANE.insertUpdates(keyChar);
 				}
+
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -105,17 +112,19 @@ public class TyperTextPane extends QRTextPane {
 	private void keyPressAction(KeyStroke keyStroke, long time) {
 		//屏蔽组合键
 		int keyCode = keyStroke.getKeyCode();
-		if (keyStroke.getModifiers() != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
+		int modifiers = keyStroke.getModifiers();
+		if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
 			return;
 		}
-		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
-			return;
-		}
+//		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
+//			return;
+//		}
+		TypingData.startTyping(time);
 //		KeyEvent.VK_OPEN_BRACKET
 		TypingData.endTime = time;
+		long timeDiff = TypingData.endTime - TypingData.startTime;
 		char keyChar = (char) keyCode;
 		if (MainWindow.INSTANCE.isVisible() && TYPER_TEXT_PANE.hasFocus()) {
-
 			//region 按键统计
 			TypingData.keyCounts++;
 			boolean flag = true;
@@ -127,36 +136,40 @@ public class TyperTextPane extends QRTextPane {
 				}
 				case ' ' -> {
 					TypingData.spaceCounts++;
-					TypingData.typedKeyRecord.append(' ');
+					TypingData.typedKeyRecord.append('_');
+					DangLangManager.DANG_LANG_MANAGER.put('_', timeDiff);
 					flag = false;
 				}
 				case KeyEvent.VK_ENTER -> {
 					TypingData.enterCount++;
 					TypingData.rightCounts++;
 					TypingData.typedKeyRecord.append('↵');
+					DangLangManager.DANG_LANG_MANAGER.put('↵', timeDiff);
 					flag = false;
 				}
 				case KeyEvent.VK_BACK_SPACE -> {
 					TypingData.backSpaceCount++;
 					TypingData.rightCounts++;
 					TypingData.typedKeyRecord.append('←');
+					DangLangManager.DANG_LANG_MANAGER.put('←', timeDiff);
 					flag = false;
 				}
 			}
 			if (flag) {
 				if (TypingData.LEFT.indexOf(keyChar) != -1) {
 					TypingData.leftCounts++;
-					TypingData.typedKeyRecord.append(keyChar);
 				} else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
 					TypingData.rightCounts++;
-					TypingData.typedKeyRecord.append(keyChar);
 				} else {
-					System.out.println("Unknown Keycode: " + keyCode);
+					TypingData.typedKeyRecord.append('⊗');
+					DangLangManager.DANG_LANG_MANAGER.put('⊗', timeDiff);
+					return;
 				}
+				TypingData.typedKeyRecord.append(keyChar);
+				DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
 			}
 			//endregion 按键统计
 
-			TypingData.startTyping(time);
 		}
 	}
 

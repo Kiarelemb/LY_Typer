@@ -7,6 +7,7 @@ import ly.qr.kiarelemb.component.contract.state.WordLabel;
 import ly.qr.kiarelemb.data.GradeData;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -108,7 +109,6 @@ public class TextPane extends QRTextPane {
 		if (getTextLoadUpdate(text)) {
 			return;
 		}
-//		System.out.println("[" + ++this.count + "] text = " + text);
 		QRComponentUtils.runActions(this.setTextBeforeActions);
 		super.setText("");
 		printProcessAfterSetText();
@@ -217,15 +217,9 @@ public class TextPane extends QRTextPane {
 //		System.out.println("text = " + text);
 		int index = TypingData.currentTypedIndex;
 		final String originText;
-		int length = text.length();
-		if (length != 1) {
-			length = QRStringUtils.getActualChineseLength(text);
-		}
-		try {
-			originText = TextLoad.TEXT_LOAD.wordPartsCopyRange(index, length);
-		} catch (Exception ignore) {
-			return;
-		}
+		String[] textParts = QRStringUtils.getChineseExtraPhrase(text);
+		originText = TextLoad.TEXT_LOAD.wordPartsCopyRange(index, textParts.length);
+		int length = originText.length();
 		boolean thisWordIsRight = text.equals(originText);
 		if (!TypingData.lookModel) {
 			if (thisWordIsRight) {
@@ -236,22 +230,31 @@ public class TextPane extends QRTextPane {
 					replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getCorrectStyle());
 				}
 			} else {
-				//否则判错，背景颜色改成红色
-				if (!LookModelCheckBox.lookModelCheckBox.checked()) {
-					replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
+				if (length == 1) {
+					//否则判错，背景颜色改成红色
+					if (!LookModelCheckBox.lookModelCheckBox.checked()) {
+						replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
+					}
+					TypingData.WRONG_WORDS_INDEX.add(index);
+				} else {
+					for (int i = 0; i < length; i++) {
+						int currentIndex = TypingData.currentTypedIndex + i;
+						String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
+						if (rightWord.equals(textParts[i])) {
+							replaceText(currentIndex, rightWord, TextStyleManager.getCorrectStyle());
+						} else {
+							replaceText(currentIndex, rightWord, TextStyleManager.getWrongStyle());
+							TypingData.WRONG_WORDS_INDEX.add(currentIndex);
+						}
+					}
 				}
-				TypingData.WRONG_WORDS_INDEX.add(index);
 			}
 		}
-		try {
-			setCaretBlock();
-			//更新位置
-			int ol = originText.length();
-			setCaretPosition(TypingData.currentTypedIndex + ol);
-			TypingData.currentTypedIndex += ol;
-			setCaretUnblock();
-		} catch (Exception ignore) {
-		}
+		setCaretBlock();
+		//更新位置
+		TypingData.currentTypedIndex += length;
+		setCaretPosition(TypingData.currentTypedIndex);
+		setCaretUnblock();
 		if (TextLoad.TEXT_LOAD.wordsLength() == TypingData.currentTypedIndex) {
 			//0是打完即可，1是打完无错，2是无错智能，3是可错智能
 			if (TypingData.finishModel == TYPING_FINISH_MARK_OVER_DO_NOTING || (TypingData.finishModel == TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
@@ -354,6 +357,7 @@ public class TextPane extends QRTextPane {
 		String grade = gradeData.getSetGrade();
 		//将成绩存放至剪贴板
 		QRSystemUtils.putTextToClipboard(grade);
+		DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
 		//发送成绩8
 		SendText.gradeSend();
 		TypingData.windowFresh();
@@ -371,6 +375,7 @@ public class TextPane extends QRTextPane {
 			TypingData.typing = false;
 			TypingData.typeEnd = true;
 			TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
+			DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
 //			TEXT_PANE.setText(TextLoad.TEXT_LOAD.currentText());
 			TypingData.windowFresh();
 		}

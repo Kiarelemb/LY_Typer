@@ -471,5 +471,6 @@ public class TextLoad {
 		this.reTypeTimes++;
 //		INSTANCE.retypedTimesLabel.setText(reTypeTimes);
 	}
+
 	//endregion
 }

@@ -384,7 +384,7 @@ public class Keys {
             put(TYPE_METHOD_INPUT, null);
             put(TYPE_METHOD_KEYBOARD, null);
             put(TYPE_SIGNATURE, null);
-            put(QUICK_KEY_RESTART, "F3");
+	        put(QUICK_KEY_RESTART, "F3, alt 3");
             put(QUICK_KEY_GROUP, "F5");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4");

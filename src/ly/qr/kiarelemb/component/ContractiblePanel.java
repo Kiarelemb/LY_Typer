@@ -277,6 +277,9 @@ public class ContractiblePanel extends QRContractiblePanel {
 
 	private static void standardDataUpdate() {
 		TipData tipData = TextLoad.TEXT_LOAD.tipData;
+		if (tipData == null) {
+			return;
+		}
 		TipData.StandardData data = tipData.data;
 		double stan = QRMathUtils.doubleFormat((tipData.codes.length() + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
 		double single = QRMathUtils.doubleFormat((tipData.singleCodeNum + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
