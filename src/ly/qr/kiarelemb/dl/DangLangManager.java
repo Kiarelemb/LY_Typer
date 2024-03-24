@@ -66,12 +66,14 @@ public class DangLangManager {
 		if (list.isEmpty()) {
 			return;
 		}
+		ArrayList<String> paraOriginalData = new ArrayList<>();
 		Map<String, PartData> map = new HashMap<>();
 		for (int i = 1, listSize = list.size(); i < listSize; i++) {
 			DangLangData thisData = list.get(i);
 			DangLangData foreData = list.get(i - 1);
 			String combo = foreData.c() + "" + thisData.c();
 			int diff = Math.toIntExact(thisData.time() - foreData.time());
+			paraOriginalData.add(combo + "=" + diff);
 			PartData data = map.getOrDefault(combo, new PartData(0, 0));
 			map.put(combo, new PartData(data.time() + diff, data.times() + 1));
 		}
@@ -96,12 +98,10 @@ public class DangLangManager {
 		String split = "-".repeat(22);
 		printAction(split);
 
-		ArrayList<String> paraData = new ArrayList<>();
 		map.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(e -> {
 			PartData values = e.getValue();
 			String data = e.getKey() + " = " + values.time() + " / " + values.times() + " / " + QRMathUtils.doubleFormat(values.time() / (0.0 + values.times()));
 			printAction(data);
-			paraData.add(QRStringUtils.spaceClear(data, false));
 		});
 
 		System.out.println("组合键=累积间隔/频率/均时");
@@ -118,7 +118,7 @@ public class DangLangManager {
 		DateTimeFormatter fileNamePatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 		String filePath = Info.DL_DIRECTORY + now.format(dirPatter) + File.separator + now.format(fileNamePatter) + "-" + TextLoad.TEXT_LOAD.textMD5Short() + ".txt";
 		QRFileUtils.fileCreate(filePath);
-		QRFileUtils.fileWriterWithUTF8(filePath, paraData);
+		QRFileUtils.fileWriterWithUTF8(filePath, paraOriginalData);
 		clear();
 	}
 
