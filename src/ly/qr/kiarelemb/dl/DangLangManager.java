@@ -4,12 +4,15 @@ import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.res.Info;
+import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRPropertiesUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -93,10 +96,12 @@ public class DangLangManager {
 		String split = "-".repeat(22);
 		printAction(split);
 
+		ArrayList<String> paraData = new ArrayList<>();
 		map.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(e -> {
 			PartData values = e.getValue();
 			String data = e.getKey() + " = " + values.time() + " / " + values.times() + " / " + QRMathUtils.doubleFormat(values.time() / (0.0 + values.times()));
 			printAction(data);
+			paraData.add(QRStringUtils.spaceClear(data, false));
 		});
 
 		System.out.println("组合键=累积间隔/频率/均时");
@@ -107,6 +112,13 @@ public class DangLangManager {
 			arr.add(text);
 		});
 		QRFileUtils.fileWriterWithUTF8(propFile.getAbsolutePath(), arr);
+
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter dirPatter = DateTimeFormatter.ofPattern("yyyy" + File.separator + "MM" + File.separator + "dd" + File.separator);
+		DateTimeFormatter fileNamePatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+		String filePath = Info.DL_DIRECTORY + now.format(dirPatter) + File.separator + now.format(fileNamePatter) + "-" + TextLoad.TEXT_LOAD.textMD5Short() + ".txt";
+		QRFileUtils.fileCreate(filePath);
+		QRFileUtils.fileWriterWithUTF8(filePath, paraData);
 		clear();
 	}
 
