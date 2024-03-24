@@ -116,9 +116,11 @@ public class TyperTextPane extends QRTextPane {
 		if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
 			return;
 		}
-//		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
-//			return;
-//		}
+		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
+			if (!TypingData.typing) {
+				return;
+			}
+		}
 		TypingData.startTyping(time);
 //		KeyEvent.VK_OPEN_BRACKET
 		TypingData.endTime = time;

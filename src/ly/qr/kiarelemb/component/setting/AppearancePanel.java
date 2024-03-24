@@ -42,7 +42,16 @@ public class AppearancePanel extends SettingPanel {
 		QRRoundButton fontSelectBtn = new QRRoundButton("选择字体文件");
 		QRLineSeparatorLabel splitLabel = new QRLineSeparatorLabel(0.8d);
 		QRLabel lookFontTipLabel = new QRLabel("看打区字体：");
-		QRComboBox lookFontsComboBox = new ComboBox.FontComboBox(Keys.TEXT_FONT_NAME_LOOK);
+		QRComboBox lookFontsComboBox = new ComboBox.FontComboBox(Keys.TEXT_FONT_NAME_LOOK) {
+
+			@Override
+			protected void itemChangedAction(QRItemEvent e) {
+				SettingsItem.saveActions.put("look.font", ar -> {
+					TextStyleManager.PREFERRED_CHINESE_FONT_NAME = e.after();
+					TextStyleManager.updateAll();
+				});
+			}
+		};
 		QRLabel lookFontSizeTip = new QRLabel("大小：");
 		Spinner lookSizeSpinner = new Spinner(Keys.TEXT_FONT_SIZE_LOOK);
 		QRLabel typeFontTipLabel = new QRLabel("跟打区字体：");

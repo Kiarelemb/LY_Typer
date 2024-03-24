@@ -304,6 +304,10 @@ public class Keys {
      * 菜单快捷键之载文，默认为 {@code F4}
      */
     public static final String QUICK_KEY_MENU_TYPE_TEXT_LOAD = "quick.key.menu.type.text.load";
+    /**
+     * 当量窗体显示快捷键，默认为 {@code Ctrl D}
+     */
+    public static final String QUICK_KEY_DANG_LIANG_WINDOW = "quick.key.dang.liang.window";
     //endregion 快捷键设置
 
     //endregion String 类型
@@ -388,6 +392,7 @@ public class Keys {
             put(QUICK_KEY_GROUP, "F5");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4");
+            put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
             put(TEXT_LINE_SPACE, "0.8");
             put(WINDOW_SPLIT_WEIGHT, "0.618");
         }

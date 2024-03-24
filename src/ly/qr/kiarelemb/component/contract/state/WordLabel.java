@@ -34,7 +34,7 @@ public class WordLabel extends QRLabel {
 			today = loadWordNum(true, todayDate);
 		}
 		//退出软件后自动保存字数
-		QRSwing.addActionAfterClose(e -> wordSave());
+		QRSwing.registerSystemExitAction(e -> wordSave());
 		runCheck();
 		setText(today + " / " + total);
 	}

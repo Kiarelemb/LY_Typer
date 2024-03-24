@@ -28,27 +28,27 @@ public class TextStyleManager {
 	/**
 	 * 一简字前景色
 	 */
-	public static Color SIMPLIFIED_ONE = new Color(255, 255, 0);
+	public static Color SIMPLIFIED_ONE;
 	/**
 	 * 二简字前景色
 	 */
-	public static Color SIMPLIFIED_TWO = new Color(255, 51, 102);
+	public static Color SIMPLIFIED_TWO;
 	/**
 	 * 三简字前景色
 	 */
-	public static Color SIMPLIFIED_THREE = new Color(0, 220, 220);
+	public static Color SIMPLIFIED_THREE;
 	/**
 	 * 全码字颜色
 	 */
-	public static Color Full_FOUR = new Color(0, 153, 255);
+	public static Color Full_FOUR;
 
-	public static final int[] styleType = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-	public static final String PREFERRED_CHINESE_FONT_NAME = "黑体";
+	public static final int[] STYLE_TYPE = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+	public static String PREFERRED_CHINESE_FONT_NAME;
 	public static final String PREFERRED_ENGLISH_FONT_NAME = "Consolas";
 	public static final boolean BOLD_FALSE = false;
 	public static final Map<String, SimpleAttributeSet> EXTRA_STYLE = new HashMap<>();
 	public static final Font DEFAULT_FONT = QRFontUtils.loadFontFromURL(Info.loadURL(Info.ALIBABA_FONT_NAME));
-	private static final ArrayList<SimpleAttributeSet> styles;
+	private static final ArrayList<SimpleAttributeSet> STYLES;
 	private static SimpleAttributeSet correctStyle;
 	private static SimpleAttributeSet WrongStyle;
 	private static SimpleAttributeSet defaultStyle;
@@ -79,7 +79,9 @@ public class TextStyleManager {
 			QRSwing.setGlobalSetting("simplified.code.three", ColorData.getColor(SIMPLIFIED_THREE));
 			QRSwing.setGlobalSetting("code.all", ColorData.getColor(Full_FOUR));
 		}
-		styles = new ArrayList<>(14);
+		STYLES = new ArrayList<>(14);
+		String set = Keys.strValue(Keys.TEXT_FONT_NAME_LOOK);
+		PREFERRED_CHINESE_FONT_NAME = set == null ? "黑体" : set;
 		updateAll();
 	}
 
@@ -137,7 +139,7 @@ public class TextStyleManager {
 		return tipStyle;
 	}
 
-	public static SimpleAttributeSet createFontNameStyleFromCurrentStype(String fontName, SimpleAttributeSet s) {
+	public static SimpleAttributeSet createFontNameStyleFromCurrentStyle(String fontName, SimpleAttributeSet s) {
 		SimpleAttributeSet sas = new SimpleAttributeSet();
 		StyleConstants.setFontFamily(sas, fontName);
 		StyleConstants.setFontSize(sas, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
@@ -188,11 +190,11 @@ public class TextStyleManager {
 	}
 
 	private static void freshToEnglishModelStyle() {
-		styles.clear();
+		STYLES.clear();
 		final int maxSize = 16;
 		for (int i = 0; i < maxSize; i++) {
 			final boolean bold = i > 6;
-			styles.add(getStyle(bold ? i - 7 : i, bold, PREFERRED_ENGLISH_FONT_NAME));
+			STYLES.add(getStyle(bold ? i - 7 : i, bold, PREFERRED_ENGLISH_FONT_NAME));
 		}
 		correctStyle = null;
 		WrongStyle = null;
@@ -205,31 +207,29 @@ public class TextStyleManager {
 	}
 
 	private static void freshToChineseModelStyle() {
-		styles.clear();
+		STYLES.clear();
 		final int maxSize = 16;
-		String set = Keys.strValue(Keys.TEXT_FONT_NAME_LOOK);
-		String fontName = set == null ? PREFERRED_CHINESE_FONT_NAME : set;
 		for (int i = 0; i < maxSize; i++) {
 			final boolean bold = i > 8;
-			styles.add(getStyle(bold ? i - 8 : i, bold, fontName));
+			STYLES.add(getStyle(bold ? i - 8 : i, bold, PREFERRED_CHINESE_FONT_NAME));
 		}
 		correctStyle = null;
 		WrongStyle = null;
 		defaultStyle = null;
 		tipStyle = null;
-		getCorrectStyle(fontName, false);
-		getWrongStyle(fontName);
-		getDefaultStyle(fontName);
+		getCorrectStyle(PREFERRED_CHINESE_FONT_NAME, false);
+		getWrongStyle(PREFERRED_CHINESE_FONT_NAME);
+		getDefaultStyle(PREFERRED_CHINESE_FONT_NAME);
 		getTipStyleFont();
 	}
 
 	public static SimpleAttributeSet getDefinedStyle(int type, boolean bold) {
-		return styles.get(type + (bold ? 7 : 0));
+		return STYLES.get(type + (bold ? 7 : 0));
 	}
 
 
 	public static SimpleAttributeSet getDefinedStyle(int type, boolean bold, String str, boolean shortPhrase) {
-		final SimpleAttributeSet a = styles.get((shortPhrase ? type : 0) + (bold ? 7 : 0));
+		final SimpleAttributeSet a = STYLES.get((shortPhrase ? type : 0) + (bold ? 7 : 0));
 		String fontFamily = StyleConstants.getFontFamily(a);
 		Font font = QRFontUtils.getFont(fontFamily, 10);
 		if (!QRFontUtils.fontCanAllDisplay(str, font)) {
@@ -245,7 +245,7 @@ public class TextStyleManager {
 							//如果这个字体样式已经建立了
 							return simpleAttributeSet;
 						} else {
-							final SimpleAttributeSet styleFromFontName = TextStyleManager.createFontNameStyleFromCurrentStype(canDisplayFont.getFamily(), a);
+							final SimpleAttributeSet styleFromFontName = TextStyleManager.createFontNameStyleFromCurrentStyle(canDisplayFont.getFamily(), a);
 							//放入这个字体样式
 							EXTRA_STYLE.put(canDisplayFont.getFamily(), styleFromFontName);
 							return styleFromFontName;

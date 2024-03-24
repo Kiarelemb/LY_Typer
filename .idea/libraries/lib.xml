@@ -5,7 +5,7 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../QR_Method_/src.zip!/" />
+      <root url="file://$PROJECT_DIR$/../QR_Method_/src" />
     </SOURCES>
   </library>
 </component>

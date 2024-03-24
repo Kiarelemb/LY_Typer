@@ -8,6 +8,7 @@ import ly.qr.kiarelemb.data.GradeData;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
+import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -17,6 +18,7 @@ import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.*;
+import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRScrollPane;
 import swing.qr.kiarelemb.component.basic.QRTextPane;
@@ -67,6 +69,12 @@ public class TextPane extends QRTextPane {
 			TypingData.clear();
 			this.caret.setVisible(SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked());
 		});
+		//当量显示器
+		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_DANG_LIANG_WINDOW),
+				event -> {
+					DangLangWindow window = DangLangWindow.dangLangWindow();
+					window.setVisible(!window.isVisible());
+				}, true);
 	}
 
 
@@ -186,8 +194,6 @@ public class TextPane extends QRTextPane {
 	public void insertUpdates(char c) {
 		// 确保线程安全
 		synchronized (lock) {
-			// 当前调用的时间戳
-			long currentTime = System.currentTimeMillis();
 			// 取消之前的延迟任务（如果存在）
 			if (futureTask != null && !futureTask.isDone()) {
 				futureTask.cancel(false);

@@ -143,7 +143,7 @@ public abstract class AbstractTextTip {
 					if (code.endsWith("_") && codeLen == maxLen && i != this.subscriptInstances.length - 1) {
 						code = code.substring(0, this.codeLength);
 					}
-					tcsd.add(new TipCharStyleData(x, word, code, TextStyleManager.styleType[0], TextStyleManager.BOLD_FALSE));
+					tcsd.add(new TipCharStyleData(x, word, code, TextStyleManager.STYLE_TYPE[0], TextStyleManager.BOLD_FALSE));
 					x += word.length();
 					singleLength += code.length();
 				}
@@ -266,7 +266,7 @@ public abstract class AbstractTextTip {
 				tcsd.add(new TipCharStyleData(foreI, word, code, type, TextStyleManager.BOLD_FALSE));
 				tpsd.add(new TipPhraseStyleData(foreI, word, code, type, TextStyleManager.BOLD_FALSE, false));
 				indexes.add(foreI);
-				foreType = TextStyleManager.styleType[0];
+				foreType = TextStyleManager.STYLE_TYPE[0];
 				foreBold = false;
 				allCodes.append(code);
 				foreI += word.length();
