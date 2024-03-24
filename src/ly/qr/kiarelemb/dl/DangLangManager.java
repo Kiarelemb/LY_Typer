@@ -30,7 +30,7 @@ public class DangLangManager {
 		TextPane.TEXT_PANE.addSetTextFinishedAction(event -> {
 			System.out.print("\033[H\033[2J");
 			System.out.flush();
-			DangLangWindow.dangLangWindow().logTextPane.clear();
+			DangLangWindow.dangLangWindow().logTextPane.setText("按键 - 时间间隔/总计时");
 		});
 	}
 
@@ -73,7 +73,6 @@ public class DangLangManager {
 			map.put(combo, new PartData(data.time() + diff, data.times() + 1));
 		}
 		Properties prop;
-		Map<String, String> listProp = new HashMap<>();
 		File propFile;
 		if (failPara(paraMd5)) {
 			propFile = new File(Info.DL_DIRECTORY + "首打.properties");
@@ -91,7 +90,7 @@ public class DangLangManager {
 			String data = values[0] + "/" + values[1] + "/" + QRMathUtils.doubleFormat(values[0] / (0.0 + values[1]));
 			prop.put(combo, data);
 		});
-		String split = "-".repeat(25);
+		String split = "-".repeat(22);
 		printAction(split);
 
 		map.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(e -> {
@@ -113,7 +112,9 @@ public class DangLangManager {
 
 	private static void printAction(String data) {
 		System.out.println(data);
-		DangLangWindow.dangLangWindow().logTextPane.noneChinesePrintln(data);
+		if (DangLangWindow.dangLangWindow().isVisible()) {
+			DangLangWindow.dangLangWindow().logTextPane.noneChinesePrintln(data);
+		}
 	}
 
 	/**

@@ -81,15 +81,7 @@ public class DangLangWindow extends QRDialog {
 		}
 
 		public void noneChinesePrintln(String text) {
-			if (text.isEmpty()) {
-				return;
-			}
-			int index = textLength();
-			if (index == 0) {
-				print(text, ENGLISH_SET, 0);
-				return;
-			}
-			print(QRStringUtils.AN_ENTER.concat(text), ENGLISH_SET, index);
+			print(QRStringUtils.AN_ENTER.concat(text), ENGLISH_SET);
 			SwingUtilities.invokeLater(() -> {
 				addScrollPane().addLineNumberModelForTextPane().adjustWidth();
 				JScrollBar bar = scrollPane.getVerticalScrollBar();
@@ -99,15 +91,7 @@ public class DangLangWindow extends QRDialog {
 		}
 
 		public void chinesePrintln(String text) {
-			if (text.isEmpty()) {
-				return;
-			}
-			int index = textLength();
-			if (index == 0) {
-				print(text, ENGLISH_SET, 0);
-				return;
-			}
-			print(QRStringUtils.AN_ENTER.concat(text), CHINESE_SET, index);
+			print(QRStringUtils.AN_ENTER.concat(text), CHINESE_SET);
 		}
 	}
 }
