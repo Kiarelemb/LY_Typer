@@ -110,23 +110,23 @@ public class TyperTextPane extends QRTextPane {
 	}
 
 	private void keyPressAction(KeyStroke keyStroke, long time) {
-		//屏蔽组合键
-		int keyCode = keyStroke.getKeyCode();
-		int modifiers = keyStroke.getModifiers();
-		if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
-			return;
-		}
-		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
-			if (!TypingData.typing) {
+		if (MainWindow.INSTANCE.isVisible() && TYPER_TEXT_PANE.hasFocus()) {
+			//屏蔽组合键
+			int keyCode = keyStroke.getKeyCode();
+			int modifiers = keyStroke.getModifiers();
+			if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
 				return;
 			}
-		}
-		TypingData.startTyping(time);
+			if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
+				if (!TypingData.typing) {
+					return;
+				}
+			}
+			TypingData.startTyping(time);
 //		KeyEvent.VK_OPEN_BRACKET
-		TypingData.endTime = time;
-		long timeDiff = TypingData.endTime - TypingData.startTime;
-		char keyChar = (char) keyCode;
-		if (MainWindow.INSTANCE.isVisible() && TYPER_TEXT_PANE.hasFocus()) {
+			TypingData.endTime = time;
+			long timeDiff = TypingData.endTime - TypingData.startTime;
+			char keyChar = (char) keyCode;
 			//region 按键统计
 			TypingData.keyCounts++;
 			boolean flag = true;
@@ -171,7 +171,6 @@ public class TyperTextPane extends QRTextPane {
 				DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
 			}
 			//endregion 按键统计
-
 		}
 	}
 
@@ -214,7 +213,6 @@ public class TyperTextPane extends QRTextPane {
 			text = "剪贴板\n" + text;
 		}
 		TextPane.TEXT_PANE.setTypeText(text);
-//		TextPane.TEXT_PANE.setText(text);
 	}
 
 	@Override

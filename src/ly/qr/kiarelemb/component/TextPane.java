@@ -131,8 +131,6 @@ public class TextPane extends QRTextPane {
 		}, 100);
 	}
 
-//	double count = 0;
-
 	private void printProcessAfterSetText() {
 		if (TypingData.tipEnable && AbstractTextTip.TEXT_TIP.loaded() && !TextLoad.TEXT_LOAD.isEnglish()) {
 			final ArrayList<TipPhraseStyleData> tpsd = TextLoad.TEXT_LOAD.tipData.tpsd;
@@ -175,15 +173,14 @@ public class TextPane extends QRTextPane {
 		return false;
 	}
 
-
 	// 累积的字符
-	private static StringBuilder accumulatedChars = new StringBuilder();
+	private StringBuilder accumulatedChars = new StringBuilder();
 	// 用于同步的锁对象
-	private static final Object lock = new Object();
+	private final Object lock = new Object();
 	// 创建一个调度器
-	private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+	private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 	// 用于取消未执行的延迟任务
-	private static Future<?> futureTask = null;
+	private Future<?> futureTask = null;
 
 	/**
 	 * 统计打词的算法
@@ -220,7 +217,6 @@ public class TextPane extends QRTextPane {
 		if (this.writeBlock) {
 			return;
 		}
-//		System.out.println("text = " + text);
 		int index = TypingData.currentTypedIndex;
 		final String originText;
 		String[] textParts = QRStringUtils.getChineseExtraPhrase(text);
@@ -333,15 +329,12 @@ public class TextPane extends QRTextPane {
 		String totalTimeInSecs = String.format("%.2f", totalTimeInSec);
 		//用时_分
 		double totalTimeInMin = totalTimeInSec / 60.0D;
-//		String totalTimeInMins = String.format("%.2f", totalTimeInMin);
 		//速度
 		double s = (!TypingData.WRONG_WORDS_INDEX.isEmpty() ? TextLoad.TEXT_LOAD.wordsLength() - 5 * TypingData.WRONG_WORDS_INDEX.size() : TextLoad.TEXT_LOAD.wordsLength()) / totalTimeInMin;
 		//速度过小，不统计
 		double speed = QRMathUtils.doubleFormat(s);
 		if (speed < 1 || totalTimeInSec <= 0) {
 			QRSmallTipShow.display(MainWindow.INSTANCE, "继续重打吧！");
-//			MainWindow.reStart();
-//			TextLoad.TEXT_LOAD.setFirstTimeFailure();
 			return;
 		}
 		//英打字数
@@ -382,7 +375,6 @@ public class TextPane extends QRTextPane {
 			TypingData.typeEnd = true;
 			TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
 			DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
-//			TEXT_PANE.setText(TextLoad.TEXT_LOAD.currentText());
 			TypingData.windowFresh();
 		}
 	}
