@@ -29,7 +29,6 @@ public class LoadTextItem extends MenuItem {
 		if (GroupButton.groupBtn.groupLinked()) {
 			String text = LoadText.getLoadText();
 			if (text != null && !text.isEmpty()) {
-//                TextPane.TEXT_PANE.setText(text);
 				TextPane.TEXT_PANE.setTypeText(text);
 				return;
 			}

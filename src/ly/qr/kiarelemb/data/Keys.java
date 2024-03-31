@@ -112,6 +112,10 @@ public class Keys {
      * 编码提示窗口的位置，{@code 0} （默认）跟随光标，{@code 1} 固定于窗体上方居中
      */
     public static final String TEXT_TIP_WINDOW_LOCATION = "text.tip.window.location";
+    /**
+     * 新建发文窗口默认选择的标签，{@code 0} （默认）跟随光标，{@code 1} 固定于窗体上方居中
+     */
+    public static final String SEND_TEXT_NEW_WINDOW_TAB_INDEX = "send.text.new.window.tab.index";
     //endregion int类型
 
     //region boolean 类型
@@ -288,6 +292,11 @@ public class Keys {
     public static final String TYPE_SIGNATURE = "type.signature";
 
     //region 快捷键设置
+
+    /**
+     * 新建发文快捷键，默认为 {@code F2}
+     */
+    public static final String QUICK_KEY_NEW_SEND = "quick.key.new.send";
     /**
      * 重打快捷键，默认为 {@code F3}
      */
@@ -335,6 +344,7 @@ public class Keys {
             put(TYPE_KEY_METHOD_B, "0");
             put(TEXT_TIP_PANEL_LOCATION, "1");
             put(TEXT_TIP_WINDOW_LOCATION, "0");
+            put(SEND_TEXT_NEW_WINDOW_TAB_INDEX, "0");
             put(SEND_MINIMALISM, "false");
             put(SEND_CRYPTOGRAPHIC, "false");
             put(SEND_BACK_CHANGE, "true");
@@ -375,8 +385,8 @@ public class Keys {
             put(WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, "true");
             put(TEXT_FONT_NAME_GLOBAL_ENABLE, "false");
             put(WINDOW_TRANSPARENCY_ENABLE, "false");
-            put(TEXT_FONT_NAME_LOOK, "阿里巴巴普惠体 R");
-            put(TEXT_FONT_NAME_TYPE, "阿里巴巴普惠体 R");
+            put(TEXT_FONT_NAME_LOOK, "黑体");
+            put(TEXT_FONT_NAME_TYPE, "黑体");
             put(TEXT_FONT_NAME_GLOBAL, "阿里巴巴普惠体 R");
             put(TEXT_TIP_FILE_PATH, "当前未选择词提文件");
             put(TEXT_TIP_SELECTION, "_234567890");
@@ -391,6 +401,7 @@ public class Keys {
 	        put(QUICK_KEY_RESTART, "F3, alt 3");
             put(QUICK_KEY_GROUP, "F5");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
+            put(QUICK_KEY_NEW_SEND, "F2");
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4");
             put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
             put(TEXT_LINE_SPACE, "0.8");

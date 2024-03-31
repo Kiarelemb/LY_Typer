@@ -84,10 +84,10 @@ public class ContractiblePanel extends QRContractiblePanel {
 		this.paraInfoPanel.column().setFold(Keys.boolValue(Keys.WINDOW_COLUMN_FOLD_PARA_INFO));
 		this.standardDataPanel.column().setFold(Keys.boolValue(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS));
 		//保存
-		this.typingStatisticsPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_TYPING_STATISTICS, String.valueOf(e)));
-		this.stateInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STATE_INFO, String.valueOf(e)));
-		this.paraInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_PARA_INFO, String.valueOf(e)));
-		this.standardDataPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, String.valueOf(e)));
+		this.typingStatisticsPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_TYPING_STATISTICS, e));
+		this.stateInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STATE_INFO, e));
+		this.paraInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_PARA_INFO, e));
+		this.standardDataPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, e));
 
 		TextPane.TEXT_PANE.addSetTextBeforeAction(e -> paraInfoUpdate());
 		TextPane.TEXT_PANE.addSetTextBeforeAction(e -> standardDataUpdate());

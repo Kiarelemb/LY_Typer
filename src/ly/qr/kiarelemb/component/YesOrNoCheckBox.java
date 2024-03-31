@@ -29,7 +29,7 @@ public class YesOrNoCheckBox extends QRCheckBox {
 		this.checked = !this.checked;
 		setText(this.checked ? "是" : "否");
 		setSelected(this.checked);
-		QRSwing.setGlobalSetting(this.key, String.valueOf(this.checked));
+		QRSwing.setGlobalSetting(this.key, this.checked);
 	}
 
 	public boolean checked() {
