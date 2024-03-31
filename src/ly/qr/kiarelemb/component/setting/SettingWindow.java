@@ -31,6 +31,8 @@ public class SettingWindow extends QRDialog {
 		setTitle("设置");
 		setTitlePlace(QRDialog.CENTER);
 		setSize(700, 470);
+		//移动时，主窗体不移动
+		setParentWindowNotFollowMove();
 		this.mainPanel.setLayout(new BorderLayout());
 		this.mainPanel.setBorder(new EmptyBorder(5, 10, 0, 10));
 
@@ -119,11 +121,4 @@ public class SettingWindow extends QRDialog {
 	public boolean save() {
 		return this.sure;
 	}
-
-//	@Override
-//	public void dispose() {
-//		QRSwing.registerGlobalActionRemove(QRStringUtils.getKeyStroke(KeyEvent.VK_ESCAPE), this.disposeAction, false);
-//		setVisible(false);
-//		System.gc();
-//	}
 }

@@ -81,27 +81,25 @@ public class TyperTextPane extends QRTextPane {
 			return;
 		}
 		int keyCode = e.getKeyCode();
-		if (e.getModifiersEx() != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
+		if (e.isControlDown() || e.getKeyChar() == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) {
 			return;
 		}
-		if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
+		if (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12) {
 			return;
 		}
-		if (TypingData.typing && !TypingData.typeEnd) {
-			try {
-				char keyChar = e.getKeyChar();
-				if (keyChar == KeyEvent.VK_BACK_SPACE) {
-					TextPane.TEXT_PANE.deleteUpdates(e);
-
-				} else {
-					TextPane.TEXT_PANE.insertUpdates(keyChar);
-				}
-
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		} else {
+		if (!TypingData.typing || TypingData.typeEnd) {
 			e.consume();
+			return;
+		}
+		try {
+			char keyChar = e.getKeyChar();
+			if (keyChar == KeyEvent.VK_BACK_SPACE) {
+				TextPane.TEXT_PANE.deleteUpdates(e);
+				return;
+			}
+			TextPane.TEXT_PANE.insertUpdates(keyChar);
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 	}
 
@@ -117,7 +115,7 @@ public class TyperTextPane extends QRTextPane {
 			if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
 				return;
 			}
-			if (keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
+			if (keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_WINDOWS) {
 				if (!TypingData.typing) {
 					return;
 				}
