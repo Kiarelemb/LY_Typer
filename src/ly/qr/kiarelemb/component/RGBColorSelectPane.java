@@ -22,6 +22,6 @@ public class RGBColorSelectPane extends QRRGBColorSelectPane {
 
 	@Override
 	protected void colorChangedAction(Color from, Color to) {
-		SettingsItem.changeMap.put(this.key, QRRGBColorSelectPane.getColor(to));
+		SettingsItem.CHANGE_MAP.put(this.key, QRRGBColorSelectPane.getColor(to));
 	}
 }

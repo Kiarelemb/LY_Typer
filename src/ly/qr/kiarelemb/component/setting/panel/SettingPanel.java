@@ -1,5 +1,6 @@
-package ly.qr.kiarelemb.component.setting;
+package ly.qr.kiarelemb.component.setting.panel;
 
+import ly.qr.kiarelemb.component.setting.SettingWindow;
 import swing.qr.kiarelemb.component.basic.QRPanel;
 
 /**

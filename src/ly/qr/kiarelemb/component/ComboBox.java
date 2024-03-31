@@ -23,7 +23,7 @@ public class ComboBox extends QRComboBox {
 		addItemChangeListener(e -> {
 			QRItemEvent event = (QRItemEvent) e;
 			int index = ArrayUtils.indexOf(array, event.after());
-			SettingsItem.changeMap.put(key, String.valueOf(index));
+			SettingsItem.CHANGE_MAP.put(key, String.valueOf(index));
 		});
 		int index = Keys.intValue(key);
 		if (index >= array.length) {
@@ -41,7 +41,7 @@ public class ComboBox extends QRComboBox {
 			}
 			addItemChangeListener(e -> {
 				QRItemEvent event = (QRItemEvent) e;
-				SettingsItem.changeMap.put(key, event.after());
+				SettingsItem.CHANGE_MAP.put(key, event.after());
 			});
 		}
 	}

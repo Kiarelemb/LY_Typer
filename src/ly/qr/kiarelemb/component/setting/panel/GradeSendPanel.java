@@ -1,8 +1,9 @@
-package ly.qr.kiarelemb.component.setting;
+package ly.qr.kiarelemb.component.setting.panel;
 
 import ly.qr.kiarelemb.component.CheckBox;
 import ly.qr.kiarelemb.component.ComboBox;
 import ly.qr.kiarelemb.component.TextField;
+import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
 import swing.qr.kiarelemb.component.basic.QRButton;
 import swing.qr.kiarelemb.component.basic.QRComboBox;

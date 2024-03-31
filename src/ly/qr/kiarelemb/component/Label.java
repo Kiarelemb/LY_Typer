@@ -22,7 +22,7 @@ public class Label extends QRLabel {
 	public void setText(String text) {
 		super.setText(text);
 		if (this.key != null) {
-			SettingsItem.changeMap.put(this.key, text);
+			SettingsItem.CHANGE_MAP.put(this.key, text);
 		}
 	}
 }

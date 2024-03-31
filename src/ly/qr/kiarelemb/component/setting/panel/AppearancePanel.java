@@ -1,4 +1,4 @@
-package ly.qr.kiarelemb.component.setting;
+package ly.qr.kiarelemb.component.setting.panel;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.CheckBox;
@@ -6,6 +6,7 @@ import ly.qr.kiarelemb.component.ComboBox;
 import ly.qr.kiarelemb.component.RGBColorSelectPane;
 import ly.qr.kiarelemb.component.Spinner;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
+import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
@@ -46,7 +47,7 @@ public class AppearancePanel extends SettingPanel {
 
 			@Override
 			protected void itemChangedAction(QRItemEvent e) {
-				SettingsItem.saveActions.put("look.font", ar -> {
+				SettingsItem.SAVE_ACTIONS.put("look.font", ar -> {
 					TextStyleManager.PREFERRED_CHINESE_FONT_NAME = e.after();
 					TextStyleManager.updateAll();
 				});
@@ -78,7 +79,7 @@ public class AppearancePanel extends SettingPanel {
 			QRSwing.setTheme(after);
 			MainWindow.INSTANCE.componentFresh();
 			//如果取消，则恢复之前的主题
-			SettingsItem.cancelActions.putIfAbsent("window.fresh", es -> {
+			SettingsItem.CANCEL_ACTIONS.putIfAbsent("window.fresh", es -> {
 				if (!QRSwing.theme.equals(themeBackup)) {
 					QRSwing.setTheme(themeBackup);
 					MainWindow.INSTANCE.componentFresh();
@@ -96,7 +97,7 @@ public class AppearancePanel extends SettingPanel {
 		customFontCheckBox.addClickAction(e -> {
 			frameFontsComboBox.setEnabled(customFontCheckBox.checked());
 			fontSelectBtn.setEnabled(customFontCheckBox.checked());
-			SettingsItem.saveActions.putIfAbsent("window.font.default", es -> {
+			SettingsItem.SAVE_ACTIONS.putIfAbsent("window.font.default", es -> {
 				if (!customFontCheckBox.checked()) {
 					QRSwing.customFontName(TextStyleManager.DEFAULT_FONT);
 					MainWindow.INSTANCE.componentFresh();
@@ -110,12 +111,12 @@ public class AppearancePanel extends SettingPanel {
 			//去重
 			if (qcu.isPassedMmTime()) {
 				QRItemEvent event = (QRItemEvent) e;
-				SettingsItem.changeMap.put(Keys.TEXT_FONT_NAME_GLOBAL, event.after());
+				SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, event.after());
 				QRSwing.customFontName(event.after());
 				MainWindow.INSTANCE.componentFresh();
 				qcu.startTimeUpdate();
 				//如果取消，则恢复之前的字体
-				SettingsItem.cancelActions.putIfAbsent("window.font", es -> {
+				SettingsItem.CANCEL_ACTIONS.putIfAbsent("window.font", es -> {
 					if (!fontNameBackup.equals(event.after())) {
 						QRSwing.customFontName(fontNameBackup);
 						MainWindow.INSTANCE.componentFresh();
@@ -129,7 +130,7 @@ public class AppearancePanel extends SettingPanel {
 			Font font = QRFontUtils.loadFontFromFile(10, file);
 			QRSwing.customFontName(font);
 			MainWindow.INSTANCE.componentFresh();
-			SettingsItem.changeMap.put(Keys.TEXT_FONT_NAME_GLOBAL, file.getAbsolutePath());
+			SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, file.getAbsolutePath());
 			frameFontsComboBox.setText(font.getFamily());
 //			System.out.println("----------------------------------------------------------------------");
 		});

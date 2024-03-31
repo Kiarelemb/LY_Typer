@@ -1,8 +1,9 @@
-package ly.qr.kiarelemb.component.setting;
+package ly.qr.kiarelemb.component.setting.panel;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.CheckBox;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
+import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
@@ -63,7 +64,7 @@ public class WindowPanel extends SettingPanel {
 			windowBackgroundImageSetCheckBox.setEnabled(!checked);
 			backgroundImageSetBtn.setEnabled(!checked);
 //			if (checked) {
-			SettingsItem.saveActions.put("window.trans.set", windowTransAction);
+			SettingsItem.SAVE_ACTIONS.put("window.trans.set", windowTransAction);
 //			} else {
 //				SettingsItem.saveActions.remove("window.trans.set", windowTransAction);
 //			}
@@ -86,8 +87,8 @@ public class WindowPanel extends SettingPanel {
 			int value = windowTransSlider.getValue();
 			float alpha = value / 100f;
 			QRSystemUtils.setWindowTrans(window, alpha);
-			SettingsItem.changeMap.put(QRSwing.WINDOW_TRANSPARENCY, String.valueOf(alpha));
-			SettingsItem.saveActions.put("window.trans.set", windowTransAction);
+			SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_TRANSPARENCY, String.valueOf(alpha));
+			SettingsItem.SAVE_ACTIONS.put("window.trans.set", windowTransAction);
 		});
 
 		boolean set = MainWindow.INSTANCE.backgroundImageSet();
@@ -214,7 +215,7 @@ public class WindowPanel extends SettingPanel {
 					float alpha = v / 100f;
 					b.setAlpha(alpha);
 					QRComponentUtils.windowFreshRightNow(backgroundImagePanel);
-					SettingsItem.changeMap.put(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, String.valueOf(alpha));
+					SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, String.valueOf(alpha));
 				}
 			});
 
@@ -234,13 +235,13 @@ public class WindowPanel extends SettingPanel {
 		private void sureBtnAction() {
 			final String path = this.textField.getText();
 			if (QRFileUtils.fileExists(path)) {
-				SettingsItem.saveActions.put("window.image.path", e -> MainWindow.INSTANCE.setBackgroundImage(path));
+				SettingsItem.SAVE_ACTIONS.put("window.image.path", e -> MainWindow.INSTANCE.setBackgroundImage(path));
 				//保存，以备再次打开
 				QRSwing.windowBackgroundImagePath = path;
 			}
-			if (SettingsItem.changeMap.containsKey(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA)) {
-				float alpha = Float.parseFloat(SettingsItem.changeMap.get(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA));
-				SettingsItem.saveActions.put("window.image.alpha", e -> {
+			if (SettingsItem.CHANGE_MAP.containsKey(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA)) {
+				float alpha = Float.parseFloat(SettingsItem.CHANGE_MAP.get(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA));
+				SettingsItem.SAVE_ACTIONS.put("window.image.alpha", e -> {
 					MainWindow.INSTANCE.setBackgroundBorderAlpha(alpha);
 				});
 				QRSwing.windowAlpha = alpha;
@@ -250,8 +251,8 @@ public class WindowPanel extends SettingPanel {
 
 		@Override
 		public void dispose() {
-			if (!SettingsItem.cancelActions.containsKey("window.image.path")) {
-				SettingsItem.cancelActions.put("window.image.path", e -> MainWindow.INSTANCE.setBackgroundImage(this.backgroundImagePathBackup));
+			if (!SettingsItem.CANCEL_ACTIONS.containsKey("window.image.path")) {
+				SettingsItem.CANCEL_ACTIONS.put("window.image.path", e -> MainWindow.INSTANCE.setBackgroundImage(this.backgroundImagePathBackup));
 			}
 			super.dispose();
 		}

@@ -130,7 +130,7 @@ public class TipData {
 				", codes='" + codes + '\'' +
 				", indexes=" + Arrays.toString(indexes) +
 				", singleCodeNum=" + singleCodeNum +
-				", data=" + data +
+				", TypedData=" + data +
 				'}';
 	}
 

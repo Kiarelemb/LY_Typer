@@ -1,5 +1,6 @@
 package ly.qr.kiarelemb.component.menu.type;
 
+import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.menu.MenuItem;
 import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
@@ -18,9 +19,9 @@ import java.util.TreeMap;
  **/
 public class SettingsItem extends MenuItem {
 
-	public static final Map<String, String> changeMap = new TreeMap<>();
-	public static final Map<String, QRActionRegister> saveActions = new TreeMap<>();
-	public static final Map<String, QRActionRegister> cancelActions = new TreeMap<>();
+	public static final Map<String, String> CHANGE_MAP = new TreeMap<>();
+	public static final Map<String, QRActionRegister> SAVE_ACTIONS = new TreeMap<>();
+	public static final Map<String, QRActionRegister> CANCEL_ACTIONS = new TreeMap<>();
 	public static final SettingsItem SETTINGS_ITEM = new SettingsItem();
 
 	private SettingsItem() {
@@ -29,16 +30,17 @@ public class SettingsItem extends MenuItem {
 
 	@Override
 	protected void actionEvent(ActionEvent o) {
-		changeMap.clear();
-		saveActions.clear();
-		cancelActions.clear();
+		CHANGE_MAP.clear();
+		SAVE_ACTIONS.clear();
+		CANCEL_ACTIONS.clear();
 		SettingWindow window = new SettingWindow();
+		window.setLocationRelativeTo(MainWindow.INSTANCE);
 		window.setVisible(true);
 		if (window.save()) {
-			changeMap.forEach(QRSwing::setGlobalSetting);
-			saveActions.forEach((s, e) -> e.action(null));
-		} else {
-			cancelActions.forEach((s, e) -> e.action(null));
+			CHANGE_MAP.forEach(QRSwing::setGlobalSetting);
+			SAVE_ACTIONS.forEach((s, e) -> e.action(null));
+			return;
 		}
+		CANCEL_ACTIONS.forEach((s, e) -> e.action(null));
 	}
 }

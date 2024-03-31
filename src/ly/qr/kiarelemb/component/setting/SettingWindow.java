@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.component.setting;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.Tree;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
+import ly.qr.kiarelemb.component.setting.panel.*;
 import ly.qr.kiarelemb.data.Keys;
 import swing.qr.kiarelemb.component.assembly.QRMutableTreeNode;
 import swing.qr.kiarelemb.component.basic.QRPanel;
@@ -79,8 +80,6 @@ public class SettingWindow extends QRDialog {
 
 		//region 底部面板
 		QRPanel bottomPanel = new QRPanel();
-//		bottomPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
-//		bottomPanel.setLayout(new BorderLayout(10, 2));
 
 		QRRoundButton sureBtn = new QRRoundButton("确认") {
 			@Override
@@ -96,11 +95,10 @@ public class SettingWindow extends QRDialog {
 				dispose();
 			}
 		};
-
 		QRRoundButton backToDefaultBtn = new QRRoundButton("恢复默认设置并关闭") {
 			@Override
 			protected void actionEvent(ActionEvent o) {
-				SettingsItem.changeMap.putAll(Keys.DEFAULT_MAP);
+				SettingsItem.CHANGE_MAP.putAll(Keys.DEFAULT_MAP);
 				sureBtn.doClick();
 			}
 		};

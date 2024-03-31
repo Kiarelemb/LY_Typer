@@ -15,8 +15,8 @@ public class Spinner extends QRSpinner {
 		setValue(Keys.intValue(key));
 		addChangeListener(e -> {
 			String value = getValue().toString();
-			SettingsItem.changeMap.put(key, value);
-			SettingsItem.saveActions.putIfAbsent(key, es -> TextPane.TEXT_PANE.restart());
+			SettingsItem.CHANGE_MAP.put(key, value);
+			SettingsItem.SAVE_ACTIONS.putIfAbsent(key, es -> TextPane.TEXT_PANE.restart());
 		});
 	}
 }

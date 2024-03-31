@@ -1,7 +1,8 @@
-package ly.qr.kiarelemb.component.setting;
+package ly.qr.kiarelemb.component.setting.panel;
 
 import ly.qr.kiarelemb.component.*;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
+import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
@@ -55,10 +56,10 @@ public class TipSettingPanel extends SettingPanel {
 			TextTip.TEXT_TIP.load();
 		};
 
-		tipEnableCheckBox.addClickAction(e -> SettingsItem.saveActions.putIfAbsent("tip.enable", tipLoadAction));
+		tipEnableCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable", tipLoadAction));
 
 		tipEnhanceModelCheckBox.addClickAction(e -> {
-			SettingsItem.saveActions.putIfAbsent("tip.enable.enhance", es -> {
+			SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable.enhance", es -> {
 				if (Keys.boolValue(Keys.TEXT_TIP_ENHANCE)) {
 					if (AbstractTextTip.TEXT_TIP instanceof TextTip) {
 						AbstractTextTip.TEXT_TIP.release();
@@ -75,12 +76,12 @@ public class TipSettingPanel extends SettingPanel {
 			String path = file.getAbsolutePath();
 			if (!path.equals(tipFilePathLabel.getText())) {
 				tipFilePathLabel.setText(path);
-				SettingsItem.saveActions.putIfAbsent("tip.load", tipLoadAction);
+				SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.load", tipLoadAction);
 			}
 		});
 
-		QRActionRegister tipPanelAction = e -> SettingsItem.saveActions.putIfAbsent("tip.panel", es -> SplitPane.SPLIT_PANE.updateTipPaneLocation());
-		QRActionRegister tipWindowAction = e -> SettingsItem.saveActions.putIfAbsent("tip.window", es -> TipWindow.TIP_WINDOW.updateTipWindowLocation());
+		QRActionRegister tipPanelAction = e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.panel", es -> SplitPane.SPLIT_PANE.updateTipPaneLocation());
+		QRActionRegister tipWindowAction = e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.window", es -> TipWindow.TIP_WINDOW.updateTipWindowLocation());
 		tipPanelEnableCheckBox.addClickAction(tipPanelAction);
 		tipWindowEnableCheckBox.addClickAction(tipWindowAction);
 		tipPanelComboBox.addItemChangeListener(tipPanelAction);

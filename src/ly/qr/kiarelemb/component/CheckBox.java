@@ -27,14 +27,14 @@ public class CheckBox extends QRCheckBox {
 	public void setSelected(boolean b) {
 		super.setSelected(b);
 		this.checked = b;
-		SettingsItem.changeMap.put(this.key, String.valueOf(this.checked));
+		SettingsItem.CHANGE_MAP.put(this.key, String.valueOf(this.checked));
 	}
 
 	@Override
 	protected final void actionEvent(ActionEvent o) {
 		this.checked = !this.checked;
 		setSelected(this.checked);
-		SettingsItem.changeMap.put(this.key, String.valueOf(this.checked));
+		SettingsItem.CHANGE_MAP.put(this.key, String.valueOf(this.checked));
 	}
 
 	public boolean checked() {

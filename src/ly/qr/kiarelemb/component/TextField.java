@@ -33,6 +33,6 @@ public class TextField extends QRTextField {
 
 	@Override
 	protected void changedUpdate(DocumentEvent e) {
-		SettingsItem.changeMap.put(this.key, getText());
+		SettingsItem.CHANGE_MAP.put(this.key, getText());
 	}
 }

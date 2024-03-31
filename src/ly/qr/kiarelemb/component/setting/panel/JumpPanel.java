@@ -1,4 +1,4 @@
-package ly.qr.kiarelemb.component.setting;
+package ly.qr.kiarelemb.component.setting.panel;
 
 import method.qr.kiarelemb.utils.QRFontUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
