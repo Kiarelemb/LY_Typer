@@ -15,7 +15,7 @@ import java.util.TreeMap;
  **/
 public class Keys {
 
-    //region 读取配置的静态方法类
+    //region 读取配置的静态方法
 
     /**
      * 从全局配置文件中读取配置
@@ -36,7 +36,7 @@ public class Keys {
      */
     public static boolean boolValue(String key) {
         String dv = DEFAULT_MAP.get(key);
-        return QRPropertiesUtils.getPropInBoolean(QRSwing.GLOBAL_PROP, key, Boolean.parseBoolean(dv), dv != null);
+        return QRPropertiesUtils.getPropInBoolean(QRSwing.GLOBAL_PROP, key, Boolean.parseBoolean(dv), true);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Keys {
      */
     public static String strValue(String key) {
         String dv = DEFAULT_MAP.get(key);
-        return QRPropertiesUtils.getPropInString(QRSwing.GLOBAL_PROP, key, dv, dv != null);
+        return QRPropertiesUtils.getPropInString(QRSwing.GLOBAL_PROP, key, dv, true);
     }
 
     /**
@@ -63,18 +63,22 @@ public class Keys {
     //endregion
 
     //region int类型
+
     /**
      * 繁简转换键，{@code 0} （默认）不转换，{@code 1} 繁转简，{@code 2} 简转繁
      */
     public static final String TEXT_SIMPLE_TRADITIONAL_CONVERT = "text.simple.traditional.convert";
     /**
-     * 词提方案的码长，{@code 0} 为四码方案，{@code 1} （默认）为三码方案
+     * 词提方案的码长，{@code 0} 为四码方案，{@code 1} （默认）为三码方案，{@code 2} 为42顶的三码方案
      */
     public static final String TEXT_TIP_CODE_LENGTH = "text.tip.code.length";
     /**
-     * 看打区和跟打区的字体大小，默认为 {@code 28}
+     * 看打区字体大小，默认为 {@code 28}
      */
     public static final String TEXT_FONT_SIZE_LOOK = "text.font.size.look";
+    /**
+     * 跟打区的字体大小，默认为 {@code 28}
+     */
     public static final String TEXT_FONT_SIZE_TYPE = "text.font.size.type";
     /**
      * 跟打数据的更新，{@code 0} （默认）实时更新，{@code 1} 每秒更新，{@code 2} 每五更新
@@ -112,24 +116,10 @@ public class Keys {
      * 编码提示窗口的位置，{@code 0} （默认）跟随光标，{@code 1} 固定于窗体上方居中
      */
     public static final String TEXT_TIP_WINDOW_LOCATION = "text.tip.window.location";
-    /**
-     * 新建发文窗口默认选择的标签，{@code 0} （默认）跟随光标，{@code 1} 固定于窗体上方居中
-     */
-    public static final String SEND_TEXT_NEW_WINDOW_TAB_INDEX = "send.text.new.window.tab.index";
     //endregion int类型
 
     //region boolean 类型
     //region 成绩单发送
-    /**
-     * 极简模式
-     */
-    public static final String SEND_MINIMALISM = "send.minimalism";
-    /**
-     * 加密发文
-     */
-    public static final String SEND_CRYPTOGRAPHIC = "send.cryptographic";
-    public static final String SEND_BACK_CHANGE = "send.back.change";
-    public static final String SEND_BACKSPACE = "send.backspace";
     public static final String SEND_ENTER_COUNT = "send.enter.count";
     public static final String SEND_METHOD_INPUT = "send.method.input";
     //	public static final String SEND_IS_SIMPLIFY = "send.isSimplify";
@@ -146,7 +136,21 @@ public class Keys {
     public static final String SEND_TIME_COST = "send.time.cost";
     public static final String SEND_WORDS_NUM = "send.words.num";
     public static final String SEND_WORD_WRONG = "send.word.wrong";
-    //endregion
+    /**
+     * 新建发文窗口默认选择的标签，{@code 0} （默认）跟随光标，{@code 1} 固定于窗体上方居中
+     */
+    public static final String SEND_TEXT_NEW_WINDOW_TAB_INDEX = "send.text.new.window.tab.index";
+    /**
+     * 极简模式
+     */
+    public static final String SEND_MINIMALISM = "send.minimalism";
+    /**
+     * 加密发文
+     */
+    public static final String SEND_CRYPTOGRAPHIC = "send.cryptographic";
+    public static final String SEND_BACK_CHANGE = "send.back.change";
+    public static final String SEND_BACKSPACE = "send.backspace";
+    //endregion 成绩单发送
     /**
      * 智能载文，{@code false} 基本不格式化文本，{@code true} （默认）智能载文
      */
@@ -227,17 +231,21 @@ public class Keys {
      * 标顶数据是否已折叠，{@code false} （默认）不折叠，{@code true} 折叠
      */
     public static final String WINDOW_COLUMN_FOLD_STANDARD_STATISTICS = "window.column.fold.standard.statistics";
-
     /**
      * 全局的界面字体，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String TEXT_FONT_NAME_GLOBAL_ENABLE = "text.font.name.global.enable";
+    /**
+     * 启用窗体透明，{@code false} （默认）不启用，{@code true} 启用
+     */
     public static final String WINDOW_TRANSPARENCY_ENABLE = "window.transparency.enable";
+    /**
+     * 启用窗体背景图片，{@code false} （默认）不启用，{@code true} 启用
+     */
     public static final String WINDOW_BACKGROUND_IMAGE_ENABLE = "window.background.image.enable";
     //endregion boolean 类型
 
     //region String 类型
-
     /**
      * 看打区字体名称，默认为 {@code 黑体}
      */
@@ -290,9 +298,12 @@ public class Keys {
      * 个签，默认为 {@code null}
      */
     public static final String TYPE_SIGNATURE = "type.signature";
+    /**
+     * 输入法码表路径，默认为 {@code null}
+     */
 
     //region 快捷键设置
-
+    public static final String INPUT_CODE_DICT_PATH = "input.code.dict.path";
     /**
      * 新建发文快捷键，默认为 {@code F2}
      */
@@ -317,12 +328,18 @@ public class Keys {
      * 当量窗体显示快捷键，默认为 {@code Ctrl D}
      */
     public static final String QUICK_KEY_DANG_LIANG_WINDOW = "quick.key.dang.liang.window";
+    /**
+     * 内置输入框启用快捷键，默认为 {@code Ctrl I}
+     */
+    public static final String QUICK_KEY_INNER_INPUT_WINDOW = "quick.key.inner.input.window";
     //endregion 快捷键设置
 
     //endregion String 类型
 
     //region float 类型
-
+    /**
+     * 行距，默认为 {@code 0.8}
+     */
     public static final String TEXT_LINE_SPACE = "text.line.space";
     /**
      * 记录主窗体分割面板的分割值
@@ -398,12 +415,14 @@ public class Keys {
             put(TYPE_METHOD_INPUT, null);
             put(TYPE_METHOD_KEYBOARD, null);
             put(TYPE_SIGNATURE, null);
-	        put(QUICK_KEY_RESTART, "F3, alt 3");
+            put(INPUT_CODE_DICT_PATH, null);
+            put(QUICK_KEY_RESTART, "F3, alt 3");
             put(QUICK_KEY_GROUP, "F5");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
             put(QUICK_KEY_NEW_SEND, "F2");
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4");
             put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
+            put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");
             put(TEXT_LINE_SPACE, "0.8");
             put(WINDOW_SPLIT_WEIGHT, "0.618");
         }

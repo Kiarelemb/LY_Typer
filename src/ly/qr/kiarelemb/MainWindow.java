@@ -32,7 +32,7 @@ public class MainWindow extends QRFrame {
 	private MainWindow() {
 		super("揽月 " + Info.SOFTWARE_VERSION);
 		this.mainPanel.setLayout(new BorderLayout());
-
+        setTitlePanel();
 		//region 菜单
 		QRButton typeMenu = this.titleMenuPanel.add("跟打");
 		QRButton sendMenu = this.titleMenuPanel.add("发文");

@@ -57,7 +57,7 @@ public class TipWindow extends QREmptyDialog {
 				Rectangle r = TextPane.TEXT_PANE.positionRectangle(TypingData.currentTypedIndex).getBounds();
 				if (r != null) {
 					JScrollBar scrollBar = TextPane.TEXT_PANE.addScrollPane().getVerticalScrollBar();
-					int x = location.x + r.x + TextPane.INSECT;
+					int x = location.x + r.x;
 					int y = location.y + r.y - getHeight() - (scrollBar.isVisible() ? scrollBar.getValue() : 0) - 5;
 					setLocation(x, y);
 				} else {

@@ -52,8 +52,10 @@ public class WindowPanel extends SettingPanel {
 
 		QRActionRegister windowTransAction = es -> {
 			if (windowTransCheckBox.checked()) {
+                QRSwing.setWindowTransparency(windowTransSlider.getValue() / 100f);
 				QRSystemUtils.setWindowTrans(MainWindow.INSTANCE, Keys.floatValue(QRSwing.WINDOW_TRANSPARENCY));
 			} else {
+                QRSwing.setWindowTransparency(0.99f);
 				QRSystemUtils.setWindowNotTrans(MainWindow.INSTANCE);
 			}
 		};
@@ -179,7 +181,6 @@ public class WindowPanel extends SettingPanel {
 				Image image = QRSwingInfo.loadImage(this.backgroundImagePathBackup);
 				QRBackgroundBorder backgroundBorder = new QRBackgroundBorder(image);
 				backgroundImagePanel.setBorder(backgroundBorder);
-//				backgroundImagePanel.setSize(image.getWidth(null), image.getHeight(null));
 				this.textField.setText(this.backgroundImagePathBackup);
 			}
 
@@ -204,10 +205,9 @@ public class WindowPanel extends SettingPanel {
 					sureBtn.setEnabled(false);
 				}
 			};
-
 			QRSlider alphaSlider = new QRSlider();
 			alphaSlider.setBoundValue(50, 100);
-			alphaSlider.setValue((int) (100 * QRSwing.windowAlpha));
+            alphaSlider.setValue((int) (100 * QRSwing.windowBackgroundImageAlpha));
 			alphaSlider.addChangeListener(e -> {
 				Border border = backgroundImagePanel.getBorder();
 				if (border instanceof QRBackgroundBorder b) {
@@ -244,7 +244,7 @@ public class WindowPanel extends SettingPanel {
 				SettingsItem.SAVE_ACTIONS.put("window.image.alpha", e -> {
 					MainWindow.INSTANCE.setBackgroundBorderAlpha(alpha);
 				});
-				QRSwing.windowAlpha = alpha;
+                QRSwing.windowBackgroundImageAlpha = alpha;
 			}
 			super.dispose();
 		}

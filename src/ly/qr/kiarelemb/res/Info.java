@@ -19,6 +19,7 @@ import static java.io.File.separator;
 public class Info {
 	public static final String ARTICLES_DIRECTORY = "res" + separator + "articles" + separator;
 	public static final String PICK_DIRECTORY = "res" + separator + "pick" + separator;
+    public static final String DICT_DIRECTORY = "res" + separator + "dict" + separator;
 	public static final String THEME_DIRECTORY = "theme" + separator;
 	public static final String TMP_DIRECTORY = "tmp" + separator;
 	/**

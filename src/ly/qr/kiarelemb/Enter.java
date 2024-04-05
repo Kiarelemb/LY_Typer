@@ -25,7 +25,6 @@ public class Enter {
 		Toolkit.getDefaultToolkit().sync();
 		QRSwing.start("res/settings/setting.properties", "res/settings/window.properties");
 		QRSwing.windowIcon = Info.loadImage(Info.ICON_PNG_PATH);
-		QRSwing.windowTitleMenu = true;
 
 		FlashLoadingWindow flw = new FlashLoadingWindow();
 		flw.setVisible(true);
@@ -38,7 +37,7 @@ public class Enter {
 
 		if (Keys.boolValue(Keys.WINDOW_BACKGROUND_IMAGE_ENABLE)) {
 			MainWindow.INSTANCE.setBackgroundImage(Keys.strValue(QRSwing.WINDOW_IMAGE_PATH));
-			MainWindow.INSTANCE.setBackgroundBorderAlpha(0.7f);
+            MainWindow.INSTANCE.setBackgroundBorderAlpha(QRSwing.windowBackgroundImageAlpha);
 		}
 
 		flw.setVisible(false);

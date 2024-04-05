@@ -71,7 +71,7 @@ public class TextLoad {
 		}
 		String spaceFormattedText = QRArrayUtils.spaceFormat(originalText);
 		int diIndex = spaceFormattedText.lastIndexOf(DI) + 1;
-		int duanIndex = spaceFormattedText.lastIndexOf(DUAN);
+		int duanIndex = spaceFormattedText.indexOf(DUAN, diIndex);
 		//没有段号信息就不行
 		if (diIndex == 0 || duanIndex == -1) {
 			return;
@@ -82,7 +82,8 @@ public class TextLoad {
 
 		boolean twoPara = firstln != 0 && (firstln == lastln + 1);
 		if (threePara || twoPara) {
-			this.originalText = originalText;
+			this.originalText = originalText.replaceAll("\r", "\n");
+
 			//段号
 			this.paragraph = spaceFormattedText.substring(diIndex, duanIndex);
 			this.para = Integer.parseInt(this.paragraph);
@@ -108,9 +109,9 @@ public class TextLoad {
 			}
 			//正文字数
 			if (twoPara) {
-				this.originalContent = originalText.substring(0, originalText.lastIndexOf(AN_ENTER)).trim();
+				this.originalContent = this.originalText.substring(0, this.originalText.lastIndexOf(AN_ENTER)).trim();
 			} else {
-				this.originalContent = originalText.substring(originalText.indexOf(AN_ENTER) + 1, originalText.lastIndexOf(AN_ENTER)).trim();
+				this.originalContent = this.originalText.substring(this.originalText.indexOf(AN_ENTER) + 1, this.originalText.lastIndexOf(AN_ENTER)).trim();
 			}
 			//正文前的制作者的信息
 			this.foreText = threePara ? spaceFormattedText.substring(0, firstln - 1).trim() : "";
