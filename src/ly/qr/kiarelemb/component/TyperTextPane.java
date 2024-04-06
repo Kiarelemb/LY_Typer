@@ -122,7 +122,6 @@ public class TyperTextPane extends QRTextPane {
                 }
             }
             TypingData.startTyping(time);
-//		KeyEvent.VK_OPEN_BRACKET
             TypingData.endTime = time;
             long timeDiff = TypingData.endTime - TypingData.startTime;
 
@@ -190,10 +189,6 @@ public class TyperTextPane extends QRTextPane {
 
     @Override
     protected void pasteAction() {
-        //TODO 发文时不载文
-//		if (ifTextUnloadable()) {
-//			return;
-//		}
         String text = QRSystemUtils.getSysClipboardText();
         if (text == null) {
             return;

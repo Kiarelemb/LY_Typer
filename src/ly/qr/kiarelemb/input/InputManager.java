@@ -11,11 +11,11 @@ import method.qr.kiarelemb.utils.QRBloomFilter;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.basic.QRTextField;
+import swing.qr.kiarelemb.component.basic.QRTextArea;
+import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.window.basic.QREmptyDialog;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Kiarelemb
@@ -33,31 +34,42 @@ import java.util.TreeMap;
  * @create 2024/4/5 19:06
  */
 public class InputManager {
-    public static final InputManager INPUT_MANAGER = new InputManager();
 
-    TreeMap<String, ArrayList<String>> dictMap = new TreeMap<>();
+    public static final InputManager INPUT_MANAGER = new InputManager();
+    public static boolean loaded = false;
+    private InputWindow inputWindow;
+    TreeMap<String, ArrayList<String>> dictMap;
+    private boolean isSmMethod = false;
+    private String selections;
+    private int codeLength;
+    private boolean three42;
 
     private InputManager() {
-        QRSwing.setGlobalSetting(Keys.INPUT_CODE_DICT_PATH, "C:\\Users\\Kiarelemb QR\\Desktop\\B易.txt");
-        InputWindow inputWindow = new InputWindow();
-        inputWindow.setVisible(true);
-        TyperTextPane.TYPER_TEXT_PANE.addTypeActions(e -> {
-            TyperTextPane.TYPER_TEXT_PANE.addTypeActions(event -> inputWindow.updateLocation());
-        });
+    }
+
+    public void tipUpdate() {
+        selections = Keys.strValue(Keys.TEXT_TIP_SELECTION);
+        selections = selections.startsWith("_") ? selections : "_".concat(selections);
+        int cl = Keys.intValue(Keys.TEXT_TIP_CODE_LENGTH);
+        this.codeLength = cl > 0 ? 3 : 4;
+        this.three42 = cl == 2;
     }
 
     public void init() {
+        QRSwing.setGlobalSetting(Keys.INPUT_CODE_DICT_PATH, "C:\\Users\\Kiarelemb QR\\Documents\\rime\\SM.dict.yaml");
+
+        //region 读取码表等操作
         String filePath = Keys.strValue(Keys.INPUT_CODE_DICT_PATH);
         if (!QRFileUtils.fileExists(filePath)) {
             return;
         }
-        String fileCRC;
+        String fileCrc;
         try {
-            fileCRC = QRFileUtils.getCrc32(filePath);
+            fileCrc = QRFileUtils.getCrc32(filePath);
         } catch (IOException e) {
-            fileCRC = QRFileUtils.getFileName(filePath);
+            fileCrc = QRFileUtils.getFileName(filePath);
         }
-        String tmp = Info.DICT_DIRECTORY + fileCRC + ".dct";
+        String tmp = Info.DICT_DIRECTORY + fileCrc + ".dct";
         QRFileUtils.dirCreate(Info.DICT_DIRECTORY);
         if (!QRFileUtils.fileExists(tmp)) {
             QRBloomFilter<String> bloomFilter = new QRBloomFilter<>(12, 1000000, 8);
@@ -136,6 +148,7 @@ public class InputManager {
             String crc32 = QRFileUtils.getCrc32(tmp);
             String binPath = Info.DICT_DIRECTORY + crc32 + ".bin";
             if (!QRFileUtils.fileExists(binPath)) {
+                dictMap = new TreeMap<>();
                 QRFileUtils.fileReaderWithUtf8(tmp, "\t", (line, split) -> {
                     if (split.length != 2) {
                         return;
@@ -165,8 +178,29 @@ public class InputManager {
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        AtomicInteger total = new AtomicInteger();
+        AtomicInteger exCount = new AtomicInteger();
+        dictMap.keySet().forEach(e -> {
+            if (e.contains("e")) {
+                exCount.getAndIncrement();
+            }
+            total.getAndIncrement();
+        });
+        if (exCount.get() / (0f + total.get()) < 0.05) {
+            isSmMethod = true;
+        }
+        //endregion 读取码表等操作
 
-
+        inputWindow = new InputWindow();
+        tipUpdate();
+        QRActionRegister locationUpdate = e -> {
+            inputWindow.updateLocation();
+            TyperTextPane.TYPER_TEXT_PANE.caret.setVisible(false);
+        };
+        TyperTextPane.TYPER_TEXT_PANE.addTypeActions(locationUpdate);
+        TextPane.TEXT_PANE.addSetTextFinishedAction(locationUpdate);
+        loaded = true;
+        inputWindow.setVisible(true);
     }
 
     private record TipFileLineData(String chinese, String code) {
@@ -178,14 +212,13 @@ public class InputManager {
     }
 
     private class InputWindow extends QREmptyDialog {
-
         public InputWindow() {
             super(MainWindow.INSTANCE, false);
             setLayout(new BorderLayout());
             addWindowListener();
-            QRTextField inputField = new InputField();
-            add(inputField, BorderLayout.CENTER);
-            inputField.setPreferredSize(new Dimension(50, 35));
+            QRTextArea inputArea = new InputField();
+            add(inputArea, BorderLayout.CENTER);
+            inputArea.setPreferredSize(new Dimension(65, 40));
             pack();
             updateLocation();
         }
@@ -210,19 +243,10 @@ public class InputManager {
         }
     }
 
-    private class InputField extends QRTextField {
-        private String selections;
-        private int codeLength;
-        private boolean three42;
+    private class InputField extends QRTextArea {
 
         public InputField() {
-            addDocumentListener();
             addKeyListener();
-            selections = Keys.strValue(Keys.TEXT_TIP_SELECTION);
-            selections = selections.startsWith("_") ? selections : "_".concat(selections);
-            int cl = Keys.intValue(Keys.TEXT_TIP_CODE_LENGTH);
-            this.codeLength = cl > 0 ? 3 : 4;
-            this.three42 = cl == 2;
         }
 
         @Override
@@ -237,12 +261,20 @@ public class InputManager {
                 }
                 return;
             }
+            if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                clear();
+                e.consume();
+                return;
+            }
+            char dou = isSmMethod ? 'i' : ',';
+            char ju = isSmMethod ? '\'' : '.';
+
             char keyChar = e.getKeyChar();
             if (keyChar == ' ') {
                 keyChar = '_';
             }
-            if (keyChar == ',' || keyChar == '.') {
-                String mark = keyChar == ',' ? "，" : "。";
+            if (keyChar == dou || keyChar == ju) {
+                String mark = keyChar == dou ? "，" : "。";
                 ArrayList<String> list = dictMap.get(text);
                 if (list != null) {
                     String input = list.get(0);
@@ -253,8 +285,7 @@ public class InputManager {
             }
             int index = selections.indexOf(keyChar);
             if (index > -1) {
-                System.out.println("输字");
-                if (len == 4) {
+                if (len == codeLength + 1) {
                     LinkedList<String> parts = QRArrayUtils.splitWithLength(text, 2);
                     ArrayList<String> list = dictMap.get(parts.getFirst());
                     if (list != null) {
@@ -273,8 +304,8 @@ public class InputManager {
                     return;
                 }
                 inputText(getText());
-            } else {
-                if (three42 && len == 3) {
+            } else if (len == codeLength) {
+                if (three42) {
                     LinkedList<String> parts = QRArrayUtils.splitWithLength(text, 2);
                     ArrayList<String> list = dictMap.get(parts.getFirst());
                     if (list != null) {
@@ -284,16 +315,12 @@ public class InputManager {
                         setText(parts.getLast());
                         return;
                     }
-                    clear();
-                } else if (!three42 && len == this.codeLength) {
-                    ArrayList<String> list = dictMap.get(text);
-                    if (list != null) {
-                        String input = list.get(0);
-                        inputText(input);
+                } else {
+                    if (find(text, 0)) {
                         return;
                     }
-                    clear();
                 }
+                clear();
             }
         }
 
@@ -304,6 +331,9 @@ public class InputManager {
                 if (len == 0) {
                     e.consume();
                 }
+            }
+            if (e.isControlDown() || e.isAltDown() || (e.getKeyCode() >= KeyEvent.VK_F1 && e.getKeyCode() <= KeyEvent.VK_F12)) {
+                QRSwing.invokeAction(inputWindow, QRStringUtils.getKeyStroke(e), true);
             }
         }
 
@@ -339,17 +369,6 @@ public class InputManager {
                 }
             }
             return false;
-        }
-
-
-        @Override
-        protected void insertUpdate(DocumentEvent e) {
-
-        }
-
-        @Override
-        protected void removeUpdate(DocumentEvent e) {
-            super.removeUpdate(e);
         }
     }
 }

@@ -416,11 +416,11 @@ public class Keys {
             put(TYPE_METHOD_KEYBOARD, null);
             put(TYPE_SIGNATURE, null);
             put(INPUT_CODE_DICT_PATH, null);
+            put(QUICK_KEY_NEW_SEND, "F2, alt 2");
             put(QUICK_KEY_RESTART, "F3, alt 3");
-            put(QUICK_KEY_GROUP, "F5");
+            put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4, alt 4");
+            put(QUICK_KEY_GROUP, "F5, alt 5");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
-            put(QUICK_KEY_NEW_SEND, "F2");
-            put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4");
             put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
             put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");
             put(TEXT_LINE_SPACE, "0.8");

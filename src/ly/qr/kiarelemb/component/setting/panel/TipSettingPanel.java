@@ -4,6 +4,7 @@ import ly.qr.kiarelemb.component.*;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.TextTipEnhance;
@@ -54,6 +55,9 @@ public class TipSettingPanel extends SettingPanel {
         QRActionRegister tipLoadAction = es -> {
             TextTip.TEXT_TIP.release();
             TextTip.TEXT_TIP.load();
+            if (InputManager.loaded) {
+                InputManager.INPUT_MANAGER.tipUpdate();
+            }
         };
 
         tipEnableCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable", tipLoadAction));
