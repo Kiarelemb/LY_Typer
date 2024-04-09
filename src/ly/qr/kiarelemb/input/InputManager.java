@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Kiarelemb
  * @projectName LYTyper
  * @className InputManager
- * @description TODO
+ * @description 内置输入法管理器
  * @create 2024/4/5 19:06
  */
 public class InputManager {

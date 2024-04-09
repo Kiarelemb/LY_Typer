@@ -1,8 +1,8 @@
 package ly.qr.kiarelemb.data;
 
-import method.qr.kiarelemb.utils.QRPropertiesUtils;
 import method.qr.kiarelemb.utils.QRTimeUtils;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.resource.QRSwingInfo;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,47 +18,43 @@ public class Keys {
     //region 读取配置的静态方法
 
     /**
-     * 从全局配置文件中读取配置
+     * 读取配置
      *
      * @param key 键
      * @return 值
      */
     public static int intValue(String key) {
-        String dv = DEFAULT_MAP.get(key);
-        return QRPropertiesUtils.getPropInInteger(QRSwing.GLOBAL_PROP, key, Integer.parseInt(dv), true);
+        return QRSwingInfo.intValue(DEFAULT_MAP, key);
     }
 
     /**
-     * 从全局配置文件中读取配置
+     * 读取配置
      *
      * @param key 键
      * @return 值
      */
     public static boolean boolValue(String key) {
-        String dv = DEFAULT_MAP.get(key);
-        return QRPropertiesUtils.getPropInBoolean(QRSwing.GLOBAL_PROP, key, Boolean.parseBoolean(dv), true);
+        return QRSwingInfo.boolValue(DEFAULT_MAP, key);
     }
 
     /**
-     * 从全局配置文件中读取配置
+     * 读取配置
      *
      * @param key 键
      * @return 值
      */
     public static String strValue(String key) {
-        String dv = DEFAULT_MAP.get(key);
-        return QRPropertiesUtils.getPropInString(QRSwing.GLOBAL_PROP, key, dv, true);
+        return QRSwingInfo.strValue(DEFAULT_MAP, key);
     }
 
     /**
-     * 从全局配置文件中读取配置
+     * 读取配置
      *
      * @param key 键
      * @return 值
      */
     public static float floatValue(String key) {
-        String dv = DEFAULT_MAP.get(key);
-        return QRPropertiesUtils.getPropInFloat(QRSwing.GLOBAL_PROP, key, Float.parseFloat(dv), true);
+        return QRSwingInfo.floatValue(DEFAULT_MAP, key);
     }
     //endregion
 
