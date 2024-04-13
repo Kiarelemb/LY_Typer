@@ -21,6 +21,7 @@ import java.util.*;
 public class KeyBoardPanel extends QRKeyBoardPanel {
     private final Map<Character, Float> dataMap;
     private final Map<Character, Integer> map;
+    private static final Font FONT = QRSwing.globalFont.deriveFont(15f);
     /**
      * 需要扩大的倍数，以对于高占比的数据能实现爆红
      */
@@ -100,8 +101,7 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
     @Override
     protected void labelPaint(QRLabel label, Graphics g) {
 
-        QRComponentUtils.componentStringDraw(label, g, text[labelIndex(label)], QRSwing.globalFont,
-                QRColorsAndFonts.MENU_COLOR, 30);
+        QRComponentUtils.componentStringDraw(label, g, text[labelIndex(label)], FONT, QRColorsAndFonts.MENU_COLOR, 30);
 
 
         char c = labelChar(label);
@@ -112,8 +112,8 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         }
         Integer i = map.get(c);
 
-        String count = QRMathUtils.floatFormat(v * 100, 2) + "% / " + i;
-        QRComponentUtils.componentStringDraw(label, g, count, QRSwing.globalFont, QRColorsAndFonts.MENU_COLOR, 55);
+        String count = QRMathUtils.floatFormat(v * 100, 2) + "%/" + i;
+        QRComponentUtils.componentStringDraw(label, g, count, FONT, QRColorsAndFonts.MENU_COLOR, 55);
 
     }
 }

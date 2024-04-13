@@ -5,6 +5,7 @@ import ly.qr.kiarelemb.component.SplitPane;
 import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.component.contract.state.GroupButton;
+import ly.qr.kiarelemb.component.menu.about.HotMapItem;
 import ly.qr.kiarelemb.component.menu.send.SendTextItem;
 import ly.qr.kiarelemb.component.menu.type.LoadTextItem;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
@@ -46,6 +47,8 @@ public class MainWindow extends QRFrame {
 		typeMenu.add(SettingsItem.SETTINGS_ITEM);
 
 		sendMenu.add(SendTextItem.SEND_TEXT_ITEM);
+
+		aboutMenu.add(HotMapItem.HOT_MAP_ITEM);
 		//endregion
 
 		//region 中心面板

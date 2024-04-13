@@ -34,7 +34,8 @@ public class KeyTypedRecordWindow extends QRDialog {
 
         tabbedPane.addTab("今日跟打记录", today);
         tabbedPane.addTab("总计跟打记录", total);
-
+        tabbedPane.setSelectedTab(0);
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
+        setSize(1330, 600);
     }
 }

@@ -10,7 +10,7 @@ import swing.qr.kiarelemb.component.basic.QRMenuItem;
  * @create 2023-01-25 15:16
  **/
 public class MenuItem extends QRMenuItem {
-	public MenuItem(String text, String key) {
-		super(text, Keys.strValue(key));
-	}
+    public MenuItem(String text, String key) {
+        super(text, key == null ? null : Keys.strValue(key));
+    }
 }

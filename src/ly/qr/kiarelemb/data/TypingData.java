@@ -186,6 +186,7 @@ public class TypingData {
             if (!typedKeyRecord.isEmpty()) {
                 KeyTypedRecordData.fresh(typedKeyRecord.toString());
             }
+            System.out.println(typedKeyRecord.toString());
             typedKeyRecord = new StringBuilder();
             runTyping();
         }

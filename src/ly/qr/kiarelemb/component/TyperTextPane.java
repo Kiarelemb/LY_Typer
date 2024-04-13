@@ -109,7 +109,10 @@ public class TyperTextPane extends QRTextPane {
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
-        if (MainWindow.INSTANCE.isVisible()) {
+        if (MainWindow.INSTANCE.isFocused()) {
+            if (TextLoad.TEXT_LOAD == null) {
+                return;
+            }
             //屏蔽组合键
             int keyCode = keyStroke.getKeyCode();
             char keyChar = (char) keyCode;
@@ -132,7 +135,8 @@ public class TyperTextPane extends QRTextPane {
             switch (keyCode) {
                 case 'B' -> {
                     TypingData.bCounts++;
-                    TypingData.typedKeyRecord.append('b');
+                    TypingData.typedKeyRecord.append('B');
+                    DangLangManager.DANG_LANG_MANAGER.put('b', timeDiff);
                     flag = false;
                 }
                 case ' ' -> {
