@@ -33,7 +33,9 @@ public class MainWindow extends QRFrame {
 		super("揽月 " + Info.SOFTWARE_VERSION);
 		this.mainPanel.setLayout(new BorderLayout());
         setTitlePanel();
+
 		//region 菜单
+        this.titleMenuPanel.setAutoExpend(true);
 		QRButton typeMenu = this.titleMenuPanel.add("跟打");
 		QRButton sendMenu = this.titleMenuPanel.add("发文");
 		QRButton windowMenu = this.titleMenuPanel.add("窗口");

@@ -147,6 +147,16 @@ public class TyperTextPane extends QRTextPane {
                     DangLangManager.DANG_LANG_MANAGER.put('↵', timeDiff);
                     flag = false;
                 }
+                case KeyEvent.VK_SHIFT -> {
+                    TypingData.typedKeyRecord.append('↑');
+                    DangLangManager.DANG_LANG_MANAGER.put('↑', timeDiff);
+                    flag = false;
+                }
+                case KeyEvent.VK_ALT -> {
+                    TypingData.typedKeyRecord.append('ᐃ');
+                    DangLangManager.DANG_LANG_MANAGER.put('ᐃ', timeDiff);
+                    flag = false;
+                }
                 case KeyEvent.VK_BACK_SPACE -> {
                     TypingData.backSpaceCount++;
                     TypingData.rightCounts++;
@@ -161,6 +171,7 @@ public class TyperTextPane extends QRTextPane {
                 } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
                     TypingData.rightCounts++;
                 } else {
+                    System.out.println(keyStroke.getKeyCode() + "-" + keyStroke.getKeyChar());
                     TypingData.typedKeyRecord.append('⊗');
                     DangLangManager.DANG_LANG_MANAGER.put('⊗', timeDiff);
                     return;

@@ -84,34 +84,6 @@ public class TextPane extends QRTextPane {
 
     @Override
     public void setText(String text) {
-//		if (text == null || text.isBlank()) {
-//			return;
-//		}
-//		if (this.writeBlock) {
-//			return;
-//		}
-//		this.writeBlock = true;
-//		setCaretBlock();
-//		setCursorWait();
-//		if (getTextLoadUpdate(text)) {
-//			setCursorEdit();
-//			setCaretUnblock();
-//			this.writeBlock = false;
-//			return;
-//		}
-//
-//		QRComponentUtils.runActions(this.setTextBeforeActions);
-//
-//		removeText(0, getDocument().getLength());
-//		printProcessAfterSetText();
-//		setCaretPosition(0);
-//		this.scrollPane.locationFresh();
-//
-//		QRComponentUtils.runActions(this.setTextFinishedActions);
-//		indexesUpdate();
-//		setCaretUnblock();
-//		setCursorEdit();
-//		this.writeBlock = false;
     }
 
     public void setTypeText(String text) {
@@ -227,31 +199,35 @@ public class TextPane extends QRTextPane {
         originText = TextLoad.TEXT_LOAD.wordPartsCopyRange(index, textParts.length);
         int length = originText.length();
         boolean thisWordIsRight = text.equals(originText);
-        if (!TypingData.lookModel) {
-            if (thisWordIsRight) {
-                if (!TextLoad.TEXT_LOAD.isEnglish() || QRStringUtils.A_WHITE_SPACE.equals(text)) {
-                    WordLabel.typedOneWord();
+        if (thisWordIsRight) {
+            if (!TextLoad.TEXT_LOAD.isEnglish() || QRStringUtils.A_WHITE_SPACE.equals(text)) {
+                WordLabel.typedOneWord();
+            }
+            if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+                replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getCorrectStyle());
+            }
+        } else {
+            if (length == 1) {
+                //否则判错，背景颜色改成红色
+                if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+                    replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
                 }
-                if (!SilkyModelCheckBox.silkyCheckBox.checked()) {
-                    replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getCorrectStyle());
-                }
+                TypingData.WRONG_WORDS_INDEX.add(index);
             } else {
-                if (length == 1) {
-                    //否则判错，背景颜色改成红色
-                    if (!LookModelCheckBox.lookModelCheckBox.checked()) {
-                        replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
-                    }
-                    TypingData.WRONG_WORDS_INDEX.add(index);
-                } else {
-                    for (int i = 0; i < length; i++) {
-                        int currentIndex = TypingData.currentTypedIndex + i;
-                        String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
-                        if (rightWord.equals(textParts[i])) {
+                for (int i = 0; i < length; i++) {
+                    int currentIndex = TypingData.currentTypedIndex + i;
+                    String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
+                    if (rightWord.equals(textParts[i])) {
+                        if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+
                             replaceText(currentIndex, rightWord, TextStyleManager.getCorrectStyle());
-                        } else {
-                            replaceText(currentIndex, rightWord, TextStyleManager.getWrongStyle());
-                            TypingData.WRONG_WORDS_INDEX.add(currentIndex);
                         }
+                    } else {
+                        if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+
+                            replaceText(currentIndex, rightWord, TextStyleManager.getWrongStyle());
+                        }
+                        TypingData.WRONG_WORDS_INDEX.add(currentIndex);
                     }
                 }
             }

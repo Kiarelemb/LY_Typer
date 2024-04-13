@@ -8,24 +8,22 @@ new FormModel {
 			"vgap": 20
 		} ) {
 			name: "this"
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 				name: "panel1"
-			}, new FormLayoutConstraints( class java.lang.String ) {
-				"value": "North"
-			} )
-			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRTextPane" ) {
-				name: "qRTextPane1"
+				add( new FormComponent( "swing.qr.kiarelemb.component.utils.QRKeyBoardPanel" ) {
+					name: "qRKeyBoardPanel1"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 25
+					"y": 280
+					"width": 1285
+					"height": 530
+				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
 			} )
-			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRPanel" ) {
-				name: "qRPanel2"
-			}, new FormLayoutConstraints( class java.lang.String ) {
-				"value": "South"
-			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1055, 685 )
+			"size": new java.awt.Dimension( 1375, 895 )
 		} )
 	}
 }
