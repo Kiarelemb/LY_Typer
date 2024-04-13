@@ -65,7 +65,8 @@ public class TyperTextPane extends QRTextPane {
                 double startUpdateLine = 3;
                 if (currentLine >= startUpdateLine) {
                     int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
-                    double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
+                    double value =
+                            ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
                     verticalScrollBar.setValue((int) (Math.min(value, max)));
                 }
             }
@@ -111,7 +112,7 @@ public class TyperTextPane extends QRTextPane {
         if (MainWindow.INSTANCE.isVisible()) {
             //屏蔽组合键
             int keyCode = keyStroke.getKeyCode();
-            char keyChar = keyStroke.getKeyChar();
+            char keyChar = (char) keyCode;
             int modifiers = keyStroke.getModifiers();
             if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
                 return;
@@ -208,7 +209,8 @@ public class TyperTextPane extends QRTextPane {
         final int lastIndexOf = text.lastIndexOf(QRStringUtils.AN_ENTER);
         int diIndex = text.indexOf(TextLoad.DI, lastIndexOf);
         int duanIndex = text.indexOf(TextLoad.DUAN, diIndex + 1);
-        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1, duanIndex))) {
+        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1,
+                duanIndex))) {
             if (lastIndexOf != -1 && text.indexOf(QRStringUtils.AN_ENTER) < lastIndexOf) {
                 text = QRStringUtils.lineSeparatorClear(text, true);
             }

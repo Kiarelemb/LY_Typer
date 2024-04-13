@@ -16,14 +16,14 @@ import java.util.Map;
  * @create 2024/4/13 14:04
  */
 public class KeyTypedRecordData {
-    private static final KeyTypedRecordData KEY_TOTAL_RECORD_DATA =
+    public static final KeyTypedRecordData KEY_TOTAL_RECORD_DATA =
             new KeyTypedRecordData(KeyTypedRecordData.keyTotalPath);
-    private static final KeyTypedRecordData KEY_TODAY_RECORD_DATA =
+    public static final KeyTypedRecordData KEY_TODAY_RECORD_DATA =
             new KeyTypedRecordData(KeyTypedRecordData.keyTodayPath);
     private static final String keyTotalPath = "res/settings/keyTotal.properties";
     private static final String keyTodayPath = "res/settings/keyToday.properties";
 
-    private final Map<Character, Integer> keyMap;
+    public final Map<Character, Integer> keyMap;
     private final String keyPath;
 
     private KeyTypedRecordData(String keyPath) {

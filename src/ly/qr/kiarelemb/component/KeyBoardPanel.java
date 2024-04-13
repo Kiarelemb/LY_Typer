@@ -1,14 +1,13 @@
 package ly.qr.kiarelemb.component;
 
-import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.utils.QRKeyBoardPanel;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.*;
 
@@ -21,34 +20,65 @@ import java.util.*;
  */
 public class KeyBoardPanel extends QRKeyBoardPanel {
     private final Map<Character, Float> dataMap;
+    private final Map<Character, Integer> map;
     /**
      * 需要扩大的倍数，以对于高占比的数据能实现爆红
      */
     private final int factor;
+    public static final char[] KEY_CHARS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '←', 'Q', 'W'
+            , 'E', 'R'
+            , 'Y', 'T', 'U', 'I', 'O', 'P', '[', ']', '\\', 'A', 'S', 'D', 'F', 'H', 'G', 'J', 'K', 'L', ';', '\'',
+            '↵', '↑', 'Z', 'X', 'C', 'B', 'V', 'N', 'M', ',', '.', '/', '↑', 'ᐃ', '_'};
 
     public KeyBoardPanel(Map<Character, Integer> map) {
         int mapSize = map.size();
         dataMap = new HashMap<>(mapSize);
+        this.map = map;
+        if (mapSize == 0) {
+            this.factor = 1;
+            return;
+        }
         for (QRLabel label : labelList) {
             label.clear();
         }
         List<Float> list = new ArrayList<>(mapSize);
         float totalKeyCount = map.values().stream().mapToInt(Integer::intValue).sum();
         map.forEach((c, i) -> {
-            float count = QRMathUtils.floatFormat(QRMathUtils.floatCount(i, totalKeyCount), 5);
+            float count = QRMathUtils.floatFormat(i / totalKeyCount, 5);
             list.add(count);
             dataMap.put(c, count);
         });
         list.sort(Comparator.reverseOrder());
 
+
         int factor = 1;
         int max = 1;
         float maxValue = list.get(0);
+        if (maxValue == 0) {
+            this.factor = 1;
+            return;
+        }
         float tmp = maxValue;
         while (tmp < max) {
             tmp = maxValue * ++factor;
         }
         this.factor = --factor;
+        setSize(0, 0);
+        final int factorTmp = this.factor;
+        labelList.forEach(label -> {
+            Float v = dataMap.get(labelChar(label));
+            if (v == null) {
+                label.setOpaque(false);
+                return;
+            }
+            float a = v * factorTmp;
+            label.setBackground(new Color(1, 0, 0, a));
+        });
+    }
+
+    private char labelChar(QRLabel label) {
+        int index = labelIndex(label);
+        return KEY_CHARS[index];
     }
 
     /**
@@ -59,7 +89,6 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
     @Override
     protected void labelComponentFresh(QRLabel label) {
         label.setOpaque(true);
-        label.setBackground(Color.red);
     }
 
     /**
@@ -70,14 +99,21 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
      */
     @Override
     protected void labelPaint(QRLabel label, Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        String title = text[labelIndex(label)];
-        Rectangle2D r = QRFontUtils.getStringBounds(title, QRSwing.globalFont);
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                this.getClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING));
-        g2.setFont(QRSwing.globalFont);
-        g2.setColor(QRColorsAndFonts.MENU_COLOR);
-        float x = (float) (label.getWidth() / 2 - r.getWidth() / 2);
-        g2.drawString(title, x, 30);
+
+        QRComponentUtils.componentStringDraw(label, g, text[labelIndex(label)], QRSwing.globalFont,
+                QRColorsAndFonts.MENU_COLOR, 30);
+
+
+        char c = labelChar(label);
+
+        Float v = dataMap.get(c);
+        if (v == null) {
+            return;
+        }
+        Integer i = map.get(c);
+
+        String count = QRMathUtils.floatFormat(v * 100, 2) + "% / " + i;
+        QRComponentUtils.componentStringDraw(label, g, count, QRSwing.globalFont, QRColorsAndFonts.MENU_COLOR, 55);
+
     }
 }

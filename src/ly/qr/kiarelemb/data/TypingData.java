@@ -10,6 +10,7 @@ import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRSleepUtils;
 import method.qr.kiarelemb.utils.QRThreadBuilder;
 import method.qr.kiarelemb.utils.QRTools;
+import swing.qr.kiarelemb.QRSwing;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -72,6 +73,11 @@ public class TypingData {
         TextPane.TEXT_PANE.addSetTextFinishedAction(e -> {
             typeEnd = false;
             windowFresh();
+        });
+        QRSwing.registerSystemExitAction(event -> {
+            if (!typedKeyRecord.isEmpty()) {
+                KeyTypedRecordData.fresh(typedKeyRecord.toString());
+            }
         });
     }
 

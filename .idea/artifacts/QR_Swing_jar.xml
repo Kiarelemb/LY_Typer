@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="QR_Swing:jar">
-    <output-path>$PROJECT_DIR$/../QR_Swing</output-path>
-    <root id="archive" name="QR_Swing.jar">
-      <element id="module-output" name="QR_Swing" />
-      <element id="artifact" artifact-name="揽月跟打器" />
-    </root>
-  </artifact>
-</component>
