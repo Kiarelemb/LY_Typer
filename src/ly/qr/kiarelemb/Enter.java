@@ -6,10 +6,10 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
+import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import swing.qr.kiarelemb.QRSwing;
 
 import java.awt.*;
@@ -53,7 +53,7 @@ public class Enter {
 			String fontNameOrPath = Keys.strValue(Keys.TEXT_FONT_NAME_GLOBAL);
 			if (QRFileUtils.fileExists(fontNameOrPath)) {
 				font = QRFontUtils.loadFontFromFile(10, fontNameOrPath);
-			} else if (ArrayUtils.indexOf(names, fontNameOrPath) != -1) {
+			} else if (QRArrayUtils.objectIndexOf(names, fontNameOrPath) != -1) {
 				font = QRFontUtils.getFont(fontNameOrPath, 10);
 			}
 		}

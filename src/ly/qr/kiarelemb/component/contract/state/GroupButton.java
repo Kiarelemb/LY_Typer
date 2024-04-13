@@ -5,8 +5,8 @@ import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.qq.WindowAPI;
+import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRThreadBuilder;
-import org.apache.commons.collections4.ListUtils;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
@@ -51,7 +51,7 @@ public class GroupButton extends QRRoundButton {
         //放线程就不会卡
         GROUP_CHANGE.submit(() -> {
             ArrayList<String> windows = WindowAPI.getQQWindows();
-            if (!ListUtils.isEqualList(this.windows, windows)) {
+            if (!QRArrayUtils.isEqualList(this.windows, windows)) {
                 if (this.groupName() != null) {
                     this.groupIndex = windows.indexOf(this.groupName());
                 }
