@@ -25,6 +25,7 @@ public class SendWindow extends QRDialog {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(tabbedPane, BorderLayout.CENTER);
 
+		setParentWindowNotFollowMove();
 	}
 
 
