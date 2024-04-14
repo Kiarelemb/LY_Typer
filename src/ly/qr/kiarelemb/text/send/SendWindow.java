@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.text.send;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.TabbedPane;
+import ly.qr.kiarelemb.component.SendTextTabbedPane;
 import swing.qr.kiarelemb.component.combination.QRTabbedPane;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
@@ -20,7 +20,7 @@ public class SendWindow extends QRDialog {
 		setTitle("新建发文");
 		setSize(500, 300);
 
-		QRTabbedPane tabbedPane = new TabbedPane();
+		QRTabbedPane tabbedPane = new SendTextTabbedPane();
 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(tabbedPane, BorderLayout.CENTER);

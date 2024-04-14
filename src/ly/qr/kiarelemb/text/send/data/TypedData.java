@@ -12,10 +12,9 @@ public final class TypedData {
 	private final String fileCrc;
 	private int startIndex;
 	private int typedTimes;
-	private int remainingWordsCount;
+	private long remainingWordsCount;
 	private int perLength;
 	private final boolean paraNumRandom;
-	private final boolean textSegIntelli;
 
 	/**
 	 * @param fileName            跟打文件名
@@ -25,10 +24,9 @@ public final class TypedData {
 	 * @param remainingWordsCount 剩余字数
 	 * @param perLength           每段字数
 	 * @param paraNumRandom       段号随机
-	 * @param textSegIntelli      智能分段
 	 */
-	public TypedData(String fileName, String fileCrc, int startIndex, int typedTimes, int remainingWordsCount,
-	                 int perLength, boolean paraNumRandom, boolean textSegIntelli) {
+	public TypedData(String fileName, String fileCrc, int startIndex, int typedTimes, long remainingWordsCount,
+	                 int perLength, boolean paraNumRandom) {
 		this.fileName = fileName;
 		this.fileCrc = fileCrc;
 		this.startIndex = startIndex;
@@ -36,7 +34,6 @@ public final class TypedData {
 		this.remainingWordsCount = remainingWordsCount;
 		this.perLength = perLength;
 		this.paraNumRandom = paraNumRandom;
-		this.textSegIntelli = textSegIntelli;
 	}
 
 	public void setStartIndex(int startIndex) {
@@ -71,7 +68,7 @@ public final class TypedData {
 		return typedTimes;
 	}
 
-	public int remainingWordsCount() {
+	public long remainingWordsCount() {
 		return remainingWordsCount;
 	}
 
@@ -81,10 +78,6 @@ public final class TypedData {
 
 	public boolean paraNumRandom() {
 		return paraNumRandom;
-	}
-
-	public boolean textSegIntelli() {
-		return textSegIntelli;
 	}
 
 	@Override
@@ -102,13 +95,12 @@ public final class TypedData {
 				this.typedTimes == that.typedTimes &&
 				this.remainingWordsCount == that.remainingWordsCount &&
 				this.perLength == that.perLength &&
-				this.paraNumRandom == that.paraNumRandom &&
-				this.textSegIntelli == that.textSegIntelli;
+				this.paraNumRandom == that.paraNumRandom;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fileName, fileCrc, startIndex, typedTimes, remainingWordsCount, perLength, paraNumRandom, textSegIntelli);
+		return Objects.hash(fileName, fileCrc, startIndex, typedTimes, remainingWordsCount, perLength, paraNumRandom);
 	}
 
 	@Override
@@ -120,7 +112,6 @@ public final class TypedData {
 				"typedTimes=" + typedTimes + ", " +
 				"remainingWordsCount=" + remainingWordsCount + ", " +
 				"perLength=" + perLength + ", " +
-				"paraNumRandom=" + paraNumRandom + ", " +
-				"textSegIntelli=" + textSegIntelli + ']';
+				"paraNumRandom=" + paraNumRandom + ']';
 	}
 }

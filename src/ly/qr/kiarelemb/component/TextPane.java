@@ -94,8 +94,9 @@ public class TextPane extends QRTextPane {
             return;
         }
         QRComponentUtils.runActions(this.setTextBeforeActions);
-        super.setText("");
-        printProcessAfterSetText();
+        super.setText(TextLoad.TEXT_LOAD.formattedActualText());
+        printTextStyleAfterSetText();
+//        printProcessAfterSetText();
         setCaretPosition(0);
         new Timer().schedule(new TimerTask() {
             @Override
@@ -105,6 +106,14 @@ public class TextPane extends QRTextPane {
                 indexesUpdate();
             }
         }, 100);
+    }
+
+    private void printTextStyleAfterSetText() {
+        if (TypingData.tipEnable && AbstractTextTip.TEXT_TIP.loaded() && !TextLoad.TEXT_LOAD.isEnglish()) {
+            if (Keys.boolValue(Keys.TEXT_TIP_PAINT_COLOR)) {
+                textPanelEditorKit.changeFontColor(TextLoad.TEXT_LOAD.tipData.tpsd);
+            }
+        }
     }
 
     private void printProcessAfterSetText() {
@@ -204,13 +213,15 @@ public class TextPane extends QRTextPane {
                 WordLabel.typedOneWord();
             }
             if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-                replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getCorrectStyle());
+                changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getCorrectStyle(), true);
+//                replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getCorrectStyle());
             }
         } else {
             if (length == 1) {
                 //否则判错，背景颜色改成红色
                 if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-                    replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
+//                    replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
+                    changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getWrongStyle(), true);
                 }
                 TypingData.WRONG_WORDS_INDEX.add(index);
             } else {
@@ -219,13 +230,15 @@ public class TextPane extends QRTextPane {
                     String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
                     if (rightWord.equals(textParts[i])) {
                         if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-
-                            replaceText(currentIndex, rightWord, TextStyleManager.getCorrectStyle());
+                            changeTextsStyle(TypingData.currentTypedIndex, rightWord.length(),
+                                    TextStyleManager.getCorrectStyle(), true);
+//                            replaceText(currentIndex, rightWord, TextStyleManager.getCorrectStyle());
                         }
                     } else {
                         if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-
-                            replaceText(currentIndex, rightWord, TextStyleManager.getWrongStyle());
+                            changeTextsStyle(TypingData.currentTypedIndex, rightWord.length(),
+                                    TextStyleManager.getWrongStyle(), true);
+//                            replaceText(currentIndex, rightWord, TextStyleManager.getWrongStyle());
                         }
                         TypingData.WRONG_WORDS_INDEX.add(currentIndex);
                     }
@@ -270,8 +283,10 @@ public class TextPane extends QRTextPane {
         TypingData.currentTypedIndex--;
         if (TextLoad.TEXT_LOAD.isExtra()) {
             String deleteText = TextLoad.TEXT_LOAD.getWordPartsAtIndex(TypingData.currentTypedIndex);
-            int offset = index - deleteText.length();
-            replaceText(offset, deleteText, TextStyleManager.getDefaultStyle());
+            length = deleteText.length();
+            int offset = index - length;
+//            replaceText(offset, deleteText, TextStyleManager.getDefaultStyle());
+            changeTextsStyle(offset, length, TextStyleManager.getDefaultStyle(), true);
             setCaretPosition(offset);
             TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(TypingData.currentTypedIndex));
         } else {
@@ -285,12 +300,14 @@ public class TextPane extends QRTextPane {
                 return;
             }
 
-            removeText(preIndex, length);
+//            removeText(preIndex, length);
             if (TextTip.TEXT_TIP.loaded() && TextLoad.TEXT_LOAD.tipData != null) {
                 SimpleAttributeSet attributeSet = TextLoad.TEXT_LOAD.tipData.getForeAttributeSet(preIndex);
-                print(deleteText, attributeSet, preIndex);
+                changeTextsStyle(preIndex, length, attributeSet, true);
+//                print(deleteText, attributeSet, preIndex);
             } else {
-                print(deleteText, TextStyleManager.getDefaultStyle(), preIndex);
+                changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
+//                print(deleteText, TextStyleManager.getDefaultStyle(), preIndex);
             }
             setCaretPosition(preIndex);
         }
@@ -310,7 +327,9 @@ public class TextPane extends QRTextPane {
         //用时_分
         double totalTimeInMin = totalTimeInSec / 60.0D;
         //速度
-        double s = (!TypingData.WRONG_WORDS_INDEX.isEmpty() ? TextLoad.TEXT_LOAD.wordsLength() - 5 * TypingData.WRONG_WORDS_INDEX.size() : TextLoad.TEXT_LOAD.wordsLength()) / totalTimeInMin;
+        double s = (!TypingData.WRONG_WORDS_INDEX.isEmpty() ?
+                TextLoad.TEXT_LOAD.wordsLength() - 5 * TypingData.WRONG_WORDS_INDEX.size() :
+                TextLoad.TEXT_LOAD.wordsLength()) / totalTimeInMin;
         //速度过小，不统计
         double speed = QRMathUtils.doubleFormat(s);
         if (speed < 1 || totalTimeInSec <= 0) {
@@ -342,6 +361,9 @@ public class TextPane extends QRTextPane {
         TypingData.windowFresh();
     }
 
+    /**
+     * 调用后重打次数增加
+     */
     public void restart() {
         if (TextLoad.TEXT_LOAD != null) {
             TextLoad.TEXT_LOAD.reTypeTimesAdd();
@@ -349,10 +371,14 @@ public class TextPane extends QRTextPane {
         }
     }
 
-    public static void simpleRestart() {
+    /**
+     * 该方法不增加重打次数
+     */
+    public void simpleRestart() {
         if (TextLoad.TEXT_LOAD != null) {
             TypingData.typing = false;
             TypingData.typeEnd = true;
+//            printTextStyleAfterSetText();
             TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
             DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
             TypingData.windowFresh();

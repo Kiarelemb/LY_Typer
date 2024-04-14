@@ -109,83 +109,81 @@ public class TyperTextPane extends QRTextPane {
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
-        if (MainWindow.INSTANCE.isFocused()) {
-            if (TextLoad.TEXT_LOAD == null) {
-                return;
-            }
-            //屏蔽组合键
-            int keyCode = keyStroke.getKeyCode();
-            char keyChar = (char) keyCode;
-            int modifiers = keyStroke.getModifiers();
-            if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
-                return;
-            }
-            if (keyChar == KeyEvent.VK_CONTROL || keyChar == KeyEvent.VK_ALT || keyChar == KeyEvent.VK_WINDOWS) {
-                if (!TypingData.typing) {
-                    return;
-                }
-            }
-            TypingData.startTyping(time);
-            TypingData.endTime = time;
-            long timeDiff = TypingData.endTime - TypingData.startTime;
+	    if (!MainWindow.INSTANCE.isFocused() || TextLoad.TEXT_LOAD == null) {
+		    return;
+	    }
+	    //屏蔽组合键
+	    int keyCode = keyStroke.getKeyCode();
+	    char keyChar = (char) keyCode;
+	    int modifiers = keyStroke.getModifiers();
+	    if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
+		    return;
+	    }
+	    if (keyChar == KeyEvent.VK_CONTROL || keyChar == KeyEvent.VK_WINDOWS) {
+		    if (TypingData.typing) {
+			    return;
+		    }
+	    }
+	    TypingData.startTyping(time);
+	    TypingData.endTime = time;
+	    long timeDiff = TypingData.endTime - TypingData.startTime;
 
-            //region 按键统计
-            TypingData.keyCounts++;
-            boolean flag = true;
-            switch (keyCode) {
-                case 'B' -> {
-                    TypingData.bCounts++;
-                    TypingData.typedKeyRecord.append('B');
-                    DangLangManager.DANG_LANG_MANAGER.put('b', timeDiff);
-                    flag = false;
-                }
-                case ' ' -> {
-                    TypingData.spaceCounts++;
-                    TypingData.typedKeyRecord.append('_');
-                    DangLangManager.DANG_LANG_MANAGER.put('_', timeDiff);
-                    flag = false;
-                }
-                case KeyEvent.VK_ENTER -> {
-                    TypingData.enterCount++;
-                    TypingData.rightCounts++;
-                    TypingData.typedKeyRecord.append('↵');
-                    DangLangManager.DANG_LANG_MANAGER.put('↵', timeDiff);
-                    flag = false;
-                }
-                case KeyEvent.VK_SHIFT -> {
-                    TypingData.typedKeyRecord.append('↑');
-                    DangLangManager.DANG_LANG_MANAGER.put('↑', timeDiff);
-                    flag = false;
-                }
-                case KeyEvent.VK_ALT -> {
-                    TypingData.typedKeyRecord.append('ᐃ');
-                    DangLangManager.DANG_LANG_MANAGER.put('ᐃ', timeDiff);
-                    flag = false;
-                }
-                case KeyEvent.VK_BACK_SPACE -> {
-                    TypingData.backSpaceCount++;
-                    TypingData.rightCounts++;
-                    TypingData.typedKeyRecord.append('←');
-                    DangLangManager.DANG_LANG_MANAGER.put('←', timeDiff);
-                    flag = false;
-                }
-            }
-            if (flag) {
-                if (TypingData.LEFT.indexOf(keyChar) != -1) {
-                    TypingData.leftCounts++;
-                } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
-                    TypingData.rightCounts++;
-                } else {
-                    System.out.println(keyStroke.getKeyCode() + "-" + keyStroke.getKeyChar());
-                    TypingData.typedKeyRecord.append('⊗');
-                    DangLangManager.DANG_LANG_MANAGER.put('⊗', timeDiff);
-                    return;
-                }
-                TypingData.typedKeyRecord.append(keyChar);
-                DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
-            }
-            //endregion 按键统计
-        }
+	    //region 按键统计
+	    TypingData.keyCounts++;
+	    boolean flag = true;
+	    switch (keyCode) {
+		    case 'B' -> {
+			    TypingData.bCounts++;
+			    TypingData.typedKeyRecord.append('B');
+			    DangLangManager.DANG_LANG_MANAGER.put('b', timeDiff);
+			    flag = false;
+		    }
+		    case ' ' -> {
+			    TypingData.spaceCounts++;
+			    TypingData.typedKeyRecord.append('_');
+			    DangLangManager.DANG_LANG_MANAGER.put('_', timeDiff);
+			    flag = false;
+		    }
+		    case KeyEvent.VK_ENTER -> {
+			    TypingData.enterCount++;
+			    TypingData.rightCounts++;
+			    TypingData.typedKeyRecord.append('↵');
+			    DangLangManager.DANG_LANG_MANAGER.put('↵', timeDiff);
+			    flag = false;
+		    }
+		    case KeyEvent.VK_SHIFT -> {
+			    TypingData.typedKeyRecord.append('↑');
+			    DangLangManager.DANG_LANG_MANAGER.put('↑', timeDiff);
+			    flag = false;
+		    }
+		    case KeyEvent.VK_ALT -> {
+			    TypingData.typedKeyRecord.append('ᐃ');
+			    DangLangManager.DANG_LANG_MANAGER.put('ᐃ', timeDiff);
+			    flag = false;
+		    }
+		    case KeyEvent.VK_BACK_SPACE -> {
+			    TypingData.backSpaceCount++;
+			    TypingData.rightCounts++;
+			    TypingData.typedKeyRecord.append('←');
+			    DangLangManager.DANG_LANG_MANAGER.put('←', timeDiff);
+			    flag = false;
+		    }
+	    }
+	    if (flag) {
+		    if (TypingData.LEFT.indexOf(keyChar) != -1) {
+			    TypingData.leftCounts++;
+		    } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
+			    TypingData.rightCounts++;
+		    } else {
+			    System.out.println(keyStroke.getKeyCode() + "-" + keyStroke.getKeyChar());
+			    TypingData.typedKeyRecord.append('⊗');
+			    DangLangManager.DANG_LANG_MANAGER.put('⊗', timeDiff);
+			    return;
+		    }
+		    TypingData.typedKeyRecord.append(keyChar);
+		    DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
+	    }
+	    //endregion 按键统计
     }
 
     private void timeCountInit() {

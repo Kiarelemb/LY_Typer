@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
-import swing.qr.kiarelemb.component.examples.QRRGBColorSelectPane;
+import swing.qr.kiarelemb.component.utils.QRRGBColorSelectPane;
 
 import java.awt.*;
 

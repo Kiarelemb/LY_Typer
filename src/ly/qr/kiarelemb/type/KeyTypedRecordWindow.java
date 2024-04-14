@@ -6,6 +6,7 @@ import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
 import swing.qr.kiarelemb.component.combination.QRTabbedPane;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -20,6 +21,8 @@ public class KeyTypedRecordWindow extends QRDialog {
 //        super(MainWindow.INSTANCE);
         super(null);
 
+	    setTitle("键盘热力图");
+	    setTitlePlace(SwingConstants.CENTER);
         mainPanel.setLayout(new BorderLayout());
 
 

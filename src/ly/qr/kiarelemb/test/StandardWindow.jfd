@@ -14,7 +14,7 @@ new FormModel {
 					name: "qRKeyBoardPanel1"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 25
-					"y": 280
+					"y": 110
 					"width": 1285
 					"height": 530
 				} )

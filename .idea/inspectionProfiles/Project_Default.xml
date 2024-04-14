@@ -68,7 +68,7 @@
       <option name="minLength" value="561" />
     </inspection_tool>
     <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="ADDITIONAL_TAGS" value="program:,description:,create,date,projectName,className,description" />
+      <option name="ADDITIONAL_TAGS" value="program:,description:,create,date,projectName,className,description,apiNote:" />
     </inspection_tool>
     <inspection_tool class="MapOrSetKeyShouldOverrideHashCodeEquals" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ThrowablePrintStackTrace" enabled="false" level="WARNING" enabled_by_default="false" />

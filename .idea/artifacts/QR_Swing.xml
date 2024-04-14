@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="QR_Swing">
+    <output-path>$PROJECT_DIR$/../QR_Swing</output-path>
+    <root id="archive" name="QR_Swing.jar">
+      <element id="module-output" name="QR_Swing" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Method/QR_Method.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Swing/lib/commons-collections4-4.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

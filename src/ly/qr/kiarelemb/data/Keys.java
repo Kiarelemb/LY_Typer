@@ -112,6 +112,14 @@ public class Keys {
      * 编码提示窗口的位置，{@code 0} （默认）跟随光标，{@code 1} 固定于窗体上方居中
      */
     public static final String TEXT_TIP_WINDOW_LOCATION = "text.tip.window.location";
+    /**
+     * 发文时默认的开始段号选择，{@code 0} （默认）从 1 开始，{@code 1} 随机段号
+     */
+    public static final String TEXT_SEND_START_PARA = "text.send.start.para";
+    /**
+     * 发文时默认的每段字数，{@code 50} （默认）50字
+     */
+    public static final String TEXT_SEND_START_WORD_NUM = "text.send.start.word.num";
     //endregion int类型
 
     //region boolean 类型
@@ -358,6 +366,7 @@ public class Keys {
             put(TEXT_TIP_PANEL_LOCATION, "1");
             put(TEXT_TIP_WINDOW_LOCATION, "0");
             put(SEND_TEXT_NEW_WINDOW_TAB_INDEX, "0");
+            put(TEXT_SEND_START_PARA, "0");
             put(SEND_MINIMALISM, "false");
             put(SEND_CRYPTOGRAPHIC, "false");
             put(SEND_BACK_CHANGE, "true");

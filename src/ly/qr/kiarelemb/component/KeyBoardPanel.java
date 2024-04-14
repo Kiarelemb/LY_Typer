@@ -21,7 +21,8 @@ import java.util.*;
 public class KeyBoardPanel extends QRKeyBoardPanel {
     private final Map<Character, Float> dataMap;
     private final Map<Character, Integer> map;
-    private static final Font FONT = QRSwing.globalFont.deriveFont(15f);
+	private static final Font FONT = QRSwing.globalFont.deriveFont(18f);
+	private static final Font DATA_Font = QRSwing.globalFont.deriveFont(15f);
     /**
      * 需要扩大的倍数，以对于高占比的数据能实现爆红
      */
@@ -100,20 +101,17 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
      */
     @Override
     protected void labelPaint(QRLabel label, Graphics g) {
-
-        QRComponentUtils.componentStringDraw(label, g, text[labelIndex(label)], FONT, QRColorsAndFonts.MENU_COLOR, 30);
-
-
         char c = labelChar(label);
-
         Float v = dataMap.get(c);
+	    String str = text[labelIndex(label)];
         if (v == null) {
+	        QRComponentUtils.componentStringDraw(label, g, str, FONT, QRColorsAndFonts.MENU_COLOR, 45);
             return;
         }
-        Integer i = map.get(c);
-
-        String count = QRMathUtils.floatFormat(v * 100, 2) + "%/" + i;
-        QRComponentUtils.componentStringDraw(label, g, count, FONT, QRColorsAndFonts.MENU_COLOR, 55);
-
+	    QRComponentUtils.componentStringDraw(label, g, str, FONT, QRColorsAndFonts.MENU_COLOR, 25);
+	    String count = QRMathUtils.floatFormat(v * 100, 2) + "%";
+	    QRComponentUtils.componentStringDraw(label, g, count, DATA_Font, QRColorsAndFonts.MENU_COLOR, 50);
+	    String num = String.valueOf(map.get(c));
+	    QRComponentUtils.componentStringDraw(label, g, num, DATA_Font, QRColorsAndFonts.MENU_COLOR, 70);
     }
 }

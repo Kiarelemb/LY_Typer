@@ -104,34 +104,33 @@ public class TextPanelEditorKit extends StyledEditorKit {
 	}
 
 	public void changeFontColor(ArrayList<TipPhraseStyleData> tpsd) {
-		SimpleAttributeSet attrs = new SimpleAttributeSet();
-		StyledDocument doc = (StyledDocument) textPane.getDocument();
+//		StyledDocument doc = (StyledDocument) textPane.getDocument();
 		// 添加剩下字体
 		for (final TipPhraseStyleData data : tpsd) {
 			if (data == null) {
 				continue;
 			}
+			final SimpleAttributeSet style = data.getStyle();
 			if (TypingData.paintCode) {
-				attrs.addAttribute("UnderlineOpen", true);
-				attrs.addAttribute("Underline-Color", Color.red);
-				attrs.addAttribute("Number", data.code());
-				final SimpleAttributeSet style = data.getStyle();
-				style.addAttributes(attrs);
-				doc.setCharacterAttributes(data.index(), data.phrase().length(), style, true);
-				data.setStyle(new SimpleAttributeSet(style));
+				style.addAttribute("UnderlineOpen", true);
+				style.addAttribute("Underline-Color", Color.red);
+				style.addAttribute("Number", data.code());
+
+				textPane.changeTextsStyle(data.index(), data.phrase().length(), style, true);
+//				doc.setCharacterAttributes(data.index(), data.phrase().length(), style, true);
+//				data.setStyle(new SimpleAttributeSet(style));
 			} else if (TypingData.paintSelection) {
 				int type = data.type();
-				final SimpleAttributeSet style = data.getStyle();
 				boolean condition = (TypingData.charEnable || data.shortPhrase()) && type % 2 == 0;
 				if (condition) {
-					attrs.addAttribute("UnderlineOpen", true);
-					attrs.addAttribute("Underline-Color", Color.red);
-					attrs.addAttribute("Number", data.lastChar());
-					style.addAttributes(attrs);
-					doc.setCharacterAttributes(data.index(), data.phrase().length(), style, true);
-					data.setStyle(new SimpleAttributeSet(style));
+					style.addAttribute("UnderlineOpen", true);
+					style.addAttribute("Underline-Color", Color.red);
+					style.addAttribute("Number", data.lastChar());
+//					doc.setCharacterAttributes(data.index(), data.phrase().length(), style, true);
+//					data.setStyle(new SimpleAttributeSet(style));
 				}
 			}
+			textPane.changeTextsStyle(data.index(), data.phrase().length(), style, true);
 		}
 	}
 

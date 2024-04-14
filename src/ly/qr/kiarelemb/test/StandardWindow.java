@@ -30,7 +30,7 @@ public class StandardWindow extends JFrame {
         {
             panel1.setLayout(null);
             panel1.add(qRKeyBoardPanel1);
-            qRKeyBoardPanel1.setBounds(25, 280, 1285, 530);
+            qRKeyBoardPanel1.setBounds(25, 110, 1285, 530);
 
             {
                 // compute preferred size
