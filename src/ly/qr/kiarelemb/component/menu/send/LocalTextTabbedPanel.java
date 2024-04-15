@@ -11,6 +11,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRFileUtils;
+import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
@@ -72,25 +73,14 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		sendFileTextField.setTextCenter();
 
 		//region 位置与添加
-
-		clearableTextField.setBounds(25, 15, 260, 35);
-		fileSelectBtn.setBounds(300, 15, 75, 35);
-		clipboardBtn.setBounds(25, 70, 90, 35);
-		startParaLabel.setBounds(25, 120, 95, 30);
-		startParaCbx.setBounds(130, 120, 130, 30);
-		paraWordLabel.setBounds(25, 165, 95, 30);
-		paraWordCbx.setBounds(130, 165, 130, 30);
-		startBtn.setBounds(300, 165, 75, 35);
-
-		setLayout(null);
-		add(clearableTextField);
-		add(fileSelectBtn);
-		add(clipboardBtn);
-		add(startParaLabel);
-		add(startParaCbx);
-		add(paraWordLabel);
-		add(paraWordCbx);
-		add(startBtn);
+		QRComponentUtils.setBoundsAndAddToComponent(this, clearableTextField, 25, 15, 260, 35);
+		QRComponentUtils.setBoundsAndAddToComponent(this, fileSelectBtn, 300, 15, 75, 35);
+		QRComponentUtils.setBoundsAndAddToComponent(this, clipboardBtn, 25, 70, 90, 35);
+		QRComponentUtils.setBoundsAndAddToComponent(this, startParaLabel, 25, 120, 95, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, startParaCbx, 130, 120, 130, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, paraWordLabel, 25, 165, 95, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, paraWordCbx, 130, 165, 130, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, startBtn, 300, 165, 75, 35);
 		//endregion 位置与添加
 
 	}

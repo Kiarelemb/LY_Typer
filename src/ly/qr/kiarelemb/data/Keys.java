@@ -317,17 +317,21 @@ public class Keys {
      */
     public static final String QUICK_KEY_RESTART = "quick.key.restart";
     /**
+     * 菜单快捷键之载文，默认为 {@code F4}
+     */
+    public static final String QUICK_KEY_MENU_TYPE_TEXT_LOAD = "quick.key.menu.type.text.load";
+    /**
      * 换群快捷键，默认为 {@code F5}
      */
     public static final String QUICK_KEY_GROUP = "quick.key.group";
     /**
+     * 乱序快捷键，默认为 {@code F8}
+     */
+    public static final String QUICK_KEY_TEXT_MIX = "quick.key.text.mix";
+    /**
      * 菜单快捷键之设置，默认为 {@code Ctrl Z}
      */
     public static final String QUICK_KEY_SETTING_WINDOW = "quick.key.menu.type.setting";
-    /**
-     * 菜单快捷键之载文，默认为 {@code F4}
-     */
-    public static final String QUICK_KEY_MENU_TYPE_TEXT_LOAD = "quick.key.menu.type.text.load";
     /**
      * 当量窗体显示快捷键，默认为 {@code Ctrl D}
      */
@@ -426,6 +430,7 @@ public class Keys {
             put(QUICK_KEY_RESTART, "F3, alt 3");
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4, alt 4");
             put(QUICK_KEY_GROUP, "F5, alt 5");
+            put(QUICK_KEY_TEXT_MIX, "F8, alt 8");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
             put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
             put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");

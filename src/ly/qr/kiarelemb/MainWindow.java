@@ -9,6 +9,7 @@ import ly.qr.kiarelemb.component.menu.about.HotMapItem;
 import ly.qr.kiarelemb.component.menu.send.SendTextItem;
 import ly.qr.kiarelemb.component.menu.type.LoadTextItem;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
+import ly.qr.kiarelemb.component.menu.type.TextMixItem;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
@@ -33,10 +34,10 @@ public class MainWindow extends QRFrame {
 	private MainWindow() {
 		super("揽月 " + Info.SOFTWARE_VERSION);
 		this.mainPanel.setLayout(new BorderLayout());
-        setTitlePanel();
+		setTitlePanel();
 
 		//region 菜单
-        this.titleMenuPanel.setAutoExpend(true);
+		this.titleMenuPanel.setAutoExpend(true);
 		QRButton typeMenu = this.titleMenuPanel.add("跟打");
 		QRButton sendMenu = this.titleMenuPanel.add("发文");
 		QRButton windowMenu = this.titleMenuPanel.add("窗口");
@@ -71,7 +72,10 @@ public class MainWindow extends QRFrame {
 	public void quickKeyLoad() {
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_RESTART), e -> TextPane.TEXT_PANE.restart(), true);
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_GROUP), e -> GroupButton.groupBtn.doClick(), true);
-		addActionBeforeDispose(e -> QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT, QRMathUtils.toString(SplitPane.SPLIT_PANE.getResizeWeight(), 3, false)));
+		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_TEXT_MIX), e -> TextMixItem.TEXT_MIX_ITEM.doClick(),
+				true);
+		addActionBeforeDispose(e -> QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT,
+				QRMathUtils.toString(SplitPane.SPLIT_PANE.getResizeWeight(), 3, false)));
 	}
 
 	public void grabFocus() {

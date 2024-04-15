@@ -62,10 +62,12 @@ public class SplitPane extends QRSplitPane {
 		} else {
 			if (this.tipPanel.getParent() != null) {
 				QRActionRegister loopToRemove = component -> {
-					Component[] cms = ((QRPanel) component).getComponents();
+					QRPanel panel = (QRPanel) component;
+					Component[] cms = panel.getComponents();
 					for (Component com : cms) {
-						if (com instanceof QRPanel pane && pane != this.tipPanel) {
-							pane.remove(this.tipPanel);
+						if (com instanceof SplitTipPanel pane) {
+							panel.remove(pane);
+							return;
 						}
 					}
 				};

@@ -1,6 +1,7 @@
 package ly.qr.kiarelemb.text;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
+import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
@@ -27,7 +28,6 @@ public class TextLoad {
 
 	public static final char DI = '第';
 	public static final char DUAN = '段';
-
 	public static TextLoad TEXT_LOAD;
 	public TipData tipData;
 	private boolean isEnglish = false;
@@ -299,6 +299,7 @@ public class TextLoad {
 		//更新
 		textUpdate();
 		updateTipsWithoutEnable();
+		TextPane.TEXT_PANE.textFresh();
 		this.isMixing = true;
 	}
 

@@ -5,8 +5,7 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/../QR_Swing/src" />
-      <root url="file://$PROJECT_DIR$/../QR_Swing/src" />
+      <root url="jar://$PROJECT_DIR$/../QR_Swing/QR_Swing.jar!/" />
     </SOURCES>
   </library>
 </component>

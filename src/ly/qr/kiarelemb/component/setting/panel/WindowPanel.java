@@ -52,10 +52,10 @@ public class WindowPanel extends SettingPanel {
 
 		QRActionRegister windowTransAction = es -> {
 			if (windowTransCheckBox.checked()) {
-                QRSwing.setWindowTransparency(windowTransSlider.getValue() / 100f);
+				QRSwing.setWindowTransparency(windowTransSlider.getValue() / 100f);
 				QRSystemUtils.setWindowTrans(MainWindow.INSTANCE, Keys.floatValue(QRSwing.WINDOW_TRANSPARENCY));
 			} else {
-                QRSwing.setWindowTransparency(0.99f);
+				QRSwing.setWindowTransparency(0.99f);
 				QRSystemUtils.setWindowNotTrans(MainWindow.INSTANCE);
 			}
 		};
@@ -101,26 +101,15 @@ public class WindowPanel extends SettingPanel {
 		backgroundImageSetBtn.setEnabled(set && windowBackgroundImageSetCheckBox.checked());
 		windowTransSlider.setEnabled(!set && windowTransCheckBox.checked());
 
-		windowRoundCheckBox.setBounds(25, 30, 140, 30);
-		windowOnTopCheckBox.setBounds(25, 75, 140, 30);
-		splitSeparator.setBounds(25, 120, 450, 30);
-		mainWindowTipLabel.setBounds(25, 160, 75, 30);
-		windowTransCheckBox.setBounds(50, 205, 140, 30);
-		windowTransSlider.setBounds(200, 205, 125, 30);
-		windowScreenAdsorbCheckBox.setBounds(50, 250, 140, 30);
-		windowBackgroundImageSetCheckBox.setBounds(50, 295, 140, 30);
-		backgroundImageSetBtn.setBounds(200, 295, 125, 30);
-
-		add(mainWindowTipLabel);
-		add(windowRoundCheckBox);
-		add(windowOnTopCheckBox);
-		add(splitSeparator);
-		add(windowTransCheckBox);
-		add(windowTransSlider);
-		add(windowScreenAdsorbCheckBox);
-		add(backgroundImageSetBtn);
-		add(windowBackgroundImageSetCheckBox);
-//		setPreferredSize(new Dimension(505, 410));
+		QRComponentUtils.setBoundsAndAddToComponent(this, windowRoundCheckBox, 25, 30, 140, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, windowOnTopCheckBox, 25, 75, 140, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, splitSeparator, 25, 120, 450, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, mainWindowTipLabel, 25, 160, 75, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, windowTransCheckBox, 50, 205, 140, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, windowTransSlider, 200, 205, 125, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, windowScreenAdsorbCheckBox, 50, 250, 140, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, windowBackgroundImageSetCheckBox, 50, 295, 140, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, backgroundImageSetBtn, 200, 295, 125, 30);
 	}
 
 	class BackgroundImageSelectDialog extends QRDialog {
@@ -207,7 +196,7 @@ public class WindowPanel extends SettingPanel {
 			};
 			QRSlider alphaSlider = new QRSlider();
 			alphaSlider.setBoundValue(50, 100);
-            alphaSlider.setValue((int) (100 * QRSwing.windowBackgroundImageAlpha));
+			alphaSlider.setValue((int) (100 * QRSwing.windowBackgroundImageAlpha));
 			alphaSlider.addChangeListener(e -> {
 				Border border = backgroundImagePanel.getBorder();
 				if (border instanceof QRBackgroundBorder b) {
@@ -244,7 +233,7 @@ public class WindowPanel extends SettingPanel {
 				SettingsItem.SAVE_ACTIONS.put("window.image.alpha", e -> {
 					MainWindow.INSTANCE.setBackgroundBorderAlpha(alpha);
 				});
-                QRSwing.windowBackgroundImageAlpha = alpha;
+				QRSwing.windowBackgroundImageAlpha = alpha;
 			}
 			super.dispose();
 		}
@@ -252,7 +241,8 @@ public class WindowPanel extends SettingPanel {
 		@Override
 		public void dispose() {
 			if (!SettingsItem.CANCEL_ACTIONS.containsKey("window.image.path")) {
-				SettingsItem.CANCEL_ACTIONS.put("window.image.path", e -> MainWindow.INSTANCE.setBackgroundImage(this.backgroundImagePathBackup));
+				SettingsItem.CANCEL_ACTIONS.put("window.image.path",
+						e -> MainWindow.INSTANCE.setBackgroundImage(this.backgroundImagePathBackup));
 			}
 			super.dispose();
 		}
