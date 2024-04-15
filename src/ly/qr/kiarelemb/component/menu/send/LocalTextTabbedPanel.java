@@ -14,19 +14,21 @@ import method.qr.kiarelemb.utils.QRFileUtils;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
+import swing.qr.kiarelemb.component.basic.QRTextField;
 import swing.qr.kiarelemb.component.event.QRItemEvent;
 import swing.qr.kiarelemb.component.event.QRTabSelectEvent;
 import swing.qr.kiarelemb.component.utils.QRClearableTextField;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
  * @author Kiarelemb QR
  */
 public class LocalTextTabbedPanel extends TabbedContentPanel {
-	private final QRClearableTextField sendFileTextField;
+	private final QRTextField sendFileTextField;
 	private final QRComboBox startParaCbx;
 	private final QRComboBox paraWordCbx;
 
@@ -39,9 +41,9 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		QRLabel paraWordLabel = new QRLabel("每段字数：");
 		startParaCbx = new ComboBox(0, Keys.TEXT_SEND_START_PARA, "1", "随机段号");
 		QRRoundButton startBtn = new QRRoundButton("开始");
-		startBtn.setEnabled(false);
-		sendFileTextField = new QRClearableTextField(false, true, null, startBtn);
-		startBtn.addClickAction(this::startAction);
+		QRClearableTextField clearableTextField = new QRClearableTextField(true, true, null, startBtn);
+		sendFileTextField = clearableTextField.textField;
+
 		String[] wordArray = {"50", "100", "200", "500"};
 		int wordNum = Keys.intValue(Keys.TEXT_SEND_START_WORD_NUM);
 
@@ -59,7 +61,19 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		};
 		paraWordCbx.setSelectedIndex(selectIndex);
 
-		sendFileTextField.setBounds(25, 15, 260, 35);
+		System.out.println(paraWordCbx.getEditor().getEditorComponent().getClass());
+
+		startBtn.setEnabled(false);
+		startBtn.addClickAction(this::startAction);
+		fileSelectBtn.addClickAction(this::fileSelect);
+		clearableTextField.clearButton.addClickAction(event -> sendFileTextField.setToolTipText(null));
+
+		paraWordCbx.setEditable(true);
+		sendFileTextField.setTextCenter();
+
+		//region 位置与添加
+
+		clearableTextField.setBounds(25, 15, 260, 35);
 		fileSelectBtn.setBounds(300, 15, 75, 35);
 		clipboardBtn.setBounds(25, 70, 90, 35);
 		startParaLabel.setBounds(25, 120, 95, 30);
@@ -69,7 +83,7 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		startBtn.setBounds(300, 165, 75, 35);
 
 		setLayout(null);
-		add(sendFileTextField);
+		add(clearableTextField);
 		add(fileSelectBtn);
 		add(clipboardBtn);
 		add(startParaLabel);
@@ -77,7 +91,7 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		add(paraWordLabel);
 		add(paraWordCbx);
 		add(startBtn);
-
+		//endregion 位置与添加
 
 	}
 
@@ -90,8 +104,18 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		});
 	}
 
+	private void fileSelect(Object o) {
+		Window window = SwingUtilities.getWindowAncestor(this);
+		File file = QRFileUtils.fileSelect(window, "文本文件", "txt", "mobi", "epub");
+		if (file == null) {
+			return;
+		}
+		sendFileTextField.setText(file.getAbsolutePath());
+		sendFileTextField.setToolTipText(QRFileUtils.getFileName(file));
+	}
+
 	private void startAction(Object o) {
-		String filePath = sendFileTextField.textField.getText();
+		String filePath = sendFileTextField.getToolTipText();
 		try {
 			// TODO 文件格式化等操作
 			String fileCrc = QRFileUtils.getCrc32(filePath);
