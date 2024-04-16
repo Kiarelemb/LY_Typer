@@ -11,6 +11,8 @@ import ly.qr.kiarelemb.component.menu.type.LoadTextItem;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.menu.type.TextMixItem;
 import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.dl.DangLangWindow;
+import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
 import method.qr.kiarelemb.utils.QRMathUtils;
@@ -78,6 +80,13 @@ public class MainWindow extends QRFrame {
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_GROUP), e -> GroupButton.groupBtn.doClick(), true);
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_TEXT_MIX), e -> TextMixItem.TEXT_MIX_ITEM.doClick(),
 				true);
+		//当量显示器
+		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_DANG_LIANG_WINDOW), event -> {
+			DangLangWindow window = DangLangWindow.dangLangWindow();
+			window.setVisible(!window.isVisible());
+		}, true);
+		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_INNER_INPUT_WINDOW),
+				event -> InputManager.INPUT_MANAGER.init(), true);
 		addActionBeforeDispose(e -> QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT,
 				QRMathUtils.toString(SplitPane.SPLIT_PANE.getResizeWeight(), 3, false)));
 	}

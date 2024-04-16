@@ -22,7 +22,6 @@ import java.awt.*;
  **/
 public class Enter {
 	public static void main(String[] args) {
-		Toolkit.getDefaultToolkit().sync();
 		QRSwing.start("res/settings/setting.properties", "res/settings/window.properties");
 		QRSwing.windowIcon = Info.loadImage(Info.ICON_PNG_PATH);
 

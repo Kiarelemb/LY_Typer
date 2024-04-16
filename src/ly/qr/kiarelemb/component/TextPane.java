@@ -8,8 +8,6 @@ import ly.qr.kiarelemb.data.GradeData;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
-import ly.qr.kiarelemb.dl.DangLangWindow;
-import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -19,7 +17,6 @@ import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.*;
-import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRScrollPane;
 import swing.qr.kiarelemb.component.basic.QRTextPane;
@@ -70,15 +67,6 @@ public class TextPane extends QRTextPane {
 			TypingData.clear();
 			this.caret.setVisible(SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked());
 		});
-		//当量显示器
-		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_DANG_LIANG_WINDOW),
-				event -> {
-					DangLangWindow window = DangLangWindow.dangLangWindow();
-					window.setVisible(!window.isVisible());
-				}, true);
-
-		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_INNER_INPUT_WINDOW),
-				event -> InputManager.INPUT_MANAGER.init(), true);
 	}
 
 
@@ -222,13 +210,11 @@ public class TextPane extends QRTextPane {
 			}
 			if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
 				changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getCorrectStyle(), true);
-//                replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getCorrectStyle());
 			}
 		} else {
 			if (length == 1) {
 				//否则判错，背景颜色改成红色
 				if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-//                    replaceText(TypingData.currentTypedIndex, originText, TextStyleManager.getWrongStyle());
 					changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getWrongStyle(), true);
 				}
 				TypingData.WRONG_WORDS_INDEX.add(index);
@@ -238,15 +224,13 @@ public class TextPane extends QRTextPane {
 					String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
 					if (rightWord.equals(textParts[i])) {
 						if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-							changeTextsStyle(TypingData.currentTypedIndex, rightWord.length(),
-									TextStyleManager.getCorrectStyle(), true);
-//                            replaceText(currentIndex, rightWord, TextStyleManager.getCorrectStyle());
+							changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getCorrectStyle(),
+									true);
 						}
 					} else {
 						if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-							changeTextsStyle(TypingData.currentTypedIndex, rightWord.length(),
+							changeTextsStyle(currentIndex, rightWord.length(),
 									TextStyleManager.getWrongStyle(), true);
-//                            replaceText(currentIndex, rightWord, TextStyleManager.getWrongStyle());
 						}
 						TypingData.WRONG_WORDS_INDEX.add(currentIndex);
 					}
