@@ -104,7 +104,10 @@ public class TyperTextPane extends QRTextPane {
         }
     }
 
-    public void runTypeActions() {
+	/**
+	 * 每输入或回改事件，即光标移动事件
+	 */
+	public void runTypedActions() {
         QRComponentUtils.runActions(this.typeActions);
     }
 

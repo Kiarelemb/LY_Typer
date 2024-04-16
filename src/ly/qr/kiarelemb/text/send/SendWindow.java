@@ -20,7 +20,7 @@ public class SendWindow extends QRDialog {
 		setTitle("新建发文");
 		setSize(500, 300);
 
-		QRTabbedPane tabbedPane = new SendTextTabbedPane();
+		QRTabbedPane tabbedPane = new SendTextTabbedPane(this);
 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(tabbedPane, BorderLayout.CENTER);
@@ -32,6 +32,5 @@ public class SendWindow extends QRDialog {
 	@Override
 	public void dispose() {
 		super.dispose();
-
 	}
 }

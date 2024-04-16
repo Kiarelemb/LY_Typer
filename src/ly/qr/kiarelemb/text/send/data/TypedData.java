@@ -1,23 +1,33 @@
 package ly.qr.kiarelemb.text.send.data;
 
-import java.util.Objects;
+import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.res.Info;
+import ly.qr.kiarelemb.text.send.TextSendManager;
+import method.qr.kiarelemb.utils.QRFileUtils;
+import method.qr.kiarelemb.utils.QRMathUtils;
+import method.qr.kiarelemb.utils.QRRandomUtils;
+import method.qr.kiarelemb.utils.data.QRTextSendData;
+
+import java.io.Serializable;
 
 /**
  * 当前跟打信息记录类
  *
  * @author Kiarelemb QR
  */
-public final class TypedData {
+public final class TypedData implements Serializable {
 	private final String fileName;
 	private final String fileCrc;
-	private int startIndex;
+	private final int totalWordsNum;
+	private final String filePath;
+	private boolean paraNumRandom;
+	private long startIndex;
 	private int typedTimes;
-	private long remainingWordsCount;
+	private int remainingWordsCount;
 	private int perLength;
-	private final boolean paraNumRandom;
 
 	/**
-	 * @param fileName            跟打文件名
+	 * @param fileName            跟打文件名，不带拓展名
 	 * @param fileCrc             文件校验CRC码
 	 * @param startIndex          本次跟打开始索引
 	 * @param typedTimes          已跟打次数
@@ -25,27 +35,92 @@ public final class TypedData {
 	 * @param perLength           每段字数
 	 * @param paraNumRandom       段号随机
 	 */
-	public TypedData(String fileName, String fileCrc, int startIndex, int typedTimes, long remainingWordsCount,
-	                 int perLength, boolean paraNumRandom) {
+	public TypedData(String fileName, String fileCrc, long startIndex, int typedTimes, int totalWordsNum,
+	                 int remainingWordsCount, int perLength, boolean paraNumRandom) {
 		this.fileName = fileName;
+		filePath = Info.TYPE_DIRECTORY + fileName + ".txt";
 		this.fileCrc = fileCrc;
 		this.startIndex = startIndex;
 		this.typedTimes = typedTimes;
+		this.totalWordsNum = totalWordsNum;
 		this.remainingWordsCount = remainingWordsCount;
 		this.perLength = perLength;
 		this.paraNumRandom = paraNumRandom;
 	}
 
-	public void setStartIndex(int startIndex) {
-		this.startIndex = startIndex;
+	/**
+	 * 当前段号
+	 */
+	private int paraNum;
+	/**
+	 * 当前段文本内容
+	 */
+	private String currentText;
+
+	private QRTextSendData sendData = null;
+
+	public TypedData gotoForePara() {
+		if (sendData == null || startIndex <= 0) {
+			return this;
+		}
+
+		// 段号
+		if (paraNumRandom) {
+			paraNum = QRRandomUtils.getRandomInt(100000, 999999);
+		} else {
+			paraNum--;
+		}
+		// 上一段的结束位置
+		startIndex = sendData.startIndex();
+		remainingWordsCount += currentText.length();
+		return this;
 	}
 
-	public void setTypedTimes(int typedTimes) {
-		this.typedTimes = typedTimes;
+	public String foreParaText() {
+		sendData = QRFileUtils.fileForeReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
+				TypingData.textLoadIntelli);
+		String fore = fileName + "\n";
+		currentText = sendData.text();
+		String ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
+				+ QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
+		TextSendManager.save();
+		return fore + currentText + ends;
 	}
 
-	public void setRemainingWordsCount(int remainingWordsCount) {
-		this.remainingWordsCount = remainingWordsCount;
+	/**
+	 * 为进入下一段前做数据计算准备。在最开始发文时，该方法不调用
+	 *
+	 * @return 当前跟打记录文件
+	 */
+	public TypedData gotoNextPara() {
+		// 段号
+		if (paraNumRandom) {
+			paraNum = QRRandomUtils.getRandomInt(100000, 999999);
+		} else {
+			paraNum++;
+		}
+		if (sendData == null) {
+			return this;
+		}
+		// 下一段的开始位置
+		startIndex = sendData.startIndex();
+		return this;
+	}
+
+	public String nextParaText() {
+		sendData = QRFileUtils.fileReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
+				TypingData.textLoadIntelli);
+		String fore = fileName + "\n";
+		currentText = sendData.text();
+		remainingWordsCount -= currentText.length();
+		String ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
+				+ QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
+		TextSendManager.save();
+		return fore + currentText + ends;
+	}
+
+	public void addTypedTimes(int typedTimes) {
+		this.typedTimes++;
 	}
 
 	public void setPerLength(int perLength) {
@@ -60,7 +135,7 @@ public final class TypedData {
 		return fileCrc;
 	}
 
-	public int startIndex() {
+	public long startIndex() {
 		return startIndex;
 	}
 
@@ -68,50 +143,49 @@ public final class TypedData {
 		return typedTimes;
 	}
 
-	public long remainingWordsCount() {
+	public int remainingWordsCount() {
 		return remainingWordsCount;
 	}
 
-	public int perLength() {
-		return perLength;
-	}
-
-	public boolean paraNumRandom() {
-		return paraNumRandom;
+	public int totalWordsNum() {
+		return totalWordsNum;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (obj == null || obj.getClass() != this.getClass()) {
-			return false;
-		}
-		var that = (TypedData) obj;
-		return Objects.equals(this.fileName, that.fileName) &&
-				Objects.equals(this.fileCrc, that.fileCrc) &&
-				this.startIndex == that.startIndex &&
-				this.typedTimes == that.typedTimes &&
-				this.remainingWordsCount == that.remainingWordsCount &&
-				this.perLength == that.perLength &&
-				this.paraNumRandom == that.paraNumRandom;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		TypedData data = (TypedData) o;
+
+		if (totalWordsNum != data.totalWordsNum) return false;
+		if (paraNumRandom != data.paraNumRandom) return false;
+		if (startIndex != data.startIndex) return false;
+		if (typedTimes != data.typedTimes) return false;
+		if (remainingWordsCount != data.remainingWordsCount) return false;
+		if (perLength != data.perLength) return false;
+		if (paraNum != data.paraNum) return false;
+		if (!fileName.equals(data.fileName)) return false;
+		if (!fileCrc.equals(data.fileCrc)) return false;
+		if (!filePath.equals(data.filePath)) return false;
+		if (!currentText.equals(data.currentText)) return false;
+		return sendData.equals(data.sendData);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fileName, fileCrc, startIndex, typedTimes, remainingWordsCount, perLength, paraNumRandom);
-	}
-
-	@Override
-	public String toString() {
-		return "TypedData[" +
-				"fileName=" + fileName + ", " +
-				"fileCrc=" + fileCrc + ", " +
-				"startIndex=" + startIndex + ", " +
-				"typedTimes=" + typedTimes + ", " +
-				"remainingWordsCount=" + remainingWordsCount + ", " +
-				"perLength=" + perLength + ", " +
-				"paraNumRandom=" + paraNumRandom + ']';
+		int result = fileName.hashCode();
+		result = 31 * result + fileCrc.hashCode();
+		result = 31 * result + totalWordsNum;
+		result = 31 * result + filePath.hashCode();
+		result = 31 * result + (paraNumRandom ? 1 : 0);
+		result = 31 * result + (int) (startIndex ^ (startIndex >>> 32));
+		result = 31 * result + typedTimes;
+		result = 31 * result + remainingWordsCount;
+		result = 31 * result + perLength;
+		result = 31 * result + paraNum;
+		result = 31 * result + currentText.hashCode();
+		result = 31 * result + sendData.hashCode();
+		return result;
 	}
 }

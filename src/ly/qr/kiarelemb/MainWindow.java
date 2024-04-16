@@ -6,6 +6,8 @@ import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.component.contract.state.GroupButton;
 import ly.qr.kiarelemb.component.menu.about.HotMapItem;
+import ly.qr.kiarelemb.component.menu.send.ForeParaTextItem;
+import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.component.menu.send.SendTextItem;
 import ly.qr.kiarelemb.component.menu.type.LoadTextItem;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
@@ -67,6 +69,8 @@ public class MainWindow extends QRFrame {
 		typeMenu.add(SettingsItem.SETTINGS_ITEM);
 
 		sendMenu.add(SendTextItem.SEND_TEXT_ITEM);
+		sendMenu.add(ForeParaTextItem.FORE_PARA_TEXT_ITEM);
+		sendMenu.add(NextParaTextItem.NEXT_PARA_TEXT_ITEM);
 
 		aboutMenu.add(HotMapItem.HOT_MAP_ITEM);
 	}

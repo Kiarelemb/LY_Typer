@@ -70,6 +70,7 @@ public class TextPane extends QRTextPane {
 	}
 
 
+	@Deprecated
 	@Override
 	public void setText(String text) {
 	}
@@ -260,7 +261,7 @@ public class TextPane extends QRTextPane {
 				}
 			}
 		}
-		TyperTextPane.TYPER_TEXT_PANE.runTypeActions();
+		TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
 	}
 
 	public void deleteUpdates(KeyEvent e) {
@@ -306,7 +307,7 @@ public class TextPane extends QRTextPane {
 		TypingData.backDeleteCount++;
 		setCaretUnblock();
 		this.writeBlock = false;
-		TyperTextPane.TYPER_TEXT_PANE.runTypeActions();
+		TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
 //		inputFollowedWindowsUpdate();
 //		textTipUpdate(true);
 	}
@@ -348,7 +349,7 @@ public class TextPane extends QRTextPane {
 		//将成绩存放至剪贴板
 		QRSystemUtils.putTextToClipboard(grade);
 		DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
-		//发送成绩8
+		//发送成绩
 		SendText.gradeSend();
 		TypingData.windowFresh();
 	}
