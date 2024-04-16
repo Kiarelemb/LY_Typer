@@ -108,6 +108,7 @@ public class LocalTextTabbedPanel extends TabbedContentPanel {
 		String filePath = sendFileTextField.getToolTipText();
 		try {
 			// TODO 文件格式化等操作
+			// 决定采用序列化的方式保存进度文件
 			String fileCrc = QRFileUtils.getCrc32(filePath);
 			long words = QRFileUtils.getFileWordNumWithUTF8(filePath);
 			int paraWords = Integer.parseInt(paraWordCbx.getText());

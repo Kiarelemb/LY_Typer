@@ -107,6 +107,7 @@ public class TextPane extends QRTextPane {
 				QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions);
 				TextPane.TEXT_PANE.scrollPane.locationFresh();
 				indexesUpdate();
+				MainWindow.INSTANCE.grabFocus();
 			}
 		}, 100);
 	}
@@ -118,7 +119,7 @@ public class TextPane extends QRTextPane {
 				return;
 			}
 		}
-		changeTextsStyle(0, TextLoad.TEXT_LOAD.wordsLength(), TextStyleManager.getDefaultStyle());
+		changeTextsStyle(0, TextLoad.TEXT_LOAD.wordsLength(), TextStyleManager.getDefaultStyle(), true);
 	}
 
 

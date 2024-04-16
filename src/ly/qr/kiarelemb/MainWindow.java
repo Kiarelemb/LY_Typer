@@ -36,21 +36,8 @@ public class MainWindow extends QRFrame {
 		this.mainPanel.setLayout(new BorderLayout());
 		setTitlePanel();
 
-		//region 菜单
-		this.titleMenuPanel.setAutoExpend(true);
-		QRButton typeMenu = this.titleMenuPanel.add("跟打");
-		QRButton sendMenu = this.titleMenuPanel.add("发文");
-		QRButton windowMenu = this.titleMenuPanel.add("窗口");
-		QRButton toolMenu = this.titleMenuPanel.add("工具");
-		QRButton aboutMenu = this.titleMenuPanel.add("关于");
-
-		typeMenu.add(LoadTextItem.LOAD_TEXT_ITEM);
-		typeMenu.add(SettingsItem.SETTINGS_ITEM);
-
-		sendMenu.add(SendTextItem.SEND_TEXT_ITEM);
-
-		aboutMenu.add(HotMapItem.HOT_MAP_ITEM);
-		//endregion
+		//菜单
+		menuInit();
 
 		//region 中心面板
 		this.mainPanel.add(SplitPane.SPLIT_PANE, BorderLayout.CENTER);
@@ -63,6 +50,23 @@ public class MainWindow extends QRFrame {
 		setTitleCenter();
 		setCloseButtonSystemExit();
 		quickKeyLoad();
+	}
+
+	private void menuInit() {
+		this.titleMenuPanel.setAutoExpend(true);
+		QRButton typeMenu = this.titleMenuPanel.add("跟打");
+		QRButton sendMenu = this.titleMenuPanel.add("发文");
+		QRButton windowMenu = this.titleMenuPanel.add("窗口");
+		QRButton toolMenu = this.titleMenuPanel.add("工具");
+		QRButton aboutMenu = this.titleMenuPanel.add("关于");
+
+		typeMenu.add(TextMixItem.TEXT_MIX_ITEM);
+		typeMenu.add(LoadTextItem.LOAD_TEXT_ITEM);
+		typeMenu.add(SettingsItem.SETTINGS_ITEM);
+
+		sendMenu.add(SendTextItem.SEND_TEXT_ITEM);
+
+		aboutMenu.add(HotMapItem.HOT_MAP_ITEM);
 	}
 
 
