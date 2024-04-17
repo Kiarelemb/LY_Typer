@@ -11,6 +11,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextWash;
 import ly.qr.kiarelemb.text.send.SendWindow;
+import ly.qr.kiarelemb.text.send.TextSendManager;
 import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRFileUtils;
@@ -64,8 +65,6 @@ public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
 		};
 		paraWordCbx.setSelectedIndex(selectIndex);
 
-		System.out.println(paraWordCbx.getEditor().getEditorComponent().getClass());
-
 		startBtn.setEnabled(false);
 		startBtn.addClickAction(this::startAction);
 		fileSelectBtn.addClickAction(this::fileSelect);
@@ -117,7 +116,7 @@ public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
 				int paraWords = Integer.parseInt(paraWordCbx.getText());
 				TypedData sendData = new TypedData(QRFileUtils.getFileName(filePath), fileCrc, 0, 0, words, words,
 						paraWords, startParaCbx.getSelectedIndex() == 1);
-				setTypedData(sendData);
+				TextSendManager.setTypedData(sendData);
 				window.dispose();
 			} catch (IOException e) {
 				throw new RuntimeException(e);

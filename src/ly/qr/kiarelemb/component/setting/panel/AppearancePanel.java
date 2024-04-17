@@ -35,12 +35,12 @@ public class AppearancePanel extends SettingPanel {
 	public AppearancePanel(SettingWindow window) {
 		super(window, "外观...");
 		final String themeBackup = QRSwing.theme;
-		final String fontNameBackup = QRSwing.globalFont == null ? "阿里巴巴普惠体 R" : QRSwing.globalFont.getFamily();
+		final Font fontBackup = QRSwing.globalFont == null ? TextStyleManager.DEFAULT_FONT : QRSwing.globalFont;
 		QRLabel themeTipLabel = new QRLabel("主题：");
 		QRComboBox themeComboBox = new QRComboBox(QRColorsAndFonts.BASIC_THEMES);
 		QRRoundButton themeDesignerBtn = new QRRoundButton("打开设计器");
 		CheckBox customFontCheckBox = new CheckBox("自定义界面字体", Keys.TEXT_FONT_NAME_GLOBAL_ENABLE);
-		QRFontComboBox frameFontsComboBox = new QRFontComboBox(fontNameBackup);
+		QRFontComboBox frameFontsComboBox = new QRFontComboBox(fontBackup.getFontName());
 		QRRoundButton fontSelectBtn = new QRRoundButton("选择字体文件");
 		QRLineSeparatorLabel splitLabel = new QRLineSeparatorLabel(0.8d);
 		QRLabel lookFontTipLabel = new QRLabel("看打区字体：");
@@ -118,8 +118,8 @@ public class AppearancePanel extends SettingPanel {
 				qcu.startTimeUpdate();
 				//如果取消，则恢复之前的字体
 				SettingsItem.CANCEL_ACTIONS.putIfAbsent("window.font", es -> {
-					if (!fontNameBackup.equals(event.after())) {
-						QRSwing.customFontName(fontNameBackup);
+					if (!fontBackup.getFontName().equals(event.after())) {
+						QRSwing.customFontName(fontBackup);
 						MainWindow.INSTANCE.componentFresh();
 					}
 				});
@@ -128,6 +128,9 @@ public class AppearancePanel extends SettingPanel {
 
 		fontSelectBtn.addClickAction(e -> {
 			File file = QRFileUtils.fileSelect(window, "字体文件", "ttf", "ttc");
+			if (file == null) {
+				return;
+			}
 			Font font = QRFontUtils.loadFontFromFile(10, file);
 			QRSwing.customFontName(font);
 			MainWindow.INSTANCE.componentFresh();

@@ -64,7 +64,7 @@ public class TypingData {
 	public static boolean tipWindowEnable = false;
 	public static boolean backspaceAutoRestart = false;
 	public static boolean wordAutoSave = true;
-	public static boolean textLoadIntelli = false;
+	public static boolean textLoadIntelli;
 	public static long restTime;
 	private static long pauseStartTime;
 	private static long pauseEndTime;
@@ -80,6 +80,7 @@ public class TypingData {
 				KeyTypedRecordData.fresh(typedKeyRecord.toString());
 			}
 		});
+		dataUpdate();
 	}
 
 	public static void clear() {

@@ -101,7 +101,7 @@ public class QqOperation {
 				GroupButton.groupBtn.doClick();
 				return true;
 			}
-			QRSmallTipShow.display(MainWindow.INSTANCE, "请按 F5 选择群聊！");
+//			QRSmallTipShow.display(MainWindow.INSTANCE, "请按 F5 选择群聊！");
 			return false;
 		}
 		return true;

@@ -329,6 +329,10 @@ public class Keys {
      */
     public static final String QUICK_KEY_TEXT_MIX = "quick.key.text.mix";
     /**
+     * 继续发文快捷键，默认为 {@code F9}
+     */
+    public static final String QUICK_KEY_SEND_CONTINUE = "quick.key.send.continue";
+    /**
      * 下一段快捷键，默认为 {@code F10}
      */
     public static final String QUICK_KEY_SEND_NEXT_PARA = "quick.key.send.para.next";
@@ -439,8 +443,9 @@ public class Keys {
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4, alt 4");
             put(QUICK_KEY_GROUP, "F5, alt 5");
             put(QUICK_KEY_TEXT_MIX, "F8, alt 8");
-            put(QUICK_KEY_SEND_NEXT_PARA, "F10, alt 0, ctrl n");
+            put(QUICK_KEY_SEND_CONTINUE, "F9, alt 9");
             put(QUICK_KEY_SEND_PARA_FORE, "ctrl f");
+            put(QUICK_KEY_SEND_NEXT_PARA, "F10, alt 0, ctrl n");
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
             put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
             put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");

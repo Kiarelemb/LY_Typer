@@ -1,12 +1,6 @@
 package ly.qr.kiarelemb.component.menu.send.panel;
 
-import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.component.menu.send.ForeParaTextItem;
-import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
-import ly.qr.kiarelemb.component.menu.send.SendTextItem;
 import ly.qr.kiarelemb.text.send.SendWindow;
-import ly.qr.kiarelemb.text.send.TextSendManager;
-import ly.qr.kiarelemb.text.send.data.TypedData;
 import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
@@ -28,23 +22,4 @@ public class SendTextTabbedContentPanel extends QRTabbedContentPanel {
 		this.window = window;
 	}
 
-	public void setTypedData(TypedData data) {
-		TextSendManager.setData(data);
-		TextPane.TEXT_PANE.setTypeText(data.nextParaText());
-		control(true);
-		//TODO 在此处添加跟打结束事件
-	}
-
-	/**
-	 * 结束发文
-	 */
-	public static void endSendText() {
-		control(false);
-	}
-
-	private static void control(boolean enable) {
-		SendTextItem.SEND_TEXT_ITEM.setEnabled(!enable);
-		ForeParaTextItem.FORE_PARA_TEXT_ITEM.setEnabled(enable);
-		NextParaTextItem.NEXT_PARA_TEXT_ITEM.setEnabled(enable);
-	}
 }

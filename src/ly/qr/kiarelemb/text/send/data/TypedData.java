@@ -1,6 +1,7 @@
 package ly.qr.kiarelemb.text.send.data;
 
 import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.send.TextSendManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
@@ -16,11 +17,13 @@ import java.io.Serializable;
  * @author Kiarelemb QR
  */
 public final class TypedData implements Serializable {
+	@java.io.Serial
+	private static final long serialVersionUID = -5849714470754967711L;
 	private final String fileName;
 	private final String fileCrc;
 	private final int totalWordsNum;
 	private final String filePath;
-	private boolean paraNumRandom;
+	private final boolean paraNumRandom;
 	private long startIndex;
 	private int typedTimes;
 	private int remainingWordsCount;
@@ -46,6 +49,9 @@ public final class TypedData implements Serializable {
 		this.remainingWordsCount = remainingWordsCount;
 		this.perLength = perLength;
 		this.paraNumRandom = paraNumRandom;
+		if (!this.paraNumRandom) {
+			paraNum = 1;
+		}
 	}
 
 	/**
@@ -71,7 +77,8 @@ public final class TypedData implements Serializable {
 			paraNum--;
 		}
 		// 上一段的结束位置
-		startIndex = sendData.startIndex();
+		startIndex -= sendData.typeTextByteLen();
+//		System.out.println("上 " + startIndex);
 		remainingWordsCount += currentText.length();
 		return this;
 	}
@@ -81,10 +88,13 @@ public final class TypedData implements Serializable {
 				TypingData.textLoadIntelli);
 		String fore = fileName + "\n";
 		currentText = sendData.text();
+//		System.out.println("currentText = " + currentText);
 		String ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
 				+ QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
 		TextSendManager.save();
-		return fore + currentText + ends;
+		String text = fore + currentText + ends;
+		SendText.sendText(text);
+		return text;
 	}
 
 	/**
@@ -102,21 +112,25 @@ public final class TypedData implements Serializable {
 		if (sendData == null) {
 			return this;
 		}
-		// 下一段的开始位置
-		startIndex = sendData.startIndex();
+//		System.out.println("下 " + startIndex);
 		return this;
 	}
 
 	public String nextParaText() {
 		sendData = QRFileUtils.fileReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
 				TypingData.textLoadIntelli);
+		// 下一段的开始位置
+		startIndex += sendData.typeTextByteLen();
 		String fore = fileName + "\n";
 		currentText = sendData.text();
+//		System.out.println("currentText = " + currentText);
 		remainingWordsCount -= currentText.length();
 		String ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
 				+ QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
 		TextSendManager.save();
-		return fore + currentText + ends;
+		String text = fore + currentText + ends;
+		SendText.sendText(text);
+		return text;
 	}
 
 	public void addTypedTimes(int typedTimes) {
@@ -187,5 +201,22 @@ public final class TypedData implements Serializable {
 		result = 31 * result + currentText.hashCode();
 		result = 31 * result + sendData.hashCode();
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "TypedData{" + "fileName='" + fileName + '\'' +
+				", fileCrc='" + fileCrc + '\'' +
+				", totalWordsNum=" + totalWordsNum +
+				", filePath='" + filePath + '\'' +
+				", paraNumRandom=" + paraNumRandom +
+				", startIndex=" + startIndex +
+				", typedTimes=" + typedTimes +
+				", remainingWordsCount=" + remainingWordsCount +
+				", perLength=" + perLength +
+				", paraNum=" + paraNum +
+				", currentText='" + currentText + '\'' +
+				", sendData=" + sendData +
+				'}';
 	}
 }

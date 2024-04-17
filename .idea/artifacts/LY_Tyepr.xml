@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="LY_Tyepr">
     <output-path>$PROJECT_DIR$</output-path>
     <root id="archive" name="LY_Tyepr.jar">
-      <element id="module-output" name="揽月跟打器" />
+      <element id="module-output" name="LY_Typer" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Swing/QR_Swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Method/QR_Method.jar" path-in-jar="/" />
     </root>

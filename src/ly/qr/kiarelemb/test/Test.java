@@ -1,6 +1,5 @@
 package ly.qr.kiarelemb.test;
 
-import ly.qr.kiarelemb.text.TextWash;
 import ly.qr.kiarelemb.type.KeyTypedRecordWindow;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import swing.qr.kiarelemb.QRSwing;
@@ -24,7 +23,6 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
-		TextWash.fileCopyAndWash("C:\\Users\\Kiarelemb QR\\Desktop\\局外人.txt", "C:\\Users\\Kiarelemb " +
-				"QR\\Desktop\\局外人Washed.txt");
+
 	}
 }
