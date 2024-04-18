@@ -5,6 +5,7 @@
       <element id="module-output" name="QR_Swing" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Method/QR_Method.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Swing/lib/commons-collections4-4.4.jar" path-in-jar="/" />
+      <element id="module-source" name="QR_Swing" />
     </root>
   </artifact>
 </component>
