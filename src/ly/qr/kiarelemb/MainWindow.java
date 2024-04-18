@@ -2,9 +2,7 @@ package ly.qr.kiarelemb;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.SplitPane;
-import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
-import ly.qr.kiarelemb.component.contract.state.GroupButton;
 import ly.qr.kiarelemb.component.menu.about.HotMapItem;
 import ly.qr.kiarelemb.component.menu.send.ContinueSendTextItem;
 import ly.qr.kiarelemb.component.menu.send.ForeParaTextItem;
@@ -82,17 +80,15 @@ public class MainWindow extends QRFrame {
 	 * 加载快捷键
 	 */
 	public void quickKeyLoad() {
-		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_RESTART), e -> TextPane.TEXT_PANE.restart(), true);
-		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_GROUP), e -> GroupButton.groupBtn.doClick(), true);
-		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_TEXT_MIX), e -> TextMixItem.TEXT_MIX_ITEM.doClick(),
-				true);
 		//当量显示器
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_DANG_LIANG_WINDOW), event -> {
 			DangLangWindow window = DangLangWindow.dangLangWindow();
 			window.setVisible(!window.isVisible());
 		}, true);
+		//内置输入法
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_INNER_INPUT_WINDOW),
 				event -> InputManager.INPUT_MANAGER.init(), true);
+		//保存分割面板的分割比例
 		addActionBeforeDispose(e -> QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT,
 				QRMathUtils.toString(SplitPane.SPLIT_PANE.getResizeWeight(), 3, false)));
 	}

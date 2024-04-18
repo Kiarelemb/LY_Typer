@@ -114,7 +114,7 @@ public class TipPanel extends QRPanel {
 				width += phraseWordBounds.getWidth() + phraseWordCodeBounds.getWidth() + this.gap * 2;
 			}
 		}
-		setPreferredSize(width, height);
+		setPreferredSize(width + 10, height);
 	}
 
 	@Override

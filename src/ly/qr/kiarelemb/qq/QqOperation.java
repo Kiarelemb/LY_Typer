@@ -98,7 +98,7 @@ public class QqOperation {
 		if (!GroupButton.groupBtn.groupLinked()) {
 			ArrayList<String> group = WindowAPI.getQQWindows();
 			if (group.size() == 1) {
-				GroupButton.groupBtn.doClick();
+				GroupButton.groupBtn.click();
 				return true;
 			}
 //			QRSmallTipShow.display(MainWindow.INSTANCE, "请按 F5 选择群聊！");

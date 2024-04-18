@@ -7,6 +7,7 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.qq.WindowAPI;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRThreadBuilder;
+import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
@@ -29,6 +30,7 @@ public class GroupButton extends QRRoundButton {
     private GroupButton() {
         super(Keys.strValue(Keys.QUICK_KEY_GROUP) + " / 点击换群");
         setToolTipText(Keys.strValue(Keys.QUICK_KEY_GROUP) + " / 点击换群");
+        QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_GROUP), e -> GroupButton.groupBtn.click(), true);
     }
 
     private final ArrayList<String> windows = new ArrayList<>();
