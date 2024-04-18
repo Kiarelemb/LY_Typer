@@ -76,8 +76,6 @@ public final class TypedData implements Serializable {
 		} else {
 			paraNum--;
 		}
-		// 上一段的结束位置
-		startIndex -= sendData.typeTextByteLen();
 //		System.out.println("上 " + startIndex);
 		remainingWordsCount += currentText.length();
 		return this;
@@ -86,6 +84,8 @@ public final class TypedData implements Serializable {
 	public String foreParaText() {
 		sendData = QRFileUtils.fileForeReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
 				TypingData.textLoadIntelli);
+		// 上一段的结束位置
+		startIndex -= sendData.typeTextByteLen();
 		String fore = fileName + "\n";
 		currentText = sendData.text();
 //		System.out.println("currentText = " + currentText);
@@ -112,6 +112,8 @@ public final class TypedData implements Serializable {
 		if (sendData == null) {
 			return this;
 		}
+		// 下一段的开始位置
+		startIndex += sendData.typeTextByteLen();
 //		System.out.println("下 " + startIndex);
 		return this;
 	}
@@ -119,8 +121,6 @@ public final class TypedData implements Serializable {
 	public String nextParaText() {
 		sendData = QRFileUtils.fileReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
 				TypingData.textLoadIntelli);
-		// 下一段的开始位置
-		startIndex += sendData.typeTextByteLen();
 		String fore = fileName + "\n";
 		currentText = sendData.text();
 //		System.out.println("currentText = " + currentText);
