@@ -81,19 +81,19 @@ public class TyperTextPane extends QRTextPane {
 		if (TextLoad.TEXT_LOAD == null) {
 			return;
 		}
-		int keyCode = e.getKeyCode();
-		if (e.isControlDown() || e.getKeyChar() == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) {
-			return;
-		}
-		if (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12) {
-			return;
-		}
 		if (!TypingData.typing || TypingData.typeEnd) {
 			e.consume();
 			return;
 		}
+		char keyChar = e.getKeyChar();
+		if (keyChar == '\n' || keyChar == '\t') {
+			return;
+		}
+		int keyCode = e.getKeyCode();
+		if (e.isControlDown() || keyCode == KeyEvent.VK_WINDOWS || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12) {
+			return;
+		}
 		try {
-			char keyChar = e.getKeyChar();
 			if (keyChar == KeyEvent.VK_BACK_SPACE) {
 				TextPane.TEXT_PANE.deleteUpdates(e);
 				return;
@@ -101,6 +101,18 @@ public class TyperTextPane extends QRTextPane {
 			TextPane.TEXT_PANE.insertUpdates(keyChar);
 		} catch (Exception e1) {
 			e1.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void keyPress(KeyEvent e) {
+		if (!TypingData.typing || TypingData.typeEnd) {
+			e.consume();
+			return;
+		}
+		char keyChar = e.getKeyChar();
+		if (keyChar == '\n' || keyChar == '\t') {
+			e.consume();
 		}
 	}
 
