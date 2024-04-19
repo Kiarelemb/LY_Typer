@@ -7,6 +7,8 @@ import ly.qr.kiarelemb.text.send.TextSendManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.LinkedList;
 
 /**
  * @author Kiarelemb
@@ -24,12 +26,23 @@ public class ContinueSendTextItem extends MenuItem {
 
 	@Override
 	protected void actionEvent(ActionEvent o) {
+		LinkedList<File> list = new LinkedList<>();
 		QRFileUtils.dirLoop(Info.TYPE_DIRECTORY, file -> {
 			if (".bin".equals(QRFileUtils.getFileExtension(file))) {
-				if (TextSendManager.loadSerializedData(file.getName())) {
-					TextSendManager.setTypedData(TextSendManager.data());
-				}
+				list.add(file);
 			}
 		});
+
+		if (list.isEmpty()) {
+			return;
+		}
+
+		int size = list.size();
+		if (size == 1) {
+			if (TextSendManager.loadSerializedData(list.getFirst().getName())) {
+				TextSendManager.setTypedData(TextSendManager.data());
+				return;
+			}
+		}
 	}
 }

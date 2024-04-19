@@ -215,7 +215,7 @@ public class TextPane extends QRTextPane {
 		} else {
 			if (length == 1) {
 				//否则判错，背景颜色改成红色
-				if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+				if (!LookModelCheckBox.lookModelCheckBox.checked()) {
 					changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getWrongStyle(), true);
 				}
 				TypingData.WRONG_WORDS_INDEX.add(index);
@@ -224,12 +224,12 @@ public class TextPane extends QRTextPane {
 					int currentIndex = TypingData.currentTypedIndex + i;
 					String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
 					if (rightWord.equals(textParts[i])) {
-						if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+						if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
 							changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getCorrectStyle(),
 									true);
 						}
 					} else {
-						if (!LookModelCheckBox.lookModelCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+						if (!LookModelCheckBox.lookModelCheckBox.checked()) {
 							changeTextsStyle(currentIndex, rightWord.length(),
 									TextStyleManager.getWrongStyle(), true);
 						}
@@ -246,19 +246,19 @@ public class TextPane extends QRTextPane {
 		if (TextLoad.TEXT_LOAD.wordsLength() == TypingData.currentTypedIndex) {
 			//0是打完即可，1是打完无错，2是无错智能，3是可错智能
 			if (TypingData.finishModel == TYPING_FINISH_MARK_OVER_DO_NOTING || (TypingData.finishModel == TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
-				if (TextLoad.TEXT_LOAD.textNotIsChanged(getText())) {
-					//打字结束
-					if (!Info.IS_WINDOWS) {
-						MainWindow.INSTANCE.setAlwaysOnTop(false);
-					}
-					TypingData.typeEnd = true;
-					TypingData.typing = false;
-					typingEndThread.submit(this::typeEnding);
-				} else {
-					//Windows下可能因输入法的问题，而导致有人想在英打时打中文，进而使内容发生改变
-					QRSmallTipShow.display(MainWindow.INSTANCE, "当前文本内容被修改，将自动重打！");
-					QRSleepUtils.sleep(500);
+//				if (TextLoad.TEXT_LOAD.textNotIsChanged(getText())) {
+				//打字结束
+				if (!Info.IS_WINDOWS) {
+					MainWindow.INSTANCE.setAlwaysOnTop(false);
 				}
+				TypingData.typeEnd = true;
+				TypingData.typing = false;
+				typingEndThread.submit(this::typeEnding);
+//				} else {
+//					//Windows下可能因输入法的问题，而导致有人想在英打时打中文，进而使内容发生改变
+//					QRSmallTipShow.display(MainWindow.INSTANCE, "当前文本内容被修改，将自动重打！");
+//					QRSleepUtils.sleep(500);
+//				}
 			}
 		}
 		TyperTextPane.TYPER_TEXT_PANE.runTypedActions();

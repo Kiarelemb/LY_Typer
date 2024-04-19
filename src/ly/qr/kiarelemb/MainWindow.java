@@ -9,6 +9,7 @@ import ly.qr.kiarelemb.component.menu.send.ForeParaTextItem;
 import ly.qr.kiarelemb.component.menu.send.NewSendTextItem;
 import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.component.menu.type.LoadTextItem;
+import ly.qr.kiarelemb.component.menu.type.RetypeItem;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.menu.type.TextMixItem;
 import ly.qr.kiarelemb.data.Keys;
@@ -63,8 +64,9 @@ public class MainWindow extends QRFrame {
 		QRButton toolMenu = this.titleMenuPanel.add("工具");
 		QRButton aboutMenu = this.titleMenuPanel.add("关于");
 
-		typeMenu.add(TextMixItem.TEXT_MIX_ITEM);
 		typeMenu.add(LoadTextItem.LOAD_TEXT_ITEM);
+		typeMenu.add(RetypeItem.RETYPE_ITEM);
+		typeMenu.add(TextMixItem.TEXT_MIX_ITEM);
 		typeMenu.add(SettingsItem.SETTINGS_ITEM);
 
 		sendMenu.add(NewSendTextItem.NEW_SEND_TEXT_ITEM);
