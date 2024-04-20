@@ -333,6 +333,10 @@ public class Keys {
      */
     public static final String QUICK_KEY_SEND_CONTINUE = "quick.key.send.continue";
     /**
+     * 结束发文快捷键，默认为 {@code Ctrl E}
+     */
+    public static final String QUICK_KEY_SEND_END = "quick.key.send.end";
+    /**
      * 下一段快捷键，默认为 {@code F10}
      */
     public static final String QUICK_KEY_SEND_NEXT_PARA = "quick.key.send.para.next";
@@ -449,6 +453,7 @@ public class Keys {
             put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
             put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
             put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");
+            put(QUICK_KEY_SEND_END, "ctrl e");
             put(TEXT_LINE_SPACE, "0.8");
             put(WINDOW_SPLIT_WEIGHT, "0.618");
         }

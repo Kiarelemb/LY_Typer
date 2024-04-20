@@ -16,7 +16,6 @@ import swing.qr.kiarelemb.inter.QRActionRegister;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -100,21 +99,35 @@ public class TipPanel extends QRPanel {
 	public void pack() {
 		int width = this.gap * 2;
 		int height = this.gap * 2;
-		Rectangle2D singleWordBounds = QRFontUtils.getStringBounds(this.singleWordLabel.getText(), this.singleWordLabel.getFont());
-		Rectangle2D singleWordCodeBounds = QRFontUtils.getStringBounds(this.singleWordCodeLabel.getText(), this.singleWordCodeLabel.getFont());
-		width += singleWordBounds.getWidth() + singleWordCodeBounds.getWidth() + this.gap;
-		height += singleWordBounds.getHeight();
+		Rectangle singleWordBounds = QRFontUtils.getStringBounds(this.singleWordLabel.getText(),
+				this.singleWordLabel.getFont()).getBounds();
+		Rectangle singleWordCodeBounds = QRFontUtils.getStringBounds(this.singleWordCodeLabel.getText(),
+				this.singleWordCodeLabel.getFont()).getBounds();
+		width += singleWordBounds.width + singleWordCodeBounds.width + this.gap;
+		height += singleWordBounds.height;
 		if (this.phraseWordLabel.getText() != null) {
-			Rectangle2D phraseWordBounds = QRFontUtils.getStringBounds(this.phraseWordLabel.getText(), this.phraseWordLabel.getFont());
-			Rectangle2D phraseWordCodeBounds = QRFontUtils.getStringBounds(this.phraseWordCodeLabel.getText(), this.phraseWordCodeLabel.getFont());
+			Rectangle phraseWordBounds = QRFontUtils.getStringBounds(this.phraseWordLabel.getText(),
+					this.phraseWordLabel.getFont()).getBounds();
+			Rectangle phraseWordCodeBounds = QRFontUtils.getStringBounds(this.phraseWordCodeLabel.getText(),
+					this.phraseWordCodeLabel.getFont()).getBounds();
 			if (Keys.boolValue(Keys.TEXT_TIP_DIVIDE)) {
-				height += phraseWordBounds.getHeight() + this.gap * 2;
-				width += (int) Math.max(width, phraseWordBounds.getWidth() + phraseWordCodeBounds.getWidth() + this.gap * 2);
+				height += phraseWordBounds.height + this.gap * 2;
+				width += (int) Math.max(width,
+						phraseWordBounds.getWidth() + phraseWordCodeBounds.getWidth() + this.gap * 2);
 			} else {
-				width += phraseWordBounds.getWidth() + phraseWordCodeBounds.getWidth() + this.gap * 2;
+				width += phraseWordBounds.width + phraseWordCodeBounds.width + this.gap * 2;
 			}
+//			this.phraseWordLabel.setPreferredSize(new Dimension(phraseWordBounds.width, phraseWordBounds.height));
+//			this.phraseWordCodeLabel.setPreferredSize(new Dimension(phraseWordCodeBounds.width, phraseWordCodeBounds
+//			.height));
 		}
-		setPreferredSize(width + 10, height);
+
+//		System.out.println("width = " + width);
+		setPreferredSize(width, height);
+		repaint();
+//		this.singleWordLabel.setPreferredSize(new Dimension(singleWordBounds.width, singleWordBounds.height));
+//		this.singleWordCodeLabel.setPreferredSize(new Dimension(singleWordCodeBounds.width, singleWordCodeBounds
+//		.height));
 	}
 
 	@Override

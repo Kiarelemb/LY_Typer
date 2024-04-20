@@ -20,11 +20,6 @@ public class HotMapItem extends MenuItem {
         super("跟打热力图", null);
     }
 
-    /**
-     * 已自动添加监听器，可直接重写
-     *
-     * @param o
-     */
     @Override
     protected void actionEvent(ActionEvent o) {
         KeyTypedRecordWindow window = new KeyTypedRecordWindow();

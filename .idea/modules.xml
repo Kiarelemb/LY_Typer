@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LY_Typer.iml" filepath="$PROJECT_DIR$/LY_Typer.iml" />
       <module fileurl="file://$PROJECT_DIR$/../MyTypeTool/MyTypeTool.iml" filepath="$PROJECT_DIR$/../MyTypeTool/MyTypeTool.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../QR_Swing/QR_Swing.iml" filepath="$PROJECT_DIR$/../QR_Swing/QR_Swing.iml" />
     </modules>
   </component>
 </project>

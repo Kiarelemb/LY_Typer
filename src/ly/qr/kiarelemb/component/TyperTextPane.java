@@ -194,7 +194,7 @@ public class TyperTextPane extends QRTextPane {
 			} else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
 				TypingData.rightCounts++;
 			} else {
-				System.out.println(keyStroke.getKeyCode() + "-" + keyStroke.getKeyChar());
+//				System.out.println(keyStroke.getKeyCode() + "-" + keyStroke.getKeyChar());
 				TypingData.typedKeyRecord.append('⊗');
 				DangLangManager.DANG_LANG_MANAGER.put('⊗', timeDiff);
 				return;

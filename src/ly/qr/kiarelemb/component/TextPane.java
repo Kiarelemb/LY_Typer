@@ -4,6 +4,7 @@ import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.contract.state.LookModelCheckBox;
 import ly.qr.kiarelemb.component.contract.state.SilkyModelCheckBox;
 import ly.qr.kiarelemb.component.contract.state.WordLabel;
+import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.data.GradeData;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
@@ -24,14 +25,13 @@ import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
+import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.*;
 
 /**
@@ -67,6 +67,12 @@ public class TextPane extends QRTextPane {
 			TypingData.clear();
 			this.caret.setVisible(SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked());
 		});
+		this.setTextFinishedActions.add(e -> {
+			setCaretPosition(0);
+			indexesUpdate();
+			TextPane.TEXT_PANE.scrollPane.locationFresh();
+			MainWindow.INSTANCE.grabFocus();
+		});
 	}
 
 
@@ -87,18 +93,9 @@ public class TextPane extends QRTextPane {
 
 	public void textFresh() {
 		QRComponentUtils.runActions(this.setTextBeforeActions);
-		super.setText(TextLoad.TEXT_LOAD.formattedActualText());
+		TextPane.super.setText(TextLoad.TEXT_LOAD.formattedActualText());
 		printTextStyleAfterSetText();
-		setCaretPosition(0);
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions);
-				TextPane.TEXT_PANE.scrollPane.locationFresh();
-				indexesUpdate();
-				MainWindow.INSTANCE.grabFocus();
-			}
-		}, 100);
+		SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions));
 	}
 
 	private void printTextStyleAfterSetText() {
@@ -351,6 +348,7 @@ public class TextPane extends QRTextPane {
 		DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
 		//发送成绩
 		SendText.gradeSend();
+		NextParaTextItem.NEXT_PARA_TEXT_ITEM.click();
 		TypingData.windowFresh();
 	}
 

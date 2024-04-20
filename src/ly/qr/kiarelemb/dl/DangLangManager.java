@@ -104,7 +104,7 @@ public class DangLangManager {
 			printAction(data);
 		});
 
-		System.out.println("组合键=累积间隔/频率/均时");
+//		System.out.println("组合键=累积间隔/频率/均时");
 		DangLangWindow.dangLangWindow().logTextPane.chinesePrintln("组合键=累积间隔/频率/均时");
 		ArrayList<String> arr = new ArrayList<>(prop.size());
 		prop.keySet().stream().sorted().forEach(o -> {
@@ -123,7 +123,7 @@ public class DangLangManager {
 	}
 
 	private static void printAction(String data) {
-		System.out.println(data);
+//		System.out.println(data);
 		if (DangLangWindow.dangLangWindow().isVisible()) {
 			DangLangWindow.dangLangWindow().logTextPane.noneChinesePrintln(data);
 		}

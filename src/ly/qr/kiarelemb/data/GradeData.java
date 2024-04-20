@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.data;
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
+import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import method.qr.kiarelemb.utils.QRMathUtils;
 
@@ -184,7 +185,10 @@ public final class GradeData {
 		if (simplify) {
 			return "No." + TextLoad.TEXT_LOAD.paragraph() + " -> " + this.speed + " | " + this.keyStroke + " | " + this.codeLength;
 		} else {
-			grade = "第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() + (!TextLoad.TEXT_LOAD.isEnglish() && "0.0".equals(ContractiblePanel.STANDARD_LEN_LABEL.getText()) ? " 标顶" + ContractiblePanel.STANDARD_LEN_LABEL.getText() : "") + (Keys.boolValue(Keys.SEND_WORDS_NUM) ? TextLoad.TEXT_LOAD.isEnglish() ? " 词数" + TextLoad.TEXT_LOAD.englishWordsNum() : " 字数" + TextLoad.TEXT_LOAD.wordsLength() : "") + (Keys.boolValue(Keys.SEND_BACK_CHANGE) ? " 回改" + backDeleteCount : "") + (Keys.boolValue(Keys.SEND_BACKSPACE) ? " 退格" + backSpaceCount : "") + (Keys.boolValue(Keys.SEND_ENTER_COUNT) ? " 回车" + enterCount : "") + (Keys.boolValue(Keys.SEND_KEY_NUM) ? " 键数" + keyCounts : "") + (Keys.boolValue(Keys.SEND_WORD_WRONG) ? " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() : "") + (Keys.boolValue(Keys.SEND_KEY_ACCURACY) ? " 键准" + keyAccuracy() : "") + (Keys.boolValue(Keys.SEND_TIMES_PAUSE) ? " 暂停" + pausedTimes + "次" : "") + (Keys.boolValue(Keys.SEND_TIMES_RETYPE) ? " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" : "") + (Keys.boolValue(Keys.SEND_TIME_COST) ? " 用时" + timeCost() : "") + (Keys.boolValue(Keys.SEND_KEY_METHOD) ? " 键法" + keyMethods() : "") + (Keys.boolValue(Keys.SEND_METHOD_TYPE) ? " 指法" + typeMethod() : "")
+			grade =
+					"第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() +
+					(!TextLoad.TEXT_LOAD.isEnglish() && TextTip.TEXT_TIP.loaded() && tipEnable ?
+							" 标顶" + ContractiblePanel.STANDARD_LEN_LABEL.getText() : "") + (Keys.boolValue(Keys.SEND_WORDS_NUM) ? TextLoad.TEXT_LOAD.isEnglish() ? " 词数" + TextLoad.TEXT_LOAD.englishWordsNum() : " 字数" + TextLoad.TEXT_LOAD.wordsLength() : "") + (Keys.boolValue(Keys.SEND_BACK_CHANGE) ? " 回改" + backDeleteCount : "") + (Keys.boolValue(Keys.SEND_BACKSPACE) ? " 退格" + backSpaceCount : "") + (Keys.boolValue(Keys.SEND_ENTER_COUNT) ? " 回车" + enterCount : "") + (Keys.boolValue(Keys.SEND_KEY_NUM) ? " 键数" + keyCounts : "") + (Keys.boolValue(Keys.SEND_WORD_WRONG) ? " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() : "") + (Keys.boolValue(Keys.SEND_KEY_ACCURACY) ? " 键准" + keyAccuracy() : "") + (Keys.boolValue(Keys.SEND_TIMES_PAUSE) ? " 暂停" + pausedTimes + "次" : "") + (Keys.boolValue(Keys.SEND_TIMES_RETYPE) ? " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" : "") + (Keys.boolValue(Keys.SEND_TIME_COST) ? " 用时" + timeCost() : "") + (Keys.boolValue(Keys.SEND_KEY_METHOD) ? " 键法" + keyMethods() : "") + (Keys.boolValue(Keys.SEND_METHOD_TYPE) ? " 指法" + typeMethod() : "")
 //			        + ((TaipinnguDeeta.highPerformModel || !BetterTyping.loaded || !tsd.tipEnable() || TextLoad.TEXT_LOAD.isSingleOnly()) && (!OtherSetting.osd.tipWindowShow() || QRTextPane.tw == null || !QRTextPane.tw.isVisible()) && !TextLoad.TEXT_LOAD.isEnglish() ? "禁词提" : "")
 			        + (Keys.boolValue(Keys.SEND_METHOD_INPUT) ? " 输入法:" + inputMethod() : "") + (Keys.boolValue(Keys.SEND_SIGNATURE) ? " 个签:" + personalSignature() : "") + (Keys.boolValue(Keys.SEND_KEYBOARD) ? " 键盘:" + keyboard() : "") + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + (Keys.boolValue(Keys.SEND_SYSTEM_VERSION) ? A_WHITE_SPACE + systemVersion() : "");
 		}

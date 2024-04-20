@@ -73,6 +73,12 @@ public class SendText {
 	}
 
 	public static void sendText(String texts) {
+		if (!Info.IS_WINDOWS || !GroupButton.groupBtn.groupLinked()) {
+			return;
+		}
+		if (DiveCheckBox.diveCheckBox.checked()) {
+			return;
+		}
 		if (Keys.boolValue(Keys.SEND_CRYPTOGRAPHIC)) {
 			texts = textCoding(texts, true);
 		}

@@ -1,10 +1,7 @@
 package ly.qr.kiarelemb.text.send;
 
 import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.component.menu.send.ContinueSendTextItem;
-import ly.qr.kiarelemb.component.menu.send.ForeParaTextItem;
-import ly.qr.kiarelemb.component.menu.send.NewSendTextItem;
-import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
+import ly.qr.kiarelemb.component.menu.send.*;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRSerializeUtils;
@@ -72,12 +69,15 @@ public class TextSendManager {
 	 * 结束发文
 	 */
 	public static void endSendText() {
+		setData(null);
 		control(false);
 	}
 
 	private static void control(boolean enable) {
-		NewSendTextItem.NEW_SEND_TEXT_ITEM.setEnabled(!enable);
-		ContinueSendTextItem.CONTINUE_SEND_TEXT_ITEM.setEnabled(!enable);
+		boolean disable = !enable;
+		NewSendTextItem.NEW_SEND_TEXT_ITEM.setEnabled(disable);
+		ContinueSendTextItem.CONTINUE_SEND_TEXT_ITEM.setEnabled(disable);
+		EndSendTextItem.END_SEND_TEXT_ITEM.setEnabled(enable);
 		ForeParaTextItem.FORE_PARA_TEXT_ITEM.setEnabled(enable);
 		NextParaTextItem.NEXT_PARA_TEXT_ITEM.setEnabled(enable);
 	}

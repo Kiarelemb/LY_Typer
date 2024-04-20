@@ -4,10 +4,7 @@ import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.SplitPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.component.menu.about.HotMapItem;
-import ly.qr.kiarelemb.component.menu.send.ContinueSendTextItem;
-import ly.qr.kiarelemb.component.menu.send.ForeParaTextItem;
-import ly.qr.kiarelemb.component.menu.send.NewSendTextItem;
-import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
+import ly.qr.kiarelemb.component.menu.send.*;
 import ly.qr.kiarelemb.component.menu.type.LoadTextItem;
 import ly.qr.kiarelemb.component.menu.type.RetypeItem;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
@@ -71,6 +68,7 @@ public class MainWindow extends QRFrame {
 
 		sendMenu.add(NewSendTextItem.NEW_SEND_TEXT_ITEM);
 		sendMenu.add(ContinueSendTextItem.CONTINUE_SEND_TEXT_ITEM);
+		sendMenu.add(EndSendTextItem.END_SEND_TEXT_ITEM);
 		sendMenu.add(ForeParaTextItem.FORE_PARA_TEXT_ITEM);
 		sendMenu.add(NextParaTextItem.NEXT_PARA_TEXT_ITEM);
 
