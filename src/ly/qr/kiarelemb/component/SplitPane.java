@@ -31,7 +31,14 @@ public class SplitPane extends QRSplitPane {
 		setTopComponent(TextPane.TEXT_PANE.addScrollPane());
 		setBottomComponent(TyperTextPane.TYPER_TEXT_PANE.addScrollPane());
 
-		setResizeWeight(Keys.floatValue(Keys.WINDOW_SPLIT_WEIGHT));
+
+		int value;
+		try {
+			value = Keys.intValue(Keys.WINDOW_SPLIT_WEIGHT);
+		} catch (Exception e) {
+			value = 300;
+		}
+		setDividerLocation(value);
 		//更新编码提示的位置
 		updateTipPaneLocation();
 	}

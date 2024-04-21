@@ -59,7 +59,10 @@ public class Keys {
     //endregion
 
     //region int类型
-
+    /**
+     * 记录主窗体分割面板的分割值
+     */
+    public static final String WINDOW_SPLIT_WEIGHT = "window.split.weight";
     /**
      * 繁简转换键，{@code 0} （默认）不转换，{@code 1} 繁转简，{@code 2} 简转繁
      */
@@ -365,10 +368,6 @@ public class Keys {
      * 行距，默认为 {@code 0.8}
      */
     public static final String TEXT_LINE_SPACE = "text.line.space";
-    /**
-     * 记录主窗体分割面板的分割值
-     */
-    public static final String WINDOW_SPLIT_WEIGHT = "window.split.weight";
     //endregion float 类型
 
     public static final Map<String, String> DEFAULT_MAP = new TreeMap<>() {
@@ -455,7 +454,7 @@ public class Keys {
             put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");
             put(QUICK_KEY_SEND_END, "ctrl e");
             put(TEXT_LINE_SPACE, "0.8");
-            put(WINDOW_SPLIT_WEIGHT, "0.618");
+            put(WINDOW_SPLIT_WEIGHT, "300");
         }
     };
 }

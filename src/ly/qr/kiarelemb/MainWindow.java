@@ -14,7 +14,6 @@ import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
-import method.qr.kiarelemb.utils.QRMathUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRButton;
 import swing.qr.kiarelemb.window.basic.QRFrame;
@@ -89,8 +88,9 @@ public class MainWindow extends QRFrame {
 		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_INNER_INPUT_WINDOW),
 				event -> InputManager.INPUT_MANAGER.init(), true);
 		//保存分割面板的分割比例
-		addActionBeforeDispose(e -> QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT,
-				QRMathUtils.toString(SplitPane.SPLIT_PANE.getResizeWeight(), 3, false)));
+		addActionBeforeDispose(e -> {
+			QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT, SplitPane.SPLIT_PANE.getDividerLocation());
+		});
 	}
 
 	public void grabFocus() {

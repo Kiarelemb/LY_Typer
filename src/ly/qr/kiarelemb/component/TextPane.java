@@ -250,7 +250,7 @@ public class TextPane extends QRTextPane {
 				}
 				TypingData.typeEnd = true;
 				TypingData.typing = false;
-				typingEndThread.submit(this::typeEnding);
+				typeEnding();
 //				} else {
 //					//Windows下可能因输入法的问题，而导致有人想在英打时打中文，进而使内容发生改变
 //					QRSmallTipShow.display(MainWindow.INSTANCE, "当前文本内容被修改，将自动重打！");
@@ -310,7 +310,6 @@ public class TextPane extends QRTextPane {
 	}
 
 	public void typeEnding() {
-		QRSleepUtils.sleep(100);
 		long time = TypingData.endTime - TypingData.startTime;
 		double totalTimeInSec = time / 1000.0D;
 		String totalTimeInSecs = String.format("%.2f", totalTimeInSec);
@@ -348,7 +347,8 @@ public class TextPane extends QRTextPane {
 		DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
 		//发送成绩
 		SendText.gradeSend();
-		NextParaTextItem.NEXT_PARA_TEXT_ITEM.click();
+
+		NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
 		TypingData.windowFresh();
 	}
 

@@ -54,8 +54,11 @@ public final class GradeData {
 	 */
 	public String speeds() {
 		int size = WRONG_WORDS_INDEX.size();
-		String wrongedSpeed = (size > 0 ? QRMathUtils.doubleFormat((TextLoad.TEXT_LOAD.wordsLength() - 5 * size) / this.totalTimeInMin) + "/" : "") + QRMathUtils.doubleFormat(TextLoad.TEXT_LOAD.wordsLength() / this.totalTimeInMin);
-		return wrongedSpeed + (TextLoad.TEXT_LOAD.isEnglish() ? (" (" + QRMathUtils.doubleFormat(TextLoad.TEXT_LOAD.englishWordsAverageLength() / this.totalTimeInMin) + "WPM)") : "");
+		String wrongedSpeed = (size > 0 ?
+				QRMathUtils.doubleFormat((TextLoad.TEXT_LOAD.wordsLength() - 5 * size) / this.totalTimeInMin) + "/" :
+				"") + QRMathUtils.doubleFormat(TextLoad.TEXT_LOAD.wordsLength() / this.totalTimeInMin);
+		return wrongedSpeed + (TextLoad.TEXT_LOAD.isEnglish() ?
+				(" (" + QRMathUtils.doubleFormat(TextLoad.TEXT_LOAD.englishWordsAverageLength() / this.totalTimeInMin) + "WPM)") : "");
 	}
 
 	public String keyStrokes() {
@@ -91,10 +94,12 @@ public final class GradeData {
 		String keyAccuracy;
 		int size = WRONG_WORDS_INDEX.size();
 		if (TextLoad.TEXT_LOAD.isEnglish()) {
-			keyAccuracy = String.valueOf(QRMathUtils.doubleFormat(100.0 * (TextLoad.TEXT_LOAD.wordsLength() - size) / keyCounts));
+			keyAccuracy =
+					String.valueOf(QRMathUtils.doubleFormat(100.0 * (TextLoad.TEXT_LOAD.wordsLength() - size) / keyCounts));
 		} else {
 			int wrongWordLose = 0;
-			final double avgCodeLength = QRMathUtils.doubleFormat((keyCounts + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
+			final double avgCodeLength =
+					QRMathUtils.doubleFormat((keyCounts + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
 			if (size != 0) {
 				if (TextLoad.TEXT_LOAD.tipData != null && TextLoad.TEXT_LOAD.tipData.tcsd != null) {
 					ArrayList<TipCharStyleData> tcsd = TextLoad.TEXT_LOAD.tipData.tcsd;
@@ -106,7 +111,8 @@ public final class GradeData {
 					wrongWordLose += avgCodeLength * WRONG_WORDS_INDEX.size();
 				}
 			}
-			double ka = QRMathUtils.doubleFormat(100.0 * (keyCounts - backSpaceCount * 2 - backDeleteCount * avgCodeLength - wrongWordLose) / keyCounts);
+			double ka =
+					QRMathUtils.doubleFormat(100.0 * (keyCounts - backSpaceCount * 2 - backDeleteCount * avgCodeLength - wrongWordLose) / keyCounts);
 			ka = Math.max(ka, 0.0);
 			keyAccuracy = String.valueOf(ka);
 		}
@@ -187,10 +193,12 @@ public final class GradeData {
 		} else {
 			grade =
 					"第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() +
-					(!TextLoad.TEXT_LOAD.isEnglish() && TextTip.TEXT_TIP.loaded() && tipEnable ?
-							" 标顶" + ContractiblePanel.STANDARD_LEN_LABEL.getText() : "") + (Keys.boolValue(Keys.SEND_WORDS_NUM) ? TextLoad.TEXT_LOAD.isEnglish() ? " 词数" + TextLoad.TEXT_LOAD.englishWordsNum() : " 字数" + TextLoad.TEXT_LOAD.wordsLength() : "") + (Keys.boolValue(Keys.SEND_BACK_CHANGE) ? " 回改" + backDeleteCount : "") + (Keys.boolValue(Keys.SEND_BACKSPACE) ? " 退格" + backSpaceCount : "") + (Keys.boolValue(Keys.SEND_ENTER_COUNT) ? " 回车" + enterCount : "") + (Keys.boolValue(Keys.SEND_KEY_NUM) ? " 键数" + keyCounts : "") + (Keys.boolValue(Keys.SEND_WORD_WRONG) ? " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() : "") + (Keys.boolValue(Keys.SEND_KEY_ACCURACY) ? " 键准" + keyAccuracy() : "") + (Keys.boolValue(Keys.SEND_TIMES_PAUSE) ? " 暂停" + pausedTimes + "次" : "") + (Keys.boolValue(Keys.SEND_TIMES_RETYPE) ? " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" : "") + (Keys.boolValue(Keys.SEND_TIME_COST) ? " 用时" + timeCost() : "") + (Keys.boolValue(Keys.SEND_KEY_METHOD) ? " 键法" + keyMethods() : "") + (Keys.boolValue(Keys.SEND_METHOD_TYPE) ? " 指法" + typeMethod() : "")
-//			        + ((TaipinnguDeeta.highPerformModel || !BetterTyping.loaded || !tsd.tipEnable() || TextLoad.TEXT_LOAD.isSingleOnly()) && (!OtherSetting.osd.tipWindowShow() || QRTextPane.tw == null || !QRTextPane.tw.isVisible()) && !TextLoad.TEXT_LOAD.isEnglish() ? "禁词提" : "")
-			        + (Keys.boolValue(Keys.SEND_METHOD_INPUT) ? " 输入法:" + inputMethod() : "") + (Keys.boolValue(Keys.SEND_SIGNATURE) ? " 个签:" + personalSignature() : "") + (Keys.boolValue(Keys.SEND_KEYBOARD) ? " 键盘:" + keyboard() : "") + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + (Keys.boolValue(Keys.SEND_SYSTEM_VERSION) ? A_WHITE_SPACE + systemVersion() : "");
+							(!TextLoad.TEXT_LOAD.isEnglish() && TextTip.TEXT_TIP.loaded() && tipEnable ?
+									" 标顶" + ContractiblePanel.STANDARD_LEN_LABEL.getText() : "") + (Keys.boolValue(Keys.SEND_WORDS_NUM) ? TextLoad.TEXT_LOAD.isEnglish() ? " 词数" + TextLoad.TEXT_LOAD.englishWordsNum() : " 字数" + TextLoad.TEXT_LOAD.wordsLength() : "") + (Keys.boolValue(Keys.SEND_BACK_CHANGE) ? " 回改" + backDeleteCount : "") + (Keys.boolValue(Keys.SEND_BACKSPACE) ? " 退格" + backSpaceCount : "") + (Keys.boolValue(Keys.SEND_ENTER_COUNT) ? " 回车" + enterCount : "") + (Keys.boolValue(Keys.SEND_KEY_NUM) ? " 键数" + keyCounts : "") + (Keys.boolValue(Keys.SEND_WORD_WRONG) ? " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() : "") + (Keys.boolValue(Keys.SEND_KEY_ACCURACY) ? " 键准" + keyAccuracy() : "") + (Keys.boolValue(Keys.SEND_TIMES_PAUSE) ? " 暂停" + pausedTimes + "次" : "") + (Keys.boolValue(Keys.SEND_TIMES_RETYPE) ? " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" : "") + (Keys.boolValue(Keys.SEND_TIME_COST) ? " 用时" + timeCost() : "") + (Keys.boolValue(Keys.SEND_KEY_METHOD) ? " 键法" + keyMethods() : "") + (Keys.boolValue(Keys.SEND_METHOD_TYPE) ? " 指法" + typeMethod() : "")
+//			        + ((TaipinnguDeeta.highPerformModel || !BetterTyping.loaded || !tsd.tipEnable() || TextLoad
+//			        .TEXT_LOAD.isSingleOnly()) && (!OtherSetting.osd.tipWindowShow() || QRTextPane.tw == null ||
+//			        !QRTextPane.tw.isVisible()) && !TextLoad.TEXT_LOAD.isEnglish() ? "禁词提" : "")
+							+ (Keys.boolValue(Keys.SEND_METHOD_INPUT) ? " 输入法:" + inputMethod() : "") + (Keys.boolValue(Keys.SEND_SIGNATURE) ? " 个签:" + personalSignature() : "") + (Keys.boolValue(Keys.SEND_KEYBOARD) ? " 键盘:" + keyboard() : "") + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + (Keys.boolValue(Keys.SEND_SYSTEM_VERSION) ? A_WHITE_SPACE + systemVersion() : "");
 		}
 //                (ssd.isSimplify() && tsd.title().isEmpty() ? "" : (ssd.title() ? " 称号：" + title() : ""));
 		return getGradeContainsCode(grade);
@@ -200,7 +208,8 @@ public final class GradeData {
 	 * 取得完全的成绩
 	 */
 	public String getFullGrade() {
-		String grade = "第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() + " 字数" + TextLoad.TEXT_LOAD.wordsLength() + " 回改" + backDeleteCount + " 退格" + backSpaceCount + " 回车" + enterCount + " 键数" + keyCounts + " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() + " 键准" + keyAccuracy() + " 用时" + timeCost() + " 暂停" + pausedTimes + "次" + " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" + " 键法" + keyMethods() + " 输入法:" + inputMethod() + " 个签:" + personalSignature() + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + A_WHITE_SPACE + systemVersion();
+		String grade =
+				"第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() + " 字数" + TextLoad.TEXT_LOAD.wordsLength() + " 回改" + backDeleteCount + " 退格" + backSpaceCount + " 回车" + enterCount + " 键数" + keyCounts + " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() + " 键准" + keyAccuracy() + " 用时" + timeCost() + " 暂停" + pausedTimes + "次" + " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" + " 键法" + keyMethods() + " 输入法:" + inputMethod() + " 个签:" + personalSignature() + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + A_WHITE_SPACE + systemVersion();
 		return getGradeContainsCode(grade);
 	}
 
@@ -208,7 +217,8 @@ public final class GradeData {
 	 * 根据成绩，取得写入的成绩
 	 */
 	private String getWriteGrade() {
-		String grade = "第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() + " 字数" + TextLoad.TEXT_LOAD.wordsLength() + " 回改" + backDeleteCount + " 退格" + backSpaceCount + " 回车" + enterCount + " 键数" + keyCounts + " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() + " 键准" + keyAccuracy() + " 用时" + timeCost() + " 暂停" + pausedTimes + "次" + " 键法" + keyMethods() + " 输入法:" + inputMethod() + " 个签:" + personalSignature() + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + A_WHITE_SPACE + systemVersion();
+		String grade =
+				"第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() + " 字数" + TextLoad.TEXT_LOAD.wordsLength() + " 回改" + backDeleteCount + " 退格" + backSpaceCount + " 回车" + enterCount + " 键数" + keyCounts + " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() + " 键准" + keyAccuracy() + " 用时" + timeCost() + " 暂停" + pausedTimes + "次" + " 键法" + keyMethods() + " 输入法:" + inputMethod() + " 个签:" + personalSignature() + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + A_WHITE_SPACE + systemVersion();
 		return getGradeContainsCode(grade);
 	}
 
@@ -221,7 +231,7 @@ public final class GradeData {
 	}
 
 	private String getWrongWords() {
-		if (WRONG_WORDS_INDEX.size() == 0) {
+		if (WRONG_WORDS_INDEX.isEmpty()) {
 			return "";
 		}
 		StringBuilder sb = new StringBuilder(WRONG_WORDS_INDEX.size());
@@ -257,10 +267,10 @@ public final class GradeData {
 		if (obj == null || obj.getClass() != this.getClass()) return false;
 		var that = (GradeData) obj;
 		return Double.doubleToLongBits(this.totalTimeInMin) == Double.doubleToLongBits(that.totalTimeInMin) &&
-		       Double.doubleToLongBits(this.speed) == Double.doubleToLongBits(that.speed) &&
-		       Double.doubleToLongBits(this.keyStroke) == Double.doubleToLongBits(that.keyStroke) &&
-		       Double.doubleToLongBits(this.codeLength) == Double.doubleToLongBits(that.codeLength) &&
-		       Objects.equals(this.timeCost, that.timeCost);
+				Double.doubleToLongBits(this.speed) == Double.doubleToLongBits(that.speed) &&
+				Double.doubleToLongBits(this.keyStroke) == Double.doubleToLongBits(that.keyStroke) &&
+				Double.doubleToLongBits(this.codeLength) == Double.doubleToLongBits(that.codeLength) &&
+				Objects.equals(this.timeCost, that.timeCost);
 	}
 
 	@Override

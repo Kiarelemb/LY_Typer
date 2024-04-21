@@ -104,7 +104,7 @@ public class SettingWindow extends QRDialog {
             @Override
             protected void actionEvent(ActionEvent o) {
                 SettingsItem.CHANGE_MAP.putAll(Keys.DEFAULT_MAP);
-                sureBtn.click();
+                sureBtn.clickInvokeLater();
             }
         };
 

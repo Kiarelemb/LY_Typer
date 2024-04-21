@@ -339,7 +339,7 @@ public class ContractiblePanel extends QRContractiblePanel {
 
 		@Override
 		protected void mouseClick(MouseEvent e) {
-			StandardCodeLengthBtn.STANDARD_CODE_LENGTH_BTN.click();
+			StandardCodeLengthBtn.STANDARD_CODE_LENGTH_BTN.clickInvokeLater();
 		}
 
 		@Override
