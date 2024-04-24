@@ -109,7 +109,10 @@ public class TextPane extends QRTextPane {
 	}
 
 
-	@Deprecated(since = "已被取代方法 printTextStyleAfterSetText() 取代")
+	/**
+	 * 已被取代方法 {@link #printTextStyleAfterSetText()} 取代
+	 */
+	@Deprecated()
 	private void printProcessAfterSetText() {
 		if (TypingData.tipEnable && AbstractTextTip.TEXT_TIP.loaded() && !TextLoad.TEXT_LOAD.isEnglish()) {
 			final ArrayList<TipPhraseStyleData> tpsd = TextLoad.TEXT_LOAD.tipData.tpsd;
@@ -153,7 +156,7 @@ public class TextPane extends QRTextPane {
 	}
 
 	// 累积的字符
-	private StringBuilder accumulatedChars = new StringBuilder();
+	private final StringBuilder accumulatedChars = new StringBuilder();
 	// 用于同步的锁对象
 	private final Object lock = new Object();
 	// 创建一个调度器
@@ -185,7 +188,7 @@ public class TextPane extends QRTextPane {
 					if (!accumulatedChars.isEmpty()) {
 						insertUpdateExecute(accumulatedChars.toString());
 						// 重置累积的字符
-						accumulatedChars = new StringBuilder();
+						accumulatedChars.setLength(0);
 					}
 				}
 			}, shortestInputTimeDiff, TimeUnit.MILLISECONDS);
@@ -250,7 +253,9 @@ public class TextPane extends QRTextPane {
 				}
 				TypingData.typeEnd = true;
 				TypingData.typing = false;
-				typeEnding();
+//				typeEnding();
+				typingEndThread.execute(this::typeEnding);
+//				endingScheduler.submit(this::typeEnding);
 //				} else {
 //					//Windows下可能因输入法的问题，而导致有人想在英打时打中文，进而使内容发生改变
 //					QRSmallTipShow.display(MainWindow.INSTANCE, "当前文本内容被修改，将自动重打！");
@@ -261,6 +266,7 @@ public class TextPane extends QRTextPane {
 		TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
 	}
 
+	private final ScheduledExecutorService endingScheduler = Executors.newSingleThreadScheduledExecutor();
 	public void deleteUpdates(KeyEvent e) {
 		int index = this.caret.getDot();
 		if (index <= 1 || TypingData.backspaceAutoRestart) {

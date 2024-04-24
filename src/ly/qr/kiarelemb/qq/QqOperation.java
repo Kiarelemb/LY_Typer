@@ -40,7 +40,7 @@ public class QqOperation {
 		WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, Name);
 		genda = User32.INSTANCE.FindWindow(null, MainWindow.INSTANCE.getTitle());
 		double SCALE = (double) Toolkit.getDefaultToolkit().getScreenResolution() / 96;
-		QRSleepUtils.sleep(100);
+		QRSleepUtils.sleep(50);
 		if (hWnd != null) {
 			User32.INSTANCE.SetForegroundWindow(hWnd);
 			WinDef.RECT rect = new WinDef.RECT();

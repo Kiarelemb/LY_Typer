@@ -72,50 +72,55 @@ public class TextTip extends AbstractTextTip {
                                 this.subscriptInstances[j + i + 1].setCodeLengthTemp(nextCodeLengthTemp);
                             }
                         }
-                        if (j > 0) {
-                            int wordCodeLength = this.subscriptInstances[j].getWordCode().length();
-                            int thisCodeLength = this.subscriptInstances[j].getCodeLengthTemp();
+                        if (j > 0 && j < subscriptInstances.length) {
+                            final SubscriptInstance instance = subscriptInstances[j];
+                            if (instance == null) {
+                                continue;
+                            }
+                            int wordCodeLength = instance.getWordCode().length();
+                            int thisCodeLength = instance.getCodeLengthTemp();
                             int nextCodeLengthTemp = preCodeLengthTemp + wordCodeLength;
                             if (thisCodeLength == 0) {
-                                this.subscriptInstances[j].setCodeLengthTemp(nextCodeLengthTemp);
+                                instance.setCodeLengthTemp(nextCodeLengthTemp);
                             } else if (thisCodeLength > nextCodeLengthTemp) {
-                                this.subscriptInstances[j].setCodeLengthTemp(nextCodeLengthTemp);
+                                instance.setCodeLengthTemp(nextCodeLengthTemp);
                             }
                         }
                     }
                 }
-                for (int i = article.length() - 1; i >= 0; i--) {
-                    boolean sign = true;
-                    SubscriptInstance subscriptInstance = this.subscriptInstances[i];
-                    int codeLengthTemp = subscriptInstance.getCodeLengthTemp();
-                    SubscriptInstance.PreInfo preInfo = subscriptInstance.getPreInfoMap().get(codeLengthTemp);
-                    int pre = 0;
-                    if (preInfo == null || preInfo.getPre().isEmpty()) {
-                        sign = false;
-                    } else {
-                        pre = preInfo.getMinPre();
+            }
+            for (int i = articleLength - 1; i >= 0; i--) {
+                boolean sign = true;
+                SubscriptInstance subscriptInstance = this.subscriptInstances[i];
+                int codeLengthTemp = subscriptInstance.getCodeLengthTemp();
+                SubscriptInstance.PreInfo preInfo = subscriptInstance.getPreInfoMap().get(codeLengthTemp);
+                int pre = 0;
+                if (preInfo == null || preInfo.getPre().isEmpty()) {
+                    sign = false;
+                } else {
+                    pre = preInfo.getMinPre();
+                }
+                //subscriptInstances[i].getShortCodePreInfo().getType(subscriptInstance.getPreInfoMap().get
+                // (subscriptInstances[i].getCodeLengthTemp())getMinPre())
+                if (sign && this.subscriptInstances[pre].isNotUseWordSign() && !(!this.subscriptInstances[pre].isUseSign() && this.subscriptInstances[i].isUseSign())) {
+                    this.subscriptInstances[pre].setType(this.subscriptInstances[i].getShortCodePreInfo().getType(pre));
+                    this.subscriptInstances[pre].setNext(i);
+                    this.subscriptInstances[pre].setUseWordSign(true);
+                    for (int i2 = pre; i2 <= i; i2++) {
+                        this.subscriptInstances[pre].setUseSign(true);
                     }
-                    //subscriptInstances[i].getShortCodePreInfo().getType(subscriptInstance.getPreInfoMap().get(subscriptInstances[i].getCodeLengthTemp())getMinPre())
-                    if (sign && this.subscriptInstances[pre].isNotUseWordSign() && !(!this.subscriptInstances[pre].isUseSign() && this.subscriptInstances[i].isUseSign())) {
-                        this.subscriptInstances[pre].setType(this.subscriptInstances[i].getShortCodePreInfo().getType(pre));
-                        this.subscriptInstances[pre].setNext(i);
-                        this.subscriptInstances[pre].setUseWordSign(true);
-                        for (int i2 = pre; i2 <= i; i2++) {
-                            this.subscriptInstances[pre].setUseSign(true);
+                }
+                for (Integer key : subscriptInstance.getPreInfoMap().keySet()) {
+                    SubscriptInstance.PreInfo preinfo = this.subscriptInstances[i].getPreInfoMap().get(key);
+                    for (int preTemp : preinfo.getPre().keySet()) {
+                        if (preTemp > pre && this.subscriptInstances[preTemp].isNotUseWordSign()) {
+                            this.subscriptInstances[preTemp].setNext(i);
+                            this.subscriptInstances[preTemp].setType(preinfo.getType(preTemp));
                         }
                     }
-                    for (Integer key : subscriptInstance.getPreInfoMap().keySet()) {
-                        SubscriptInstance.PreInfo preinfo = this.subscriptInstances[i].getPreInfoMap().get(key);
-                        for (int preTemp : preinfo.getPre().keySet()) {
-                            if (preTemp > pre && this.subscriptInstances[preTemp].isNotUseWordSign()) {
-                                this.subscriptInstances[preTemp].setNext(i);
-                                this.subscriptInstances[preTemp].setType(preinfo.getType(preTemp));
-                            }
-                        }
-                    }
-                    if (sign) {
-                        i = pre;
-                    }
+                }
+                if (sign) {
+                    i = pre;
                 }
             }
         } catch (Exception e) {
