@@ -161,7 +161,7 @@ public abstract class AbstractTextTip {
 					code = code.substring(0, this.codeLength);
 				}
 				phraseNum++;
-				char c = code.charAt(codeLen - 1);
+                char c = code.charAt(code.length() - 1);
 				if (c != '_' && regex.indexOf(c) != -1) {
 					int clen = codeLen - 1;
 					switch (clen) {
