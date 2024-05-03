@@ -56,7 +56,7 @@ public class TipSettingPanel extends SettingPanel {
 		QRActionRegister tipLoadAction = es -> {
 			TextTip.TEXT_TIP.release();
 			TextTip.TEXT_TIP.load();
-			if (InputManager.loaded) {
+			if (InputManager.INPUT_MANAGER.isLoaded()) {
 				InputManager.INPUT_MANAGER.tipUpdate();
 			}
 		};

@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class InputManager {
 
     public static final InputManager INPUT_MANAGER = new InputManager();
-    public static boolean loaded = false;
+    private static boolean loaded = false;
     private InputWindow inputWindow;
     TreeMap<String, ArrayList<String>> dictMap;
     private boolean isSmMethod = false;
@@ -47,16 +47,21 @@ public class InputManager {
     private InputManager() {
     }
 
+    public boolean isLoaded() {
+        return loaded && inputWindow != null && inputWindow.isFocused();
+    }
+
     public void tipUpdate() {
-        selections = Keys.strValue(Keys.TEXT_TIP_SELECTION);
-        selections = selections.startsWith("_") ? selections : "_".concat(selections);
+//        selections = Keys.strValue(Keys.TEXT_TIP_SELECTION);
+//        selections = selections.startsWith("_") ? selections : "_".concat(selections);
+        selections = "_234567890";
         int cl = Keys.intValue(Keys.TEXT_TIP_CODE_LENGTH);
         this.codeLength = cl > 0 ? 3 : 4;
         this.three42 = cl == 2;
     }
 
     public void init() {
-        QRSwing.setGlobalSetting(Keys.INPUT_CODE_DICT_PATH, "C:\\Users\\Kiarelemb QR\\Documents\\rime\\SM.dict.yaml");
+        QRSwing.setGlobalSetting(Keys.INPUT_CODE_DICT_PATH, "D:\\backup\\smb.txt");
 
         //region 读取码表等操作
         String filePath = Keys.strValue(Keys.INPUT_CODE_DICT_PATH);

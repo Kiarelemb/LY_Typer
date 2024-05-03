@@ -24,11 +24,7 @@ public class TextTip extends AbstractTextTip {
                 char charTemp = strTemp.toCharArray()[0];
                 codeTemp = this.wordCode.get(strTemp);
                 if (codeTemp == null) {
-                    if (symbol.contains(strTemp)) {
-                        codeTemp = strTemp;
-                    } else {
-                        codeTemp = "?".repeat(this.codeLength);
-                    }
+                    codeTemp = strTemp;
                 } else {
                     int codeLen = codeTemp.length();
                     if (articleLength > i + 1 && codeTemp.endsWith("_")

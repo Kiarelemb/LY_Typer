@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "8.0.1.0.199" Java: "17.0.5" encoding: "UTF-8"
+JFDML JFormDesigner: "8.2.3.0.386" Java: "17.0.10" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -213,6 +213,18 @@ new FormModel {
 				"y": 215
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRCheckBox" ) {
+				name: "phraseCountCombo"
+				"text": "词率"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 90
+				"height": 30
+				"x": 45
+				"y": 260
+			} )
+			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRCheckBox" ) {
 				name: "simplifyModelCheckBox"
 				"text": "极简模式"
 				"toolTipText": "极简模式的成绩单只有一行，能尽最大可能减少刷屏程度。"
@@ -235,8 +247,8 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 75
 				"height": 30
-				"x": 45
-				"y": 265
+				"x": 200
+				"y": 260
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRTextField" ) {
 				name: "inputMethodTextField"
@@ -244,10 +256,10 @@ new FormModel {
 					"JavaCodeGenerator.variableLocal": true
 				}
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
+				"x": 290
 				"y": 260
 				"height": 30
-				"width": 320
+				"width": 150
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "signTipLabel"
@@ -260,7 +272,7 @@ new FormModel {
 				"width": 75
 				"height": 30
 				"x": 45
-				"y": 310
+				"y": 350
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRTextField" ) {
 				name: "signTextField"
@@ -271,7 +283,7 @@ new FormModel {
 				"width": 320
 				"height": 30
 				"x": 120
-				"y": 305
+				"y": 350
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "keyBoardTipLabel"
@@ -283,8 +295,8 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 75
 				"height": 30
-				"x": 45
-				"y": 355
+				"x": 200
+				"y": 305
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRTextField" ) {
 				name: "keyBoardTextField"
@@ -292,10 +304,10 @@ new FormModel {
 					"JavaCodeGenerator.variableLocal": true
 				}
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 320
+				"width": 150
 				"height": 30
-				"x": 120
-				"y": 350
+				"x": 290
+				"y": 305
 			} )
 			add( new FormComponent( "swing.qr.kiarelemb.component.basic.QRLabel" ) {
 				name: "typeMethodTipLabel"
