@@ -215,7 +215,6 @@ public final class TypedData implements Serializable {
 				", remainingWordsCount=" + remainingWordsCount +
 				", perLength=" + perLength +
 				", paraNum=" + paraNum +
-				", currentText='" + currentText + '\'' +
 				", sendData=" + sendData +
 				'}';
 	}

@@ -81,6 +81,4 @@ public class TextSendManager {
 		ForeParaTextItem.FORE_PARA_TEXT_ITEM.setEnabled(enable);
 		NextParaTextItem.NEXT_PARA_TEXT_ITEM.setEnabled(enable);
 	}
-
-
 }
