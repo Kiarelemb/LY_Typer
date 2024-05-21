@@ -28,7 +28,8 @@ public class ContinueSendTextItem extends MenuItem {
 	protected void actionEvent(ActionEvent o) {
 		LinkedList<File> list = new LinkedList<>();
 		QRFileUtils.dirLoop(Info.TYPE_DIRECTORY, file -> {
-			if (".bin".equals(QRFileUtils.getFileExtension(file))) {
+			if (".bin".equals(QRFileUtils.getFileExtension(file))
+					&& QRFileUtils.fileExists(Info.TYPE_DIRECTORY + QRFileUtils.getFileName(file) + ".txt")) {
 				list.add(file);
 			}
 		});
@@ -41,6 +42,7 @@ public class ContinueSendTextItem extends MenuItem {
 		if (size == 1) {
 			if (TextSendManager.loadSerializedData(list.getFirst().getName())) {
 				TextSendManager.setTypedData(TextSendManager.data());
+				System.out.println("TextSendManager.data() = " + TextSendManager.data());
 				return;
 			}
 		}

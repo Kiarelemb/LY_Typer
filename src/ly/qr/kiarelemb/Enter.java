@@ -48,7 +48,8 @@ public class Enter {
 		//region 全局界面字体
 		Font font = null;
 		String[] names = QRFontUtils.getSystemFontNames();
-		if (Keys.boolValue(Keys.TEXT_FONT_NAME_GLOBAL_ENABLE)) {
+		boolean fontEnable = Keys.boolValue(Keys.TEXT_FONT_NAME_GLOBAL_ENABLE);
+		if (fontEnable) {
 			String fontNameOrPath = Keys.strValue(Keys.TEXT_FONT_NAME_GLOBAL);
 			if (QRFileUtils.fileExists(fontNameOrPath)) {
 				font = QRFontUtils.loadFontFromFile(10, fontNameOrPath);
@@ -57,6 +58,7 @@ public class Enter {
 			}
 		}
 		if (font == null) {
+			//全局默认字体即为阿里巴巴普惠体
 			font = TextStyleManager.DEFAULT_FONT;
 		}
 		QRSwing.customFontName(font);

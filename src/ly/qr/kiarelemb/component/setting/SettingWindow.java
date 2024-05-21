@@ -57,7 +57,7 @@ public class SettingWindow extends QRDialog {
         //需要记录哪些节点展开了，哪些又没展开
         tree.expendAll();
 
-        QRTreeTabbedPane treeTabbedPane = new QRTreeTabbedPane(tree, BorderLayout.WEST) {
+        QRTreeTabbedPane treeTabbedPane = new QRTreeTabbedPane(tree) {
             @Override
             public void componentFresh() {
                 super.componentFresh();

@@ -54,6 +54,7 @@ public class ComboBox extends QRComboBox {
 
     public static class FontComboBox extends QRFontComboBox {
         public FontComboBox(String key) {
+            super(false);
             String value = Keys.strValue(key);
             if (value != null) {
                 setText(value);

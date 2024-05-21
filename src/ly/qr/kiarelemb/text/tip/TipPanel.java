@@ -61,7 +61,7 @@ public class TipPanel extends QRPanel {
 				if (charData != null) {
 					//更新字体
 					final String tpC = StyleConstants.getFontFamily(charData.getStyle());
-					Font font = QRFontUtils.fontMap.computeIfAbsent(tpC, t -> QRFontUtils.getFont(t, 20));
+					Font font = QRFontUtils.FONT_MAP.computeIfAbsent(tpC, t -> QRFontUtils.getFont(t, 20));
 					if (this.singleWordLabel.getFont() != font) {
 						this.singleWordLabel.setFont(font);
 						this.phraseWordLabel.setFont(font);
