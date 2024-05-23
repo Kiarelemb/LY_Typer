@@ -11,7 +11,6 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRFontUtils;
-import method.qr.kiarelemb.utils.QRTimeCountUtil;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
@@ -57,7 +56,6 @@ public class AppearancePanel extends SettingPanel {
         Spinner lookSizeSpinner = new Spinner(Keys.TEXT_FONT_SIZE_LOOK);
         QRLabel typeFontTipLabel = new QRLabel("跟打区字体：");
         QRComboBox typeFontsComboBox = new ComboBox.FontComboBox(Keys.TEXT_FONT_NAME_TYPE);
-//		QRRoundButton typeFontSelectBtn = new QRRoundButton("选择字体文件");
         QRLabel typeFontSizeTip = new QRLabel("大小：");
         Spinner typeSizeSpinner = new Spinner(Keys.TEXT_FONT_SIZE_TYPE);
         QRLineSeparatorLabel splitLabel2 = new QRLineSeparatorLabel(0.8d);
@@ -105,36 +103,27 @@ public class AppearancePanel extends SettingPanel {
             });
         });
 
-
-        QRTimeCountUtil qcu = new QRTimeCountUtil((short) 100);
         frameFontsComboBox.addItemChangeListener(e -> {
-            //去重
-            if (qcu.isPassedMmTime()) {
-                QRItemEvent event = (QRItemEvent) e;
-                SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, event.after());
-                QRSwing.customFontName(event.after());
-                MainWindow.INSTANCE.componentFresh();
-                qcu.startTimeUpdate();
-                //如果取消，则恢复之前的字体
-                SettingsItem.CANCEL_ACTIONS.putIfAbsent("window.font", es -> {
-                    if (!fontBackup.getFontName().equals(event.after())) {
-                        QRSwing.customFontName(fontBackup);
-                        MainWindow.INSTANCE.componentFresh();
-                    }
-                });
-            }
+            QRItemEvent event = (QRItemEvent) e;
+            SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, event.after());
+            QRSwing.customFontName(event.after());
+            MainWindow.INSTANCE.componentFresh();
+            //如果取消，则恢复之前的字体
+            SettingsItem.CANCEL_ACTIONS.putIfAbsent("window.font", es -> {
+                if (!fontBackup.getFontName().equals(event.after())) {
+                    QRSwing.customFontName(fontBackup);
+                    MainWindow.INSTANCE.componentFresh();
+                }
+            });
         });
 
-        fontSelectBtn.addClickAction(e -> {
-            QRFileUtils.fileSelect(window, "字体文件", file -> {
-                Font font = QRFontUtils.loadFontFromFile(10, file);
-                QRSwing.customFontName(font);
-                MainWindow.INSTANCE.componentFresh();
-                SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, file.getAbsolutePath());
-                frameFontsComboBox.setText(font.getFamily());
-            }, "ttf", "ttc");
-//			System.out.println("----------------------------------------------------------------------");
-        });
+        fontSelectBtn.addClickAction(e -> QRFileUtils.fileSelect(window, "字体文件", file -> {
+            Font font = QRFontUtils.loadFontFromFile(10, file);
+            QRSwing.customFontName(font);
+            MainWindow.INSTANCE.componentFresh();
+            SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, file.getAbsolutePath());
+            frameFontsComboBox.setText(font.getFamily());
+        }, "ttf", "ttc"));
         //endregion 全局字体设置
 
         QRComponentUtils.setBoundsAndAddToComponent(this, themeTipLabel, 25, 30, 60, 30);

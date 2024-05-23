@@ -65,8 +65,7 @@ public class Enter {
 		//endregion 全局界面字体
 
 		//提前加载一遍试试
-		SettingWindow w = new SettingWindow();
-		w.setVisible(false);
+        SettingWindow.INSTANCE.setVisible(false);
 
 		//加载一下词提
 		TextTip.TEXT_TIP.load();

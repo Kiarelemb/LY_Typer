@@ -24,9 +24,11 @@ import java.awt.event.ActionEvent;
  * @create 2023-01-30 12:51
  **/
 public class SettingWindow extends QRDialog {
+    public static final SettingWindow INSTANCE = new SettingWindow();
     private boolean sure = false;
 
-    public SettingWindow() {
+
+    private SettingWindow() {
         super(MainWindow.INSTANCE);
         setTitle("设置");
         setTitlePlace(QRDialog.CENTER);

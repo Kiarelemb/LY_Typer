@@ -33,7 +33,7 @@ public class SettingsItem extends MenuItem {
 		CHANGE_MAP.clear();
 		SAVE_ACTIONS.clear();
 		CANCEL_ACTIONS.clear();
-		SettingWindow window = new SettingWindow();
+        SettingWindow window = SettingWindow.INSTANCE;
 		window.setLocationRelativeTo(MainWindow.INSTANCE);
 		window.setVisible(true);
 		if (window.save()) {
