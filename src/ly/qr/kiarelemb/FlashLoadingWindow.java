@@ -23,7 +23,7 @@ public class FlashLoadingWindow extends QREmptyDialog {
 	private static class TextLabel extends QRLabel {
 		public TextLabel(String text) {
 			super(text);
-			setFont(QRFontUtils.getFontInSize(25));
+			setFont(QRColorsAndFonts.MENU_ITEM_DEFAULT_FONT.deriveFont(25f));
 			setForeground(new Color(235, 235, 235));
 			setHorizontalAlignment(SwingConstants.CENTER);
 		}
@@ -88,12 +88,12 @@ public class FlashLoadingWindow extends QREmptyDialog {
 		this.mainPanel.add(imageLabel, BorderLayout.CENTER);
 //        flashImage = ImageIO.read(Objects.requireNonNull());
 //
-		imageLabel.setIcon(new ImageIcon(Info.FLASH_PATH));
+		imageLabel.setIcon(Info.loadImage(Info.FLASH_PATH));
 //        imageLabel.setIcon(new ImageIcon(FLASH_PATH));
 		imageLabel.setLayout(null);
 
 		TextLabel qiLabel = new TextLabel("揽月跟打器");
-		qiLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		qiLabel.setTextRight();
 
 		this.loadingInfoLabel = new QRLabel();
 		final Color foreColor = new Color(235, 235, 235);
@@ -107,7 +107,7 @@ public class FlashLoadingWindow extends QREmptyDialog {
 
 //		qiLabel.setBounds(10, 217, 150, 30);//37
 //		versionLabel.setBounds(10, 190, 100, 30);
-		qiLabel.setBounds(10, 10, 150, 30);//37
+		qiLabel.setBounds(10, 20, 530, 30);//37
 		versionLabel.setBounds(475, 10, 100, 30);
 //        loadingInfoLabel.setBounds(10, 297, 250, 23);
 		this.loadingInfoLabel.setBounds(10, 5, 450, 23);
@@ -118,7 +118,7 @@ public class FlashLoadingWindow extends QREmptyDialog {
 
 
 //        imageLabel.add(IconLabel);
-//		imageLabel.add(qiLabel);
+		imageLabel.add(qiLabel);
 		imageLabel.add(this.loadingInfoLabel);
 //		imageLabel.add(versionLabel);
 

@@ -5,13 +5,14 @@ import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRScrollPane;
-import swing.qr.kiarelemb.component.basic.QRTextPane;
+import swing.qr.kiarelemb.component.basic.QRTextArea;
 import swing.qr.kiarelemb.component.listener.QRWindowListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 import swing.qr.kiarelemb.window.basic.QRFrame;
 
 import javax.swing.*;
+import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -57,7 +58,7 @@ public class DangLangWindow extends QRDialog {
 		setLocation(parent.getX() - getWidth() - 10, parent.getY());
 	}
 
-	public static class LogTextPane extends QRTextPane {
+	public static class LogTextPane extends QRTextArea {
 		final SimpleAttributeSet CHINESE_SET;
 		final SimpleAttributeSet ENGLISH_SET;
 
@@ -67,9 +68,7 @@ public class DangLangWindow extends QRDialog {
 			ENGLISH_SET = QRComponentUtils.getSimpleAttributeSet(TextStyleManager.PREFERRED_ENGLISH_FONT_NAME,
 					QRColorsAndFonts.STANDARD_FONT_TEXT.getSize(), QRColorsAndFonts.STANDARD_FONT_TEXT.getStyle(),
 					QRColorsAndFonts.TEXT_COLOR_FORE, QRColorsAndFonts.FRAME_COLOR_BACK);
-			setLineSpacing(0.6f);
-			setEditableFalseButCursorEdit();
-			addScrollPane().addLineNumberModelForTextPane().setCustomAdjust(true);
+			setEditable(false);
 		}
 
 		public void noneChinesePrint(String text) {
@@ -83,7 +82,6 @@ public class DangLangWindow extends QRDialog {
 		public void noneChinesePrintln(String text) {
 			print(QRStringUtils.AN_ENTER.concat(text), ENGLISH_SET);
 			SwingUtilities.invokeLater(() -> {
-				addScrollPane().addLineNumberModelForTextPane().adjustWidth();
 				JScrollBar bar = scrollPane.getVerticalScrollBar();
 				int max = bar.getMaximum();
 				bar.setValue(max);
@@ -92,6 +90,15 @@ public class DangLangWindow extends QRDialog {
 
 		public void chinesePrintln(String text) {
 			print(QRStringUtils.AN_ENTER.concat(text), CHINESE_SET);
+		}
+
+		public void print(String text, SimpleAttributeSet attributeSet) {
+			try {
+				Document model = getDocument();
+				model.insertString(model.getLength(), text, attributeSet);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

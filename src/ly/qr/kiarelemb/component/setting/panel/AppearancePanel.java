@@ -81,6 +81,8 @@ public class AppearancePanel extends SettingPanel {
                 if (!QRSwing.theme.equals(themeBackup)) {
                     QRSwing.setTheme(themeBackup);
                     MainWindow.INSTANCE.componentFresh();
+                    SettingWindow.INSTANCE.componentFresh();
+                    themeComboBox.setText(QRSwing.theme);
                 }
             });
             setCursorDefault();

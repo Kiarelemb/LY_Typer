@@ -66,19 +66,19 @@ public class GradeSendPanel extends SettingPanel {
 		action.action(null);
 		simplifyModelCheckBox.addClickAction(action);
 
-		selectAllBtn.addActionListener(e -> {
+		selectAllBtn.addClickAction(e -> {
 			for (CheckBox box : boxes) {
 				box.setSelected(true);
 			}
 		});
 
-		notSelectAllBtn.addActionListener(e -> {
+		notSelectAllBtn.addClickAction(e -> {
 			for (CheckBox box : boxes) {
 				box.setSelected(false);
 			}
 		});
 
-		reverseSelectionBtn.addActionListener(e -> {
+		reverseSelectionBtn.addClickAction(e -> {
 			for (CheckBox box : boxes) {
 				box.setSelected(!box.checked());
 			}

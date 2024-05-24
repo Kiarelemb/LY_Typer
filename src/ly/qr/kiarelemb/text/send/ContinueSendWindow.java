@@ -60,7 +60,7 @@ public class ContinueSendWindow extends QRDialog {
         });
 
         QRComponentUtils.setBoundsAndAddToComponent(mainPanel, listTabbedPane, 10, 10, 500, 350);
-        QRComponentUtils.setBoundsAndAddToComponent(mainPanel, sureButton, 450, 310, 80, 40);
+        QRComponentUtils.setBoundsAndAddToComponent(mainPanel, sureButton, 445, 310, 80, 40);
     }
 
     static class ListContentPanel extends QRTabbedContentPanel {
@@ -80,7 +80,9 @@ public class ContinueSendWindow extends QRDialog {
 
 
             setLayout(null);
+
             previewTextArea.setText(data.currentText());
+            previewTextArea.setEditable(true);
             paraNumComboBox.setText(String.valueOf(data.perLength()));
 
             QRComponentUtils.setBoundsAndAddToComponent(this, fileNameTip, 10, 5, 105, 30);

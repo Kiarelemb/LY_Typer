@@ -2,11 +2,11 @@ package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.component.menu.send.panel.InnerArticleTextTabbedPanel;
 import ly.qr.kiarelemb.component.menu.send.panel.LocalTextSendTextTabbedPanel;
-import ly.qr.kiarelemb.component.menu.send.panel.SendTextTabbedContentPanel;
 import ly.qr.kiarelemb.component.menu.send.panel.SingleSendTextTabbedPanel;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.send.SendWindow;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
 import swing.qr.kiarelemb.component.combination.QRTabbedPane;
 
 /**
@@ -19,9 +19,9 @@ import swing.qr.kiarelemb.component.combination.QRTabbedPane;
 public class SendTextTabbedPane extends QRTabbedPane {
 	public SendTextTabbedPane(SendWindow window) {
 
-		SendTextTabbedContentPanel singlePanel = new SingleSendTextTabbedPanel(window);
-		SendTextTabbedContentPanel innerArticlePanel = new InnerArticleTextTabbedPanel(window);
-		SendTextTabbedContentPanel localTextPanel = new LocalTextSendTextTabbedPanel(window);
+		QRTabbedContentPanel singlePanel = new SingleSendTextTabbedPanel(window);
+		QRTabbedContentPanel innerArticlePanel = new InnerArticleTextTabbedPanel(window);
+		QRTabbedContentPanel localTextPanel = new LocalTextSendTextTabbedPanel(window);
 
 		int singleIndex = addTab("单字发文", singlePanel);
 		int articleIndex = addTab("内置发文", innerArticlePanel);

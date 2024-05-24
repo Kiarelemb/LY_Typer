@@ -173,7 +173,7 @@ public class WindowPanel extends SettingPanel {
 				this.textField.setText(this.backgroundImagePathBackup);
 			}
 
-			sureBtn.addActionListener(e -> sureBtnAction());
+			sureBtn.addClickAction(e -> sureBtnAction());
 			sureBtn.setEnabled(fileExists || this.backgroundImagePathBackup == null || this.backgroundImagePathBackup.isEmpty());
 
 			QRFileSelectButton selectBtn = new QRFileSelectButton(this, "图片文件", "jpg", "png", "jpeg", "jfif") {

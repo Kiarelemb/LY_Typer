@@ -82,7 +82,7 @@ public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
 		QRComponentUtils.setBoundsAndAddToComponent(this, startParaCbx, 130, 120, 130, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, paraWordLabel, 25, 165, 95, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, paraWordCbx, 130, 165, 130, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, startBtn, 300, 165, 75, 35);
+		QRComponentUtils.setBoundsAndAddToComponent(this, startBtn, 300, 160, 75, 35);
 		//endregion 位置与添加
 
 	}

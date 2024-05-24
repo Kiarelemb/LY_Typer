@@ -32,7 +32,7 @@ public class Info {
 	//    public static final boolean isWindows = SYSTEM_NAME.contains("Windows");
 	public static final boolean IS_WINDOWS = SYSTEM_NAME.contains("Windows");
 	public static final boolean IS_MAC = SYSTEM_NAME.toLowerCase().contains("mac");
-	public static final String FLASH_PATH = PICK_DIRECTORY + "flash.png";
+	public static final String FLASH_PATH = "flash.png";
 	public static final String ICON_PNG_PATH = "icon.png";
 	public static final String ICON_TRAY_PATH = "tray.png";
 	public static final String SPEED_ICON = "speed.png";
