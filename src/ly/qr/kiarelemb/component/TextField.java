@@ -13,26 +13,29 @@ import javax.swing.event.DocumentEvent;
  * @create 2023-02-01 14:59
  **/
 public class TextField extends QRTextField {
-	private final String key;
+    private final String key;
 
-	public TextField(String key) {
-		super(Keys.strValue(key));
-		addDocumentListener();
-		this.key = key;
-	}
+    public TextField(String key) {
+        String s = Keys.strValue(key);
+        if (s != null) {
+            setText(s);
+        }
+        addDocumentListener();
+        this.key = key;
+    }
 
-	@Override
-	protected void insertUpdate(DocumentEvent e) {
-		changedUpdate(e);
-	}
+    @Override
+    protected void insertUpdate(DocumentEvent e) {
+        changedUpdate(e);
+    }
 
-	@Override
-	protected void removeUpdate(DocumentEvent e) {
-		changedUpdate(e);
-	}
+    @Override
+    protected void removeUpdate(DocumentEvent e) {
+        changedUpdate(e);
+    }
 
-	@Override
-	protected void changedUpdate(DocumentEvent e) {
-		SettingsItem.CHANGE_MAP.put(this.key, getText());
-	}
+    @Override
+    protected void changedUpdate(DocumentEvent e) {
+        SettingsItem.CHANGE_MAP.put(this.key, getText());
+    }
 }

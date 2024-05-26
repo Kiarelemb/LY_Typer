@@ -69,13 +69,13 @@ public final class TypedData implements Serializable {
         if (sendData == null || startIndex <= 0) {
             return this;
         }
-
         // 段号
         if (paraNumRandom) {
             paraNum = QRRandomUtils.getRandomInt(100000, 999999);
         } else {
             paraNum--;
         }
+        currentText = sendData.text();
         remainingWordsCount += currentText.length();
         return this;
     }
@@ -85,7 +85,6 @@ public final class TypedData implements Serializable {
                 TypingData.textLoadIntelli);
         // 上一段的结束位置
         startIndex -= sendData.typeTextByteLen();
-//		System.out.println("currentText = " + currentText);
         return getSendParaText();
     }
 
@@ -112,13 +111,13 @@ public final class TypedData implements Serializable {
     public String nextParaText() {
         sendData = QRFileUtils.fileReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
                 TypingData.textLoadIntelli);
+        currentText = sendData.text();
         remainingWordsCount -= currentText.length();
         return getSendParaText();
     }
 
     private String getSendParaText() {
         String fore = fileName + "\n";
-        currentText = sendData.text();
         String ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
                 + QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
         TextSendManager.save();

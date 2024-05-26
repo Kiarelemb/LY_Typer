@@ -2,7 +2,6 @@ package ly.qr.kiarelemb.text;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
@@ -88,12 +87,7 @@ public class TextLoad {
 			this.paragraph = spaceFormattedText.substring(diIndex, duanIndex);
 			this.para = Integer.parseInt(this.paragraph);
 			//正文稍微格式化后的内容
-			String tmp = (threePara ? spaceFormattedText.substring(firstln, lastln) : spaceFormattedText.substring(0, lastln)).trim();
-			String actualContent = switch (Keys.intValue(Keys.TEXT_SIMPLE_TRADITIONAL_CONVERT)) {
-				case 1 -> QRStringUtils.isTraditionalChinese(tmp) ? QRStringUtils.convertToSimplifiedChinese(tmp) : tmp;
-				case 2 -> QRStringUtils.isSimplifiedChinese(tmp) ? QRStringUtils.convertToTraditionalChinese(tmp) : tmp;
-				default -> tmp;
-			};
+			String actualContent = (threePara ? spaceFormattedText.substring(firstln, lastln) : spaceFormattedText.substring(0, lastln)).trim();
 			//是否是英文
 			this.isEnglish = QRStringUtils.isEnglish(actualContent);
 			//打字文本格式化后的内容

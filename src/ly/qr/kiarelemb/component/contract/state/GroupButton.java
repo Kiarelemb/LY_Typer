@@ -28,9 +28,11 @@ public class GroupButton extends QRRoundButton {
     public static final GroupButton groupBtn = new GroupButton();
 
     private GroupButton() {
-        super(Keys.strValue(Keys.QUICK_KEY_GROUP) + " / 点击换群");
-        setToolTipText(Keys.strValue(Keys.QUICK_KEY_GROUP) + " / 点击换群");
-        QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_GROUP),
+        String key = Keys.strValue(Keys.QUICK_KEY_GROUP);
+        String[] keys = key.split(",");
+        setText(keys[0] + " / 点击换群");
+        setToolTipText(key + " / 点击换群");
+        QRSwing.registerGlobalAction(key,
                 e -> GroupButton.groupBtn.clickInvokeLater(), true);
     }
 

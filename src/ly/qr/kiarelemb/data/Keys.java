@@ -243,10 +243,6 @@ public class Keys {
      */
     public static final String TEXT_FONT_NAME_GLOBAL_ENABLE = "text.font.name.global.enable";
     /**
-     * 启用窗体透明，{@code false} （默认）不启用，{@code true} 启用
-     */
-    public static final String WINDOW_TRANSPARENCY_ENABLE = "window.transparency.enable";
-    /**
      * 启用窗体背景图片，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String WINDOW_BACKGROUND_IMAGE_ENABLE = "window.background.image.enable";
@@ -378,6 +374,8 @@ public class Keys {
             put(TEXT_FONT_SIZE_LOOK, "28");
             put(TEXT_FONT_SIZE_TYPE, "28");
             put(TYPE_STATISTICS_UPDATE, "0");
+            put(TYPE_WORD_TOTAL, "0");
+            put(TYPE_WORD_TODAY, "0");
             put(TYPE_FINISH_MODEL, "3");
             put(TYPE_WORD_AUTO_SAVE_MINUTE, "5");
             put(TYPE_KEY_METHOD_SPACE, "0");
@@ -426,7 +424,6 @@ public class Keys {
             put(WINDOW_COLUMN_FOLD_PARA_INFO, "false");
             put(WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, "true");
             put(TEXT_FONT_NAME_GLOBAL_ENABLE, "false");
-            put(WINDOW_TRANSPARENCY_ENABLE, "false");
             put(TEXT_FONT_NAME_LOOK, "黑体");
             put(TEXT_FONT_NAME_TYPE, "黑体");
             put(TEXT_FONT_NAME_GLOBAL, "阿里巴巴普惠体 R");
@@ -437,10 +434,10 @@ public class Keys {
             put(TEXT_TIP_COLOR_SIMPLIFIED_CODE_THREE, "0, 220, 220");
             put(TEXT_TIP_COLOR_CODE_ALL, "0, 153, 255");
             put(TYPE_WORD_TOTAL_LAST_UPDATE, QRTimeUtils.getDateNow());
-            put(TYPE_METHOD_INPUT, null);
-            put(TYPE_METHOD_KEYBOARD, null);
-            put(TYPE_SIGNATURE, null);
-            put(INPUT_CODE_DICT_PATH, null);
+            put(TYPE_METHOD_INPUT, "");
+            put(TYPE_METHOD_KEYBOARD, "");
+            put(TYPE_SIGNATURE, "");
+            put(INPUT_CODE_DICT_PATH, "");
             put(QUICK_KEY_NEW_SEND, "F2, alt 2");
             put(QUICK_KEY_RESTART, "F3, alt 3");
             put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4, alt 4");

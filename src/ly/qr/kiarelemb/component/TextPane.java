@@ -13,6 +13,7 @@ import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
+import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
@@ -92,7 +93,8 @@ public class TextPane extends QRTextPane {
 
     public void textFresh() {
         QRComponentUtils.runActions(this.setTextBeforeActions);
-        TextPane.super.setText(TextLoad.TEXT_LOAD.formattedActualText());
+        super.setText(null);
+        super.setText(TextLoad.TEXT_LOAD.formattedActualText());
         printTextStyleAfterSetText();
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions));
     }
@@ -293,7 +295,13 @@ public class TextPane extends QRTextPane {
                 this.writeBlock = false;
                 return;
             }
-            changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
+            if (TextTip.TEXT_TIP.loaded() && TextLoad.TEXT_LOAD.tipData != null) {
+                SimpleAttributeSet attributeSet = TextLoad.TEXT_LOAD.tipData.getForeAttributeSetExact(preIndex);
+                changeTextsStyle(preIndex, length, attributeSet, true);
+            } else {
+                changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
+            }
+//            changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
             setCaretPosition(preIndex);
         }
         TypingData.backDeleteCount++;
@@ -368,6 +376,7 @@ public class TextPane extends QRTextPane {
             TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
             DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
             TypingData.windowFresh();
+            MainWindow.INSTANCE.grabFocus();
         }
     }
 
