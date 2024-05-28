@@ -35,7 +35,7 @@ public class TipWindow extends QREmptyDialog {
         });
 
         TextPane.TEXT_PANE.addSetTextFinishedAction(e -> {
-            if (TypingData.tipEnable && TypingData.tipPanelEnable && TextLoad.TEXT_LOAD.tipData != null) {
+            if (TypingData.tipEnable && TextLoad.TEXT_LOAD.tipData != null) {
                 if (TypingData.tipWindowEnable) {
                     setVisible(true);
                     updateLocation();
@@ -49,7 +49,7 @@ public class TipWindow extends QREmptyDialog {
 
     @Override
     public void updateLocation() {
-        if (TextPane.TEXT_PANE.isShowing()) {
+        if (TipWindow.this.isVisible()) {
             pack();
             Point location = TextPane.TEXT_PANE.getLocationOnScreen();
             //位置跟随光标

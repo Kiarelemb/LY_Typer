@@ -275,7 +275,7 @@ public class TextLoad {
 	 * 文本乱序
 	 */
 	public void actualContentMix() {
-		//中英文文章不需要乱序
+        //英文文章不需要乱序
 		if (this.isEnglish && !this.isEnglishPhrase) {
 			return;
 		}
@@ -465,7 +465,6 @@ public class TextLoad {
 
 	public void reTypeTimesAdd() {
 		this.reTypeTimes++;
-//		INSTANCE.retypedTimesLabel.setText(reTypeTimes);
 	}
 
 	//endregion

@@ -28,6 +28,7 @@ import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -188,6 +189,7 @@ public class TextPane extends QRTextPane {
                     // 执行累积的字符操作
                     if (!accumulatedChars.isEmpty()) {
                         insertUpdateExecute(accumulatedChars.toString());
+                        TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
                         // 重置累积的字符
                         accumulatedChars.setLength(0);
                     }
@@ -264,7 +266,6 @@ public class TextPane extends QRTextPane {
 //				}
             }
         }
-        TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
     }
 
     public void deleteUpdates(KeyEvent e) {
@@ -448,6 +449,23 @@ public class TextPane extends QRTextPane {
     protected void mousePress(MouseEvent e) {
         caretPositionAdjust();
         MainWindow.INSTANCE.grabFocus();
+    }
+
+    private boolean paintLock = false;
+
+    @Override
+    public void paint(Graphics g) {
+        try {
+            if (paintLock) {
+                return;
+            }
+            paintLock = true;
+            super.paint(g);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            paintLock = false;
+        }
     }
 
     @Override

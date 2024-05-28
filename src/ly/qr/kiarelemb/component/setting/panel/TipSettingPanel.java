@@ -44,6 +44,7 @@ public class TipSettingPanel extends SettingPanel {
 		CheckBox paintSelectionCheckBox = new CheckBox("显示选重", Keys.TEXT_TIP_PAINT_SELECTION);
 		CheckBox paintCodeCheckBox = new CheckBox("显示编码", Keys.TEXT_TIP_PAINT_CODE);
 		CheckBox charModelEnableCheckBox = new CheckBox("单字启用", Keys.TEXT_TIP_CHAR_ENABLE);
+		CheckBox singlePhraseDevideCheckBox = new CheckBox("字词分行", Keys.TEXT_TIP_DIVIDE);
 
 		QRCheckBox tipPanelEnableCheckBox = new CheckBox("启用编码提示面板", Keys.TEXT_TIP_PANEL_ENABLE);
 		QRLabel tipPanelLocationLabel = new QRLabel("位置：");
@@ -94,27 +95,34 @@ public class TipSettingPanel extends SettingPanel {
 		tipPanelComboBox.addItemChangeListener(tipPanelAction);
 		tipWindowComboBox.addItemChangeListener(tipWindowAction);
 
+		singlePhraseDevideCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.divide",
+				es -> {
+					SplitPane.SPLIT_PANE.tipPanel.layoutUpdate();
+					TipWindow.TIP_WINDOW.tipPanel.layoutUpdate();
+				}));
+
 		QRComponentUtils.setBoundsAndAddToComponent(this, tipEnableCheckBox, 25, 30, 110, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, tipEnhanceModelCheckBox, 145, 30, 165, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, tipFileSelectBtn, 25, 110, 75, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, lineA, 30, 70, 455, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, tipFilePathLabel, 115, 110, 355, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, multiLabel, 25, 165, 75, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, selectionTextField, 115, 160, 130, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, selectionTextField, 115, 170, 130, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, codeLengthCheckBox, 25, 220, 150, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, lineB, 25, 275, 455, 22);
-		QRComponentUtils.setBoundsAndAddToComponent(this, showModelLabel, 25, 325, 95, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, paintColorCheckBox, 55, 370, 110, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, paintSelectionCheckBox, 55, 415, 110, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, paintCodeCheckBox, 55, 460, 110, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, charModelEnableCheckBox, 55, 505, 110, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelEnableCheckBox, 220, 370, 190, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelLocationLabel, 245, 415, 65, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelComboBox, 320, 415, 135, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, tipWindowEnableCheckBox, 220, 460, 190, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, lineB, 25, 265, 455, 22);
+		QRComponentUtils.setBoundsAndAddToComponent(this, showModelLabel, 25, 300, 95, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, paintColorCheckBox, 55, 345, 110, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, paintSelectionCheckBox, 55, 385, 110, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, paintCodeCheckBox, 55, 425, 110, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, charModelEnableCheckBox, 55, 465, 110, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelEnableCheckBox, 220, 345, 190, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelLocationLabel, 245, 400, 65, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelComboBox, 320, 400, 115, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, tipWindowEnableCheckBox, 220, 455, 190, 30);
 		QRComponentUtils.setBoundsAndAddToComponent(this, tipWindowLocationLabel, 245, 505, 65, 30);
-		QRComponentUtils.setBoundsAndAddToComponent(this, tipWindowComboBox, 320, 505, 135, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, tipWindowComboBox, 320, 505, 115, 30);
+		QRComponentUtils.setBoundsAndAddToComponent(this, singlePhraseDevideCheckBox, 55, 505, 110, 30);
 
-		setPreferredSize(505, 565);
+		setPreferredSize(505, 580);
 	}
 }
