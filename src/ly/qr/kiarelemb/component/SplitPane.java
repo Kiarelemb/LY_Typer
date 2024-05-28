@@ -4,6 +4,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.TipPanel;
+import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRPanel;
 import swing.qr.kiarelemb.component.basic.QRSplitPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
@@ -36,12 +37,12 @@ public class SplitPane extends QRSplitPane {
         setTopComponent(TextPane.TEXT_PANE.addScrollPane());
         setBottomComponent(TyperTextPane.TYPER_TEXT_PANE.addScrollPane());
 
-
         int value;
         try {
             value = Keys.intValue(Keys.WINDOW_SPLIT_WEIGHT);
         } catch (Exception e) {
             value = 300;
+            QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT, value);
         }
         setUI(new SplitPaneUI());
         setDividerLocation(value);
@@ -149,6 +150,7 @@ public class SplitPane extends QRSplitPane {
                     g.setColor(QRColorsAndFonts.LINE_COLOR);
                     Dimension size = getSize();
                     g.fillRect(0, 0, size.width, size.height);
+                    // 绘制当前跟打进度条
                     if (TextLoad.TEXT_LOAD != null && TypingData.currentTypedIndex >= 0) {
                         g.setColor(QRColorsAndFonts.DEFAULT_COLOR_LABEL);
                         int width = size.width * TypingData.currentTypedIndex / TextLoad.TEXT_LOAD.wordsLength();
@@ -156,8 +158,6 @@ public class SplitPane extends QRSplitPane {
                     }
                     super.paint(g);
                 }
-
-
             };
         }
     }

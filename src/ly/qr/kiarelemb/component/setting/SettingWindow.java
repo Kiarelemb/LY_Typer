@@ -5,6 +5,7 @@ import ly.qr.kiarelemb.component.Tree;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.setting.panel.*;
 import ly.qr.kiarelemb.data.Keys;
+import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.assembly.QRMutableTreeNode;
 import swing.qr.kiarelemb.component.basic.QRPanel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
@@ -111,12 +112,9 @@ public class SettingWindow extends QRDialog {
         };
 
         bottomPanel.setLayout(null);
-        sureBtn.setBounds(480, 10, 78, 30);
-        cancelBtn.setBounds(580, 10, 78, 30);
-        backToDefaultBtn.setBounds(5, 10, 180, 30);
-        bottomPanel.add(sureBtn);
-        bottomPanel.add(cancelBtn);
-        bottomPanel.add(backToDefaultBtn);
+        QRComponentUtils.setBoundsAndAddToComponent(bottomPanel, sureBtn, 480, 10, 78, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(bottomPanel, cancelBtn, 580, 10, 78, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(bottomPanel, backToDefaultBtn, 5, 10, 180, 30);
         //endregion 底部面板
 
         bottomPanel.setPreferredSize(700, 50);

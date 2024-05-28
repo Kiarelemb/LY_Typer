@@ -414,7 +414,7 @@ public class Keys {
             put(TEXT_TIP_PAINT_CODE, "false");
             put(TEXT_TIP_CHAR_ENABLE, "false");
             put(WINDOW_PAUSE_MINIMIZE, "true");
-            put(TYPE_MODEL_LOOK, "true");
+            put(TYPE_MODEL_LOOK, "false");
             put(TEXT_TYPE_BACKSPACE_AUTO_RESTART, "false");
             put(TYPE_SILKY_MODEL, "false");
             put(TYPE_DIVE_MODEL, "false");
@@ -424,8 +424,8 @@ public class Keys {
             put(WINDOW_COLUMN_FOLD_PARA_INFO, "false");
             put(WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, "true");
             put(TEXT_FONT_NAME_GLOBAL_ENABLE, "false");
-            put(TEXT_FONT_NAME_LOOK, "黑体");
-            put(TEXT_FONT_NAME_TYPE, "黑体");
+            put(TEXT_FONT_NAME_LOOK, "阿里巴巴普惠体 R");
+            put(TEXT_FONT_NAME_TYPE, "阿里巴巴普惠体 R");
             put(TEXT_FONT_NAME_GLOBAL, "阿里巴巴普惠体 R");
             put(TEXT_TIP_FILE_PATH, "当前未选择词提文件");
             put(TEXT_TIP_SELECTION, "_234567890");
