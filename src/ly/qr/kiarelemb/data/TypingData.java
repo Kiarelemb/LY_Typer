@@ -126,10 +126,6 @@ public class TypingData {
         pauseEndTime = 0L;
         typing = false;
         pausing = false;
-        ContractiblePanel.SPEED_LABEL.setText("0.0");
-        ContractiblePanel.KEY_STROKE_LABEL.setText("0.0");
-        ContractiblePanel.CODE_LEN_LABEL.setText("0.0");
-        ContractiblePanel.TIME_LABEL.setText("0.0");
         windowFresh();
     }
 

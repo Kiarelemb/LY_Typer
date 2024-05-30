@@ -8,6 +8,7 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
 import swing.qr.kiarelemb.window.basic.QREmptyDialog;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -29,7 +30,7 @@ public class TipWindow extends QREmptyDialog {
         this.contentPane.setLayout(new BorderLayout());
         this.contentPane.add(this.tipPanel);
         TyperTextPane.TYPER_TEXT_PANE.addTypeActions(e -> {
-            if (TipWindow.this.isVisible()) {
+            if (TypingData.tipWindowEnable) {
                 updateLocation();
             }
         });
@@ -49,24 +50,26 @@ public class TipWindow extends QREmptyDialog {
 
     @Override
     public void updateLocation() {
-        if (TipWindow.this.isVisible()) {
-            pack();
-            Point location = TextPane.TEXT_PANE.getLocationOnScreen();
-            //位置跟随光标
-            if (TypingData.tipWindowLocation == 0) {
-                Rectangle2D r2 = TextPane.TEXT_PANE.positionRectangle(TypingData.currentTypedIndex);
-                if (r2 != null) {
-                    Rectangle r = r2.getBounds();
-                    int x = location.x + r.x;
-                    int y = location.y + r.y - getHeight() - 5;
-                    setLocation(x, y);
+        if (TextPane.TEXT_PANE.isShowing()) {
+            SwingUtilities.invokeLater(() -> {
+                pack();
+                Point location = TextPane.TEXT_PANE.getLocationOnScreen();
+                //位置跟随光标
+                if (TypingData.tipWindowLocation == 0) {
+                    Rectangle2D r2 = TextPane.TEXT_PANE.positionRectangle(TypingData.currentTypedIndex);
+                    if (r2 != null) {
+                        Rectangle r = r2.getBounds();
+                        int x = location.x + r.x;
+                        int y = location.y + r.y - getHeight() - 5;
+                        setLocation(x, y);
+                    } else {
+                        setLocation(location.x + TextPane.INSECT, location.y + TextPane.INSECT - getHeight());
+                    }
                 } else {
-                    setLocation(location.x + TextPane.INSECT, location.y + TextPane.INSECT - getHeight());
+                    setLocation(MainWindow.INSTANCE.getX() + (MainWindow.INSTANCE.getWidth() - getWidth()) / 2, MainWindow.INSTANCE.getY() + 3);
                 }
-            } else {
-                setLocation(MainWindow.INSTANCE.getX() + (MainWindow.INSTANCE.getWidth() - getWidth()) / 2, MainWindow.INSTANCE.getY() + 3);
-            }
-            MainWindow.INSTANCE.grabFocus();
+                MainWindow.INSTANCE.grabFocus();
+            });
         }
     }
 

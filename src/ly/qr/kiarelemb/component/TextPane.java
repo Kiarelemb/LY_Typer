@@ -56,7 +56,6 @@ public class TextPane extends QRTextPane {
     private TextPane() {
         addMouseListener();
         addKeyListener();
-//		addMouseMotionListener();
         textPanelEditorKit = new TextPanelEditorKit(this);
         setEditorKit(textPanelEditorKit);
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
@@ -83,33 +82,36 @@ public class TextPane extends QRTextPane {
     }
 
     public void setTypeText(String text) {
-        if (text == null || text.isBlank()) {
+        if (text == null) {
             return;
         }
-        if (getTextLoadUpdate(text)) {
+        TextLoad tls = new TextLoad(text);
+        if (!tls.isText()) {
             return;
+        }
+        if (TextLoad.TEXT_LOAD == null || !TextLoad.TEXT_LOAD.textNotIsChanged(tls.formattedActualText())) {
+            TextLoad.TEXT_LOAD = tls;
         }
         textFresh();
     }
 
     public void textFresh() {
-        QRComponentUtils.runActions(this.setTextBeforeActions);
+        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextBeforeActions));
         super.setText(null);
-        super.setText(TextLoad.TEXT_LOAD.formattedActualText());
+        // 消除 alt+3 带来的瞬间红字
+        print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
         printTextStyleAfterSetText();
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions));
     }
 
     private void printTextStyleAfterSetText() {
-        if (TypingData.tipEnable && AbstractTextTip.TEXT_TIP.loaded() && !TextLoad.TEXT_LOAD.isEnglish()) {
-            if (Keys.boolValue(Keys.TEXT_TIP_PAINT_COLOR)) {
-                textPanelEditorKit.changeFontColor(TextLoad.TEXT_LOAD.tipData.tpsd);
-                return;
-            }
+        if (!TypingData.tipEnable || !AbstractTextTip.TEXT_TIP.loaded() || TextLoad.TEXT_LOAD.isEnglish()) {
+            return;
         }
-        changeTextsStyle(0, TextLoad.TEXT_LOAD.wordsLength(), TextStyleManager.getDefaultStyle(), true);
+        if (Keys.boolValue(Keys.TEXT_TIP_PAINT_COLOR)) {
+            textPanelEditorKit.changeFontColor(TextLoad.TEXT_LOAD.tipData.tpsd);
+        }
     }
-
 
     /**
      * 已被取代方法 {@link #printTextStyleAfterSetText()} 取代
@@ -146,15 +148,6 @@ public class TextPane extends QRTextPane {
             defaultStyle.addAttribute("UnderlineOpen", false);
             print(TextLoad.TEXT_LOAD.formattedActualText(), defaultStyle, 0);
         }
-    }
-
-    private boolean getTextLoadUpdate(String text) {
-        TextLoad tls = new TextLoad(text);
-        if (!tls.isText()) {
-            return true;
-        }
-        TextLoad.TEXT_LOAD = tls;
-        return false;
     }
 
     // 累积的字符
@@ -249,21 +242,13 @@ public class TextPane extends QRTextPane {
         if (TextLoad.TEXT_LOAD.wordsLength() == TypingData.currentTypedIndex) {
             //0是打完即可，1是打完无错，2是无错智能，3是可错智能
             if (TypingData.finishModel == TYPING_FINISH_MARK_OVER_DO_NOTING || (TypingData.finishModel == TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
-//				if (TextLoad.TEXT_LOAD.textNotIsChanged(getText())) {
                 //打字结束
                 if (!Info.IS_WINDOWS) {
                     MainWindow.INSTANCE.setAlwaysOnTop(false);
                 }
                 TypingData.typeEnd = true;
                 TypingData.typing = false;
-//				typeEnding();
                 typingEndThread.execute(this::typeEnding);
-//				endingScheduler.submit(this::typeEnding);
-//				} else {
-//					//Windows下可能因输入法的问题，而导致有人想在英打时打中文，进而使内容发生改变
-//					QRSmallTipShow.display(MainWindow.INSTANCE, "当前文本内容被修改，将自动重打！");
-//					QRSleepUtils.sleep(500);
-//				}
             }
         }
     }
@@ -282,7 +267,6 @@ public class TextPane extends QRTextPane {
             String deleteText = TextLoad.TEXT_LOAD.getWordPartsAtIndex(TypingData.currentTypedIndex);
             length = deleteText.length();
             int offset = index - length;
-//            replaceText(offset, deleteText, TextStyleManager.getDefaultStyle());
             changeTextsStyle(offset, length, TextStyleManager.getDefaultStyle(), true);
             setCaretPosition(offset);
             TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(TypingData.currentTypedIndex));
@@ -302,15 +286,12 @@ public class TextPane extends QRTextPane {
             } else {
                 changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
             }
-//            changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
             setCaretPosition(preIndex);
         }
         TypingData.backDeleteCount++;
         setCaretUnblock();
-        this.writeBlock = false;
         TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
-//		inputFollowedWindowsUpdate();
-//		textTipUpdate(true);
+        this.writeBlock = false;
     }
 
     public void typeEnding() {
@@ -454,7 +435,7 @@ public class TextPane extends QRTextPane {
     private boolean paintLock = false;
 
     @Override
-    public void paint(Graphics g) {
+    public synchronized void paint(Graphics g) {
         try {
             if (paintLock) {
                 return;
@@ -483,7 +464,7 @@ public class TextPane extends QRTextPane {
 
     @Override
     public void componentFresh() {
-        this.textFont = QRFontUtils.getFontInSize(Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
+        this.textFont = QRColorsAndFonts.STANDARD_FONT_TEXT.deriveFont((float) Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
         super.componentFresh();
     }
 }

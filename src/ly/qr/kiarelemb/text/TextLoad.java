@@ -65,7 +65,7 @@ public class TextLoad {
 
 
 	public TextLoad(String originalText) {
-		if (originalText.isEmpty() || originalText.isBlank()) {
+		if (originalText.isBlank()) {
 			return;
 		}
 		String spaceFormattedText = QRArrayUtils.spaceFormat(originalText);

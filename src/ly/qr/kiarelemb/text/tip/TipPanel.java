@@ -46,6 +46,7 @@ public class TipPanel extends QRPanel {
         TextPane.TEXT_PANE.addSetTextFinishedAction(updateAction);
     }
 
+
     public void tipUpdate() {
         if (TypingData.tipEnable) {
             TipData data = TextLoad.TEXT_LOAD.tipData;
@@ -113,10 +114,10 @@ public class TipPanel extends QRPanel {
                     this.phraseWordLabel.getFont()).getBounds();
             Rectangle phraseWordCodeBounds = QRFontUtils.getStringBounds(this.phraseWordCodeLabel.getText(),
                     this.phraseWordCodeLabel.getFont()).getBounds();
-            int phraseWidth = (int) (phraseWordBounds.getWidth() + phraseWordCodeBounds.getWidth() + this.gap * 2);
+            int phraseWidth = phraseWordBounds.width + phraseWordCodeBounds.width + this.gap * 2;
             if (Keys.boolValue(Keys.TEXT_TIP_DIVIDE)) {
                 height += phraseWordBounds.height + this.gap;
-                width = Math.max(width, phraseWidth);
+                width = Math.max(width, phraseWidth + this.gap * 2);
             } else {
                 width += phraseWidth;
             }
