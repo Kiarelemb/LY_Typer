@@ -2,6 +2,7 @@ package ly.qr.kiarelemb;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.SplitPane;
+import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.component.menu.about.HotMapItem;
 import ly.qr.kiarelemb.component.menu.send.*;
@@ -14,6 +15,7 @@ import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
+import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRButton;
 import swing.qr.kiarelemb.window.basic.QRFrame;
@@ -106,6 +108,8 @@ public class MainWindow extends QRFrame {
 	@Override
 	public void componentFresh() {
 		super.componentFresh();
+		TextStyleManager.updateAll();
+		TextPane.TEXT_PANE.simpleRestart();
 		if (MainWindow.INSTANCE.backgroundImageSet() && QRSwing.windowBackgroundImagePath != null) {
 			String path = QRSwing.windowBackgroundImagePath;
 			MainWindow.INSTANCE.setBackgroundImage(null);

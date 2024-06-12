@@ -98,6 +98,7 @@ public class SplitPane extends QRSplitPane {
     @Override
     public void componentFresh() {
         super.componentFresh();
+        setDividerLocation(Keys.intValue(Keys.WINDOW_SPLIT_WEIGHT));
         if (this.tipPanel != null) {
             updateTipPaneLocation();
         }

@@ -16,7 +16,6 @@ public final class TipPhraseStyleData {
 	private final int type;
 	private final boolean bold;
 	private final boolean shortPhrase;
-	private SimpleAttributeSet style = null;
 
 	/**
 	 *
@@ -32,14 +31,7 @@ public final class TipPhraseStyleData {
 
 
 	public SimpleAttributeSet getStyle() {
-		if (this.style == null) {
-			this.style = (SimpleAttributeSet) TextStyleManager.getDefinedStyle(this.type, this.bold, this.phrase, this.shortPhrase).copyAttributes();
-		}
-		return this.style;
-	}
-
-	public void setStyle(SimpleAttributeSet style) {
-		this.style = style;
+		return TextStyleManager.getDefinedStyle(this.type, this.bold, this.phrase, this.shortPhrase);
 	}
 
 	public String lastChar() {

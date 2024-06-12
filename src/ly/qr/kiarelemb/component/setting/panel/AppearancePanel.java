@@ -20,6 +20,7 @@ import swing.qr.kiarelemb.component.event.QRItemEvent;
 import swing.qr.kiarelemb.component.utils.QRFontComboBox;
 import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.theme.QRSwingThemeDesigner;
 
 import java.awt.*;
 
@@ -52,6 +53,11 @@ public class AppearancePanel extends SettingPanel {
                 });
             }
         };
+        themeDesignerBtn.addClickAction(e -> {
+            QRSwingThemeDesigner designer = new QRSwingThemeDesigner(MainWindow.INSTANCE);
+            designer.setVisible(true);
+        });
+
         QRLabel lookFontSizeTip = new QRLabel("大小：");
         Spinner lookSizeSpinner = new Spinner(Keys.TEXT_FONT_SIZE_LOOK);
         QRLabel typeFontTipLabel = new QRLabel("跟打区字体：");
@@ -74,6 +80,10 @@ public class AppearancePanel extends SettingPanel {
             setCursorWait();
             QRItemEvent event = (QRItemEvent) e;
             String after = event.after();
+            if (QRSwing.theme.equals(after)) {
+                setCursorDefault();
+                return;
+            }
             QRSwing.setTheme(after);
             MainWindow.INSTANCE.componentFresh();
             //如果取消，则恢复之前的主题
