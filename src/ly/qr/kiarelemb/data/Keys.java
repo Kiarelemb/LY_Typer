@@ -246,6 +246,18 @@ public class Keys {
      * 启用窗体背景图片，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String WINDOW_BACKGROUND_IMAGE_ENABLE = "window.background.image.enable";
+    /**
+     * 单字发文时，是否随机抽取，{@code false} （默认）不启用
+     */
+    public static final String TEXT_SEND_SINGLE_RANDOM_PICK = "text.send.single.random.pick";
+    /**
+     * 单字发文时，是否乱序文本，{@code false} （默认）不启用
+     */
+    public static final String TEXT_SEND_SINGLE_RANDOM_TEXT = "text.send.single.random.text";
+    /**
+     * 单字发文时，是否自定义文本，{@code false} （默认）不启用
+     */
+    public static final String TEXT_SEND_SINGLE_CUSTOM_TEXT = "text.send.single.custom.text";
     //endregion boolean 类型
 
     //region String 类型
@@ -424,6 +436,9 @@ public class Keys {
             put(WINDOW_COLUMN_FOLD_PARA_INFO, "false");
             put(WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, "true");
             put(TEXT_FONT_NAME_GLOBAL_ENABLE, "false");
+            put(TEXT_SEND_SINGLE_RANDOM_PICK, "false");
+            put(TEXT_SEND_SINGLE_RANDOM_TEXT, "false");
+            put(TEXT_SEND_SINGLE_CUSTOM_TEXT, "false");
             put(TEXT_FONT_NAME_LOOK, "阿里巴巴普惠体 R");
             put(TEXT_FONT_NAME_TYPE, "阿里巴巴普惠体 R");
             put(TEXT_FONT_NAME_GLOBAL, "阿里巴巴普惠体 R");

@@ -9,6 +9,8 @@ import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
 import swing.qr.kiarelemb.component.combination.QRTabbedPane;
 
+import java.awt.*;
+
 /**
  * @author Kiarelemb
  * @projectName LYTyper
@@ -18,7 +20,7 @@ import swing.qr.kiarelemb.component.combination.QRTabbedPane;
  */
 public class SendTextTabbedPane extends QRTabbedPane {
 	public SendTextTabbedPane(SendWindow window) {
-
+        super(BorderLayout.NORTH, FlowLayout.CENTER);
 		QRTabbedContentPanel singlePanel = new SingleSendTextTabbedPanel(window);
 		QRTabbedContentPanel innerArticlePanel = new InnerArticleTextTabbedPanel(window);
 		QRTabbedContentPanel localTextPanel = new LocalTextSendTextTabbedPanel(window);
@@ -27,11 +29,9 @@ public class SendTextTabbedPane extends QRTabbedPane {
 		int articleIndex = addTab("内置发文", innerArticlePanel);
 		int localTextIndex = addTab("本地发文", localTextPanel);
 
+
 		setSelectedTab(Keys.intValue(Keys.SEND_TEXT_NEW_WINDOW_TAB_INDEX));
 
-		addTabSelectChangedAction(event -> {
-			int index = SendTextTabbedPane.this.getSelectedTabIndex();
-			QRSwing.setGlobalSetting(Keys.SEND_TEXT_NEW_WINDOW_TAB_INDEX, index);
-		});
+        addTabSelectChangedAction(event -> QRSwing.setGlobalSetting(Keys.SEND_TEXT_NEW_WINDOW_TAB_INDEX, SendTextTabbedPane.this.getSelectedTabIndex()));
 	}
 }

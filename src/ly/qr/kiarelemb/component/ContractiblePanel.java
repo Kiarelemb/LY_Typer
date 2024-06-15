@@ -329,7 +329,6 @@ public class ContractiblePanel extends QRContractiblePanel {
 		protected final void mouseExit(MouseEvent e) {
 			setCursor(Cursor.getDefaultCursor());
 		}
-
 	}
 
 	private static class StandardLengthLabel extends LCDNumberLabel {

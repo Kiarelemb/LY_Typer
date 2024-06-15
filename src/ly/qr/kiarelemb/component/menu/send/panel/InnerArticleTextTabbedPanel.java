@@ -10,7 +10,7 @@ import ly.qr.kiarelemb.text.send.SendWindow;
  * @create 2024/4/16 22:26
  */
 public class InnerArticleTextTabbedPanel extends SendTextTabbedContentPanel {
-	public InnerArticleTextTabbedPanel(SendWindow window) {
-		super(window);
-	}
+    public InnerArticleTextTabbedPanel(SendWindow window) {
+        super(window, 300, 300);
+    }
 }

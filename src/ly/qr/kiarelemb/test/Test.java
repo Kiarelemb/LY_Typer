@@ -1,8 +1,8 @@
 package ly.qr.kiarelemb.test;
 
-import ly.qr.kiarelemb.text.TextWash;
 import ly.qr.kiarelemb.type.KeyTypedRecordWindow;
 import method.qr.kiarelemb.utils.QRFontUtils;
+import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.QRSwing;
 
 /**
@@ -24,8 +24,8 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        TextWash.fileCopyAndWash("C:\\Users\\Kiarelemb QR\\Downloads\\水浒传.txt",
-                "C:\\Users\\Kiarelemb QR\\Documents\\articles\\水浒传.txt");
+        String str = "jiosafcejkl;acmxknsl a;jikgvopew";
+        System.out.println(QRStringUtils.getNoRepeatString(str));
     }
 
 }

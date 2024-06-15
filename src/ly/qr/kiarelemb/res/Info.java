@@ -27,12 +27,13 @@ public class Info {
 	 * 存放当量的文件夹
 	 */
 	public static final String DL_DIRECTORY = "dl" + separator;
-	public static final String SOFTWARE_VERSION = "v24.05";
+	public static final String SOFTWARE_VERSION = "v24.06";
 	public static final String SYSTEM_NAME = QRSystemUtils.getSystemName();
 	//    public static final boolean isWindows = SYSTEM_NAME.contains("Windows");
 	public static final boolean IS_WINDOWS = SYSTEM_NAME.contains("Windows");
 	public static final boolean IS_MAC = SYSTEM_NAME.toLowerCase().contains("mac");
 	public static final String FLASH_PATH = "flash.png";
+	public static final String SINGLES_PATH = "singles.txt";
 	public static final String ICON_PNG_PATH = "icon.png";
 	public static final String ICON_TRAY_PATH = "tray.png";
 	public static final String SPEED_ICON = "speed.png";

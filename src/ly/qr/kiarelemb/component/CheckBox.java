@@ -2,6 +2,7 @@ package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
+import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRCheckBox;
 
 import java.awt.event.ActionEvent;
@@ -13,31 +14,45 @@ import java.awt.event.ActionEvent;
  * @create 2023-01-31 15:39
  **/
 public class CheckBox extends QRCheckBox {
-	private final String key;
-	private boolean checked;
+    private final String key;
+    private final boolean setting;
+    private boolean checked;
 
-	public CheckBox(String text, String key) {
-		super(text);
-		this.key = key;
-		this.checked = Keys.boolValue(this.key);
-		setSelected(this.checked);
-	}
+    public CheckBox(String text, String key) {
+        this(text, key, true);
+    }
 
-	@Override
-	public void setSelected(boolean b) {
-		super.setSelected(b);
-		this.checked = b;
-		SettingsItem.CHANGE_MAP.put(this.key, String.valueOf(this.checked));
-	}
+    public CheckBox(String text, String key, boolean setting) {
+        super(text);
+        this.key = key;
+        this.setting = setting;
+        this.checked = Keys.boolValue(this.key);
+        setSelected(this.checked);
+    }
 
-	@Override
-	protected final void actionEvent(ActionEvent o) {
-		this.checked = !this.checked;
-		setSelected(this.checked);
-		SettingsItem.CHANGE_MAP.put(this.key, String.valueOf(this.checked));
-	}
+    @Override
+    public void setSelected(boolean b) {
+        super.setSelected(b);
+        this.checked = b;
+        update();
+    }
 
-	public boolean checked() {
-		return this.checked;
-	}
+    @Override
+    protected final void actionEvent(ActionEvent o) {
+        this.checked = !this.checked;
+        setSelected(this.checked);
+        update();
+    }
+
+    public boolean checked() {
+        return this.checked;
+    }
+
+    private void update() {
+        if (setting) {
+            SettingsItem.CHANGE_MAP.put(this.key, String.valueOf(this.checked));
+        } else if (Keys.boolValue(this.key) != this.checked) {
+            QRSwing.setGlobalSetting(this.key, String.valueOf(this.checked));
+        }
+    }
 }

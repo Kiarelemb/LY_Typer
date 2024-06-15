@@ -155,7 +155,7 @@ public class SplitPane extends QRSplitPane {
                     if (TextLoad.TEXT_LOAD != null && TypingData.currentTypedIndex >= 0) {
                         g.setColor(QRColorsAndFonts.DEFAULT_COLOR_LABEL);
                         int width = size.width * TypingData.currentTypedIndex / TextLoad.TEXT_LOAD.wordsLength();
-                        g.fillRect(0, size.height - 2, width, 2);
+                        g.fillRect(0, size.height / 2, width, size.height - size.height / 2);
                     }
                     super.paint(g);
                 }
