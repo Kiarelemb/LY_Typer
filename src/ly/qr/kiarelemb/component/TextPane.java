@@ -176,7 +176,7 @@ public class TextPane extends QRTextPane {
             int shortestInputTimeDiff = 15;
             //累积字符
             accumulatedChars.append(c);
-            // 设置延迟任务在20毫秒后执行
+            // 设置延迟任务在 15 毫秒后执行
             futureTask = scheduler.schedule(() -> {
                 synchronized (lock) {
                     // 执行累积的字符操作

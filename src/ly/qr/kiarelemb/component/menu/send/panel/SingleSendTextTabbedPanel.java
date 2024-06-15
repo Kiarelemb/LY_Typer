@@ -84,14 +84,16 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
                     contentLock = false;
                 }
             });
-            timer.schedule(task.get(), 350);
+            timer.schedule(task.get(), 300);
         });
 
+        // 自定义文本框事件
         customContentCheckBox.addClickAction(e -> {
             contentPreviewPane.setEditable(customContentCheckBox.isSelected());
             contentPreviewPane.setCaretPosition(content.length());
         });
 
+        // 乱序事件
         ContentMixCheckBox.addClickAction(e -> {
             if (content.isEmpty()) {
                 return;
@@ -141,7 +143,7 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
     private String getContent(int index) {
         String text;
         File file = new File(Info.loadURI(Info.SINGLES_PATH));
-        if (index >= 10) {
+        if (index > 9) {
             text = QRFileUtils.getFileLineText(file, index - 9);
         } else {
             String fore3500 = QRFileUtils.getFileLineText(file, 4);
@@ -152,6 +154,7 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
             } else if (index > 4) {
                 text = fore3500.substring((--index - 1) * 500, index * 500);
             } else {
+                // 3, 4
                 text = fore3500.substring(0, --index * 500);
             }
         }
