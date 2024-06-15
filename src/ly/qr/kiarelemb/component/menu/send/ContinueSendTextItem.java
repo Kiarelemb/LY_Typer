@@ -29,7 +29,7 @@ public class ContinueSendTextItem extends MenuItem {
         LinkedList<String> list = new LinkedList<>();
         QRFileUtils.dirLoop(Info.TYPE_DIRECTORY, file -> {
             if (".bin".equals(QRFileUtils.getFileExtension(file))
-                    && QRFileUtils.fileExists(Info.TYPE_DIRECTORY + QRFileUtils.getFileName(file) + ".txt")) {
+                && QRFileUtils.fileExists(Info.TYPE_DIRECTORY + QRFileUtils.getFileName(file) + ".txt")) {
                 list.add(QRFileUtils.getFileName(file));
             }
         });
@@ -44,7 +44,7 @@ public class ContinueSendTextItem extends MenuItem {
         } else {
             ContinueSendWindow continueSendWindow = new ContinueSendWindow(list);
             continueSendWindow.setVisible(true);
-            if (continueSendWindow.selectedIndex() == -1) {
+            if (continueSendWindow.selectedIndex() == -1 || !continueSendWindow.isContinue()) {
                 return;
             }
             fileName = list.get(continueSendWindow.selectedIndex());

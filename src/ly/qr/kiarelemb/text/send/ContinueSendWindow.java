@@ -2,6 +2,7 @@ package ly.qr.kiarelemb.text.send;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.text.send.data.TypedData;
+import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class ContinueSendWindow extends QRDialog {
     private final QRListTabbedPane listTabbedPane;
-    private int selectedIndex;
+    private boolean isContinue = false;
 
     public ContinueSendWindow(List<String> list) {
         super(MainWindow.INSTANCE);
@@ -50,6 +51,7 @@ public class ContinueSendWindow extends QRDialog {
             if (listTabbedPane.selectedIndex() == -1) {
                 return;
             }
+            isContinue = true;
             dispose();
         });
         listTabbedPane.addTabSelectChangedAction(event -> {
@@ -75,13 +77,16 @@ public class ContinueSendWindow extends QRDialog {
             QRComboBox paraNumComboBox = new QRComboBox("50", "100", "200", "500", "1000");
             QRLabel typeParaTip = new QRLabel("已打段数：");
             QRLabel typeParaShowLabel = new QRLabel(String.valueOf(data.typedTimes()));
-            QRLabel previewTip = new QRLabel("当前段预览：");
+            QRLabel previewTip = new QRLabel(data.randomPick() ? "发文内容将从下面的单字中随机抽取：" : "当前段预览：");
             QRTextArea previewTextArea = new QRTextArea(true);
 
 
             setLayout(null);
-
-            previewTextArea.setText(data.currentText());
+            if (data.randomPick()) {
+                previewTextArea.setText(QRFileUtils.fileReaderWithUtf8All(data.filePath()));
+            } else {
+                previewTextArea.setText(data.currentText());
+            }
             previewTextArea.setEditable(true);
             paraNumComboBox.setText(String.valueOf(data.perLength()));
 
@@ -93,12 +98,16 @@ public class ContinueSendWindow extends QRDialog {
             QRComponentUtils.setBoundsAndAddToComponent(this, paraNumComboBox, 120, 85, 115, 30);
             QRComponentUtils.setBoundsAndAddToComponent(this, typeParaTip, 10, 45, 105, 30);
             QRComponentUtils.setBoundsAndAddToComponent(this, typeParaShowLabel, 120, 45, 115, 30);
-            QRComponentUtils.setBoundsAndAddToComponent(this, previewTip, 10, 165, 150, 30);
+            QRComponentUtils.setBoundsAndAddToComponent(this, previewTip, 10, 165, 300, 30);
             QRComponentUtils.setBoundsAndAddToComponent(this, previewTextArea.addScrollPane(), 10, 205, 295, 135);
         }
     }
 
     public int selectedIndex() {
         return listTabbedPane.selectedIndex();
+    }
+
+    public boolean isContinue() {
+        return isContinue;
     }
 }
