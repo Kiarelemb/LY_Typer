@@ -1,11 +1,13 @@
 package ly.qr.kiarelemb.component.menu.send;
 
+import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.menu.MenuItem;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.send.ContinueSendWindow;
 import ly.qr.kiarelemb.text.send.TextSendManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
+import swing.qr.kiarelemb.window.enhance.QROpinionDialog;
 
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
@@ -35,6 +37,7 @@ public class ContinueSendTextItem extends MenuItem {
         });
 
         if (list.isEmpty()) {
+            QROpinionDialog.messageTellShow(MainWindow.INSTANCE, "无继续发文内容！");
             return;
         }
         int size = list.size();

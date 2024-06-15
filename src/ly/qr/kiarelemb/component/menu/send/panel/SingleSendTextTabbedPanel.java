@@ -20,7 +20,10 @@ import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicReference;
@@ -48,7 +51,23 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
         QRLabel previewTip = new QRLabel("内容预览：");
         CheckBox customContentCheckBox = new CheckBox("自定义单字", Keys.TEXT_SEND_SINGLE_CUSTOM_TEXT, false);
         CheckBox ContentMixCheckBox = new CheckBox("自动乱序", Keys.TEXT_SEND_SINGLE_RANDOM_TEXT, false);
-        contentPreviewPane = new QRTextPane();
+        contentPreviewPane = new QRTextPane() {
+            @Override
+            protected void pasteAction() {
+                String pasteText = QRSystemUtils.getSysClipboardText();
+                if (pasteText == null || pasteText.isBlank()) {
+                    return;
+                }
+                pasteText = TextWash.lightWashForChinese(pasteText);
+                String text = contentPreviewPane.getText();
+                content = QRStringUtils.getNoRepeatString(text.isEmpty() ? pasteText : new StringBuilder(text).insert(contentPreviewPane.getCaretPosition(), pasteText).toString());
+                contentLock = true;
+                contentPreviewPane.setText(ContentMixCheckBox.isSelected() ? QRRandomUtils.getRandomString(content) : content);
+                contentLock = false;
+                String fileName = fileNameTextField.getText();
+                fileNameTextField.setText(fileName.isBlank() ? "自定义单字" : (fileName + "-" + "自定义单字"));
+            }
+        };
         QRLabel startParaLabel = new QRLabel("起始段号：");
 
         startParaCbx = getStartParaComboBox();
@@ -92,7 +111,7 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
                     if (clickCount == 2 && customContentCheckBox.isSelected()) {
                         String text = contentPreviewPane.getText();
                         // 双击插入内容
-                        content = text.isEmpty() ? getContent(index) : QRStringUtils.getNoRepeatString(new StringBuilder(text).insert(contentPreviewPane.getCaretPosition(), getContent(index)).toString());
+                        content = QRStringUtils.getNoRepeatString(text.isEmpty() ? getContent(index) : new StringBuilder(text).insert(contentPreviewPane.getCaretPosition(), getContent(index)).toString());
                         String fileName = fileNameTextField.getText();
                         fileNameTextField.setText(fileName.isBlank() ? name : (fileName + "-" + name));
                     } else {
@@ -143,7 +162,10 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
                     3. 单字列表：
                         ① 为适应双击功能，文本面板内容的设置延迟 250 毫秒，该时间内若鼠标单击两次，则视为双击；
                         ② 单字发文的文件名可由列表选择后自动生成，也可手动输入。相同的文件名，在发文后，会替换之前的；
-                    """;
+                                        
+                    4. 文件名：
+                        ① 文件名输入框中，输入的文件名将自动补全为 txt 格式；
+                        ② 文件名输入框不能为空。""";
             QRResizableTextShowDialog textShowDialog = new QRResizableTextShowDialog(window, 590, 360, "单字发文使用说明", content, true);
             QRSystemUtils.setWindowNotTrans(textShowDialog);
             textShowDialog.setResizable(false);
@@ -210,21 +232,26 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
      */
     private String getContent(int index) {
         String text;
-        File file = new File(Info.loadURI(Info.SINGLES_PATH));
-        if (index > 9) {
-            text = QRFileUtils.getFileLineText(file, index - 9);
-        } else {
-            String fore3500 = QRFileUtils.getFileLineText(file, 4);
-            if (index < 3) {
-                text = fore3500.substring(index++ * 500, index * 500);
-            } else if (index == 9) {
-                text = fore3500;
-            } else if (index > 4) {
-                text = fore3500.substring((--index - 1) * 500, index * 500);
+        try {
+            URL url = Info.loadURI(Info.SINGLES_PATH).toURL();
+            InputStream inputStream = url.openStream();
+            if (index > 9) {
+                text = QRFileUtils.getFileLineText(inputStream, index - 9, StandardCharsets.UTF_8);
             } else {
-                // 3, 4
-                text = fore3500.substring(0, --index * 500);
+                String fore3500 = QRFileUtils.getFileLineText(inputStream, 4, StandardCharsets.UTF_8);
+                if (index < 3) {
+                    text = fore3500.substring(index++ * 500, index * 500);
+                } else if (index == 9) {
+                    text = fore3500;
+                } else if (index > 4) {
+                    text = fore3500.substring((--index - 1) * 500, index * 500);
+                } else {
+                    // 3, 4
+                    text = fore3500.substring(0, --index * 500);
+                }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return text;
     }

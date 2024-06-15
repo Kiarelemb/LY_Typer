@@ -437,7 +437,7 @@ public class Keys {
             put(WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, "true");
             put(TEXT_FONT_NAME_GLOBAL_ENABLE, "false");
             put(TEXT_SEND_SINGLE_RANDOM_PICK, "false");
-            put(TEXT_SEND_SINGLE_RANDOM_TEXT, "false");
+            put(TEXT_SEND_SINGLE_RANDOM_TEXT, "true");
             put(TEXT_SEND_SINGLE_CUSTOM_TEXT, "false");
             put(TEXT_FONT_NAME_LOOK, "阿里巴巴普惠体 R");
             put(TEXT_FONT_NAME_TYPE, "阿里巴巴普惠体 R");
