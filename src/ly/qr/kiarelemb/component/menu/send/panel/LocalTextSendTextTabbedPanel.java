@@ -7,11 +7,8 @@ package ly.qr.kiarelemb.component.menu.send.panel;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextWash;
 import ly.qr.kiarelemb.text.send.SendWindow;
-import ly.qr.kiarelemb.text.send.TextSendManager;
-import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRComboBox;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.component.basic.QRTextField;
@@ -20,15 +17,12 @@ import swing.qr.kiarelemb.component.utils.QRClearableTextField;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Kiarelemb QR
  */
 public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
     private final QRTextField sendFileTextField;
-    private final QRComboBox startParaCbx;
-    private final QRComboBox paraWordCbx;
 
     public LocalTextSendTextTabbedPanel(SendWindow window) {
         super(window, 400, 300);
@@ -74,20 +68,10 @@ public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
     }
 
     private void startAction(Object o) {
-        String filePath = sendFileTextField.getText();
+        filePath = sendFileTextField.getText();
         if (!TextWash.fileCopyAndWash(filePath, Info.TYPE_DIRECTORY.concat(sendFileTextField.getToolTipText()))) {
             return;
         }
-        try {
-            String fileCrc = QRFileUtils.getCrc32(filePath);
-            int words = Math.toIntExact(QRFileUtils.getFileWordNumWithUTF8(filePath));
-            int paraWords = Integer.parseInt(paraWordCbx.getText());
-            TypedData sendData = new TypedData(QRFileUtils.getFileName(filePath), fileCrc, 0, 0, words, words,
-                    paraWords, startParaCbx.getSelectedIndex() == 1);
-            TextSendManager.setTypedData(sendData);
-            window.dispose();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        startSendAction(false);
     }
 }

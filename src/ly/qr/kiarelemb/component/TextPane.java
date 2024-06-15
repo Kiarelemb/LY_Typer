@@ -12,6 +12,7 @@ import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
+import ly.qr.kiarelemb.text.send.TextSendManager;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
@@ -332,8 +333,10 @@ public class TextPane extends QRTextPane {
         DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
         //发送成绩
         SendText.gradeSend();
-
-        NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
+        if (TextSendManager.sendingText()) {
+            TextSendManager.data().addTypedTimes();
+            NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
+        }
         TypingData.windowFresh();
     }
 

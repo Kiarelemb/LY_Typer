@@ -7,9 +7,12 @@ import ly.qr.kiarelemb.text.send.TextSendManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRRandomUtils;
+import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.data.QRTextSendData;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 当前跟打信息记录类
@@ -24,6 +27,7 @@ public final class TypedData implements Serializable {
     private final int totalWordsNum;
     private final String filePath;
     private final boolean paraNumRandom;
+    private boolean randomPick = false;
     private long startIndex;
     private int typedTimes;
     private int remainingWordsCount;
@@ -109,6 +113,23 @@ public final class TypedData implements Serializable {
     }
 
     public String nextParaText() {
+        TypedData data = TextSendManager.data();
+        if (data.randomPick) {
+            String fileText = QRFileUtils.fileReaderWithUtf8All(filePath);
+            String[] singleParts = QRStringUtils.getChineseExtraPhrase(fileText);
+            StringBuilder text = new StringBuilder();
+            int length = data.totalWordsNum;
+            int word = data.perLength;
+            Set<Integer> parts = new HashSet<>(word);
+            while (parts.size() < word) {
+                int i = QRRandomUtils.getRandomInt(0, length);
+                if (parts.add(i)) {
+                    text.append(singleParts[i]);
+                }
+            }
+            currentText = text.toString();
+            return getSendParaText();
+        }
         sendData = QRFileUtils.fileReaderByRandomAccessMarkPositionFind(filePath, startIndex, perLength,
                 TypingData.textLoadIntelli);
         currentText = sendData.text();
@@ -118,8 +139,13 @@ public final class TypedData implements Serializable {
 
     private String getSendParaText() {
         String fore = fileName + "\n";
-        String ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
-                + QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
+        String ends;
+        if (TextSendManager.data().randomPick) {
+            ends = "\n-----第" + paraNum + "段 " + TextSendManager.data().perLength + "字 单字随机抽取";
+        } else {
+            ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
+                   + QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
+        }
         TextSendManager.save();
         String text = fore + currentText + ends;
         SendText.sendText(text);
@@ -132,6 +158,10 @@ public final class TypedData implements Serializable {
 
     public void setPerLength(int perLength) {
         this.perLength = perLength;
+    }
+
+    public void setRandomPick(boolean randomPick) {
+        this.randomPick = randomPick;
     }
 
     public String fileName() {
@@ -176,6 +206,10 @@ public final class TypedData implements Serializable {
 
     public String currentText() {
         return currentText;
+    }
+
+    public boolean randomPick() {
+        return randomPick;
     }
 
     public QRTextSendData sendData() {
@@ -223,16 +257,16 @@ public final class TypedData implements Serializable {
     @Override
     public String toString() {
         return "TypedData{" + "fileName='" + fileName + '\'' +
-                ", fileCrc='" + fileCrc + '\'' +
-                ", totalWordsNum=" + totalWordsNum +
-                ", filePath='" + filePath + '\'' +
-                ", paraNumRandom=" + paraNumRandom +
-                ", startIndex=" + startIndex +
-                ", typedTimes=" + typedTimes +
-                ", remainingWordsCount=" + remainingWordsCount +
-                ", perLength=" + perLength +
-                ", paraNum=" + paraNum +
-                ", sendData=" + sendData +
-                '}';
+               ", fileCrc='" + fileCrc + '\'' +
+               ", totalWordsNum=" + totalWordsNum +
+               ", filePath='" + filePath + '\'' +
+               ", paraNumRandom=" + paraNumRandom +
+               ", startIndex=" + startIndex +
+               ", typedTimes=" + typedTimes +
+               ", remainingWordsCount=" + remainingWordsCount +
+               ", perLength=" + perLength +
+               ", paraNum=" + paraNum +
+               ", sendData=" + sendData +
+               '}';
     }
 }
