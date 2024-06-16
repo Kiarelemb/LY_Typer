@@ -61,6 +61,12 @@ public class InputManager {
     }
 
     public void init() {
+        if (loaded) {
+            inputWindow.setVisible(false);
+            inputWindow.dispose();
+            inputWindow = null;
+            return;
+        }
         QRSwing.setGlobalSetting(Keys.INPUT_CODE_DICT_PATH, "D:\\backup\\smb.txt");
 
         //region 读取码表等操作

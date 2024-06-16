@@ -32,6 +32,9 @@ public class TextSendManager {
         TextSendManager.serializeData(TextSendManager.data);
     }
 
+    /**
+     * @return 判断当前是否在发文状态
+     */
     public static boolean sendingText() {
         return TextSendManager.data != null;
     }

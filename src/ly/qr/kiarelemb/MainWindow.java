@@ -12,7 +12,6 @@ import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.menu.type.TextMixItem;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.dl.DangLangWindow;
-import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
@@ -86,9 +85,8 @@ public class MainWindow extends QRFrame {
 			DangLangWindow window = DangLangWindow.dangLangWindow();
 			window.setVisible(!window.isVisible());
 		}, true);
-		//内置输入法
-		QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_INNER_INPUT_WINDOW),
-				event -> InputManager.INPUT_MANAGER.init(), true);
+		//内置输入法，功能未成形，取消使用
+		//QRSwing.registerGlobalAction(Keys.strValue(Keys.QUICK_KEY_INNER_INPUT_WINDOW), event -> InputManager.INPUT_MANAGER.init(), true);
 		//保存分割面板的分割比例
 		addActionBeforeDispose(e -> {
 			QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT, SplitPane.SPLIT_PANE.getDividerLocation());

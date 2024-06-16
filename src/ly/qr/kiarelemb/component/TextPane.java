@@ -306,11 +306,11 @@ public class TextPane extends QRTextPane {
                 TextLoad.TEXT_LOAD.wordsLength() - 5 * TypingData.WRONG_WORDS_INDEX.size() :
                 TextLoad.TEXT_LOAD.wordsLength()) / totalTimeInMin;
         //速度过小，不统计
-        double speed = QRMathUtils.doubleFormat(s);
-        if (speed < 1 || totalTimeInSec <= 0) {
+        if (totalTimeInSec <= 0 || s < 1) {
             QRSmallTipShow.display(MainWindow.INSTANCE, "继续重打吧！");
             return;
         }
+        double speed = QRMathUtils.doubleFormat(s);
         //英打字数
         if (TextLoad.TEXT_LOAD.isEnglish()) {
             WordLabel.typedOneWord();

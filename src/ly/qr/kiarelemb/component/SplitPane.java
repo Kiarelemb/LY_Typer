@@ -162,5 +162,4 @@ public class SplitPane extends QRSplitPane {
             };
         }
     }
-
 }

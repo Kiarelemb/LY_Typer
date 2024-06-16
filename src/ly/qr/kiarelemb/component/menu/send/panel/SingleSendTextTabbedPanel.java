@@ -152,7 +152,7 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
                     1. 自定义内容：
                         ① 单击列表项，文本面板的内容将设置为选择项的内容；
                         ② 双击列表项，在勾选“自定义内容”时，文本面板的光标位置处将插入选择项的内容，否则，功能同单击；
-                        ③ 文本面板中插入的内容将自动去重；
+                        ③ 文本面板中插入或粘贴的内容将自动去重；
 
                     2. 自动乱序：
                         ① 勾选“自动乱序”后，文本面板的内容将随机打乱；
@@ -165,7 +165,7 @@ public class SingleSendTextTabbedPanel extends SendTextTabbedContentPanel {
                                         
                     4. 文件名：
                         ① 文件名输入框中，输入的文件名将自动补全为 txt 格式；
-                        ② 文件名输入框不能为空。""";
+                        ② 文件名输入框可自由编辑，但不能为空。""";
             QRResizableTextShowDialog textShowDialog = new QRResizableTextShowDialog(window, 590, 360, "单字发文使用说明", content, true);
             QRSystemUtils.setWindowNotTrans(textShowDialog);
             textShowDialog.setResizable(false);

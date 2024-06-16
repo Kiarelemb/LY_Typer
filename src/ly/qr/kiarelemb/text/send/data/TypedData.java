@@ -12,7 +12,9 @@ import method.qr.kiarelemb.utils.data.QRTextSendData;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * 当前跟打信息记录类
@@ -219,54 +221,31 @@ public final class TypedData implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TypedData data = (TypedData) o;
-
-        if (totalWordsNum != data.totalWordsNum) return false;
-        if (paraNumRandom != data.paraNumRandom) return false;
-        if (startIndex != data.startIndex) return false;
-        if (typedTimes != data.typedTimes) return false;
-        if (remainingWordsCount != data.remainingWordsCount) return false;
-        if (perLength != data.perLength) return false;
-        if (paraNum != data.paraNum) return false;
-        if (!fileName.equals(data.fileName)) return false;
-        if (!fileCrc.equals(data.fileCrc)) return false;
-        if (!filePath.equals(data.filePath)) return false;
-        if (!currentText.equals(data.currentText)) return false;
-        return sendData.equals(data.sendData);
+        if (!(o instanceof TypedData typedData)) return false;
+        return totalWordsNum == typedData.totalWordsNum && paraNumRandom == typedData.paraNumRandom && randomPick == typedData.randomPick && startIndex == typedData.startIndex && typedTimes == typedData.typedTimes && remainingWordsCount == typedData.remainingWordsCount && perLength == typedData.perLength && paraNum == typedData.paraNum && Objects.equals(fileName, typedData.fileName) && Objects.equals(fileCrc, typedData.fileCrc) && Objects.equals(filePath, typedData.filePath) && Objects.equals(currentText, typedData.currentText) && Objects.equals(sendData, typedData.sendData);
     }
 
     @Override
     public int hashCode() {
-        int result = fileName.hashCode();
-        result = 31 * result + fileCrc.hashCode();
-        result = 31 * result + totalWordsNum;
-        result = 31 * result + filePath.hashCode();
-        result = 31 * result + (paraNumRandom ? 1 : 0);
-        result = 31 * result + Long.hashCode(startIndex);
-        result = 31 * result + typedTimes;
-        result = 31 * result + remainingWordsCount;
-        result = 31 * result + perLength;
-        result = 31 * result + paraNum;
-        result = 31 * result + currentText.hashCode();
-        result = 31 * result + sendData.hashCode();
-        return result;
+        return Objects.hash(fileName, fileCrc, totalWordsNum, filePath, paraNumRandom, randomPick, startIndex, typedTimes, remainingWordsCount, perLength, paraNum, currentText, sendData);
     }
 
     @Override
     public String toString() {
-        return "TypedData{" + "fileName='" + fileName + '\'' +
-               ", fileCrc='" + fileCrc + '\'' +
-               ", totalWordsNum=" + totalWordsNum +
-               ", filePath='" + filePath + '\'' +
-               ", paraNumRandom=" + paraNumRandom +
-               ", startIndex=" + startIndex +
-               ", typedTimes=" + typedTimes +
-               ", remainingWordsCount=" + remainingWordsCount +
-               ", perLength=" + perLength +
-               ", paraNum=" + paraNum +
-               ", sendData=" + sendData +
-               '}';
+        return new StringJoiner(", ", TypedData.class.getSimpleName() + "[", "]")
+                .add("fileName='" + fileName + "'")
+                .add("fileCrc='" + fileCrc + "'")
+                .add("totalWordsNum=" + totalWordsNum)
+                .add("filePath='" + filePath + "'")
+                .add("paraNumRandom=" + paraNumRandom)
+                .add("randomPick=" + randomPick)
+                .add("startIndex=" + startIndex)
+                .add("typedTimes=" + typedTimes)
+                .add("remainingWordsCount=" + remainingWordsCount)
+                .add("perLength=" + perLength)
+                .add("paraNum=" + paraNum)
+                .add("currentText='" + currentText + "'")
+                .add("sendData=" + sendData)
+                .toString();
     }
 }
