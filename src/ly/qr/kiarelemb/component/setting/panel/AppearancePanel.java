@@ -11,6 +11,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRFontUtils;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
@@ -19,10 +20,13 @@ import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.component.event.QRItemEvent;
 import swing.qr.kiarelemb.component.utils.QRFontComboBox;
 import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
+import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.theme.QRSwingThemeDesigner;
 
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -31,10 +35,15 @@ import java.awt.*;
  * @create 2023-01-30 14:09
  **/
 public class AppearancePanel extends SettingPanel {
+    private static final Logger logger = QRLoggerUtils.getLogger(AppearancePanel.class);
+
     public AppearancePanel(SettingWindow window) {
         super(window, "外观...");
         final String themeBackup = QRSwing.theme;
         final Font fontBackup = QRSwing.globalFont == null ? TextStyleManager.DEFAULT_FONT : QRSwing.globalFont;
+
+        QRActionRegister updateAction = event -> TextStyleManager.updateAll();
+
         QRLabel themeTipLabel = new QRLabel("主题：");
         QRComboBox themeComboBox = new QRComboBox(QRColorsAndFonts.BASIC_THEMES);
         QRRoundButton themeDesignerBtn = new QRRoundButton("打开设计器");
@@ -49,7 +58,8 @@ public class AppearancePanel extends SettingPanel {
             protected void itemChangedAction(QRItemEvent e) {
                 SettingsItem.SAVE_ACTIONS.put("look.font", ar -> {
                     TextStyleManager.PREFERRED_CHINESE_FONT_NAME = e.after();
-                    TextStyleManager.updateAll();
+                    updateAction.action(null);
+                    QRLoggerUtils.log(logger, Level.INFO, "设置看打区字体为： %s", e.after());
                 });
             }
         };
@@ -66,13 +76,13 @@ public class AppearancePanel extends SettingPanel {
         Spinner typeSizeSpinner = new Spinner(Keys.TEXT_FONT_SIZE_TYPE);
         QRLineSeparatorLabel splitLabel2 = new QRLineSeparatorLabel(0.8d);
         QRLabel oneTipLabel = new QRLabel("一简颜色：");
-        RGBColorSelectPane oneRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_ONE, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_ONE);
+        RGBColorSelectPane oneRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_ONE, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_ONE, updateAction);
         QRLabel twoTipLabel = new QRLabel("二简颜色：");
-        RGBColorSelectPane twoRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_TWO, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_TWO);
+        RGBColorSelectPane twoRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_TWO, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_TWO, updateAction);
         QRLabel threeTipLabel = new QRLabel("三简颜色：");
-        RGBColorSelectPane threeRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_THREE, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_THREE);
+        RGBColorSelectPane threeRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_THREE, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_THREE, updateAction);
         QRLabel fullTipLabel = new QRLabel("全码颜色：");
-        RGBColorSelectPane fullRgbPanel = new RGBColorSelectPane(TextStyleManager.Full_FOUR, Keys.TEXT_TIP_COLOR_CODE_ALL);
+        RGBColorSelectPane fullRgbPanel = new RGBColorSelectPane(TextStyleManager.Full_FOUR, Keys.TEXT_TIP_COLOR_CODE_ALL, updateAction);
 
         //region 设置主题
         themeComboBox.setText(QRSwing.theme);
@@ -86,6 +96,7 @@ public class AppearancePanel extends SettingPanel {
             }
             QRSwing.setTheme(after);
             MainWindow.INSTANCE.componentFresh();
+            QRLoggerUtils.log(logger, Level.INFO, "设置主题为： %s", after);
             //如果取消，则恢复之前的主题
             SettingsItem.CANCEL_ACTIONS.putIfAbsent("window.fresh", es -> {
                 if (!QRSwing.theme.equals(themeBackup)) {
@@ -93,6 +104,7 @@ public class AppearancePanel extends SettingPanel {
                     MainWindow.INSTANCE.componentFresh();
                     SettingWindow.INSTANCE.componentFresh();
                     themeComboBox.setText(QRSwing.theme);
+                    QRLoggerUtils.log(logger, Level.INFO, "恢复主题为： %s", themeBackup);
                 }
             });
             setCursorDefault();
@@ -111,6 +123,7 @@ public class AppearancePanel extends SettingPanel {
                 if (!customFontCheckBox.checked()) {
                     QRSwing.customFontName(TextStyleManager.DEFAULT_FONT);
                     MainWindow.INSTANCE.componentFresh();
+                    QRLoggerUtils.log(logger, Level.INFO, "恢复默认字体为： %s", TextStyleManager.DEFAULT_FONT.getFontName());
                 }
             });
         });
@@ -118,6 +131,7 @@ public class AppearancePanel extends SettingPanel {
         frameFontsComboBox.addItemChangeListener(e -> {
             QRItemEvent event = (QRItemEvent) e;
             SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, event.after());
+            QRLoggerUtils.log(logger, Level.INFO, "设置默认字体为： %s", event.after());
             QRSwing.customFontName(event.after());
             MainWindow.INSTANCE.componentFresh();
             //如果取消，则恢复之前的字体
@@ -134,6 +148,7 @@ public class AppearancePanel extends SettingPanel {
             QRSwing.customFontName(font);
             MainWindow.INSTANCE.componentFresh();
             SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, file.getAbsolutePath());
+            QRLoggerUtils.log(logger, Level.INFO, "设置默认字体为： %s", font.getFontName());
             frameFontsComboBox.setText(font.getFamily());
         }, "ttf", "ttc"));
         //endregion 全局字体设置

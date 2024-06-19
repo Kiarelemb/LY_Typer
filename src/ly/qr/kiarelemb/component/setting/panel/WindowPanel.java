@@ -30,21 +30,25 @@ import java.io.File;
  * @create 2023-01-31 14:28
  **/
 public class WindowPanel extends SettingPanel {
+    private boolean isSure = false;
+
     public WindowPanel(SettingWindow window) {
         super(window, "窗体...");
         QRLabel mainWindowTipLabel = new QRLabel("主窗体");
         CheckBox windowRoundCheckBox = new CheckBox("启用窗体圆角", QRSwing.WINDOW_ROUND);
         CheckBox windowOnTopCheckBox = new CheckBox("启用窗体置顶", QRSwing.WINDOW_ALWAYS_TOP);
+        CheckBox windowTitleMenu = new CheckBox("菜单置于窗体标题", QRSwing.WINDOW_TITLE_MENU);
         QRLineSeparatorLabel splitSeparator = new QRLineSeparatorLabel(0.8d);
         //WINDOW_TRANSPARENCY_ENABLE
         QRLabel windowTransCheckBox = new QRLabel("设置窗体透明");
         QRSlider windowTransSlider = new QRSlider();
         CheckBox windowScreenAdsorbCheckBox = new CheckBox("启用屏幕吸附", QRSwing.WINDOW_ABSORB);
-        CheckBox windowBackgroundImageSetCheckBox = new CheckBox("启用背景图", QRSwing.WINDOW_IMAGE_PATH);
+        CheckBox windowBackgroundImageSetCheckBox = new CheckBox("启用背景图", QRSwing.WINDOW_IMAGE_ENABLE);
         QRRoundButton backgroundImageSetBtn = new QRRoundButton("背景图设置");
 
         windowRoundCheckBox.setToolTipText("启用后，包括禅出的对话框在内，窗体都将采用圆角。");
         windowOnTopCheckBox.setToolTipText("启用后，主窗体将置顶。可能对于一些中文输入法来说，该功能不太支持。");
+        windowTitleMenu.setToolTipText("启用后，菜单将置于窗体标题栏。重启生效。");
         windowTransCheckBox.setToolTipText("在未设置主窗体背景图的情况下，该功能适用。取消勾选以启用背景图设置。");
         windowScreenAdsorbCheckBox.setToolTipText("该功能指对屏幕四边的吸附。");
         windowBackgroundImageSetCheckBox.setToolTipText("启用后，主窗体的透明功能失效。");
@@ -69,21 +73,22 @@ public class WindowPanel extends SettingPanel {
             SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_TRANSPARENCY, String.valueOf(alpha));
         });
 
-        boolean set = MainWindow.INSTANCE.backgroundImageSet();
-        windowBackgroundImageSetCheckBox.setSelected(set);
-        windowTransCheckBox.setEnabled(!set);
+        windowTransCheckBox.setEnabled(!windowBackgroundImageSetCheckBox.checked());
 //		windowTransCheckBox.setSelected(!set);
-        backgroundImageSetBtn.setEnabled(set && windowBackgroundImageSetCheckBox.checked());
+        backgroundImageSetBtn.setEnabled(windowBackgroundImageSetCheckBox.checked());
 
-        QRComponentUtils.setBoundsAndAddToComponent(this, windowRoundCheckBox, 25, 30, 140, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, windowOnTopCheckBox, 25, 75, 140, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, splitSeparator, 25, 120, 450, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, mainWindowTipLabel, 25, 160, 75, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, windowTransCheckBox, 50, 205, 140, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, windowTransSlider, 200, 205, 125, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, windowScreenAdsorbCheckBox, 50, 250, 140, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, windowBackgroundImageSetCheckBox, 50, 295, 140, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, backgroundImageSetBtn, 200, 295, 125, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowRoundCheckBox, 25, 30, 200, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowOnTopCheckBox, 25, 75, 200, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowTitleMenu, 25, 120, 200, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, splitSeparator, 25, 160, 450, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, mainWindowTipLabel, 25, 205, 75, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowTransCheckBox, 50, 250, 140, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowTransSlider, 200, 250, 125, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowScreenAdsorbCheckBox, 50, 295, 140, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, windowBackgroundImageSetCheckBox, 50, 340, 140, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, backgroundImageSetBtn, 200, 340, 125, 30);
+
+        setPreferredSize(480, 395);
     }
 
     class BackgroundImageSelectDialog extends QRDialog {
@@ -198,9 +203,9 @@ public class WindowPanel extends SettingPanel {
         private void sureBtnAction() {
             final String path = this.textField.getText();
             if (QRFileUtils.fileExists(path)) {
+                QRSwing.windowBackgroundImagePath = path;
                 SettingsItem.SAVE_ACTIONS.put("window.image.path", e -> MainWindow.INSTANCE.setBackgroundImage(path));
                 //保存，以备再次打开
-                QRSwing.windowBackgroundImagePath = path;
             }
             if (SettingsItem.CHANGE_MAP.containsKey(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA)) {
                 float alpha = Float.parseFloat(SettingsItem.CHANGE_MAP.get(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA));
@@ -209,12 +214,13 @@ public class WindowPanel extends SettingPanel {
                 });
                 QRSwing.windowBackgroundImageAlpha = alpha;
             }
+            isSure = true;
             super.dispose();
         }
 
         @Override
         public void dispose() {
-            if (!SettingsItem.CANCEL_ACTIONS.containsKey("window.image.path")) {
+            if (!isSure) {
                 SettingsItem.CANCEL_ACTIONS.put("window.image.path",
                         e -> MainWindow.INSTANCE.setBackgroundImage(this.backgroundImagePathBackup));
             }

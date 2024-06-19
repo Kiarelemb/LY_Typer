@@ -6,17 +6,13 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
-import method.qr.kiarelemb.utils.QRArrayUtils;
-import method.qr.kiarelemb.utils.QRFileUtils;
-import method.qr.kiarelemb.utils.QRMathUtils;
-import method.qr.kiarelemb.utils.QRStringUtils;
+import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -38,6 +34,7 @@ public abstract class AbstractTextTip {
     private final ArrayList<QRActionRegister> loadActions = new ArrayList<>();
     private final ArrayList<QRActionRegister> disloadActions = new ArrayList<>();
     public static AbstractTextTip TEXT_TIP;
+    protected static Logger logger = QRLoggerUtils.getLogger(AbstractTextTip.class);
 
     static {
         if (Keys.boolValue(Keys.TEXT_TIP_ENHANCE)) {
@@ -67,7 +64,10 @@ public abstract class AbstractTextTip {
                     loadFile(filePath);
                     QRComponentUtils.runActions(this.loadActions);
                 }
+            } else {
+                QRLoggerUtils.log(logger, Level.WARNING, "词提文件不存在，路径：[%s]", filePath);
             }
+            QRLoggerUtils.log(logger, Level.CONFIG, "词提实例化完成，实体类名字：[%s]，词提数据：[%s]", TEXT_TIP.getClass().getSimpleName(), this);
         }
     }
 
@@ -573,6 +573,18 @@ public abstract class AbstractTextTip {
         public String toString() {
             return this.next + '-' + this.word + '-' + this.wordCode;
         }
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", "词提各项数据：[", "]")
+                .add("加载状态：" + (loaded ? "成功" : "失败"))
+                .add("方案最大长度：" + codeLength)
+                .add("选重键：'" + selection + "'")
+                .add("是否是42顶：" + (three42 ? "是" : "否"))
+                .add("码表路径：'" + filePath + "'")
+                .toString();
     }
 
     enum Type {

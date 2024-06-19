@@ -4,9 +4,12 @@ import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.menu.send.*;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.send.data.TypedData;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import method.qr.kiarelemb.utils.QRSerializeUtils;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb
@@ -16,6 +19,7 @@ import java.io.IOException;
  * @create 2024/4/16 19:32
  */
 public class TextSendManager {
+    private static final Logger logger = QRLoggerUtils.getLogger(TextSendManager.class);
     private static TypedData data;
 
     public static TypedData data() {
@@ -43,6 +47,7 @@ public class TextSendManager {
         String filePath = Info.TYPE_DIRECTORY + data.fileName() + ".bin";
         try {
             QRSerializeUtils.writeObject(filePath, data);
+            logger.log(Level.INFO, "跟打文件 %s 保存成功！", data.filePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,9 +60,11 @@ public class TextSendManager {
     public static boolean loadData(String fileName) {
         TypedData typedData = loadSerializedData(fileName);
         if (typedData == null) {
+            logger.warning("加载失败：" + fileName);
             return false;
         }
         data = typedData;
+        logger.config("加载成功：" + fileName);
         return true;
     }
 
@@ -79,6 +86,7 @@ public class TextSendManager {
         setData(data);
         TextPane.TEXT_PANE.setTypeText(data.nextParaText());
         TextSendManager.control(true);
+        logger.info("开始发文：" + data);
         //TODO 在此处添加跟打结束事件
     }
 
@@ -88,6 +96,7 @@ public class TextSendManager {
     public static void endSendText() {
         setData(null);
         control(false);
+        logger.info("发文结束！");
     }
 
     private static void control(boolean enable) {

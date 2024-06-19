@@ -3,10 +3,14 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
 import method.qr.kiarelemb.utils.QRArrayUtils;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
 import swing.qr.kiarelemb.component.event.QRItemEvent;
 import swing.qr.kiarelemb.component.utils.QRFontComboBox;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -15,6 +19,9 @@ import swing.qr.kiarelemb.component.utils.QRFontComboBox;
  * @create 2023-02-01 14:35
  **/
 public class ComboBox extends QRComboBox {
+
+    private static Logger logger = QRLoggerUtils.getLogger(ComboBox.class);
+
     /**
      * 在设置中使用的
      *
@@ -62,6 +69,7 @@ public class ComboBox extends QRComboBox {
             addItemChangeListener(e -> {
                 QRItemEvent event = (QRItemEvent) e;
                 SettingsItem.CHANGE_MAP.put(key, event.after());
+                logger.log(Level.CONFIG, "已选择字体: %s", event.after());
             });
         }
     }

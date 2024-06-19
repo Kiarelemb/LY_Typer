@@ -9,6 +9,7 @@ import ly.qr.kiarelemb.text.send.TextSendManager;
 import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRFileUtils;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
 import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
 import swing.qr.kiarelemb.component.event.QRItemEvent;
@@ -17,6 +18,8 @@ import swing.qr.kiarelemb.inter.QRActionRegister;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb
@@ -26,6 +29,7 @@ import java.io.IOException;
  * @create 2024/3/31 22:19
  */
 public class SendTextTabbedContentPanel extends QRTabbedContentPanel {
+    private static final Logger logger = QRLoggerUtils.getLogger(SendTextTabbedContentPanel.class);
     protected final SendWindow window;
     private final int width;
     private final int height;
@@ -81,6 +85,7 @@ public class SendTextTabbedContentPanel extends QRTabbedContentPanel {
             @Override
             protected void itemChangedAction(QRItemEvent e) {
                 SettingsItem.CHANGE_MAP.put(Keys.TEXT_SEND_START_WORD_NUM, e.after());
+                logger.log(Level.INFO, "设置每段发文字数：" + e.after());
             }
         };
         paraWordCbx.setSelectedIndex(selectIndex);

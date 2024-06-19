@@ -6,10 +6,7 @@ import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.contract.state.LookModelCheckBox;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
-import method.qr.kiarelemb.utils.QRMathUtils;
-import method.qr.kiarelemb.utils.QRSleepUtils;
-import method.qr.kiarelemb.utils.QRThreadBuilder;
-import method.qr.kiarelemb.utils.QRTools;
+import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.listener.QRActionListener;
 import swing.qr.kiarelemb.inter.QRActionRegister;
@@ -19,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -28,6 +26,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  **/
 public class TypingData {
     public static final ArrayList<Integer> WRONG_WORDS_INDEX = new ArrayList<>();
+    private static final Logger logger = QRLoggerUtils.getLogger(TypingData.class);
     public static int keyCounts = 0;
     public static int backSpaceCount = 0;
     public static int backDeleteCount = 0;
@@ -139,7 +138,7 @@ public class TypingData {
     }
 
     /**
-     * 每次载本都会更新
+     * 每次载文都会更新
      */
     public static void dataUpdate() {
         finishModel = Keys.intValue(Keys.TYPE_FINISH_MODEL);
@@ -206,6 +205,7 @@ public class TypingData {
             START_TYPING_LISTENER.actionPerformed(null);
             typedKeyRecord = new StringBuilder();
             runTyping();
+            logger.info("********** 开始跟打 **********");
         }
     }
 

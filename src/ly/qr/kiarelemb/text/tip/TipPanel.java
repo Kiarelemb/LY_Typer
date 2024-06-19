@@ -25,8 +25,8 @@ import java.util.ArrayList;
  * @create 2023-02-16 14:36
  **/
 public class TipPanel extends QRPanel {
-    private final QRPanel singlePanel = new QRPanel();
-    private final QRPanel phrasePanel = new QRPanel();
+    private final QRPanel singlePanel = new QRPanel(false);
+    private final QRPanel phrasePanel = new QRPanel(false);
     private final QRLabel singleWordLabel = new QRLabel("单字");
     private final QRLabel singleWordCodeLabel = new QRLabel("abcd");
     private final QRLabel phraseWordLabel = new QRLabel("词组");

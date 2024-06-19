@@ -6,6 +6,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.QRFontUtils;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -24,8 +26,10 @@ import java.util.Map;
  */
 public class TextStyleManager {
 
+    private static Logger logger = QRLoggerUtils.getLogger(TextStyleManager.class);
+
     static {
-        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> updateAll());
+//        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> updateAll());
         try {
             String oneStr = Keys.strValue(Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_ONE).trim();
             String twoStr = Keys.strValue(Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_TWO).trim();
@@ -266,8 +270,7 @@ public class TextStyleManager {
         } else {
             freshToChineseModelStyle();
             TextPane.TEXT_PANE.caret.setFontName(PREFERRED_CHINESE_FONT_NAME).update();
-//			Font font = QRFontUtils.getFont(Keys.strValue(Keys.TEXT_FONT_NAME_LOOK, PREFFERED_CHINESE_FONT_NAME), Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK, 28));
-//			TyperTextPane.TYPER_TEXT_PANE.setFont(font);
         }
+        logger.info(String.format("字体已刷新，当前是%s，字体名是%s", isEnglishTyping ? "英文" : "中文", PREFERRED_CHINESE_FONT_NAME));
     }
 }

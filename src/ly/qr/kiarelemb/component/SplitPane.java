@@ -30,6 +30,7 @@ public class SplitPane extends QRSplitPane {
     private SplitPane() {
         super(JSplitPane.VERTICAL_SPLIT);
 
+        setOpaque(false);
         //底部的面板需要放词提
         this.tipPanel = new SplitTipPanel();
         this.tipPanel.setPreferredSize(200, 100);
@@ -60,14 +61,14 @@ public class SplitPane extends QRSplitPane {
             this.tipPanel.setOnNorth(value % 2 == 0);
             if (value == 0 || value == 1) {
                 setTopComponent(null);
-                QRPanel panel = new QRPanel();
+                QRPanel panel = new QRPanel(false);
                 panel.setLayout(new BorderLayout());
                 panel.add(TextPane.TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
                 panel.add(this.tipPanel, value == 0 ? BorderLayout.NORTH : BorderLayout.SOUTH);
                 setTopComponent(panel);
             } else {
                 setBottomComponent(null);
-                QRPanel panel = new QRPanel();
+                QRPanel panel = new QRPanel(false);
                 panel.setLayout(new BorderLayout());
                 panel.add(TyperTextPane.TYPER_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
                 panel.add(this.tipPanel, value == 3 ? BorderLayout.SOUTH : BorderLayout.NORTH);

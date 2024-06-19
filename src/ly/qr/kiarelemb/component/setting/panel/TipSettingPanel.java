@@ -9,6 +9,7 @@ import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.TextTipEnhance;
 import ly.qr.kiarelemb.text.tip.TipWindow;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRCheckBox;
 import swing.qr.kiarelemb.component.basic.QRComboBox;
@@ -19,6 +20,8 @@ import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -27,6 +30,7 @@ import java.io.File;
  * @create 2023-02-07 21:13
  **/
 public class TipSettingPanel extends SettingPanel {
+    private static final Logger logger = QRLoggerUtils.getLogger(TipSettingPanel.class);
 
     public TipSettingPanel(SettingWindow window) {
         super(window, "词提...");
@@ -57,12 +61,13 @@ public class TipSettingPanel extends SettingPanel {
         QRActionRegister tipLoadAction = es -> {
             TextTip.TEXT_TIP.release();
             TextTip.TEXT_TIP.load();
+            QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
             if (InputManager.INPUT_MANAGER.isLoaded()) {
                 InputManager.INPUT_MANAGER.tipUpdate();
             }
         };
 
-        tipEnableCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable", tipLoadAction));
+        tipEnableCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.load", tipLoadAction));
 
         tipEnhanceModelCheckBox.addClickAction(e -> {
             SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable.enhance", es -> {
@@ -71,6 +76,7 @@ public class TipSettingPanel extends SettingPanel {
                         AbstractTextTip.TEXT_TIP.release();
                         AbstractTextTip.TEXT_TIP = new TextTipEnhance();
                         AbstractTextTip.TEXT_TIP.load();
+                        QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
                     }
                 }
             });

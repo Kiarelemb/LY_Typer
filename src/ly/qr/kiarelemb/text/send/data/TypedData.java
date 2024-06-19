@@ -232,7 +232,7 @@ public final class TypedData implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", TypedData.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", "发文数据：[", "]")
                 .add("fileName='" + fileName + "'")
                 .add("fileCrc='" + fileCrc + "'")
                 .add("totalWordsNum=" + totalWordsNum)
@@ -244,8 +244,8 @@ public final class TypedData implements Serializable {
                 .add("remainingWordsCount=" + remainingWordsCount)
                 .add("perLength=" + perLength)
                 .add("paraNum=" + paraNum)
-                .add("currentText='" + currentText + "'")
                 .add("sendData=" + sendData)
+                .add("currentText='" + currentText + "'")
                 .toString();
     }
 }

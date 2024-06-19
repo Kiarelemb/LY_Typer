@@ -8,6 +8,7 @@ import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextWash;
 import ly.qr.kiarelemb.text.send.SendWindow;
 import method.qr.kiarelemb.utils.QRFileUtils;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
@@ -17,11 +18,13 @@ import swing.qr.kiarelemb.component.utils.QRClearableTextField;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
  */
 public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
+    private static final Logger logger = QRLoggerUtils.getLogger(LocalTextSendTextTabbedPanel.class);
     private final QRTextField sendFileTextField;
 
     public LocalTextSendTextTabbedPanel(SendWindow window) {
@@ -65,6 +68,7 @@ public class LocalTextSendTextTabbedPanel extends SendTextTabbedContentPanel {
         }
         sendFileTextField.setText(file.getAbsolutePath());
         sendFileTextField.setToolTipText(file.getName());
+        logger.info("已选择文件：" + file.getAbsolutePath());
     }
 
     private void startAction(Object o) {

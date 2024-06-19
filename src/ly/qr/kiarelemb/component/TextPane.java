@@ -16,7 +16,6 @@ import ly.qr.kiarelemb.text.send.TextSendManager;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
-import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.component.QRComponentUtils;
@@ -35,6 +34,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -43,6 +44,7 @@ import java.util.concurrent.*;
  * @create 2023-01-12 23:33
  **/
 public class TextPane extends QRTextPane {
+    private static final Logger logger = QRLoggerUtils.getLogger(TextPane.class);
     private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
     public static final int TYPING_FINISH_MARK_OVER_DO_NOTING = 0;
     public static final int TYPING_FINISH_MARK_OVER_NO_WRONG = 1;
@@ -57,6 +59,7 @@ public class TextPane extends QRTextPane {
     private TextPane() {
         addMouseListener();
         addKeyListener();
+        setOpaque(false);
         textPanelEditorKit = new TextPanelEditorKit(this);
         setEditorKit(textPanelEditorKit);
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
@@ -66,7 +69,8 @@ public class TextPane extends QRTextPane {
             TypingData.dataUpdate();
             //重置数据
             TypingData.clear();
-            this.caret.setVisible(SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked());
+            boolean visible = SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked();
+            this.caret.setVisible(visible);
         });
         this.setTextFinishedActions.add(e -> {
             setCaretPosition(0);
@@ -90,9 +94,16 @@ public class TextPane extends QRTextPane {
         if (!tls.isText()) {
             return;
         }
-        if (TextLoad.TEXT_LOAD == null || !TextLoad.TEXT_LOAD.textNotIsChanged(tls.formattedActualText())) {
+        if (TextLoad.TEXT_LOAD == null) {
             TextLoad.TEXT_LOAD = tls;
+        } else if (!TextLoad.TEXT_LOAD.textNotIsChanged(tls.formattedActualText())) {
+            boolean isUpdate = TextLoad.TEXT_LOAD.isEnglish() != tls.isEnglish();
+            TextLoad.TEXT_LOAD = tls;
+            if (isUpdate) {
+                TextStyleManager.updateAll();
+            }
         }
+        logger.info(String.format("已载入文本:\n[%s]", text));
         textFresh();
     }
 
@@ -181,12 +192,13 @@ public class TextPane extends QRTextPane {
             futureTask = scheduler.schedule(() -> {
                 synchronized (lock) {
                     // 执行累积的字符操作
-                    if (!accumulatedChars.isEmpty()) {
-                        insertUpdateExecute(accumulatedChars.toString());
-                        TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
-                        // 重置累积的字符
-                        accumulatedChars.setLength(0);
+                    if (accumulatedChars.isEmpty()) {
+                        return;
                     }
+                    insertUpdateExecute(accumulatedChars.toString());
+                    TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
+                    // 重置累积的字符
+                    accumulatedChars.setLength(0);
                 }
             }, shortestInputTimeDiff, TimeUnit.MILLISECONDS);
         }
@@ -240,17 +252,18 @@ public class TextPane extends QRTextPane {
         TypingData.currentTypedIndex += length;
         setCaretPosition(TypingData.currentTypedIndex);
         setCaretUnblock();
-        if (TextLoad.TEXT_LOAD.wordsLength() == TypingData.currentTypedIndex) {
-            //0是打完即可，1是打完无错，2是无错智能，3是可错智能
-            if (TypingData.finishModel == TYPING_FINISH_MARK_OVER_DO_NOTING || (TypingData.finishModel == TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
-                //打字结束
-                if (!Info.IS_WINDOWS) {
-                    MainWindow.INSTANCE.setAlwaysOnTop(false);
-                }
-                TypingData.typeEnd = true;
-                TypingData.typing = false;
-                typingEndThread.execute(this::typeEnding);
+        if (TextLoad.TEXT_LOAD.wordsLength() != TypingData.currentTypedIndex) {
+            return;
+        }
+        //0是打完即可，1是打完无错，2是无错智能，3是可错智能
+        if (TypingData.finishModel == TYPING_FINISH_MARK_OVER_DO_NOTING || (TypingData.finishModel == TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
+            //打字结束
+            if (!Info.IS_WINDOWS) {
+                MainWindow.INSTANCE.setAlwaysOnTop(false);
             }
+            TypingData.typeEnd = true;
+            TypingData.typing = false;
+            typingEndThread.execute(this::typeEnding);
         }
     }
 
@@ -307,6 +320,7 @@ public class TextPane extends QRTextPane {
                 TextLoad.TEXT_LOAD.wordsLength()) / totalTimeInMin;
         //速度过小，不统计
         if (totalTimeInSec <= 0 || s < 1) {
+            QRLoggerUtils.log(logger, Level.WARNING, "速度 %f 过小，不统计", s);
             QRSmallTipShow.display(MainWindow.INSTANCE, "继续重打吧！");
             return;
         }
@@ -328,6 +342,9 @@ public class TextPane extends QRTextPane {
         GradeData gradeData = new GradeData(totalTimeInMin, speed, keyStroke, codeLength, timeCost);
 
         String grade = gradeData.getSetGrade();
+        logger.info("********** 跟打结束 **********");
+        QRLoggerUtils.log(logger, Level.INFO, "跟打按键：[%s]", TypingData.typedKeyRecord.toString());
+        QRLoggerUtils.log(logger, Level.INFO, "本段成绩：[%s]", gradeData.getFullGrade());
         //将成绩存放至剪贴板
         QRSystemUtils.putTextToClipboard(grade);
         DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
@@ -336,6 +353,7 @@ public class TextPane extends QRTextPane {
         if (TextSendManager.sendingText()) {
             TextSendManager.data().addTypedTimes();
             NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
+            QRLoggerUtils.log(logger, Level.INFO, "发文数据：[%s]", TextSendManager.data().toString());
         }
         TypingData.windowFresh();
     }
@@ -344,33 +362,36 @@ public class TextPane extends QRTextPane {
      * 调用后重打次数增加
      */
     public void restart() {
-        if (TextLoad.TEXT_LOAD != null) {
-            TextLoad.TEXT_LOAD.reTypeTimesAdd();
-            simpleRestart();
+        if (TextLoad.TEXT_LOAD == null) {
+            return;
         }
+        TextLoad.TEXT_LOAD.reTypeTimesAdd();
+        QRLoggerUtils.log(logger, Level.INFO, "手动重打，当前第 %s 次", TextLoad.TEXT_LOAD.reTypeTimes());
+        simpleRestart();
     }
 
     /**
      * 该方法不增加重打次数
      */
     public void simpleRestart() {
-        if (TextLoad.TEXT_LOAD != null) {
-            TypingData.typing = false;
-            TypingData.typeEnd = true;
-//            printTextStyleAfterSetText();
-            TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
-            DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
-            TypingData.windowFresh();
-            MainWindow.INSTANCE.grabFocus();
+        if (TextLoad.TEXT_LOAD == null) {
+            return;
         }
+        TypingData.typing = false;
+        TypingData.typeEnd = true;
+        TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
+        DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
+        TypingData.windowFresh();
+        MainWindow.INSTANCE.grabFocus();
     }
 
     public void caretPositionAdjust() {
-        if (!this.caretBlock) {
-            int caretPosition = getCaretPosition();
-            if (TypingData.currentTypedIndex != caretPosition) {
-                setCaretPosition(TypingData.currentTypedIndex);
-            }
+        if (this.caretBlock) {
+            return;
+        }
+        int caretPosition = getCaretPosition();
+        if (TypingData.currentTypedIndex != caretPosition) {
+            setCaretPosition(TypingData.currentTypedIndex);
         }
     }
 
@@ -378,22 +399,6 @@ public class TextPane extends QRTextPane {
     public void print(TipPhraseStyleData tpsd) {
         try {
             getDocument().insertString(tpsd.index(), tpsd.phrase(), tpsd.getStyle());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void print(TipPhraseStyleData tpsd, int index) {
-        try {
-            getDocument().insertString(index, tpsd.phrase(), tpsd.getStyle());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void print(TipCharStyleData tcsd) {
-        try {
-            getDocument().insertString(tcsd.index(), tcsd.word(), tcsd.getStyle());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -439,14 +444,13 @@ public class TextPane extends QRTextPane {
 
     @Override
     public synchronized void paint(Graphics g) {
+        if (paintLock) {
+            return;
+        }
         try {
-            if (paintLock) {
-                return;
-            }
             paintLock = true;
             super.paint(g);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
         } finally {
             paintLock = false;
         }
