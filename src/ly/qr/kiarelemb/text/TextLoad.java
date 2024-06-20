@@ -183,7 +183,7 @@ public class TextLoad {
                 this.phrases = this.formattedActualText.split(QRStringUtils.A_WHITE_SPACE);
                 this.wordParts = QRStringUtils.getChineseExtraPhrase(this.formattedActualText);
                 this.wordsLength = this.wordParts.length;
-                logger.log(Level.INFO, String.format("当前文本为英文%s，词数为 %s 词", this.isEnglishPhrase ? "单词" : "文章", this.wordsLength));
+                logger.log(Level.INFO, String.format("当前文本为英文%s，词数为 %s 词", this.isEnglishPhrase ? "单词" : "文章", phrases.length + 1));
             }
             try {
                 final String md5 = QRStringUtils.getMd5(this.formattedActualText);

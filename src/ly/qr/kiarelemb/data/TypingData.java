@@ -2,7 +2,6 @@ package ly.qr.kiarelemb.data;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
-import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.contract.state.LookModelCheckBox;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -15,6 +14,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
 
@@ -76,10 +77,6 @@ public class TypingData {
     private static final ThreadPoolExecutor tre_statistics = QRThreadBuilder.singleThread("statistics");
 
     static {
-        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> {
-            typeEnd = false;
-            windowFresh();
-        });
         QRSwing.registerSystemExitAction(event -> {
             if (!typedKeyRecord.isEmpty()) {
                 KeyTypedRecordData.fresh(typedKeyRecord.toString());
@@ -162,11 +159,25 @@ public class TypingData {
     }
 
     private static void typingStatisticsUpdate(long restTime) {
+        if (MainWindow.INSTANCE.backgroundImageSet()) {
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    while (typing && !pausing) {
+                        windowFresh();
+                        QRSleepUtils.sleep(5);
+                    }
+                }
+            }, 10);
+        }
+
+        windowFresh();
         while (typing && !pausing) {
             long endTime = System.currentTimeMillis();
             //用时_秒
-            double totalTimeInSec = (endTime - startTime) / 1000.0;
             if (!LookModelCheckBox.lookModelCheckBox.checked()) {
+                double totalTimeInSec = (endTime - startTime) / 1000.0;
                 //用时_分
                 double totalTimeInMin = totalTimeInSec / 60;
                 currentSpeed = ((currentTypedIndex - 5 * WRONG_WORDS_INDEX.size()) / totalTimeInMin);
@@ -185,9 +196,9 @@ public class TypingData {
                 ContractiblePanel.SPEED_LABEL.setText(speeds);
                 ContractiblePanel.KEY_STROKE_LABEL.setText(keyStrokes);
                 ContractiblePanel.CODE_LEN_LABEL.setText(codeLengths);
+                ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
+                windowFresh();
             }
-            ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
-            windowFresh();
             QRSleepUtils.sleep(restTime);
         }
     }

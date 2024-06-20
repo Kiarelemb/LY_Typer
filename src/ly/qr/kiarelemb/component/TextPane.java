@@ -80,12 +80,6 @@ public class TextPane extends QRTextPane {
         });
     }
 
-
-    @Deprecated
-    @Override
-    public void setText(String text) {
-    }
-
     public void setTypeText(String text) {
         if (text == null) {
             return;
@@ -122,6 +116,7 @@ public class TextPane extends QRTextPane {
         // 消除 alt+3 带来的瞬间红字
         print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
         printTextStyleAfterSetText();
+        TypingData.windowFresh();
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextPane.TEXT_PANE.setTextFinishedActions));
     }
 
@@ -348,11 +343,13 @@ public class TextPane extends QRTextPane {
         ContractiblePanel.SPEED_LABEL.setText(String.valueOf(speed));
         ContractiblePanel.KEY_STROKE_LABEL.setText(String.valueOf(keyStroke));
         ContractiblePanel.CODE_LEN_LABEL.setText(String.valueOf(codeLength));
+        TypingData.windowFresh();
         GradeData gradeData = new GradeData(totalTimeInMin, speed, keyStroke, codeLength, timeCost);
 
         String grade = gradeData.getSetGrade();
+
         logger.info("********** 跟打结束 **********");
-        QRLoggerUtils.log(logger, Level.INFO, "跟打按键：[%s]", TypingData.typedKeyRecord.toString());
+        QRLoggerUtils.log(logger, Level.INFO, "跟打按键：[%s]", QRStringUtils.toLowerCase(TypingData.typedKeyRecord.toString()));
         QRLoggerUtils.log(logger, Level.INFO, "本段成绩：[%s]", gradeData.getFullGrade());
         //将成绩存放至剪贴板
         QRSystemUtils.putTextToClipboard(grade);
@@ -364,7 +361,6 @@ public class TextPane extends QRTextPane {
             NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
             QRLoggerUtils.log(logger, Level.INFO, "发文数据：[%s]", TextSendManager.data().toString());
         }
-        TypingData.windowFresh();
     }
 
     /**
@@ -390,7 +386,6 @@ public class TextPane extends QRTextPane {
         TypingData.typeEnd = true;
         TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
         DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
-        TypingData.windowFresh();
         MainWindow.INSTANCE.grabFocus();
     }
 
@@ -419,6 +414,13 @@ public class TextPane extends QRTextPane {
 
     public void addSetTextFinishedAction(QRActionRegister ar) {
         this.setTextFinishedActions.add(ar);
+    }
+
+    //region 方法重写
+
+    @Deprecated
+    @Override
+    public void setText(String text) {
     }
 
     @Override
@@ -483,4 +485,5 @@ public class TextPane extends QRTextPane {
         this.textFont = QRColorsAndFonts.STANDARD_FONT_TEXT.deriveFont((float) Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
         super.componentFresh();
     }
+    //endregion
 }

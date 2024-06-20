@@ -8,6 +8,7 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.QRMathUtils;
+import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
@@ -252,7 +253,7 @@ public class ContractiblePanel extends QRContractiblePanel {
             if (TypingData.typedKeyRecord.isEmpty()) {
                 return;
             }
-            String str = TypingData.typedKeyRecord.toString();
+            String str = QRStringUtils.toLowerCase(TypingData.typedKeyRecord.toString());
             QRResizableTextShowDialog dialog = new QRResizableTextShowDialog(MainWindow.INSTANCE, 400, 300, "按键数据",
                     str, true);
             dialog.setVisible(true);

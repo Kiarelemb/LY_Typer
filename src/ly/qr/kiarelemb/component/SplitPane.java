@@ -136,6 +136,7 @@ public class SplitPane extends QRSplitPane {
     static class SplitPaneUI extends BasicSplitPaneUI {
 
         public SplitPaneUI() {
+            // 注册跟打进度条刷新
             QRActionRegister repaintAction = e -> divider.repaint();
             TyperTextPane.TYPER_TEXT_PANE.addTypeActions(repaintAction);
             TextPane.TEXT_PANE.addSetTextFinishedAction(repaintAction);

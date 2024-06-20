@@ -67,9 +67,6 @@ public class WordLabel extends QRLabel {
 		today++;
 		total++;
 		wordLabel.setText(today + " / " + total);
-		if (TypingData.restTime != 10L) {
-			TypingData.windowFresh();
-		}
 	}
 
 	private void wordSave() {

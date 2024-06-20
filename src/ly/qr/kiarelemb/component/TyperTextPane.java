@@ -38,6 +38,8 @@ public class TyperTextPane extends QRTextPane {
         addKeyListener();
         addMouseListener();
         timeCountInit();
+        setOpaque(false);
+        addScrollPane().setOpaque(false);
         this.typeActions.add(e -> scrollUpdate());
         TextPane.TEXT_PANE.addSetTextBeforeAction(e -> {
             clear();
@@ -198,10 +200,7 @@ public class TyperTextPane extends QRTextPane {
      */
     @Override
     public void keyType(KeyEvent e) {
-        if (TextLoad.TEXT_LOAD == null) {
-            return;
-        }
-        if (keyCheck(e)) {
+        if (TextLoad.TEXT_LOAD == null || keyCheck(e)) {
             return;
         }
         if (!TypingData.typing || TypingData.typeEnd) {
