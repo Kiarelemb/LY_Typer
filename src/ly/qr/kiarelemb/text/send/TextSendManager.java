@@ -47,7 +47,7 @@ public class TextSendManager {
         String filePath = Info.TYPE_DIRECTORY + data.fileName() + ".bin";
         try {
             QRSerializeUtils.writeObject(filePath, data);
-            logger.log(Level.INFO, "跟打文件 %s 保存成功！", data.filePath());
+            QRLoggerUtils.log(logger, Level.INFO, "跟打文件 %s 保存成功！", data.filePath());
         } catch (IOException e) {
             e.printStackTrace();
         }

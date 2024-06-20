@@ -103,7 +103,16 @@ public class TextPane extends QRTextPane {
                 TextStyleManager.updateAll();
             }
         }
-        logger.info(String.format("已载入文本:\n[%s]", text));
+        String[] lines = String.format("[%s]", text).split("\n");
+        int length = lines.length;
+        if (length == 1) {
+            logger.info(String.format("已载入文本:[%s]", text));
+        } else {
+            logger.info(String.format("已载入文本:"));
+            for (String line : lines) {
+                logger.info(line);
+            }
+        }
         textFresh();
     }
 
