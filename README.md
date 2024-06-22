@@ -8,9 +8,8 @@
 ## 小白快速开始
 
 > 阅读指引：在这一部分，您将需要进行两个操作步骤：<u>①环境准备</u> <u>②双击运行</u>，每个步骤下，您将面临两个选择。  
->
->
-请注意，面对任何读不懂的内容，请转向我们的QQ群：[283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)。
+> 
+> 请注意，面对任何读不懂的内容，请转向我们的QQ群：[283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)。
 
 ### `Step 1` ：运行环境准备
 
@@ -19,15 +18,9 @@
 #### - 下载 JDK 并自行配置运行环境
 
 > 依据您的系统，选择点击下方的名称，以安装 [Java 17 GA](https://jdk.java.net/archive/) ：  
-> *
-*[Windows x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_windows-x64_bin.zip)
-**、
-> *
-*[Mac OS x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_macos-x64_bin.tar.gz)
-**、
-> *
-*[Linux x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz)
-**
+> **[Windows x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_windows-x64_bin.zip)**、
+> **[Mac OS x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_macos-x64_bin.tar.gz)**、
+> **[Linux x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz)**
 
 对于 `Windows 10+`
 系统的环境配置，我们强烈推荐您参考 [这个网站](https://www.runoob.com/w3cnote/windows10-java-setup.html)
@@ -35,13 +28,10 @@
 #### - 群内下载 `exe` 安装包免去环境配置
 
 对于 `Windows 7`
-以上的系统，您可以在QQ群 [283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)
-的群文件 `运行环境` 文件夹中下载
-
+以上的系统，您可以在QQ群 [283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh) 的群文件 `运行环境` 文件夹中下载
 ```
 jdk-17_windows-x64_bin.exe
 ```
-
 文件，双击该安装包，并以默认设置完成安装即可运行揽月。
 
 > Tip: 群内更有 `开箱即用` 而不需要考虑环境问题的打包版本。
@@ -50,13 +40,11 @@ jdk-17_windows-x64_bin.exe
 
 #### - 运行 `Jar` 包
 
-除了在本页面克隆下载之外，您还可以点击这里 [单独下载 Jar 包](https://github.com/Kiarelemb/LY_Typer/raw/master/LY_Tyepr.jar)
-。至今，我们的揽月跟打器**初次运行**并不需要任何额外的配置文件。当然，那些配置文件会在软件启用后自动生成。
+除了在本页面克隆下载之外，您还可以点击这里 [单独下载 Jar 包](https://github.com/Kiarelemb/LY_Typer/raw/master/LY_Tyepr.jar)。至今，我们的揽月跟打器**初次运行**并不需要任何额外的配置文件。当然，那些配置文件会在软件启用后自动生成。
 
 #### - 运行打包好的 `exe` 文件
 
-群文件 `小启＆揽月` 文件夹中，您还可以找到打包好的 `exe` 文件。其分为了 `老用户` 和 `新用户` 两个版本， `新用户`
-亦即 `开箱即用` 版本，无需配置环境即可运行。
+群文件 `小启＆揽月` 文件夹中，您还可以找到打包好的 `exe` 文件。其分为了 `老用户` 和 `新用户` 两个版本， `新用户` 亦即 `开箱即用` 版本，无需配置环境即可运行。
 ## 开发环境
 
 ### `Step 1` ：获取揽月代码
