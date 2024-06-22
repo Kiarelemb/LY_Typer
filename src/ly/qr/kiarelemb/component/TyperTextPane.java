@@ -6,10 +6,7 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.text.TextLoad;
-import method.qr.kiarelemb.utils.QRFontUtils;
-import method.qr.kiarelemb.utils.QRRandomUtils;
-import method.qr.kiarelemb.utils.QRStringUtils;
-import method.qr.kiarelemb.utils.QRSystemUtils;
+import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRScrollPane;
 import swing.qr.kiarelemb.component.basic.QRTextPane;
@@ -22,6 +19,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -30,6 +29,7 @@ import java.util.LinkedList;
  * @create 2023-01-12 23:35
  **/
 public class TyperTextPane extends QRTextPane {
+    private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
     public KeyListener globalKeyListener = null;
     private final LinkedList<QRActionRegister> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
@@ -54,24 +54,26 @@ public class TyperTextPane extends QRTextPane {
 
     private void scrollUpdate() {
         JScrollBar verticalScrollBar = TextPane.TEXT_PANE.addScrollPane().getVerticalScrollBar();
-        if (verticalScrollBar.isVisible()) {
-            //更新模式
+        if (!verticalScrollBar.isVisible()) {
+            return;
+        }
+        //更新模式
 //			boolean updateEveryTimes = tsd.scrollbarValueUpdate();
-            final int[] lineAndRow = TextPane.TEXT_PANE.currentLineAndRow(TypingData.currentTypedIndex);
-            final int currentLine = lineAndRow[0];
-            final double currentRow = lineAndRow[1];
-            boolean updateCondition = currentRow == 0;
-            //行尾更新
-            final int lineWords = TextPane.TEXT_PANE.lineWords();
-            if (updateCondition) {
-                double startUpdateLine = 3;
-                if (currentLine >= startUpdateLine) {
-                    int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
-                    double value =
-                            ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
-                    verticalScrollBar.setValue((int) (Math.min(value, max)));
-                }
-            }
+        final int[] lineAndRow = TextPane.TEXT_PANE.currentLineAndRow(TypingData.currentTypedIndex);
+        final int currentLine = lineAndRow[0];
+        final double currentRow = lineAndRow[1];
+        boolean updateCondition = currentRow == 0;
+        //行尾更新
+        if (!updateCondition) {
+            return;
+        }
+        final int lineWords = TextPane.TEXT_PANE.lineWords();
+        double startUpdateLine = 3;
+        if (currentLine >= startUpdateLine) {
+            int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
+            double value =
+                    ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
+            verticalScrollBar.setValue((int) (Math.min(value, max)));
         }
     }
 
@@ -82,8 +84,8 @@ public class TyperTextPane extends QRTextPane {
         }
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_WINDOWS || e.getModifiersEx() == KeyEvent.META_DOWN_MASK
-                || keyCode == KeyEvent.VK_SHIFT || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12
-                || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
+            || keyCode == KeyEvent.VK_SHIFT || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12
+            || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
             return true;
         }
         return false;
@@ -104,10 +106,9 @@ public class TyperTextPane extends QRTextPane {
         int keyCode = keyStroke.getKeyCode();
         char keyChar = (char) keyCode;
         int modifiers = keyStroke.getModifiers();
-        if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)) {
-            return;
-        }
-        if ((keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_WINDOWS) && !TypingData.typing) {
+        if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
+            || (keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_ENTER) && !TypingData.typing) {
+            QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
 
@@ -162,10 +163,8 @@ public class TyperTextPane extends QRTextPane {
             } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
                 TypingData.rightCounts++;
             } else {
-//				System.out.println(keyStroke.getKeyCode() + "-" + keyStroke.getKeyChar());
-                TypingData.typedKeyRecord.append('⊗');
-                DangLangManager.DANG_LANG_MANAGER.put('⊗', timeDiff);
-                return;
+                QRLoggerUtils.log(logger, Level.WARNING, "未知按键：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
+                keyChar = '⊗';
             }
             TypingData.typedKeyRecord.append(keyChar);
             DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
@@ -191,7 +190,11 @@ public class TyperTextPane extends QRTextPane {
     protected void caretPositionAdjust() {
         int caretPosition = caret.getDot();
         if (TypingData.currentTypedIndex != caretPosition) {
-            setCaretPosition(TypingData.currentTypedIndex);
+            try {
+                setCaretPosition(TypingData.currentTypedIndex);
+            } catch (Exception e) {
+                logger.log(Level.WARNING, "caretPositionAdjust", e);
+            }
         }
     }
 
@@ -200,10 +203,7 @@ public class TyperTextPane extends QRTextPane {
      */
     @Override
     public void keyType(KeyEvent e) {
-        if (TextLoad.TEXT_LOAD == null || keyCheck(e)) {
-            return;
-        }
-        if (!TypingData.typing || TypingData.typeEnd) {
+        if (TextLoad.TEXT_LOAD == null || keyCheck(e) || !TypingData.typing) {
             e.consume();
             return;
         }
@@ -215,7 +215,7 @@ public class TyperTextPane extends QRTextPane {
             }
             TextPane.TEXT_PANE.insertUpdates(keyChar);
         } catch (Exception e1) {
-            e1.printStackTrace();
+            logger.log(Level.WARNING, "keyType", e1);
         }
     }
 
@@ -229,7 +229,7 @@ public class TyperTextPane extends QRTextPane {
     @Override
     protected void pasteAction() {
         String text = QRSystemUtils.getSysClipboardText();
-        if (text == null) {
+        if (text == null || text.isBlank()) {
             return;
         }
         text = text.trim();

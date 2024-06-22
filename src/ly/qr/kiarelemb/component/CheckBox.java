@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRCheckBox;
 
 import java.awt.event.ActionEvent;
@@ -49,6 +50,7 @@ public class CheckBox extends QRCheckBox {
     }
 
     private void update() {
+        QRComponentUtils.windowFresh(this);
         if (setting) {
             SettingsItem.CHANGE_MAP.put(this.key, String.valueOf(this.checked));
         } else if (Keys.boolValue(this.key) != this.checked) {

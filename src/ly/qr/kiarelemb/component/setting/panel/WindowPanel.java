@@ -58,6 +58,7 @@ public class WindowPanel extends SettingPanel {
             backgroundImageSetBtn.setEnabled(checked);
             windowTransCheckBox.setEnabled(!checked);
             windowTransSlider.setEnabled(!checked);
+            SettingsItem.SAVE_ACTIONS.putIfAbsent("window.image.path", es -> MainWindow.INSTANCE.setBackgroundImage(QRSwing.windowBackgroundImagePath));
         });
         backgroundImageSetBtn.addClickAction(event -> {
             BackgroundImageSelectDialog dialog = new BackgroundImageSelectDialog();
@@ -173,6 +174,22 @@ public class WindowPanel extends SettingPanel {
                     sureBtn.setEnabled(false);
                 }
             };
+            QRSlider alphaSlider = getAlphaSlider(backgroundImagePanel);
+
+            backgroundImagePanel.setBounds(36, 10, 569, 343);
+            alphaSlider.setBounds(405, 360, 200, 40);
+            this.textField.setBounds(36, 420, 444, 30);
+            selectBtn.setBounds(490, 420, 32, 32);
+            sureBtn.setBounds(530, 420, 75, 30);
+
+            this.mainPanel.add(backgroundImagePanel);
+            this.mainPanel.add(alphaSlider);
+            this.mainPanel.add(this.textField);
+            this.mainPanel.add(selectBtn);
+            this.mainPanel.add(sureBtn);
+        }
+
+        private static QRSlider getAlphaSlider(QRPanel backgroundImagePanel) {
             QRSlider alphaSlider = new QRSlider();
             alphaSlider.setBoundValue(50, 100);
             alphaSlider.setValue((int) (100 * QRSwing.windowBackgroundImageAlpha));
@@ -186,18 +203,7 @@ public class WindowPanel extends SettingPanel {
                     SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, String.valueOf(alpha));
                 }
             });
-
-            backgroundImagePanel.setBounds(36, 10, 569, 343);
-            alphaSlider.setBounds(405, 360, 200, 40);
-            this.textField.setBounds(36, 420, 444, 30);
-            selectBtn.setBounds(490, 420, 32, 32);
-            sureBtn.setBounds(530, 420, 75, 30);
-
-            this.mainPanel.add(backgroundImagePanel);
-            this.mainPanel.add(alphaSlider);
-            this.mainPanel.add(this.textField);
-            this.mainPanel.add(selectBtn);
-            this.mainPanel.add(sureBtn);
+            return alphaSlider;
         }
 
         private void sureBtnAction() {

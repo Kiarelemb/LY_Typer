@@ -45,7 +45,6 @@ public class TypingData {
     public static StringBuilder typedKeyRecord = new StringBuilder();
     public static boolean pausing = false;
     public static boolean typing = false;
-    public static boolean typeEnd = false;
     public static int pausedTimes = 0;
     public static int lookfontSize = 0;
     public static int typefontSize = 0;
@@ -164,8 +163,10 @@ public class TypingData {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    while (typing && !pausing) {
-                        windowFresh();
+                    while (typing) {
+                        if (!pausing) {
+                            windowFresh();
+                        }
                         QRSleepUtils.sleep(5);
                     }
                 }
@@ -210,7 +211,7 @@ public class TypingData {
     }
 
     public static void startTyping(long startTime) {
-        if (!typing && !typeEnd && TextLoad.TEXT_LOAD != null) {
+        if (!typing && TextLoad.TEXT_LOAD != null) {
             TypingData.startTime = startTime;
             typing = true;
             START_TYPING_LISTENER.actionPerformed(null);

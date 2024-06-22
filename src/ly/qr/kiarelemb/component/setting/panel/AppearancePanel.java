@@ -1,10 +1,7 @@
 package ly.qr.kiarelemb.component.setting.panel;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.CheckBox;
-import ly.qr.kiarelemb.component.ComboBox;
-import ly.qr.kiarelemb.component.RGBColorSelectPane;
-import ly.qr.kiarelemb.component.Spinner;
+import ly.qr.kiarelemb.component.*;
 import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
@@ -83,6 +80,22 @@ public class AppearancePanel extends SettingPanel {
         RGBColorSelectPane threeRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_THREE, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_THREE, updateAction);
         QRLabel fullTipLabel = new QRLabel("全码颜色：");
         RGBColorSelectPane fullRgbPanel = new RGBColorSelectPane(TextStyleManager.Full_FOUR, Keys.TEXT_TIP_COLOR_CODE_ALL, updateAction);
+
+        lookSizeSpinner.addChangeListener(e -> {
+            SettingsItem.SAVE_ACTIONS.put("look.font.size", ar -> {
+                TextPane.TEXT_PANE.componentFresh();
+                updateAction.action(null);
+                QRLoggerUtils.log(logger, Level.INFO, "设置看打区字体大小为： %s", lookSizeSpinner.getValue());
+            });
+        });
+
+        typeSizeSpinner.addChangeListener(e -> {
+            SettingsItem.SAVE_ACTIONS.put("type.font.size", ar -> {
+                TyperTextPane.TYPER_TEXT_PANE.componentFresh();
+                updateAction.action(null);
+                QRLoggerUtils.log(logger, Level.INFO, "设置跟打区字体大小为： %s", typeSizeSpinner.getValue());
+            });
+        });
 
         //region 设置主题
         themeComboBox.setText(QRSwing.theme);
