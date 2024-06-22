@@ -1,4 +1,4 @@
-# 揽月跟打器 QQ群：283674085 [【跟打器终结者】小启 ＆ 揽月](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)
+# 揽月跟打器 QQ群：[【跟打器终结者】小启 ＆ 揽月](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)
 
 > 中文打字圈开源跟打器。本跟打器基于作者 **[QR](https://github.com/Kiarelemb)**
 > 自研的开源界面框架 [QR_Swing](https://github.com/Kiarelemb/QR_Swing)
@@ -51,7 +51,9 @@
 群文件 `小启＆揽月` 文件夹中，您还可以找到打包好的 `exe` 文件。其分为了 `老用户` 和 `新用户` 两个版本， `新用户`
 亦即 `开箱即用` 版本，无需配置环境即可运行。
 ## 开发环境
-### 获取揽月代码
+
+### `Step 1` ：获取揽月代码
+
 也许在群里下载的 `exe` 版本并非最新，不过，本页面所提供的 `Jar` 包和开发环境所运行的代码一定是当前揽月的最新版本。因为 QR
 每次写完代码都会把代码上传到 GitHub，而 `Jar` 包和代码则是从本项目上下载的。
 > 既然您选择**开发版本**，那么我们将默认您具备足够的 `Git` 使用技巧和 `IntelliJ IDEA` 的使用能力。
@@ -71,10 +73,10 @@ https://github.com/Kiarelemb/LY_Typer.git
 git clone https://github.com/Kiarelemb/LY_Typer.git
 ```
 
-### 项目配置
+### `Step 2` ：项目配置
 
 作者在加紧更新中……
 
-### 在 `IntelliJ IDEA` 中开始运行揽月
+### `Step 3` ：在 `IntelliJ IDEA` 中开始运行揽月
 
 作者在加紧更新中……
