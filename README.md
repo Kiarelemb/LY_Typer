@@ -36,7 +36,13 @@
 
 对于 `Windows 7`
 以上的系统，您可以在QQ群 [283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)
-的群文件 `运行环境` 文件夹中下载 `jdk-17_windows-x64_bin.exe` 文件，双击该安装包，并以默认设置完成安装即可运行揽月。
+的群文件 `运行环境` 文件夹中下载
+
+```
+jdk-17_windows-x64_bin.exe
+```
+
+文件，双击该安装包，并以默认设置完成安装即可运行揽月。
 
 > Tip: 群内更有 `开箱即用` 而不需要考虑环境问题的打包版本。
 
