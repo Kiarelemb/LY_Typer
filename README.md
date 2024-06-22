@@ -18,9 +18,9 @@
 #### - 下载 JDK 并自行配置运行环境
 
 依据您的系统，选择点击下方的名称，以安装 [Java 17 GA](https://jdk.java.net/archive/) ：  
-> **[Windows x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_windows-x64_bin.zip)**  
-> **[Mac OS x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_macos-x64_bin.tar.gz)**  
-> **[Linux x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz)**
+> [Windows x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_windows-x64_bin.zip)  
+> [Mac OS x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_macos-x64_bin.tar.gz)  
+> [Linux x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz)
 
 对于 `Windows 10+`
 系统的环境配置，我们强烈推荐您参考 [这个网站](https://www.runoob.com/w3cnote/windows10-java-setup.html)
