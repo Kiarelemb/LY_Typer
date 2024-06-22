@@ -22,13 +22,11 @@
 > [Mac OS x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_macos-x64_bin.tar.gz)  
 > [Linux x64](https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz)
 
-对于 `Windows 10+`
-系统的环境配置，我们强烈推荐您参考 [这个网站](https://www.runoob.com/w3cnote/windows10-java-setup.html)
+对于 `Windows 10+` 系统的环境配置，我们强烈推荐您参考 [这个网站](https://www.runoob.com/w3cnote/windows10-java-setup.html)。
 
 #### - 群内下载 `exe` 安装包免去环境配置
 
-对于 `Windows 7`
-以上的系统，您可以在QQ群 [283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh) 的群文件 `运行环境` 文件夹中下载
+对于 `Windows 7` 以上的系统，您可以在QQ群 [283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh) 的群文件 `运行环境` 文件夹中下载
 ```
 jdk-17_windows-x64_bin.exe
 ```
