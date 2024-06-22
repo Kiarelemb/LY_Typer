@@ -15,10 +15,13 @@ import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +61,6 @@ public class TyperTextPane extends QRTextPane {
             return;
         }
         //更新模式
-//			boolean updateEveryTimes = tsd.scrollbarValueUpdate();
         final int[] lineAndRow = TextPane.TEXT_PANE.currentLineAndRow(TypingData.currentTypedIndex);
         final int currentLine = lineAndRow[0];
         final double currentRow = lineAndRow[1];
@@ -70,10 +72,16 @@ public class TyperTextPane extends QRTextPane {
         final int lineWords = TextPane.TEXT_PANE.lineWords();
         double startUpdateLine = 3;
         if (currentLine >= startUpdateLine) {
-            int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
-            double value =
-                    ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
-            verticalScrollBar.setValue((int) (Math.min(value, max)));
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
+                    double value =
+                            ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
+                    verticalScrollBar.setValue((int) (Math.min(value, max)));
+                }
+            }, 100);
         }
     }
 
@@ -257,6 +265,12 @@ public class TyperTextPane extends QRTextPane {
     @Override
     protected void mouseClick(MouseEvent e) {
         caretPositionAdjust();
+    }
+
+    @Override
+    public void changeTextsStyle(int offset, int length, AttributeSet attrs, boolean replace) {
+        super.changeTextsStyle(offset, length, attrs, replace);
+        TypingData.windowFresh();
     }
 
     @Override

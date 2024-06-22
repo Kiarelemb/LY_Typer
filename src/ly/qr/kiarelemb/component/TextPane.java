@@ -100,11 +100,11 @@ public class TextPane extends QRTextPane {
         String[] lines = String.format("[%s]", text).split("\n");
         int length = lines.length;
         if (length == 1) {
-            logger.info(String.format("已载入文本:[%s]", text));
+            logger.info(String.format("已载入文本：[%s]", text));
         } else {
-            logger.info(String.format("已载入文本:"));
+            logger.info(String.format("已载入文本："));
             for (String line : lines) {
-                logger.info(line);
+                logger.info("\t" + line);
             }
         }
         textFresh();
@@ -125,7 +125,7 @@ public class TextPane extends QRTextPane {
             return;
         }
         if (Keys.boolValue(Keys.TEXT_TIP_PAINT_COLOR)) {
-            textPanelEditorKit.changeFontColor(TextLoad.TEXT_LOAD.tipData.tpsd);
+            textPanelEditorKit.changeFontColor();
         }
     }
 
@@ -153,7 +153,7 @@ public class TextPane extends QRTextPane {
                 } else {
                     print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
                 }
-                textPanelEditorKit.changeFontColor(tpsd);
+                textPanelEditorKit.changeFontColor();
             }
         } else {
             if (TextLoad.TEXT_LOAD.isEnglish()) {
@@ -238,13 +238,11 @@ public class TextPane extends QRTextPane {
                     String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
                     if (rightWord.equals(textParts[i])) {
                         if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
-                            changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getCorrectStyle(),
-                                    true);
+                            changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getCorrectStyle(), true);
                         }
                     } else {
                         if (!LookModelCheckBox.lookModelCheckBox.checked()) {
-                            changeTextsStyle(currentIndex, rightWord.length(),
-                                    TextStyleManager.getWrongStyle(), true);
+                            changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getWrongStyle(), true);
                         }
                         TypingData.WRONG_WORDS_INDEX.add(currentIndex);
                     }
@@ -276,39 +274,39 @@ public class TextPane extends QRTextPane {
             restart();
             return;
         }
-        int length = 1;
+        String deleteText = TextLoad.TEXT_LOAD.getWordPartsAtIndex(TypingData.currentTypedIndex - 1);
+        if (deleteText.isEmpty()) {
+            return;
+        }
+        writeBlock = true;
         int preIndex = index - 1;
         setCaretBlock();
         TypingData.currentTypedIndex--;
-        if (TextLoad.TEXT_LOAD.isExtra()) {
-            String deleteText = TextLoad.TEXT_LOAD.getWordPartsAtIndex(TypingData.currentTypedIndex);
-            length = deleteText.length();
-            int offset = index - length;
-            changeTextsStyle(offset, length, TextStyleManager.getDefaultStyle(), true);
-            setCaretPosition(offset);
-            TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(TypingData.currentTypedIndex));
+        int length = deleteText.length();
+//        if (TextLoad.TEXT_LOAD.isExtra()) {
+//            int offset = index - length;
+//            changeTextsStyle(offset, length, TextStyleManager.getDefaultStyle(), true);
+//            setCaretPosition(offset);
+//            TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(TypingData.currentTypedIndex));
+//        } else {
+        TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(preIndex));
+        if (!TextTip.TEXT_TIP.loaded() || TextLoad.TEXT_LOAD.tipData == null) {
+            changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
         } else {
-            TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(preIndex));
-            String deleteText;
-            deleteText = String.valueOf(TextLoad.TEXT_LOAD.getTextAtIndex(preIndex));
-            boolean empty = deleteText.isEmpty();
-            if (empty) {
-                setCaretUnblock();
-                this.writeBlock = false;
-                return;
-            }
-            if (TextTip.TEXT_TIP.loaded() && TextLoad.TEXT_LOAD.tipData != null) {
-                SimpleAttributeSet attributeSet = TextLoad.TEXT_LOAD.tipData.getForeAttributeSetExact(preIndex);
-                changeTextsStyle(preIndex, length, attributeSet, true);
+            TipPhraseStyleData tipPhraseStyleData = TextLoad.TEXT_LOAD.tipData.tpsd.get(preIndex);
+            if (tipPhraseStyleData != null) {
+                SimpleAttributeSet attributeSet = tipPhraseStyleData.getStyle();
+                replaceText(preIndex, tipPhraseStyleData.phrase(), attributeSet);
             } else {
-                changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
+                SimpleAttributeSet attributeSet = TextLoad.TEXT_LOAD.tipData.tcsd.get(preIndex).getStyle();
+                changeTextsStyle(preIndex, length, attributeSet, true);
             }
-            setCaretPosition(preIndex);
         }
+        setCaretPosition(preIndex);
         TypingData.backDeleteCount++;
         setCaretUnblock();
         TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
-        this.writeBlock = false;
+        writeBlock = false;
     }
 
     public void typeEnding() {
@@ -347,7 +345,6 @@ public class TextPane extends QRTextPane {
 
         String grade = gradeData.getSetGrade();
 
-        logger.info("********** 跟打结束 **********");
         QRLoggerUtils.log(logger, Level.INFO, "跟打按键：[%s]", QRStringUtils.toLowerCase(TypingData.typedKeyRecord.toString()));
         QRLoggerUtils.log(logger, Level.INFO, "本段成绩：[%s]", gradeData.getFullGrade());
         //将成绩存放至剪贴板
@@ -355,6 +352,7 @@ public class TextPane extends QRTextPane {
         DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
         //发送成绩
         SendText.gradeSend();
+        logger.info("********** 本段结束 **********");
         if (TextSendManager.sendingText()) {
             TextSendManager.data().addTypedTimes();
             NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();

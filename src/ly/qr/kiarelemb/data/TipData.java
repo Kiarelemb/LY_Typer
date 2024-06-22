@@ -1,7 +1,6 @@
 package ly.qr.kiarelemb.data;
 
 import ly.qr.kiarelemb.text.TextLoad;
-import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 
@@ -44,7 +43,14 @@ public class TipData {
 
     public SimpleAttributeSet getForeAttributeSetExact(int index) {
         TipPhraseStyleData data = this.tpsd.get(index);
-        return data == null ? TextStyleManager.getDefaultStyle() : data.getStyle();
+        SimpleAttributeSet style;
+        if (data != null) {
+            style = data.getStyle();
+        } else {
+            SimpleAttributeSet set = this.tcsd.get(index).getStyle();
+            style = set == null ? new SimpleAttributeSet() : set;
+        }
+        return style;
     }
 
     /**
@@ -131,13 +137,13 @@ public class TipData {
     @Override
     public String toString() {
         return "TipData{" +
-                "tcsd=" + tcsd +
-                ", tpsd=" + tpsd +
-                ", codes='" + codes + '\'' +
-                ", indexes=" + Arrays.toString(indexes) +
-                ", singleCodeNum=" + singleCodeNum +
-                ", TypedData=" + data +
-                '}';
+               "tcsd=" + tcsd +
+               ", tpsd=" + tpsd +
+               ", codes='" + codes + '\'' +
+               ", indexes=" + Arrays.toString(indexes) +
+               ", singleCodeNum=" + singleCodeNum +
+               ", TypedData=" + data +
+               '}';
     }
 
     public static record StandardData(int first, int multi, int singleCounts, double phraseTypeCounts, int oneFirst,

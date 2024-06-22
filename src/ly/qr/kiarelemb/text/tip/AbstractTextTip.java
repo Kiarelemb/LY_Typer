@@ -333,6 +333,9 @@ public abstract class AbstractTextTip {
         return three42;
     }
 
+    /**
+     * 首选是奇数，其他是偶数
+     */
     public int getType(String codeTemp) {
         int lengthTemp = codeTemp.length();
         //获取编码最后一个字符

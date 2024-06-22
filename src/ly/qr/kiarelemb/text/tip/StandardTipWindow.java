@@ -89,7 +89,7 @@ public class StandardTipWindow extends QRDialog {
 				throw new RuntimeException(ex);
 			}
 		}
-		textPanelEditorKit.changeFontColor(tpsd);
+		textPanelEditorKit.changeFontColor();
 		centerTextPane.setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
 		TypingData.paintCode = backup;
 	}
