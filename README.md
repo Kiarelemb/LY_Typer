@@ -7,7 +7,8 @@
 
 ## 小白快速开始
 
-> 阅读指引：在这一部分，您将需要进行两个操作步骤：<u>①环境准备</u> <u>②双击运行</u>，每个步骤下，您将面临两个选择。  
+> 阅读指引：在这一部分，您将需要进行两个操作步骤：①环境准备 ②双击运行。  
+> 每个步骤下，您将面临两个选择。  
 > 
 > 请注意，面对任何读不懂的内容，请转向我们的QQ群：[283674085](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)。
 
