@@ -20,8 +20,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,16 +70,11 @@ public class TyperTextPane extends QRTextPane {
         final int lineWords = TextPane.TEXT_PANE.lineWords();
         double startUpdateLine = 3;
         if (currentLine >= startUpdateLine) {
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
-                    double value =
-                            ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
-                    verticalScrollBar.setValue((int) (Math.min(value, max)));
-                }
-            }, 100);
+            QRComponentUtils.runLater(100, e -> {
+                int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
+                double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
+                verticalScrollBar.setValue((int) (Math.min(value, max)));
+            });
         }
     }
 
@@ -96,7 +89,10 @@ public class TyperTextPane extends QRTextPane {
             || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
             return true;
         }
-        return false;
+        if (TypingData.typing) {
+            return e.isControlDown() || e.isAltDown();
+        }
+        return TypingData.typeEnd;
     }
 
     /**
@@ -115,8 +111,11 @@ public class TyperTextPane extends QRTextPane {
         char keyChar = (char) keyCode;
         int modifiers = keyStroke.getModifiers();
         if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
-            || (keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_ENTER) && !TypingData.typing) {
+            || (keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_ENTER) && !TypingData.typing) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
+            return;
+        }
+        if (TypingData.typeEnd) {
             return;
         }
 

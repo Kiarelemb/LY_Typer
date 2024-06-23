@@ -33,3 +33,467 @@
 2024-06-23 10:14:27.571	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
 2024-06-23 10:14:27.585	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:56																					-------------------------------------- 配置加载完毕 --------------------------------------
 2024-06-23 10:14:49.670	INFO		[ly.qr.kiarelemb.MainWindow:lambda$1] MainWindow.java:97																	************************************** 您已退出揽月 **************************************
+2024-06-23 12:17:29.650	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:17:30.342	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒614
+2024-06-23 12:17:30.835	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:17:30.863	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:17:32.158	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:17:32.226	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:17:32.227	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:17:32.245	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:23:43.842	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:24:27.899	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:24:28.923	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒907
+2024-06-23 12:24:29.646	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:24:29.729	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:24:32.065	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:24:32.150	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:24:32.153	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:24:32.161	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:24:45.644	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:24:45.662	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:24:45.671	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:24:45.674	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:24:45.677	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:24:45.678	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:24:47.585	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:24:47.586	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:174												未知按键：[CONTROL]
+2024-06-23 12:24:47.689	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Ctrl + Z]
+2024-06-23 12:24:56.651	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Alt + 3]
+2024-06-23 12:24:56.652	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 1 次
+2024-06-23 12:24:56.655	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:24:56.657	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:24:56.659	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:24:56.661	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:24:56.662	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:24:56.663	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:25:15.646	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:25:41.654	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:310															跟打按键：[jelr_hk_mj_v_wfl←←c_wfllfviz_p._nc_co_uy_k_cp'sdlj/wt;_mxjn_sjswlwint_lt_j;j;j;syezn_sbwrr←←←sberr['gnckwk/;_rn_d;_nt_twpifglq←;qrsuo;f←←←s;r;fc;fvpkx.._drl']
+2024-06-23 12:25:41.674	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															本段成绩：[第999段 速度111.0 击键6.05 码长3.27 字数48 回改4 退格9 回车0 键数157 错字0 键准80.2% 用时25秒947 暂停0次 重打1次 键法112.16%(左83:右74) 输入法:三矧 个签:从不练字 正文:e5c6 揽月v24.06 Windows 10]
+2024-06-23 12:25:41.695	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:317															********** 本段结束 **********
+2024-06-23 12:25:54.211	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[ALT]
+2024-06-23 12:25:54.440	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Alt + 3]
+2024-06-23 12:25:54.441	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 2 次
+2024-06-23 12:25:54.442	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:25:54.444	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:25:54.445	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:25:54.446	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:25:54.447	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:25:54.448	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:25:55.822	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:25:57.310	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Alt + 3]
+2024-06-23 12:25:57.311	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 3 次
+2024-06-23 12:25:57.313	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:25:57.315	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:25:57.316	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:25:57.316	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:25:57.317	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:25:57.318	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:31:52.283	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:31:59.106	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:31:59.861	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒681
+2024-06-23 12:32:00.432	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:32:00.464	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:32:01.727	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:32:01.774	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:32:01.775	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:32:01.786	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:33:10.384	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:33:10.402	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:33:10.412	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:33:10.414	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:33:10.416	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:33:10.418	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:33:13.916	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:33:38.934	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:310															跟打按键：[jelr_hk_mj_c_wfllfn←←lfviz_p._nc_co_uy_k_cp'sdlj/wt;_mxjn_sjswlwint_lt_;j;syezn_w←sberr['gnckwk//;_←←←/;_rn_d;_nt_twpifgl;qrs;r;fvpkx.._dr']
+2024-06-23 12:33:38.953	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															本段成绩：[第999段 速度115.54 击键5.58 码长2.9 字数48 回改5 退格6 回车0 键数139 错字0 键准80.94% 用时24秒927 暂停0次 重打0次 键法107.46%(左72:右67) 输入法:三矧 个签:从不练字 正文:e5c6 揽月v24.06 Windows 10]
+2024-06-23 12:33:39.008	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:317															********** 本段结束 **********
+2024-06-23 12:33:50.509	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[ALT]
+2024-06-23 12:33:50.662	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Alt + 3]
+2024-06-23 12:33:50.664	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 1 次
+2024-06-23 12:33:50.665	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:33:50.667	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:33:50.668	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:33:50.668	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:33:50.669	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:33:50.669	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:33:58.505	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:34:03.046	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:174												未知按键：[CONTROL]
+2024-06-23 12:34:03.121	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Ctrl + Z]
+2024-06-23 12:34:09.924	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:caretPositionAdjust] TyperTextPane.java:204										caretPositionAdjust
+
+java.lang.IllegalArgumentException: bad position: 7
+	at java.desktop/javax.swing.text.JTextComponent.setCaretPosition(JTextComponent.java:1689)
+	at ly.qr.kiarelemb.component.TyperTextPane.caretPositionAdjust(TyperTextPane.java:202)
+	at ly.qr.kiarelemb.component.TyperTextPane.mouseClick(TyperTextPane.java:267)
+	at swing.qr.kiarelemb.component.basic.QRTextPane.lambda$addMouseListener$9(QRTextPane.java:227)
+	at swing.qr.kiarelemb.component.QRComponentUtils.lambda$runActions$0(QRComponentUtils.java:157)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at swing.qr.kiarelemb.component.QRComponentUtils.runActions(QRComponentUtils.java:154)
+	at swing.qr.kiarelemb.component.listener.QRMouseListener.mouseClicked(QRMouseListener.java:39)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseClicked(AWTEventMulticaster.java:278)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseClicked(AWTEventMulticaster.java:277)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6629)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3389)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6391)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5001)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4584)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:722)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:716)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:746)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:744)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:743)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2024-06-23 12:34:10.699	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Alt + 3]
+2024-06-23 12:34:10.700	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 2 次
+2024-06-23 12:34:10.702	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:34:10.704	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:34:10.705	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:34:10.706	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:34:10.706	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:34:10.707	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:40:56.062	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:41:32.941	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:41:33.802	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒794
+2024-06-23 12:41:34.342	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:41:34.373	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:41:35.531	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:41:35.578	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:41:35.579	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:41:35.590	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:42:03.458	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:42:09.264	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:42:10.009	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒652
+2024-06-23 12:42:10.523	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:42:10.553	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:42:11.799	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:42:11.842	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:42:11.843	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:42:11.855	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:42:19.958	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。]
+2024-06-23 12:42:19.978	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:174																	当前文本为中文文章
+2024-06-23 12:42:19.989	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:42:19.991	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[《种桃杏》白居易 第975期-斯拉雪麦格投稿
+2024-06-23 12:42:19.993	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																无论海角与天涯，大抵心安即是家。路远谁能念乡曲，年深兼欲忘京华。忠州且作三年计，种杏栽桃拟待花。
+2024-06-23 12:42:19.995	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第999段-共48字-JizM-小极赛文管理系统]
+2024-06-23 12:42:21.823	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:42:31.814	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:174												未知按键：[CONTROL]
+2024-06-23 12:42:31.917	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:119												按键屏蔽：[Ctrl + Z]
+2024-06-23 12:42:46.676	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:44:16.774	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:44:17.534	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒680
+2024-06-23 12:44:18.247	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:44:18.292	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:44:19.525	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:44:19.585	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:44:19.586	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:44:19.603	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:46:00.839	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:46:07.130	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:46:07.891	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒679
+2024-06-23 12:46:08.406	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:46:08.438	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:46:09.907	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:46:09.960	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:46:09.960	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:46:09.971	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:46:14.640	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:46:14.661	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 12:46:14.668	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:46:14.669	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:46:14.671	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几乎之外的那一点东西影响的？
+2024-06-23 12:46:14.673	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第111692段]
+2024-06-23 12:46:16.952	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:46:23.186	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:177												未知按键：[CONTROL]
+2024-06-23 12:46:23.382	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Ctrl + Z]
+2024-06-23 12:46:28.728	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:46:28.729	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 1 次
+2024-06-23 12:46:28.731	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:46:28.733	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:46:28.734	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:46:28.735	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:46:28.736	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几 乎 之 外 的 那 一 点 东 西 影 响 的 ？
+2024-06-23 12:46:28.736	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第111692段]
+2024-06-23 12:46:34.500	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:46:34.501	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:177												未知按键：[CONTROL]
+2024-06-23 12:46:34.779	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Ctrl + Z]
+2024-06-23 12:46:44.328	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:177												未知按键：[CONTROL]
+2024-06-23 12:46:44.445	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Ctrl + Z]
+2024-06-23 12:47:06.369	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:47:06.370	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 2 次
+2024-06-23 12:47:06.372	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:47:06.373	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:47:06.374	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:47:06.375	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:47:06.375	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几 乎 之 外 的 那 一 点 东 西 影 响 的 ？
+2024-06-23 12:47:06.376	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第111692段]
+2024-06-23 12:47:07.928	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:47:07.929	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:177												未知按键：[CONTROL]
+2024-06-23 12:47:44.937	WARNING		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:177												未知按键：[CONTROL]
+2024-06-23 12:48:04.701	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:48:05.465	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒681
+2024-06-23 12:48:06.024	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:48:06.059	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:48:07.583	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:48:07.659	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:48:07.660	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:48:07.677	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:48:12.706	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:48:12.724	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 12:48:12.731	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:48:12.733	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:48:12.734	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几乎之外的那一点东西影响的？
+2024-06-23 12:48:12.735	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第127761段]
+2024-06-23 12:48:16.401	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[CONTROL]
+2024-06-23 12:48:18.017	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[CONTROL]
+2024-06-23 12:48:18.695	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[CONTROL]
+2024-06-23 12:48:19.382	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[CONTROL]
+2024-06-23 12:48:20.454	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[SHIFT]
+2024-06-23 12:48:21.284	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[SHIFT]
+2024-06-23 12:48:22.857	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:48:25.787	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:310															跟打按键：[k;xjxmd_h_y_j_a[r8kqeh_,d]
+2024-06-23 12:48:25.809	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															本段成绩：[第127761段 速度293.5 击键8.74 码长1.79 字数14 回改0 退格0 回车0 键数25 错字0 键准100.0% 用时2秒862 暂停0次 重打0次 键法108.33%(左13:右12) 输入法:三矧 个签:从不练字 正文:fd59 揽月v24.06 Windows 10]
+2024-06-23 12:48:25.856	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:317															********** 本段结束 **********
+2024-06-23 12:48:26.444	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[ALT]
+2024-06-23 12:48:26.522	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:48:26.523	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:333																手动重打，当前第 1 次
+2024-06-23 12:48:26.525	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:48:26.526	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:48:26.527	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:48:26.528	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:48:26.529	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几 乎 之 外 的 那 一 点 东 西 影 响 的 ？
+2024-06-23 12:48:26.530	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第127761段]
+2024-06-23 12:48:27.263	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:48:30.581	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:310															跟打按键：[k;xjxmd_h_y_j_a[r8kqeh_,d]
+2024-06-23 12:48:30.583	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															本段成绩：[第127761段 速度255.09 击键7.59 码长1.79 字数14 回改0 退格0 回车0 键数25 错字0 键准100.0% 用时3秒293 暂停0次 重打1次 键法108.33%(左13:右12) 输入法:三矧 个签:从不练字 正文:fd59 揽月v24.06 Windows 10]
+2024-06-23 12:48:30.616	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:317															********** 本段结束 **********
+2024-06-23 12:48:31.223	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:234															********** 开始跟打 **********
+2024-06-23 12:48:36.282	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:52:12.076	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:52:12.876	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒725
+2024-06-23 12:52:13.617	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:52:13.657	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:52:15.090	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:52:15.147	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:52:15.150	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:52:15.155	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:52:17.636	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:52:17.655	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 12:52:17.664	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:52:17.666	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:52:17.667	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几乎之外的那一点东西影响的？
+2024-06-23 12:52:17.668	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第230124段]
+2024-06-23 12:52:18.608	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:236															********** 开始跟打 **********
+2024-06-23 12:52:21.322	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[k;xjxmd_h_y_j_a[r8kqeh_,d]
+2024-06-23 12:52:21.351	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第230124段 速度318.91 击键9.49 码长1.79 字数14 回改0 退格0 回车0 键数25 错字0 键准100.0% 用时2秒634 暂停0次 重打0次 键法108.33%(左13:右12) 输入法:三矧 个签:从不练字 正文:fd59 揽月v24.06 Windows 10]
+2024-06-23 12:52:21.405	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 12:52:21.979	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:236															********** 开始跟打 **********
+2024-06-23 12:52:25.932	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:52:25.937	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 1 次
+2024-06-23 12:52:25.940	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[几乎之外的那一点东西影响的？]
+2024-06-23 12:52:25.944	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:52:25.947	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:52:25.949	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:52:25.952	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																几 乎 之 外 的 那 一 点 东 西 影 响 的 ？
+2024-06-23 12:52:25.954	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第230124段]
+2024-06-23 12:57:15.240	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:57:22.389	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:57:23.153	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒678
+2024-06-23 12:57:23.661	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:57:23.687	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:57:24.920	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:57:24.985	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:57:24.986	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:57:25.004	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:57:29.943	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 12:57:29.963	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 12:57:29.972	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:57:29.974	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:57:29.976	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因为我知道它的作用了
+2024-06-23 12:57:29.977	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第676924段]
+2024-06-23 12:57:30.753	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:238															********** 开始跟打 **********
+2024-06-23 12:57:33.041	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[v[g_g0cu_h_rn_gm_n_]
+2024-06-23 12:57:33.069	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第676924段 速度271.37 击键8.59 码长1.9 字数10 回改0 退格0 回车0 键数19 错字0 键准100.0% 用时2秒211 暂停0次 重打0次 键法171.43%(左12:右7) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 12:57:33.121	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 12:58:09.878	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:58:16.082	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:58:16.774	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒611
+2024-06-23 12:58:17.292	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:58:17.323	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:58:18.461	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:58:18.515	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:58:18.516	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:58:18.529	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:58:21.956	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 12:58:21.975	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 12:58:21.983	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:58:21.985	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:58:21.986	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因为我知道它的作用了
+2024-06-23 12:58:21.987	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第984499段]
+2024-06-23 12:58:23.503	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:238															********** 开始跟打 **********
+2024-06-23 12:58:25.768	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[v[g_g0cu_h_rn_gm_n_]
+2024-06-23 12:58:25.790	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第984499段 速度274.35 击键8.69 码长1.9 字数10 回改0 退格0 回车0 键数19 错字0 键准100.0% 用时2秒187 暂停0次 重打0次 键法171.43%(左12:右7) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 12:58:25.844	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 12:59:18.721	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 12:59:24.911	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 12:59:25.682	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒695
+2024-06-23 12:59:26.224	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 12:59:26.253	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 12:59:27.548	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 12:59:27.610	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 12:59:27.611	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 12:59:27.631	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 12:59:31.496	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 12:59:31.518	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 12:59:31.527	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:59:31.529	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:59:31.530	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因为我知道它的作用了
+2024-06-23 12:59:31.532	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第833796段]
+2024-06-23 12:59:32.496	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:238															********** 开始跟打 **********
+2024-06-23 12:59:34.787	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[v[g_g0cu_h_rn_gm_n_]
+2024-06-23 12:59:34.815	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第833796段 速度271.25 击键8.59 码长1.9 字数10 回改0 退格0 回车0 键数19 错字0 键准100.0% 用时2秒212 暂停0次 重打0次 键法171.43%(左12:右7) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 12:59:34.866	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 12:59:41.742	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[ALT]
+2024-06-23 12:59:41.895	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:59:41.897	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 1 次
+2024-06-23 12:59:41.899	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 12:59:41.900	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:59:41.901	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:59:41.902	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:59:41.903	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因 为 我 知 道 它 的 作 用 了
+2024-06-23 12:59:41.903	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第833796段]
+2024-06-23 12:59:42.909	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:238															********** 开始跟打 **********
+2024-06-23 12:59:44.958	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[v[g_g0cu_h_rn_gm_n_]
+2024-06-23 12:59:44.959	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第833796段 速度298.21 击键9.44 码长1.9 字数10 回改0 退格0 回车0 键数19 错字0 键准100.0% 用时2秒012 暂停0次 重打1次 键法171.43%(左12:右7) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 12:59:44.977	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 12:59:49.878	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[ALT]
+2024-06-23 12:59:49.947	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:59:49.948	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 2 次
+2024-06-23 12:59:49.950	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 12:59:49.950	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:59:49.951	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:59:49.952	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:59:49.952	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因 为 我 知 道 它 的 作 用 了
+2024-06-23 12:59:49.952	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第833796段]
+2024-06-23 12:59:50.309	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:238															********** 开始跟打 **********
+2024-06-23 12:59:51.066	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:122												按键屏蔽：[Alt + 3]
+2024-06-23 12:59:51.068	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 3 次
+2024-06-23 12:59:51.070	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 12:59:51.072	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 12:59:51.074	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 12:59:51.075	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 12:59:51.076	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因 为 我 知 道 它 的 作 用 了
+2024-06-23 12:59:51.077	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第833796段]
+2024-06-23 13:10:42.798	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 13:15:46.724	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 13:15:47.569	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒721
+2024-06-23 13:15:48.202	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 13:15:48.251	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 13:15:49.483	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 13:15:49.545	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 13:15:49.546	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 13:15:49.553	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 13:15:51.767	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 13:15:51.796	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 13:15:51.807	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 13:15:51.809	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 13:15:51.813	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因为我知道它的作用了
+2024-06-23 13:15:51.816	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第165074段]
+2024-06-23 13:15:54.535	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:231															********** 开始跟打 **********
+2024-06-23 13:16:04.228	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[v[g_g0cu_h_rn_gm_←gm_←←←h_rn_gm_n_]
+2024-06-23 13:16:04.253	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第165074段 速度62.39 击键3.54 码长3.4 字数10 回改4 退格4 回车0 键数34 错字0 键准36.47% 用时9秒617 暂停0次 重打0次 键法126.67%(左19:右15) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 13:16:04.301	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 13:16:05.958	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:16:06.093	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + SHIFT]
+2024-06-23 13:16:06.095	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + Shift + Z]
+2024-06-23 13:16:07.081	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + Z]
+2024-06-23 13:33:22.611	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:33:22.612	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + Z]
+2024-06-23 13:33:24.440	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[SHIFT]
+2024-06-23 13:33:24.441	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[SHIFT]
+2024-06-23 13:33:24.442	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Shift + K]
+2024-06-23 13:33:24.444	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[ENTER]
+2024-06-23 13:33:24.445	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:33:24.446	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + C]
+2024-06-23 13:33:24.448	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:33:24.449	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + V]
+2024-06-23 13:33:24.451	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:33:24.452	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + D]
+2024-06-23 13:33:24.490	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:33:24.491	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + Z]
+2024-06-23 13:33:26.851	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[ALT]
+2024-06-23 13:33:26.853	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[ALT]
+2024-06-23 13:33:28.070	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************
+2024-06-23 13:33:36.976	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 13:33:37.784	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒738
+2024-06-23 13:33:38.637	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 13:33:38.705	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:76																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 13:33:40.251	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:83																			设置窗口预加载完毕。
+2024-06-23 13:33:40.303	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 13:33:40.304	CONFIG		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 13:33:40.313	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:51																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 13:33:45.815	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[因为我知道它的作用了]
+2024-06-23 13:33:45.834	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文词语
+2024-06-23 13:33:45.842	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 13:33:45.844	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 13:33:45.846	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																因为我知道它的作用了
+2024-06-23 13:33:45.848	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第961111段]
+2024-06-23 13:33:47.283	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:231															********** 开始跟打 **********
+2024-06-23 13:33:49.458	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[v[g_g0cu_h_rn_gm_n_]
+2024-06-23 13:33:49.484	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第961111段 速度287.91 击键9.12 码长1.9 字数10 回改0 退格0 回车0 键数19 错字0 键准100.0% 用时2秒084 暂停0次 重打0次 键法171.43%(左12:右7) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 13:33:49.548	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 13:33:50.078	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:33:50.190	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + Z]
+2024-06-23 13:34:09.633	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[ALT]
+2024-06-23 13:34:09.831	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Alt + 3]
+2024-06-23 13:34:09.832	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 1 次
+2024-06-23 13:34:09.834	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[知了用的为它作道我因]
+2024-06-23 13:34:09.835	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 13:34:09.836	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 13:34:09.837	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 13:34:09.838	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																知 了 用 的 为 它 作 道 我 因
+2024-06-23 13:34:09.839	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第961111段]
+2024-06-23 13:34:12.776	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[CONTROL]
+2024-06-23 13:34:12.894	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Ctrl + Z]
+2024-06-23 13:34:23.360	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[ALT]
+2024-06-23 13:34:23.547	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Alt + 3]
+2024-06-23 13:34:23.548	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 2 次
+2024-06-23 13:34:23.549	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[知了用的为它作道我因]
+2024-06-23 13:34:23.550	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 13:34:23.551	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 13:34:23.552	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 13:34:23.553	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																知 了 用 的 为 它 作 道 我 因
+2024-06-23 13:34:23.554	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第961111段]
+2024-06-23 13:34:24.540	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[ALT]
+2024-06-23 13:34:24.681	INFO		[ly.qr.kiarelemb.component.TyperTextPane:keyPressAction] TyperTextPane.java:115												按键屏蔽：[Alt + 3]
+2024-06-23 13:34:24.682	INFO		[ly.qr.kiarelemb.component.TextPane:restart] TextPane.java:334																手动重打，当前第 3 次
+2024-06-23 13:34:24.683	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:96																		载入文本格式化后的内容：[知了用的为它作道我因]
+2024-06-23 13:34:24.684	INFO		[ly.qr.kiarelemb.text.TextLoad:<init>] TextLoad.java:166																	当前文本为中文单字
+2024-06-23 13:34:24.685	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:103															已载入文本：
+2024-06-23 13:34:24.686	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																[剪贴板
+2024-06-23 13:34:24.687	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																知 了 用 的 为 它 作 道 我 因
+2024-06-23 13:34:24.687	INFO		[ly.qr.kiarelemb.component.TextPane:setTypeText] TextPane.java:105																-----第961111段]
+2024-06-23 13:34:42.455	INFO		[ly.qr.kiarelemb.data.TypingData:startTyping] TypingData.java:231															********** 开始跟打 **********
+2024-06-23 13:34:45.746	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:311															跟打按键：[gen_gm_h_m_cu_rn_beg_vz_]
+2024-06-23 13:34:45.747	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:312															本段成绩：[第961111段 速度183.88 击键7.36 码长2.4 字数10 回改0 退格0 回车0 键数24 错字0 键准100.0% 用时3秒263 暂停0次 重打3次 键法300.0%(左18:右6) 输入法:三矧 个签:从不练字 正文:32b7 揽月v24.06 Windows 10]
+2024-06-23 13:34:45.766	INFO		[ly.qr.kiarelemb.component.TextPane:typeEnding] TextPane.java:318															********** 本段结束 **********
+2024-06-23 13:36:29.924	INFO		[ly.qr.kiarelemb.MainWindow:lambda$quickKeyLoad$1] MainWindow.java:97														************************************** 您已退出揽月 **************************************

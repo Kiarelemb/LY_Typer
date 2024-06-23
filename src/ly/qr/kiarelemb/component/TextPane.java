@@ -225,6 +225,8 @@ public class TextPane extends QRTextPane {
                 MainWindow.INSTANCE.setAlwaysOnTop(false);
             }
             TypingData.typing = false;
+            TypingData.typeEnd = true;
+            TypingData.shutdown();
             typingEndThread.execute(this::typeEnding);
         }
     }
@@ -340,7 +342,6 @@ public class TextPane extends QRTextPane {
         if (TextLoad.TEXT_LOAD == null) {
             return;
         }
-        TypingData.typing = false;
         TEXT_PANE.setTypeText(TextLoad.TEXT_LOAD.currentText());
         DangLangManager.DANG_LANG_MANAGER.save(TextLoad.TEXT_LOAD.textMD5Long());
         MainWindow.INSTANCE.grabFocus();

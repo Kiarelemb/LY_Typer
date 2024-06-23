@@ -5,6 +5,7 @@ import ly.qr.kiarelemb.component.menu.type.SettingsItem;
 import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.input.InputManager;
+import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.TextTipEnhance;
@@ -57,6 +58,16 @@ public class TipSettingPanel extends SettingPanel {
         QRLabel tipWindowLocationLabel = new QRLabel("位置：");
         QRComboBox tipWindowComboBox = new ComboBox(Keys.TEXT_TIP_WINDOW_LOCATION, "跟随光标", "固定于窗体上方居中");
 
+        QRActionRegister tipUpdate = es->{
+            if (TextLoad.TEXT_LOAD != null) {
+                TextLoad.TEXT_LOAD.updateTipsWithoutEnable();
+            }
+        };
+        paintColorCheckBox.addClickAction(tipUpdate);
+        paintSelectionCheckBox.addClickAction(tipUpdate);
+        paintCodeCheckBox.addClickAction(tipUpdate);
+        charModelEnableCheckBox.addClickAction(tipUpdate);
+        singlePhraseDevideCheckBox.addClickAction(tipUpdate);
 
         QRActionRegister tipLoadAction = es -> {
             TextTip.TEXT_TIP.release();

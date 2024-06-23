@@ -5,6 +5,7 @@ import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
+import ly.qr.kiarelemb.text.tip.data.TipStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import swing.qr.kiarelemb.component.basic.QRTextPane;
 
@@ -105,49 +106,39 @@ public class TextPanelEditorKit extends StyledEditorKit {
     }
 
     public void changeFontColor() {
-//		StyledDocument doc = (StyledDocument) textPane.getDocument();
         ArrayList<TipPhraseStyleData> tpsd = TextLoad.TEXT_LOAD.tipData.tpsd;
         // 添加剩下字体
         for (final TipPhraseStyleData data : tpsd) {
             if (data == null) {
                 continue;
             }
-            final SimpleAttributeSet style = data.getStyle();
-            if (TypingData.paintCode) {
-                style.addAttribute("UnderlineOpen", true);
-                style.addAttribute("Underline-Color", Color.red);
-                style.addAttribute("Number", data.code());
-            } else if (TypingData.paintSelection) {
-                // 首选是奇数，其他是偶数
-                int type = data.type();
-                boolean condition = (TypingData.charEnable || data.shortPhrase()) && type % 2 == 0;
-                if (condition) {
-                    style.addAttribute("UnderlineOpen", true);
-                    style.addAttribute("Underline-Color", Color.red);
-                    style.addAttribute("Number", data.lastChar());
-                }
-            }
-            textPane.changeTextsStyle(data.index(), data.phrase().length(), style, true);
+            fillTipData(data);
+            textPane.changeTextsStyle(data.index(), data.phrase().length(), data.getStyle(), true);
             if (data.shortPhrase()) {
                 int length = data.phrase().length();
                 for (int i = 1; i < length; i++) {
                     ArrayList<TipCharStyleData> tcsd = TextLoad.TEXT_LOAD.tipData.tcsd;
-                    TipCharStyleData thisData = tcsd.get(data.index() + i);
-                    SimpleAttributeSet singleStyle = thisData.getStyle();
-                    if (TypingData.paintCode) {
-                        singleStyle.addAttribute("UnderlineOpen", true);
-                        singleStyle.addAttribute("Underline-Color", Color.red);
-                        singleStyle.addAttribute("Number", thisData.code());
-                    } else if (TypingData.paintSelection) {
-                        int type = thisData.type();
-                        if (!TypingData.charEnable || type % 2 == 1) {
-                            continue;
-                        }
-                        singleStyle.addAttribute("UnderlineOpen", true);
-                        singleStyle.addAttribute("Underline-Color", Color.red);
-                        singleStyle.addAttribute("Number", thisData.lastChar());
-                    }
+                    TipStyleData thisData = tcsd.get(data.index() + i);
+                    fillTipData(thisData);
                 }
+            }
+        }
+    }
+
+    private static void fillTipData(TipStyleData thisData) {
+        SimpleAttributeSet singleStyle = thisData.getStyle();
+        boolean condition = TypingData.charEnable && thisData.type() % 2 == 0;
+        if (TypingData.paintCode) {
+            if (condition) {
+                singleStyle.addAttribute("UnderlineOpen", true);
+                singleStyle.addAttribute("Underline-Color", Color.red);
+                singleStyle.addAttribute("Number", thisData.code());
+            }
+        } else if (TypingData.paintSelection) {
+            if (condition) {
+                singleStyle.addAttribute("UnderlineOpen", true);
+                singleStyle.addAttribute("Underline-Color", Color.red);
+                singleStyle.addAttribute("Number", thisData.lastChar());
             }
         }
     }

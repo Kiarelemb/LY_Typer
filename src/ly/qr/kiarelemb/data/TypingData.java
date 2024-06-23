@@ -2,11 +2,13 @@ package ly.qr.kiarelemb.data;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
+import ly.qr.kiarelemb.component.TextPane;
 import ly.qr.kiarelemb.component.contract.state.LookModelCheckBox;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.listener.QRActionListener;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
@@ -14,8 +16,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
 
@@ -45,6 +46,7 @@ public class TypingData {
     public static StringBuilder typedKeyRecord = new StringBuilder();
     public static boolean pausing = false;
     public static boolean typing = false;
+    public static boolean typeEnd = false;
     public static int pausedTimes = 0;
     public static int lookfontSize = 0;
     public static int typefontSize = 0;
@@ -76,6 +78,7 @@ public class TypingData {
     private static final ThreadPoolExecutor tre_statistics = QRThreadBuilder.singleThread("statistics");
 
     static {
+        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> typeEnd = false);
         QRSwing.registerSystemExitAction(event -> {
             if (!typedKeyRecord.isEmpty()) {
                 KeyTypedRecordData.fresh(typedKeyRecord.toString());
@@ -120,6 +123,7 @@ public class TypingData {
         pauseStartTime = 0L;
         pauseEndTime = 0L;
         typing = false;
+        typeEnd = true;
         pausing = false;
         windowFresh();
     }
@@ -130,7 +134,19 @@ public class TypingData {
             case 2 -> restTime = 5000L;
             default -> restTime = 100L;
         }
-        tre_statistics.submit(() -> typingStatisticsUpdate(restTime));
+        statisticUpdate = tre_statistics.submit(() -> typingStatisticsUpdate(restTime));
+    }
+
+    static Future<?> statisticUpdate;
+
+    public static void shutdown() {
+        if (statisticUpdate == null) {
+            return;
+        }
+        try {
+            statisticUpdate.cancel(true);
+        } catch (Exception ignore) {
+        }
     }
 
     /**
@@ -159,54 +175,49 @@ public class TypingData {
 
     private static void typingStatisticsUpdate(long restTime) {
         if (MainWindow.INSTANCE.backgroundImageSet()) {
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    while (typing) {
-                        if (!pausing) {
-                            windowFresh();
-                        }
-                        QRSleepUtils.sleep(5);
+            QRComponentUtils.runLater(10, e -> {
+                while (typing) {
+                    if (!pausing) {
+                        windowFresh();
                     }
+                    QRSleepUtils.sleep(5);
                 }
-            }, 10);
+            });
         }
-
-        windowFresh();
         while (typing && !pausing) {
+            QRSleepUtils.sleep(restTime);
+            if (typing && LookModelCheckBox.lookModelCheckBox.checked()) {
+                continue;
+            }
             long endTime = System.currentTimeMillis();
             //用时_秒
-            if (!LookModelCheckBox.lookModelCheckBox.checked()) {
-                double totalTimeInSec = (endTime - startTime) / 1000.0;
-                //用时_分
-                double totalTimeInMin = totalTimeInSec / 60;
-                currentSpeed = ((currentTypedIndex - 5 * WRONG_WORDS_INDEX.size()) / totalTimeInMin);
-                //速度
-                String speeds;
-                if (!WRONG_WORDS_INDEX.isEmpty()) {
-                    speeds = String.format("%.2f",
-                            (Math.max(currentTypedIndex - 5 * WRONG_WORDS_INDEX.size(), 0) / totalTimeInMin));
-                } else {
-                    speeds = String.format("%.2f", currentTypedIndex / totalTimeInMin);
-                }
-                //击键
-                String keyStrokes = String.format("%.2f", keyCounts / totalTimeInSec);
-                //码长
-                String codeLengths = String.format("%.2f", keyCounts / (double) (currentTypedIndex));
-                ContractiblePanel.SPEED_LABEL.setText(speeds);
-                ContractiblePanel.KEY_STROKE_LABEL.setText(keyStrokes);
-                ContractiblePanel.CODE_LEN_LABEL.setText(codeLengths);
-                ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
-                windowFresh();
+            double totalTimeInSec = (endTime - startTime) / 1000.0;
+            //用时_分
+            double totalTimeInMin = totalTimeInSec / 60;
+            currentSpeed = ((currentTypedIndex - 5 * WRONG_WORDS_INDEX.size()) / totalTimeInMin);
+            //速度
+            String speeds;
+            if (!WRONG_WORDS_INDEX.isEmpty()) {
+                speeds = String.format("%.2f",
+                        (Math.max(currentTypedIndex - 5 * WRONG_WORDS_INDEX.size(), 0) / totalTimeInMin));
+            } else {
+                speeds = String.format("%.2f", currentTypedIndex / totalTimeInMin);
             }
-            QRSleepUtils.sleep(restTime);
+            //击键
+            String keyStrokes = String.format("%.2f", keyCounts / totalTimeInSec);
+            //码长
+            String codeLengths = String.format("%.2f", keyCounts / (double) (currentTypedIndex));
+            ContractiblePanel.SPEED_LABEL.setText(speeds);
+            ContractiblePanel.KEY_STROKE_LABEL.setText(keyStrokes);
+            ContractiblePanel.CODE_LEN_LABEL.setText(codeLengths);
+            ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
+            windowFresh();
         }
     }
 
     public synchronized static void windowFresh() {
         if (MainWindow.INSTANCE.backgroundImageSet()) {
-            MainWindow.INSTANCE.repaint();
+            MainWindow.INSTANCE.getContentPane().repaint();
         }
     }
 

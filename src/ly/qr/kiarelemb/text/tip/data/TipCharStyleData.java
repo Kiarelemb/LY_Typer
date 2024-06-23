@@ -11,7 +11,7 @@ import java.util.Objects;
  * @date 2021/8/26 上午9:39
  * @apiNote 词提单字的数据类
  */
-public final class TipCharStyleData {
+public final class TipCharStyleData implements TipStyleData {
     private final int index;
     private final String word;
     private final String code;
@@ -30,6 +30,7 @@ public final class TipCharStyleData {
         this.bold = bold;
     }
 
+    @Override
     public SimpleAttributeSet getStyle() {
         if (style == null) {
             style = new SimpleAttributeSet(TextStyleManager.getDefinedStyle(this.type, this.bold, this.word, false));
@@ -38,26 +39,31 @@ public final class TipCharStyleData {
         return style;
     }
 
-    public String lastChar() {
-        return QRStringUtils.lastChar(this.code);
-    }
-
-    public int index() {
-        return index;
-    }
-
     public String word() {
         return word;
     }
 
+    @Override
+    public String lastChar() {
+        return QRStringUtils.lastChar(this.code);
+    }
+
+    @Override
+    public int index() {
+        return index;
+    }
+
+    @Override
     public String code() {
         return code;
     }
 
+    @Override
     public int type() {
         return type;
     }
 
+    @Override
     public boolean bold() {
         return bold;
     }

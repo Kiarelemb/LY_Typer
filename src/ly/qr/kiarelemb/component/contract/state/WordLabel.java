@@ -76,7 +76,7 @@ public class WordLabel extends QRLabel {
 	}
 
 	private void runCheck() {
-		Timer timer = new Timer(500, e -> {
+		Timer timer = new Timer(5000, e -> {
 			if (!QRTimeUtils.getDateNow().equals(todayDate)) {
 				todayWordFresh();
 			}
