@@ -27,11 +27,9 @@ import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -126,43 +124,6 @@ public class TextPane extends QRTextPane {
         }
         if (Keys.boolValue(Keys.TEXT_TIP_PAINT_COLOR)) {
             textPanelEditorKit.changeFontColor();
-        }
-    }
-
-    /**
-     * 已被取代方法 {@link #printTextStyleAfterSetText()} 取代
-     */
-    @Deprecated()
-    private void printProcessAfterSetText() {
-        if (TypingData.tipEnable && AbstractTextTip.TEXT_TIP.loaded() && !TextLoad.TEXT_LOAD.isEnglish()) {
-            final ArrayList<TipPhraseStyleData> tpsd = TextLoad.TEXT_LOAD.tipData.tpsd;
-            if (TextLoad.TEXT_LOAD.singleOnly() && !TypingData.charEnable && tpsd == null) {
-                //如果都是单字，则不渲染
-                final SimpleAttributeSet defaultStyle = TextStyleManager.getDefaultStyle();
-                StyleConstants.setForeground(defaultStyle, QRColorsAndFonts.TEXT_COLOR_FORE);
-                defaultStyle.addAttribute("UnderlineOpen", false);
-                print(TextLoad.TEXT_LOAD.formattedActualText(), defaultStyle, 0);
-            } else {
-                if (Keys.boolValue(Keys.TEXT_TIP_PAINT_COLOR)) {
-                    for (TipPhraseStyleData tp : tpsd) {
-                        if (tp == null) {
-                            continue;
-                        }
-                        print(tp);
-                    }
-                } else {
-                    print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
-                }
-                textPanelEditorKit.changeFontColor();
-            }
-        } else {
-            if (TextLoad.TEXT_LOAD.isEnglish()) {
-                ContractiblePanel.STANDARD_LEN_LABEL.setText("1.0");
-            }
-            final SimpleAttributeSet defaultStyle = TextStyleManager.getDefaultStyle();
-            StyleConstants.setForeground(defaultStyle, QRColorsAndFonts.TEXT_COLOR_FORE);
-            defaultStyle.addAttribute("UnderlineOpen", false);
-            print(TextLoad.TEXT_LOAD.formattedActualText(), defaultStyle, 0);
         }
     }
 
@@ -392,15 +353,6 @@ public class TextPane extends QRTextPane {
         int caretPosition = getCaretPosition();
         if (TypingData.currentTypedIndex != caretPosition) {
             setCaretPosition(TypingData.currentTypedIndex);
-        }
-    }
-
-
-    public void print(TipPhraseStyleData tpsd) {
-        try {
-            getDocument().insertString(tpsd.index(), tpsd.phrase(), tpsd.getStyle());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
