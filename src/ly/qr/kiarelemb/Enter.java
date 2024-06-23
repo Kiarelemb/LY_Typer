@@ -10,12 +10,6 @@ import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.QRSwing;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
 
 /**
@@ -94,107 +88,7 @@ public class Enter {
         logger.config("设置窗口预加载完毕。");
 
         //加载一下词提
-        TextTip.TEXT_TIP.load();
-
-//        TextStyleManager.updateAll();
-    }
-
-    private static void initLogger() {
-
-
-        LocalDate now = LocalDate.now();
-        String separator = File.separator;
-        String dir = "logs" + separator + now.format(DateTimeFormatter.ofPattern("yyyy.MM")) + separator;
-        QRFileUtils.dirCreate(dir);
-        String logFilePath = dir + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".log";
-        QRFileUtils.fileCreate(logFilePath);
-
-        ConsoleHandler consoleHandler;
-        FileHandler fileHandler;
-        Level outputLevel = Level.INFO;
-        Level writeLevel = Level.CONFIG;
-        int classMsgMaxLength = 120;
-        Formatter formatter = new Formatter() {
-
-
-            @Override
-            public String format(LogRecord record) {
-                String dataFormat = QRTimeUtils.dateAndTimeMMFormat.format(Long.valueOf(record.getMillis()));
-                StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-                StackTraceElement stackTrace = trace[0];
-                for (StackTraceElement element : trace) {
-                    if (element.getClassName().startsWith("ly")) {
-                        stackTrace = element;
-                        break;
-                    }
-                }
-                String levelTmp = record.getLevel().toString();
-                String level = levelTmp + "\t".repeat((8 - levelTmp.length()) / 4 + (levelTmp.length() % 4 == 0 ? 0 : 1));
-
-                String classTmp = String.format("[%s:%s] %s:%d", stackTrace.getClassName(), stackTrace.getMethodName(),
-                        stackTrace.getFileName(), stackTrace.getLineNumber());
-                int restLen = classMsgMaxLength - classTmp.length();
-                int times = restLen / 4 + (classTmp.length() % 4 == 0 ? 0 : 1);
-                String classMsg = classTmp + "\t".repeat(Math.max(times, 0));
-                String msg = String.format("%s\t%s\t%s\t%s\n", dataFormat, level, classMsg, record.getMessage());
-                String throwable = "";
-                if (record.getThrown() != null) {
-                    StringWriter sw = new StringWriter();
-                    PrintWriter pw = new PrintWriter(sw);
-                    pw.println();
-                    record.getThrown().printStackTrace(pw);
-                    pw.close();
-                    throwable = sw.toString();
-                }
-                return msg + throwable;
-            }
-        };
-
-        QRLoggerUtils.outputLevel = outputLevel;
-        consoleHandler = new ConsoleHandler() {
-
-            private String preRecord = "";
-
-            @Override
-            public synchronized void publish(LogRecord record) {
-                String format = getFormatter().format(record);
-                if (format.equals(preRecord)) {
-                    return;
-                }
-                preRecord = format;
-                super.publish(record);
-            }
-        };
-        consoleHandler.setLevel(outputLevel);
-        consoleHandler.setFormatter(formatter);
-        try {
-            fileHandler = new FileHandler(logFilePath, true) {
-
-                private String preRecord = "";
-
-                @Override
-                public synchronized void publish(LogRecord record) {
-                    String format = getFormatter().format(record);
-                    if (format.equals(preRecord)) {
-                        return;
-                    }
-                    preRecord = format;
-                    super.publish(record);
-                }
-            };
-            QRLoggerUtils.writeLevel = writeLevel;
-            fileHandler.setLevel(writeLevel);
-            fileHandler.setEncoding("UTF-8");
-            fileHandler.setFormatter(formatter);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        QRLoggerUtils.logFilePath = logFilePath;
-        QRLoggerUtils.outputLevel = outputLevel;
-        QRLoggerUtils.writeLevel = writeLevel;
-        QRLoggerUtils.classMsgMaxLength = classMsgMaxLength;
-        QRLoggerUtils.consoleHandler = consoleHandler;
-        QRLoggerUtils.fileHandler = fileHandler;
+		TextTip.TEXT_TIP.load();
+		System.out.println("这里试试输出");
     }
 }

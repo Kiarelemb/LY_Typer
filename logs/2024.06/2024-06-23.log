@@ -1,0 +1,35 @@
+2024-06-23 08:30:04.155	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:38																					************************************** 揽月开始启动 **************************************
+2024-06-23 08:30:04.672	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:41																					QRSwing 框架加载完毕，共计耗时: 0秒474
+2024-06-23 08:30:05.239	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 08:30:05.285	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:87																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 08:30:06.643	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:94																			设置窗口预加载完毕。
+2024-06-23 08:30:06.690	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 08:30:06.692	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:50																					当前系统：Windows 10
+2024-06-23 08:30:06.697	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:62																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 08:30:21.878	INFO		[ly.qr.kiarelemb.MainWindow:lambda$1] MainWindow.java:97																	************************************** 您已退出揽月 **************************************
+2024-06-23 08:33:05.491	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:38																					************************************** 揽月开始启动 **************************************
+2024-06-23 08:33:06.026	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:41																					QRSwing 框架加载完毕，共计耗时: 0秒490
+2024-06-23 08:33:06.512	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 08:33:06.544	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:87																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 08:33:07.771	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:94																			设置窗口预加载完毕。
+2024-06-23 08:33:07.828	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 08:33:07.829	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:50																					当前系统：Windows 10
+2024-06-23 08:33:07.839	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:62																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 08:33:13.355	INFO		[ly.qr.kiarelemb.MainWindow:lambda$1] MainWindow.java:97																	************************************** 您已退出揽月 **************************************
+2024-06-23 08:40:31.587	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 08:40:32.094	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒463
+2024-06-23 08:40:32.571	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是霞鹜文楷等宽
+2024-06-23 08:40:32.601	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:81																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 08:40:33.776	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:88																			设置窗口预加载完毕。
+2024-06-23 08:40:33.833	CONFIG		[ly.qr.kiarelemb.text.tip.AbstractTextTip:load] AbstractTextTip.java:70														词提实例化完成，实体类名字：[TextTip]，词提数据：[词提各项数据：[加载状态：成功, 方案最大长度：3, 选重键：'ex[234890', 是否是42顶：否, 码表路径：'C:\Users\Kiarelemb QR\Documents\[词提]SM.dict.txt']]
+2024-06-23 08:40:33.836	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 08:40:33.850	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:56																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 08:45:25.433	INFO		[ly.qr.kiarelemb.MainWindow:lambda$1] MainWindow.java:97																	************************************** 您已退出揽月 **************************************
+2024-06-23 10:14:24.926	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:32																					************************************** 揽月开始启动 **************************************
+2024-06-23 10:14:25.642	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:35																					QRSwing 框架加载完毕，共计耗时: 0秒653
+2024-06-23 10:14:26.237	INFO		[ly.qr.kiarelemb.text.tip.data.TextStyleManager:updateAll] TextStyleManager.java:274										字体已刷新，当前是中文，字体名是阿里巴巴普惠体 R
+2024-06-23 10:14:26.303	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:81																			加载默认字体：阿里巴巴普惠体-R
+2024-06-23 10:14:27.566	CONFIG		[ly.qr.kiarelemb.Enter:variousLoad] Enter.java:88																			设置窗口预加载完毕。
+2024-06-23 10:14:27.571	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:44																					当前系统：Windows 10
+2024-06-23 10:14:27.585	INFO		[ly.qr.kiarelemb.Enter:main] Enter.java:56																					-------------------------------------- 配置加载完毕 --------------------------------------
+2024-06-23 10:14:49.670	INFO		[ly.qr.kiarelemb.MainWindow:lambda$1] MainWindow.java:97																	************************************** 您已退出揽月 **************************************
