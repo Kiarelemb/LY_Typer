@@ -319,7 +319,7 @@ public class TextPane extends QRTextPane {
         if (TextSendManager.sendingText()) {
             TextSendManager.data().addTypedTimes();
             NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
-            QRLoggerUtils.log(logger, Level.INFO, "发文数据：[%s]", TextSendManager.data().toString());
+            logger.config(TextSendManager.data().toString());
         }
     }
 

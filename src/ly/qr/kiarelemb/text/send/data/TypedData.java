@@ -245,7 +245,6 @@ public final class TypedData implements Serializable {
                 .add("perLength=" + perLength)
                 .add("paraNum=" + paraNum)
                 .add("sendData=" + sendData)
-                .add("currentText='" + currentText + "'")
                 .toString();
     }
 }

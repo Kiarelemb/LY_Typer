@@ -103,17 +103,13 @@ public class TipPanel extends QRPanel {
     public void pack() {
         int width = this.gap * 2;
         int height = this.gap * 2;
-        Rectangle singleWordBounds = QRFontUtils.getStringBounds(this.singleWordLabel.getText(),
-                this.singleWordLabel.getFont()).getBounds();
-        Rectangle singleWordCodeBounds = QRFontUtils.getStringBounds(this.singleWordCodeLabel.getText(),
-                this.singleWordCodeLabel.getFont()).getBounds();
+        Rectangle singleWordBounds = QRFontUtils.getStringBounds(this.singleWordLabel.getText(), this.singleWordLabel.getFont()).getBounds();
+        Rectangle singleWordCodeBounds = QRFontUtils.getStringBounds(this.singleWordCodeLabel.getText(), this.singleWordCodeLabel.getFont()).getBounds();
         width += singleWordBounds.width + singleWordCodeBounds.width + this.gap;
         height += singleWordBounds.height;
         if (this.phraseWordLabel.getText() != null) {
-            Rectangle phraseWordBounds = QRFontUtils.getStringBounds(this.phraseWordLabel.getText(),
-                    this.phraseWordLabel.getFont()).getBounds();
-            Rectangle phraseWordCodeBounds = QRFontUtils.getStringBounds(this.phraseWordCodeLabel.getText(),
-                    this.phraseWordCodeLabel.getFont()).getBounds();
+            Rectangle phraseWordBounds = QRFontUtils.getStringBounds(this.phraseWordLabel.getText(), this.phraseWordLabel.getFont()).getBounds();
+            Rectangle phraseWordCodeBounds = QRFontUtils.getStringBounds(this.phraseWordCodeLabel.getText(), this.phraseWordCodeLabel.getFont()).getBounds();
             int phraseWidth = phraseWordBounds.width + phraseWordCodeBounds.width + this.gap * 2;
             if (Keys.boolValue(Keys.TEXT_TIP_DIVIDE)) {
                 height += phraseWordBounds.height + this.gap;

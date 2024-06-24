@@ -82,14 +82,13 @@ public class TipSettingPanel extends SettingPanel {
 
         tipEnhanceModelCheckBox.addClickAction(e -> {
             SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable.enhance", es -> {
-                if (Keys.boolValue(Keys.TEXT_TIP_ENHANCE)) {
-                    if (AbstractTextTip.TEXT_TIP instanceof TextTip) {
-                        AbstractTextTip.TEXT_TIP.release();
-                        AbstractTextTip.TEXT_TIP = new TextTipEnhance();
-                        AbstractTextTip.TEXT_TIP.load();
-                        QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
-                    }
+                if (!Keys.boolValue(Keys.TEXT_TIP_ENHANCE) || !(AbstractTextTip.TEXT_TIP instanceof TextTip)) {
+                    return;
                 }
+                AbstractTextTip.TEXT_TIP.release();
+                AbstractTextTip.TEXT_TIP = new TextTipEnhance();
+                AbstractTextTip.TEXT_TIP.load();
+                QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
             });
         });
 
@@ -97,10 +96,11 @@ public class TipSettingPanel extends SettingPanel {
         tipFileSelectBtn.addSuccessAction(e -> {
             File file = (File) e;
             String path = file.getAbsolutePath();
-            if (!path.equals(tipFilePathLabel.getText())) {
-                tipFilePathLabel.setText(path);
-                SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.load", tipLoadAction);
+            if (path.equals(tipFilePathLabel.getText())) {
+                return;
             }
+            tipFilePathLabel.setText(path);
+            SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.load", tipLoadAction);
         });
 
         QRActionRegister tipPanelAction = e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.panel",

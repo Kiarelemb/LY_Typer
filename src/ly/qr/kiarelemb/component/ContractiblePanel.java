@@ -2,6 +2,7 @@ package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.contract.state.*;
+import ly.qr.kiarelemb.component.menu.about.HotMapItem;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.data.TypingData;
@@ -13,6 +14,7 @@ import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.combination.QRContractiblePanel;
+import swing.qr.kiarelemb.component.listener.QRMouseListener;
 import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
@@ -67,7 +69,7 @@ public class ContractiblePanel extends QRContractiblePanel {
     private ContractiblePanel() {
         super(250);
 
-        //跟打数据
+        //region 跟打数据
         init_typingStatisticsPanel();
         //endregion
 
@@ -90,8 +92,7 @@ public class ContractiblePanel extends QRContractiblePanel {
         this.standardDataPanel.column().setFold(Keys.boolValue(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS));
         //保存
         this.typingStatisticsPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_TYPING_STATISTICS, e));
-        this.stateInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STATE_INFO,
-                e));
+        this.stateInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STATE_INFO, e));
         this.paraInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_PARA_INFO, e));
         this.standardDataPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, e));
 
@@ -149,6 +150,9 @@ public class ContractiblePanel extends QRContractiblePanel {
         QRLabel codeLabelTip = new QRLabel("正文：");
         QRLabel paraForeLabelTip = new QRLabel("段前：");
         QRLabel paraBackLabelTip = new QRLabel("段尾：");
+
+        wordNumLabel.addMouseListener();
+        wordNumLabel.addMouseAction(QRMouseListener.TYPE.CLICK, e -> HotMapItem.HOT_MAP_ITEM.clickInvokeLater());
 
         QRComponentUtils.setBoundsAndAddToComponent(this.paraInfoPanel, paraLabelTip, 15, 20, 55, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.paraInfoPanel, paraLabel, 70, 20, 155, 30);

@@ -189,6 +189,9 @@ public class TypingData {
             if (typing && LookModelCheckBox.lookModelCheckBox.checked()) {
                 continue;
             }
+            if (startTime == 0L) {
+                break;
+            }
             long endTime = System.currentTimeMillis();
             //用时_秒
             double totalTimeInSec = (endTime - startTime) / 1000.0;

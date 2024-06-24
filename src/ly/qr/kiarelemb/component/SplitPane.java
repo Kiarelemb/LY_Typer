@@ -5,6 +5,7 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.TipPanel;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRPanel;
 import swing.qr.kiarelemb.component.basic.QRSplitPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
@@ -24,8 +25,8 @@ import java.awt.*;
  * @create 2023-01-27 22:33
  **/
 public class SplitPane extends QRSplitPane {
-    public static final SplitPane SPLIT_PANE = new SplitPane();
     public final SplitTipPanel tipPanel;
+    public static final SplitPane SPLIT_PANE = new SplitPane();
 
     private SplitPane() {
         super(JSplitPane.VERTICAL_SPLIT);
@@ -55,57 +56,55 @@ public class SplitPane extends QRSplitPane {
      * 更新编码提示的位置
      */
     public void updateTipPaneLocation() {
-        if (Keys.boolValue(Keys.TEXT_TIP_PANEL_ENABLE)) {
-            this.tipPanel.pack();
-            int value = Keys.intValue(Keys.TEXT_TIP_PANEL_LOCATION);
-            this.tipPanel.setOnNorth(value % 2 == 0);
-            if (value == 0 || value == 1) {
-                setTopComponent(null);
-                QRPanel panel = new QRPanel(false);
-                panel.setLayout(new BorderLayout());
-                panel.add(TextPane.TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
-                panel.add(this.tipPanel, value == 0 ? BorderLayout.NORTH : BorderLayout.SOUTH);
-                setTopComponent(panel);
-            } else {
-                setBottomComponent(null);
-                QRPanel panel = new QRPanel(false);
-                panel.setLayout(new BorderLayout());
-                panel.add(TyperTextPane.TYPER_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
-                panel.add(this.tipPanel, value == 3 ? BorderLayout.SOUTH : BorderLayout.NORTH);
-                setBottomComponent(panel);
-            }
-        } else {
+        // 若未启用词提面板
+        if (!Keys.boolValue(Keys.TEXT_TIP_PANEL_ENABLE)) {
             if (this.tipPanel.getParent() != null) {
-                QRActionRegister loopToRemove = component -> {
-                    QRPanel panel = (QRPanel) component;
-                    Component[] cms = panel.getComponents();
-                    for (Component com : cms) {
-                        if (com instanceof SplitTipPanel pane) {
-                            panel.remove(pane);
-                            return;
-                        }
-                    }
-                };
-                Component[] cms = getComponents();
-                for (Component com : cms) {
-                    if (com instanceof QRPanel pane) {
-                        loopToRemove.action(pane);
-                    }
-                }
+                // 用循环移除 SPLIT_PANE
+                QRActionRegister loopToRemove =
+                        component -> QRComponentUtils.componentLoop((QRPanel) component, SplitTipPanel.class,
+                                e -> ((QRPanel) component).remove((SplitTipPanel) e));
+                QRComponentUtils.componentLoop(this, QRPanel.class, loopToRemove::action);
+                this.revalidate();
+                this.repaint();
+                TypingData.windowFresh();
             }
+            return;
+        }
+        this.tipPanel.pack();
+        int value = Keys.intValue(Keys.TEXT_TIP_PANEL_LOCATION);
+        this.tipPanel.setOnNorth(value % 2 == 0);
+        // 获取分割线位置
+        final int i = getDividerLocation();
+        if (value < 2) {
+            setTopComponent(null);
+            QRPanel panel = new QRPanel(false);
+            panel.setLayout(new BorderLayout());
+            panel.add(TextPane.TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
+            panel.add(this.tipPanel, value == 0 ? BorderLayout.NORTH : BorderLayout.SOUTH);
+            // 设置顶层大小能避免分割线位置变化
+            TextPane.TEXT_PANE.addScrollPane().setPreferredSize(new Dimension(100, i - this.tipPanel.getHeight()));
+            setTopComponent(panel);
+        } else {
+            setBottomComponent(null);
+            QRPanel panel = new QRPanel(false);
+            panel.setLayout(new BorderLayout());
+            panel.add(TyperTextPane.TYPER_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
+            panel.add(this.tipPanel, value == 3 ? BorderLayout.SOUTH : BorderLayout.NORTH);
+            // 设置顶层大小能避免分割线位置变化
+            TextPane.TEXT_PANE.addScrollPane().setPreferredSize(new Dimension(100, i));
+            setBottomComponent(panel);
         }
     }
 
     @Override
     public void componentFresh() {
         super.componentFresh();
-        setDividerLocation(Keys.intValue(Keys.WINDOW_SPLIT_WEIGHT));
         if (this.tipPanel != null) {
             updateTipPaneLocation();
         }
     }
 
-    public static class SplitTipPanel extends TipPanel {
+    public class SplitTipPanel extends TipPanel {
         private boolean isOnNorth = false;
 
         @Override
@@ -141,6 +140,7 @@ public class SplitPane extends QRSplitPane {
             TyperTextPane.TYPER_TEXT_PANE.addTypeActions(repaintAction);
             TextPane.TEXT_PANE.addSetTextFinishedAction(repaintAction);
         }
+
 
         @Override
         public BasicSplitPaneDivider createDefaultDivider() {
