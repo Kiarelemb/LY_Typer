@@ -55,8 +55,8 @@ public class TypingData {
     public static int spaceModel;
     public static int tipWindowLocation;
     public static String fontName;
-    public static final String LEFT = "FVGTXE2AWSDCRZQ13456\t`fvgtxe2awsdcrzq";
-    public static final String RIGHT = "HLUIYOKMJNP，=；、[;/.,。']\\\"7890-hluiyokmjnp";
+    public static final String LEFT = "FVGTXE2AWSDCRZQ13456⇧↑\t`fvgtxe2awsdcrzqᐃ";
+    public static final String RIGHT = "HLUIYOKMJNP，=；、[;/.,。']↵←\n\\\"7890-hluiyokmjnp";
     public static String grade;
     public static double currentSpeed = 0;
     public static boolean paintSelection = false;

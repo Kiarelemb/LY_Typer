@@ -47,10 +47,10 @@ public class DangLangManager {
         if (!TypingData.typing) {
             return;
         }
-        list.add(new DangLangData(c, time));
         if (c == '⊗') {
             return;
         }
+        list.add(new DangLangData(c, time));
         String data;
         int size = list.size();
         if (size > 1) {

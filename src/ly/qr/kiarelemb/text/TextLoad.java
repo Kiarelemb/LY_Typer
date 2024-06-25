@@ -93,7 +93,7 @@ public class TextLoad {
             this.isEnglish = QRStringUtils.isEnglish(actualContent);
             //打字文本格式化后的内容
             this.formattedActualText = TextWash.actualContentFormat(actualContent, this.isEnglish);
-            QRLoggerUtils.log(logger, Level.INFO, "载入文本格式化后的内容：[%s]", this.formattedActualText);
+            QRLoggerUtils.log(logger, Level.CONFIG, "载入文本格式化后的内容：[%s]", this.formattedActualText);
             this.wordsLength = this.formattedActualText.length();
             if (this.wordsLength == 0) {
                 logger.warning("文本格式化后内容为空！");
@@ -101,10 +101,10 @@ public class TextLoad {
             }
             if (this.isEnglish) {
                 if (QRStringUtils.stringContainsNon(this.formattedActualText, new String[]{",", "\"", ":"})) {
-                    logger.warning("当前文本为英打单词");
+                    logger.config("当前文本为英打单词");
                     this.isEnglishPhrase = true;
                 } else {
-                    logger.warning("当前文本为英打文章");
+                    logger.config("当前文本为英打文章");
                 }
             }
             //正文字数

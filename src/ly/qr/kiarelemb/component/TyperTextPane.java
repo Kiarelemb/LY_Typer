@@ -20,6 +20,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +35,16 @@ public class TyperTextPane extends QRTextPane {
     public KeyListener globalKeyListener = null;
     private final LinkedList<QRActionRegister> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
+
+    private final Map<Integer, Character> specialKeyMap = Map.of(
+            (int) 'B', 'b',
+            (int) ' ', '_',
+            KeyEvent.VK_ENTER, '↵',
+            KeyEvent.VK_SHIFT, '↑',
+            KeyEvent.VK_ALT, 'ᐃ',
+            KeyEvent.VK_CAPS_LOCK, '⇧',
+            KeyEvent.VK_BACK_SPACE, '←'
+    );
 
     private TyperTextPane() {
         addKeyListener();
@@ -125,54 +136,28 @@ public class TyperTextPane extends QRTextPane {
 
         //region 按键统计
         TypingData.keyCounts++;
-        boolean flag = true;
-        switch (keyCode) {
-            case 'B' -> {
-                TypingData.bCounts++;
-                TypingData.typedKeyRecord.append('B');
-                DangLangManager.DANG_LANG_MANAGER.put('b', timeDiff);
-                flag = false;
-            }
-            case ' ' -> {
-                TypingData.spaceCounts++;
-                TypingData.typedKeyRecord.append('_');
-                DangLangManager.DANG_LANG_MANAGER.put('_', timeDiff);
-                flag = false;
-            }
-            case KeyEvent.VK_ENTER -> {
-                TypingData.enterCount++;
-                TypingData.rightCounts++;
-                TypingData.typedKeyRecord.append('↵');
-                DangLangManager.DANG_LANG_MANAGER.put('↵', timeDiff);
-                flag = false;
-            }
-            case KeyEvent.VK_SHIFT -> {
-                TypingData.typedKeyRecord.append('↑');
-                DangLangManager.DANG_LANG_MANAGER.put('↑', timeDiff);
-                flag = false;
-            }
-            case KeyEvent.VK_ALT -> {
-                TypingData.typedKeyRecord.append('ᐃ');
-                DangLangManager.DANG_LANG_MANAGER.put('ᐃ', timeDiff);
-                flag = false;
-            }
-            case KeyEvent.VK_BACK_SPACE -> {
-                TypingData.backSpaceCount++;
-                TypingData.rightCounts++;
-                TypingData.typedKeyRecord.append('←');
-                DangLangManager.DANG_LANG_MANAGER.put('←', timeDiff);
-                flag = false;
-            }
-        }
+        boolean flag = specialKeyMap.containsKey(keyCode);
         if (flag) {
-            if (TypingData.LEFT.indexOf(keyChar) != -1) {
-                TypingData.leftCounts++;
-            } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
-                TypingData.rightCounts++;
-            } else {
-                QRLoggerUtils.log(logger, Level.WARNING, "未知按键：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
-                keyChar = '⊗';
-            }
+            keyChar = specialKeyMap.get(keyCode);
+            TypingData.typedKeyRecord.append(keyChar);
+            DangLangManager.DANG_LANG_MANAGER.put(keyChar, timeDiff);
+        }
+        switch (keyCode) {
+            case 'B' -> TypingData.bCounts++;
+            case ' ' -> TypingData.spaceCounts++;
+            case KeyEvent.VK_ENTER -> TypingData.enterCount++;
+            case KeyEvent.VK_BACK_SPACE -> TypingData.backSpaceCount++;
+        }
+
+        if (TypingData.LEFT.indexOf(keyChar) != -1) {
+            TypingData.leftCounts++;
+        } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
+            TypingData.rightCounts++;
+        } else if (!flag){
+            QRLoggerUtils.log(logger, Level.WARNING, "未知按键：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
+            keyChar = '⊗';
+        }
+        if (!flag) {
             TypingData.typedKeyRecord.append(keyChar);
             DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
         }

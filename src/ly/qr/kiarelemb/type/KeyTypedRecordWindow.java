@@ -1,5 +1,6 @@
 package ly.qr.kiarelemb.type;
 
+import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.KeyBoardPanel;
 import ly.qr.kiarelemb.data.KeyTypedRecordData;
 import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
@@ -18,11 +19,10 @@ import java.awt.*;
  */
 public class KeyTypedRecordWindow extends QRDialog {
     public KeyTypedRecordWindow() {
-//        super(MainWindow.INSTANCE);
-        super(null);
+        super(MainWindow.INSTANCE);
 
-	    setTitle("键盘热力图");
-	    setTitlePlace(SwingConstants.CENTER);
+        setTitle("键盘热力图");
+        setTitlePlace(SwingConstants.CENTER);
         mainPanel.setLayout(new BorderLayout());
 
 
@@ -37,8 +37,8 @@ public class KeyTypedRecordWindow extends QRDialog {
 
         tabbedPane.addTab("今日跟打记录", today);
         tabbedPane.addTab("总计跟打记录", total);
-        tabbedPane.setSelectedTab(0);
+        tabbedPane.setSelectedTab(KeyTypedRecordData.KEY_TODAY_RECORD_DATA.keyMap.size() > 0 ? 0 : 1);
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
-        setSize(1330, 600);
+        setSize(1360, 600);
     }
 }

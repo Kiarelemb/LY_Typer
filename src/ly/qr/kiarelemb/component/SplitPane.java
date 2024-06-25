@@ -154,7 +154,7 @@ public class SplitPane extends QRSplitPane {
                     Dimension size = getSize();
                     g.fillRect(0, 0, size.width, size.height);
                     // 绘制当前跟打进度条
-                    if (TextLoad.TEXT_LOAD != null && TypingData.currentTypedIndex >= 0) {
+                    if (TextLoad.TEXT_LOAD != null && TypingData.currentTypedIndex > 0) {
                         g.setColor(QRColorsAndFonts.DEFAULT_COLOR_LABEL);
                         int width = size.width * TypingData.currentTypedIndex / TextLoad.TEXT_LOAD.wordsLength();
                         g.fillRect(0, size.height / 2, width, size.height - size.height / 2);
