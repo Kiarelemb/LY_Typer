@@ -25,20 +25,18 @@ public class KeyTypedRecordWindow extends QRDialog {
         setTitlePlace(SwingConstants.CENTER);
         mainPanel.setLayout(new BorderLayout());
 
+        KeyBoardPanel todayKeyBoard = new KeyBoardPanel(KeyTypedRecordData.KEY_TODAY_RECORD_DATA.keyMap);
+        KeyBoardPanel totalKeyBoard = new KeyBoardPanel(KeyTypedRecordData.KEY_TOTAL_RECORD_DATA.keyMap);
 
-        QRTabbedPane tabbedPane = new QRTabbedPane();
+        QRTabbedPane tabbedPane = new QRTabbedPane(BorderLayout.NORTH, FlowLayout.CENTER);
 
-        QRTabbedContentPanel today = new QRTabbedContentPanel();
-        today.setLayout(new BorderLayout());
-        today.add(new KeyBoardPanel(KeyTypedRecordData.KEY_TODAY_RECORD_DATA.keyMap));
-        QRTabbedContentPanel total = new QRTabbedContentPanel();
-        total.setLayout(new BorderLayout());
-        total.add(new KeyBoardPanel(KeyTypedRecordData.KEY_TOTAL_RECORD_DATA.keyMap));
+        QRTabbedContentPanel today = new KeyBoardPanel.TabContentPanel(todayKeyBoard, totalKeyBoard);
+        QRTabbedContentPanel total = new KeyBoardPanel.TabContentPanel(totalKeyBoard, todayKeyBoard);
 
         tabbedPane.addTab("今日跟打记录", today);
         tabbedPane.addTab("总计跟打记录", total);
-        tabbedPane.setSelectedTab(KeyTypedRecordData.KEY_TODAY_RECORD_DATA.keyMap.size() > 0 ? 0 : 1);
+        tabbedPane.setSelectedTab(!KeyTypedRecordData.KEY_TODAY_RECORD_DATA.keyMap.isEmpty() ? 0 : 1);
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
-        setSize(1360, 600);
+        setSize(1360, 610);
     }
 }

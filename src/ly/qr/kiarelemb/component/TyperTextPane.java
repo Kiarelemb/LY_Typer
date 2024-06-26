@@ -228,8 +228,7 @@ public class TyperTextPane extends QRTextPane {
         final int lastIndexOf = text.lastIndexOf(QRStringUtils.AN_ENTER);
         int diIndex = text.indexOf(TextLoad.DI, lastIndexOf);
         int duanIndex = text.indexOf(TextLoad.DUAN, diIndex + 1);
-        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1,
-                duanIndex))) {
+        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1, duanIndex))) {
             if (lastIndexOf != -1 && text.indexOf(QRStringUtils.AN_ENTER) < lastIndexOf) {
                 text = QRStringUtils.lineSeparatorClear(text, true);
             }

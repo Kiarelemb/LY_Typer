@@ -1,9 +1,13 @@
 package ly.qr.kiarelemb.component;
 
+import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
+import method.qr.kiarelemb.utils.QRSleepUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
+import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
+import swing.qr.kiarelemb.component.event.QRTabSelectEvent;
 import swing.qr.kiarelemb.component.utils.QRKeyBoardPanel;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
@@ -23,19 +27,24 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
     private final Map<Character, Integer> map;
     private static final Font FONT = QRSwing.globalFont.deriveFont(18f);
     private static final Font DATA_Font = QRSwing.globalFont.deriveFont(15f);
-    public static final char[] KEY_CHARS = {'`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '←','\t',
-            'Q', 'W', 'E', 'R', 'Y', 'T', 'U', 'I', 'O', 'P', '[', ']', '\\','⇧', 'A', 'S', 'D', 'F', 'H', 'G', 'J',
+    public static final char[] KEY_CHARS = {'`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '←', '\t',
+            'Q', 'W', 'E', 'R', 'Y', 'T', 'U', 'I', 'O', 'P', '[', ']', '\\', '⇧', 'A', 'S', 'D', 'F', 'H', 'G', 'J',
             'K', 'L', ';', '\'', '↵', '↑', 'Z', 'X', 'C', 'B', 'V', 'N', 'M', ',', '.', '/', '↑', 'ᐃ', '_'};
+    private final ArrayList<Runnable> runs = new ArrayList<>();
 
     public KeyBoardPanel(Map<Character, Integer> map) {
         int mapSize = map.size();
         this.dataMap = new HashMap<>(mapSize);
         this.map = map;
-        if (mapSize == 0) {
-            return;
-        }
         for (QRLabel label : labelList) {
             label.clear();
+            label.setOpaque(false);
+        }
+        if (mapSize == 0) {
+//            for (QRLabel label : labelList) {
+//                label.setOpaque(false);
+//            }
+            return;
         }
         List<Float> list = new ArrayList<>(mapSize);
         float totalKeyCount = map.values().stream().mapToInt(Integer::intValue).sum();
@@ -47,17 +56,16 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         list.sort(Comparator.reverseOrder());
 
         // factor: 需要扩大的倍数，以对于高占比的数据能实现爆红
-        int factorTmp = 1;
         final int max = 1;
         float maxValue = list.get(0);
         if (maxValue == 0) {
             return;
         }
         float tmp = maxValue;
+        int factorTmp = 1;
         while (tmp < max) {
             tmp = maxValue * ++factorTmp;
         }
-
         factorTmp--;
         int normalFactorTmp = 1;
         int normalFactor;
@@ -74,7 +82,6 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         }
         final int factor = factorTmp;
         float maxFloat = Math.max(maxValue * factor, nextValue * normalFactor);
-        setSize(0, 0);
         labelList.forEach(label -> {
             Float v = dataMap.get(labelChar(label));
             if (v == null) {
@@ -95,11 +102,22 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
             } else {
                 a = v * normalFactor;
             }
-            label.setBackground(new Color(1, 0, 0, a));
+            Runnable run = () -> {
+                label.setOpaque(true);
+                for (float i = 0.005f; i < a; i += 0.005f) {
+                    label.setBackground(new Color(1, 0, 0, i));
+                    repaint();
+                    QRSleepUtils.sleep(7);
+                }
+                label.setBackground(new Color(1, 0, 0, a));
+            };
+            runs.add(run);
         });
 
         QRLabel totalCountLabel = new QRLabel("总键数：" + (int) totalKeyCount);
         QRComponentUtils.setBoundsAndAddToComponent(this, totalCountLabel, 20, 470, 200, 30);
+        // 设置窗体大小
+        setSize(0, 0);
     }
 
     private char labelChar(QRLabel label) {
@@ -137,5 +155,33 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         QRComponentUtils.componentStringDraw(label, g, count, DATA_Font, QRColorsAndFonts.MENU_COLOR, 50);
         String num = String.valueOf(map.get(c));
         QRComponentUtils.componentStringDraw(label, g, num, DATA_Font, QRColorsAndFonts.MENU_COLOR, 70);
+    }
+
+    public static class TabContentPanel extends QRTabbedContentPanel {
+        private final KeyBoardPanel keyBoardPanel;
+        private final KeyBoardPanel otherKeyBoardPanel;
+
+        public TabContentPanel(KeyBoardPanel keyBoardPanel, KeyBoardPanel otherKeyBoardPanel) {
+            this.keyBoardPanel = keyBoardPanel;
+            this.otherKeyBoardPanel = otherKeyBoardPanel;
+            setLayout(new BorderLayout());
+            add(keyBoardPanel);
+        }
+
+        @Override
+        protected void thisTabSelectChangeAction(QRTabSelectEvent event) {
+            QRComponentUtils.runLater(100,e->{
+                otherKeyBoardPanel.labelList.forEach(label -> label.setBackground(new Color(1, 0, 0, 0)));
+                ArrayList<Runnable> runs = new ArrayList<>(keyBoardPanel.runs);
+                // 为线程乱序
+                Object[] objects = QRArrayUtils.getRandomObject(runs);
+                for (Object run : objects) {
+                    Thread t = new Thread((Runnable)run);
+                    t.start();
+                    // 为每个键的显示时间添加间隔
+                    QRSleepUtils.sleep(15);
+                }
+            });
+        }
     }
 }
