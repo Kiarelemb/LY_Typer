@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.qq;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.contract.state.GroupButton;
+import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.data.LoadedTextData;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
@@ -21,7 +21,7 @@ public class LoadText {
             return null;
         }
         //复制群内消息
-        QqOperation.start(QqOperation.GET_ARTICLE_MODEL, GroupButton.groupBtn.groupName());
+        QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
         QRSleepUtils.sleep(100);
         //取得剪贴板内容
         String text = QRSystemUtils.getSysClipboardText();
@@ -29,7 +29,7 @@ public class LoadText {
             QRSmallTipShow.display(MainWindow.INSTANCE, "复制失败！");
             return null;
         }
-        if (GroupButton.groupBtn.isQQNT()) {
+        if (ContractiblePanel.GROUP_BUTTON.isQQNT()) {
             return text;
         } else {
             //将内容分割成段
@@ -49,11 +49,11 @@ public class LoadText {
      * @return 所有可跟打的段
      */
     public static ArrayList<LoadedTextData> getLoadTexts() {
-        if (!QqOperation.textCanSend() || GroupButton.groupBtn.isQQNT()) {
+        if (!QqOperation.textCanSend() || ContractiblePanel.GROUP_BUTTON.isQQNT()) {
             return null;
         }
         //复制群内消息
-        QqOperation.start(QqOperation.GET_ARTICLE_MODEL, GroupButton.groupBtn.groupName());
+        QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
         QRSleepUtils.sleep(100);
         //取得剪贴板内容
         String text = QRSystemUtils.getSysClipboardText();

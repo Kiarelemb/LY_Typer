@@ -1,14 +1,12 @@
 package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.contract.state.LookModelCheckBox;
-import ly.qr.kiarelemb.component.contract.state.SilkyModelCheckBox;
-import ly.qr.kiarelemb.component.contract.state.WordLabel;
-import ly.qr.kiarelemb.component.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.data.GradeData;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.data.WordLabel;
 import ly.qr.kiarelemb.dl.DangLangManager;
+import ly.qr.kiarelemb.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -67,7 +65,7 @@ public class TextPane extends QRTextPane {
             TypingData.dataUpdate();
             //重置数据
             TypingData.clear();
-            boolean visible = SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked();
+            boolean visible = ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked();
             this.caret.setVisible(visible);
         });
         this.setTextFinishedActions.add(e -> {
@@ -183,13 +181,13 @@ public class TextPane extends QRTextPane {
             if (!TextLoad.TEXT_LOAD.isEnglish() || QRStringUtils.A_WHITE_SPACE.equals(text)) {
                 WordLabel.typedOneWord();
             }
-            if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+            if (!ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                 changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getCorrectStyle(), true);
             }
         } else {
             if (length == 1) {
                 //否则判错，背景颜色改成红色
-                if (!LookModelCheckBox.lookModelCheckBox.checked()) {
+                if (!ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                     changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getWrongStyle(), true);
                 }
                 TypingData.WRONG_WORDS_INDEX.add(index);
@@ -198,11 +196,11 @@ public class TextPane extends QRTextPane {
                     int currentIndex = TypingData.currentTypedIndex + i;
                     String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
                     if (rightWord.equals(textParts[i])) {
-                        if (!SilkyModelCheckBox.silkyCheckBox.checked() && !LookModelCheckBox.lookModelCheckBox.checked()) {
+                        if (!ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                             changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getCorrectStyle(), true);
                         }
                     } else {
-                        if (!LookModelCheckBox.lookModelCheckBox.checked()) {
+                        if (!ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                             changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getWrongStyle(), true);
                         }
                         TypingData.WRONG_WORDS_INDEX.add(currentIndex);

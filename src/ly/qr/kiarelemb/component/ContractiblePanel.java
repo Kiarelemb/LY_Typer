@@ -1,25 +1,37 @@
 package ly.qr.kiarelemb.component;
 
+import com.sun.jna.platform.win32.User32;
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.contract.state.*;
-import ly.qr.kiarelemb.component.menu.about.HotMapItem;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.data.WordLabel;
+import ly.qr.kiarelemb.menu.about.HotMapItem;
+import ly.qr.kiarelemb.qq.WindowAPI;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
+import ly.qr.kiarelemb.text.tip.StandardTipWindow;
+import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
+import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.component.QRComponentUtils;
 import swing.qr.kiarelemb.component.basic.QRLabel;
+import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.component.combination.QRContractiblePanel;
 import swing.qr.kiarelemb.component.listener.QRMouseListener;
 import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
+import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Kiarelemb QR
@@ -37,27 +49,36 @@ public class ContractiblePanel extends QRContractiblePanel {
     public static final LCDNumberLabel TIME_LABEL = new LCDNumberLabel();
     //endregion 跟打数据
 
+    //region 当前状态
+    public static final CheckBox DIVE_CHECKBOX = new YesOrNoCheckBox(Keys.TYPE_DIVE_MODEL);
+    public static final CheckBox SILKY_MODEL_CHECK_BOX = new YesOrNoCheckBox(Keys.TYPE_SILKY_MODEL);
+    public static final CheckBox CRYPTOGRAPHIC_CHECK_BOX = new YesOrNoCheckBox(Keys.SEND_CRYPTOGRAPHIC);
+    public static final CheckBox LOOK_MODEL_CHECK_BOX = new YesOrNoCheckBox(Keys.TYPE_MODEL_LOOK);
+    public static final GroupButton GROUP_BUTTON = new GroupButton();
+    //endregion
+
     //region 本段信息
-    private static final QRLabel paraLabel = new QRLabel("0");
-    private static final QRLabel wordNumLabel = new QRLabel("0");
-    private static final QRLabel langLabel = new QRLabel("无");
-    private static final QRLabel numberLabel = new QRLabel("0");
-    private static final QRLabel markLabel = new QRLabel("0");
-    private static final QRLabel codeLabel = new QRLabel("无");
-    private static final QRLabel paraForeLabel = new QRLabel("无");
-    private static final QRLabel paraBackLabel = new QRLabel("无");
+    private final QRLabel paraLabel = new QRLabel("0");
+    private final QRLabel wordNumLabel = new QRLabel("0");
+    private final QRLabel langLabel = new QRLabel("无");
+    private final QRLabel numberLabel = new QRLabel("0");
+    private final QRLabel markLabel = new QRLabel("0");
+    private final QRLabel codeLabel = new QRLabel("无");
+    private final QRLabel paraForeLabel = new QRLabel("无");
+    private final QRLabel paraBackLabel = new QRLabel("无");
     //endregion 本段信息
 
     //region 标顶数据
-    private static final DoubleNumLabel stanSingleLabel = new DoubleNumLabel();
-    private static final DoubleNumLabel firstMultiLabel = new ContractiblePanel.DoubleNumLabel();
-    private static final DoubleNumLabel singlePhraseLabel = new ContractiblePanel.DoubleNumLabel();
-    private static final DoubleNumLabel oneLabel = new DoubleNumLabel();
-    private static final DoubleNumLabel twoLabel = new DoubleNumLabel();
-    private static final DoubleNumLabel threeLabel = new DoubleNumLabel();
-    private static final DoubleNumLabel fourLabel = new DoubleNumLabel();
-    private static final DoubleNumLabel allSpaceLabel = new DoubleNumLabel();
-    private static final DoubleNumLabel leftRightLabel = new DoubleNumLabel();
+    private final DoubleNumLabel stanSingleLabel = new DoubleNumLabel();
+    private final DoubleNumLabel firstMultiLabel = new DoubleNumLabel();
+    private final DoubleNumLabel singlePhraseLabel = new DoubleNumLabel();
+    private final DoubleNumLabel oneLabel = new DoubleNumLabel();
+    private final DoubleNumLabel twoLabel = new DoubleNumLabel();
+    private final DoubleNumLabel threeLabel = new DoubleNumLabel();
+    private final DoubleNumLabel fourLabel = new DoubleNumLabel();
+    private final DoubleNumLabel allSpaceLabel = new DoubleNumLabel();
+    private final DoubleNumLabel leftRightLabel = new DoubleNumLabel();
+    private final StandardCodeLengthBtn STANDARD_CODE_LENGTH_BTN = new StandardCodeLengthBtn();
     //endregion
 
     public final QRColumnContentPanel typingStatisticsPanel = addColumn("跟打数据", 360);
@@ -85,7 +106,7 @@ public class ContractiblePanel extends QRContractiblePanel {
         init_standardDataPanel();
         //endregion
 
-        //预设
+        // 预设，是否展开
         this.typingStatisticsPanel.column().setFold(Keys.boolValue(Keys.WINDOW_COLUMN_FOLD_TYPING_STATISTICS));
         this.stateInfoPanel.column().setFold(Keys.boolValue(Keys.WINDOW_COLUMN_FOLD_STATE_INFO));
         this.paraInfoPanel.column().setFold(Keys.boolValue(Keys.WINDOW_COLUMN_FOLD_PARA_INFO));
@@ -96,8 +117,8 @@ public class ContractiblePanel extends QRContractiblePanel {
         this.paraInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_PARA_INFO, e));
         this.standardDataPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, e));
 
-        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> paraInfoUpdate());
-        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> standardDataUpdate());
+        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> paraInfoUpdate());
+        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> standardDataUpdate());
     }
 
     private void init_typingStatisticsPanel() {
@@ -128,17 +149,17 @@ public class ContractiblePanel extends QRContractiblePanel {
         QRLabel lookLabelTip = new QRLabel("看打模式：");
 
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, groupLabelTip, 15, 20, 85, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, GroupButton.groupBtn, 100, 20, 135, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, GROUP_BUTTON, 100, 20, 135, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, wordLabelTip, 15, 60, 85, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, WordLabel.wordLabel, 100, 60, 125, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, diveLabelTip, 15, 100, 85, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, DiveCheckBox.diveCheckBox, 100, 100, 60, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, DIVE_CHECKBOX, 100, 100, 60, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, silkyLabelTip, 15, 140, 85, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, SilkyModelCheckBox.silkyCheckBox, 100, 140, 60, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, SILKY_MODEL_CHECK_BOX, 100, 140, 60, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, cryptographicLabelTip, 15, 180, 85, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, CryptographicCheckBox.cryptographicCheckBox, 100, 180, 60, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, CRYPTOGRAPHIC_CHECK_BOX, 100, 180, 60, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, lookLabelTip, 15, 220, 85, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, LookModelCheckBox.lookModelCheckBox, 100, 220, 60, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this.stateInfoPanel, LOOK_MODEL_CHECK_BOX, 100, 220, 60, 30);
     }
 
     private void init_paraInfoPanel() {
@@ -203,15 +224,14 @@ public class ContractiblePanel extends QRContractiblePanel {
         QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, allSpaceLabel, 110, 340, 125, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, leftRightLabelTip, 15, 380, 85, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, leftRightLabel, 110, 380, 125, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, StandardCodeLengthBtn.STANDARD_CODE_LENGTH_BTN, 15, 425, 220, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, STANDARD_CODE_LENGTH_BTN, 15, 425, 220, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, singlePhraseLabelTip, 15, 100, 85, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this.standardDataPanel, singlePhraseLabel, 110, 100, 125, 30);
     }
 
-    private static void paraInfoUpdate() {
+    private void paraInfoUpdate() {
         paraLabel.setText(TextLoad.TEXT_LOAD.para());
-        wordNumLabel.setText(TextLoad.TEXT_LOAD.isEnglish() ? TextLoad.TEXT_LOAD.englishWordsNum() :
-                TextLoad.TEXT_LOAD.wordsLength());
+        wordNumLabel.setText(TextLoad.TEXT_LOAD.isEnglish() ? TextLoad.TEXT_LOAD.englishWordsNum() : TextLoad.TEXT_LOAD.wordsLength());
         langLabel.setText(TextLoad.TEXT_LOAD.isEnglish() ? "英文" : "中文");
         numberLabel.setText(TextLoad.TEXT_LOAD.numberNum());
         markLabel.setText(TextLoad.TEXT_LOAD.markNum());
@@ -222,7 +242,7 @@ public class ContractiblePanel extends QRContractiblePanel {
         paraBackLabel.setToolTipText(TextLoad.TEXT_LOAD.endText());
     }
 
-    private static void standardDataUpdate() {
+    private void standardDataUpdate() {
         TipData tipData = TextLoad.TEXT_LOAD.tipData;
         if (tipData == null) {
             return;
@@ -230,8 +250,7 @@ public class ContractiblePanel extends QRContractiblePanel {
         TipData.StandardData data = tipData.data;
         double stan = QRMathUtils.doubleFormat((tipData.codes.length() + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
         double single = QRMathUtils.doubleFormat((tipData.singleCodeNum + 0.0) / TextLoad.TEXT_LOAD.wordsLength());
-        double singleCounts =
-                100 * QRMathUtils.doubleFormat((data.singleCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4);
+        double singleCounts = 100 * QRMathUtils.doubleFormat((data.singleCounts() + 0.0) / TextLoad.TEXT_LOAD.wordsLength(), 4);
         stanSingleLabel.update(stan, single);
         firstMultiLabel.update(data.first(), data.multi());
         singlePhraseLabel.update(
@@ -245,7 +264,7 @@ public class ContractiblePanel extends QRContractiblePanel {
         leftRightLabel.update(data.leftCounts(), data.rightCounts());
     }
 
-    public static class KeyStrokeLabel extends LCDNumberLabel {
+    private static class KeyStrokeLabel extends LCDNumberLabel {
 
         private KeyStrokeLabel() {
             addMouseListener();
@@ -281,7 +300,7 @@ public class ContractiblePanel extends QRContractiblePanel {
 
         @Override
         protected void mouseClick(MouseEvent e) {
-            StandardCodeLengthBtn.STANDARD_CODE_LENGTH_BTN.clickInvokeLater();
+            ContractiblePanel.CONTRACTIBLE_PANEL.STANDARD_CODE_LENGTH_BTN.clickInvokeLater();
         }
 
         @Override
@@ -298,7 +317,7 @@ public class ContractiblePanel extends QRContractiblePanel {
     /**
      * 标顶数据栏使用的标签
      */
-    public static class DoubleNumLabel extends QRLabel {
+    private static class DoubleNumLabel extends QRLabel {
 
         public DoubleNumLabel() {
             update("0", "0");
@@ -306,6 +325,123 @@ public class ContractiblePanel extends QRContractiblePanel {
 
         public void update(Object a, Object b) {
             setText(a + " : " + b);
+        }
+    }
+
+    private static class StandardCodeLengthBtn extends QRRoundButton {
+
+        private StandardCodeLengthBtn() {
+            super("查看标顶打法");
+        }
+
+        @Override
+        protected void actionEvent(ActionEvent o) {
+            if (TextLoad.TEXT_LOAD == null) {
+                return;
+            }
+            if (TextLoad.TEXT_LOAD.tipData == null) {
+                return;
+            }
+            if (TextLoad.TEXT_LOAD.isText()) {
+                if (TextLoad.TEXT_LOAD.isEnglish()) {
+                    return;
+                }
+                StandardTipWindow stw = new StandardTipWindow();
+                stw.setVisible(true);
+            }
+        }
+    }
+
+    public static class GroupButton extends QRRoundButton {
+        private static final ThreadPoolExecutor GROUP_CHANGE = QRThreadBuilder.singleThread("groupChange");
+
+        private GroupButton() {
+            String key = Keys.strValue(Keys.QUICK_KEY_GROUP);
+            String[] keys = key.split(",");
+            setText(keys[0] + " / 点击换群");
+            setToolTipText(key + " / 点击换群");
+            QRSwing.registerGlobalAction(key, e -> GROUP_BUTTON.clickInvokeLater(), true);
+        }
+
+        private final ArrayList<String> windows = new ArrayList<>();
+        /**
+         * 是否已找到群聊
+         */
+        private boolean groupLinked = false;
+        /**
+         * 找到的群聊名
+         */
+        private String groupName;
+        /**
+         * 是否为QQ NT
+         */
+        private boolean isQQNT = false;
+        private int groupIndex = -1;
+
+        @Override
+        protected void actionEvent(ActionEvent o) {
+            //放线程就不会卡
+            GROUP_CHANGE.submit(() -> {
+                ArrayList<String> windows = WindowAPI.getQQWindows();
+                if (!QRArrayUtils.isEqualList(this.windows, windows)) {
+                    if (this.groupName() != null) {
+                        this.groupIndex = windows.indexOf(this.groupName());
+                    }
+                    this.windows.clear();
+                    this.windows.addAll(windows);
+                }
+                int size = this.windows.size();
+                if (size == 0) {
+                    this.setGroupLinked(false);
+                    QRSmallTipShow.display(MainWindow.INSTANCE, "没有找到群聊");
+                    return;
+                }
+                this.groupIndex++;
+                if (this.groupIndex == size) {
+                    this.groupIndex = 0;
+                }
+                this.setGroupName(this.windows.get(this.groupIndex));
+                Matcher matcher = Pattern.compile("等[0-9]+个会话").matcher(this.groupName());
+                if (matcher.find()) {
+                    setText(this.groupName().substring(0, matcher.start()));
+                } else {
+                    if ("QQ".equals(this.groupName()) && User32.INSTANCE.FindWindow("TXGuiFoundation", "QQ") == null) {
+                        setText("QQ NT");
+                        this.isQQNT = true;
+                    } else {
+                        setText(this.groupName());
+                        this.isQQNT = false;
+                    }
+                }
+                this.setGroupLinked(true);
+                TypingData.windowFresh();
+            });
+        }
+
+        /**
+         * 找到的群聊名
+         */
+        public String groupName() {
+            return this.groupName;
+        }
+
+        public boolean isQQNT() {
+            return this.isQQNT;
+        }
+
+        private void setGroupName(String groupName) {
+            this.groupName = groupName;
+        }
+
+        /**
+         * 是否已找到群聊
+         */
+        public boolean groupLinked() {
+            return this.groupLinked;
+        }
+
+        private void setGroupLinked(boolean groupLinked) {
+            this.groupLinked = groupLinked;
         }
     }
 }

@@ -3,7 +3,6 @@ package ly.qr.kiarelemb.data;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.component.contract.state.LookModelCheckBox;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
@@ -66,7 +65,6 @@ public class TypingData {
     public static boolean tipPanelEnable = false;
     public static boolean tipWindowEnable = false;
     public static boolean backspaceAutoRestart = false;
-    public static boolean wordAutoSave = true;
     public static boolean textLoadIntelli;
     public static long restTime;
     private static long pauseStartTime;
@@ -155,7 +153,6 @@ public class TypingData {
     public static void dataUpdate() {
         finishModel = Keys.intValue(Keys.TYPE_FINISH_MODEL);
         wordSaveInterval = Keys.intValue(Keys.TYPE_WORD_AUTO_SAVE_MINUTE);
-        wordAutoSave = Keys.boolValue(Keys.TYPE_WORD_AUTO_SAVE);
         paintSelection = Keys.boolValue(Keys.TEXT_TIP_PAINT_SELECTION);
         paintCode = Keys.boolValue(Keys.TEXT_TIP_PAINT_CODE);
         charEnable = Keys.boolValue(Keys.TEXT_TIP_CHAR_ENABLE);
@@ -186,7 +183,7 @@ public class TypingData {
         }
         while (typing && !pausing) {
             QRSleepUtils.sleep(restTime);
-            if (typing && LookModelCheckBox.lookModelCheckBox.checked()) {
+            if (typing && ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                 continue;
             }
             if (startTime == 0L) {
@@ -224,6 +221,10 @@ public class TypingData {
         }
     }
 
+    /**
+     * 全局唯一开始计时的地方
+     * @param startTime
+     */
     public static void startTyping(long startTime) {
         if (!typing && TextLoad.TEXT_LOAD != null) {
             TypingData.startTime = startTime;

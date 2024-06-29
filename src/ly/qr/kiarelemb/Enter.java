@@ -1,9 +1,9 @@
 package ly.qr.kiarelemb;
 
 import ly.qr.kiarelemb.component.TyperTextPane;
-import ly.qr.kiarelemb.component.setting.SettingWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
+import ly.qr.kiarelemb.setting.SettingWindow;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.*;

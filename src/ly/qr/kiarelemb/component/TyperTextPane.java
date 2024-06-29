@@ -122,7 +122,8 @@ public class TyperTextPane extends QRTextPane {
         char keyChar = (char) keyCode;
         int modifiers = keyStroke.getModifiers();
         if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
-            || (keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_ENTER) && !TypingData.typing) {
+            || (keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
+                || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) && !TypingData.typing) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
@@ -130,6 +131,7 @@ public class TyperTextPane extends QRTextPane {
             return;
         }
 
+        // 开始计时
         TypingData.startTyping(time);
         TypingData.endTime = time;
         long timeDiff = TypingData.endTime - TypingData.startTime;
@@ -153,7 +155,7 @@ public class TyperTextPane extends QRTextPane {
             TypingData.leftCounts++;
         } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
             TypingData.rightCounts++;
-        } else if (!flag){
+        } else if (!flag) {
             QRLoggerUtils.log(logger, Level.WARNING, "未知按键：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             keyChar = '⊗';
         }
@@ -180,13 +182,15 @@ public class TyperTextPane extends QRTextPane {
     }
 
     protected void caretPositionAdjust() {
+        if (TypingData.typeEnd || !TypingData.typing) return;
         int caretPosition = caret.getDot();
-        if (TypingData.currentTypedIndex != caretPosition) {
-            try {
-                setCaretPosition(TypingData.currentTypedIndex);
-            } catch (Exception e) {
-                logger.log(Level.WARNING, "caretPositionAdjust", e);
-            }
+        if (TypingData.currentTypedIndex == caretPosition) {
+            return;
+        }
+        try {
+            setCaretPosition(TypingData.currentTypedIndex);
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "caretPositionAdjust", e);
         }
     }
 

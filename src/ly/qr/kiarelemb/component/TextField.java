@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.component;
 
-import ly.qr.kiarelemb.component.menu.type.SettingsItem;
+import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
 import swing.qr.kiarelemb.component.basic.QRTextField;
 

@@ -4,8 +4,8 @@ import com.sun.jna.platform.WindowUtils;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import ly.qr.kiarelemb.MainWindow;
+import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.TyperTextPane;
-import ly.qr.kiarelemb.component.contract.state.GroupButton;
 import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRSleepUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
@@ -95,10 +95,10 @@ public class QqOperation {
 			QRSmallTipShow.display(MainWindow.INSTANCE, "载文仅支持Windows！");
 			return false;
 		}
-		if (!GroupButton.groupBtn.groupLinked()) {
+		if (!ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			ArrayList<String> group = WindowAPI.getQQWindows();
 			if (group.size() == 1) {
-				GroupButton.groupBtn.clickInvokeLater();
+				ContractiblePanel.GROUP_BUTTON.clickInvokeLater();
 				return true;
 			}
 //			QRSmallTipShow.display(MainWindow.INSTANCE, "请按 F5 选择群聊！");

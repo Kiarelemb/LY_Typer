@@ -1,9 +1,7 @@
 package ly.qr.kiarelemb.qq;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.contract.state.DiveCheckBox;
-import ly.qr.kiarelemb.component.contract.state.GroupButton;
-import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
@@ -51,10 +49,10 @@ public class SendText {
 	 */
 	public static void gradeSend() {
 //        tpe.execute(() -> {
-		if (!Info.IS_WINDOWS || !GroupButton.groupBtn.groupLinked()) {
+		if (!Info.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			return;
 		}
-		if (DiveCheckBox.diveCheckBox.checked()) {
+		if (ContractiblePanel.DIVE_CHECKBOX.isSelected()) {
 			return;
 		}
 		//TODO 如果有发送成绩的限制
@@ -66,24 +64,24 @@ public class SendText {
 //			}
 //		} else {
 		//发送成绩
-		QqOperation.start(QqOperation.SEND_ACHIEVEMENT_MODEL, GroupButton.groupBtn.groupName());
+		QqOperation.start(QqOperation.SEND_ACHIEVEMENT_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
 //		}
 		MainWindow.INSTANCE.grabFocus();
 //        });
 	}
 
 	public static void sendText(String texts) {
-		if (!Info.IS_WINDOWS || !GroupButton.groupBtn.groupLinked()) {
+		if (!Info.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			return;
 		}
-		if (DiveCheckBox.diveCheckBox.checked()) {
+		if (ContractiblePanel.DIVE_CHECKBOX.checked()) {
 			return;
 		}
-		if (Keys.boolValue(Keys.SEND_CRYPTOGRAPHIC)) {
+		if (ContractiblePanel.CRYPTOGRAPHIC_CHECK_BOX.checked()) {
 			texts = textCoding(texts, true);
 		}
 		QRSystemUtils.putTextToClipboard(texts);
-		QqOperation.start(QqOperation.SEND_ACHIEVEMENT_MODEL, GroupButton.groupBtn.groupName());
+		QqOperation.start(QqOperation.SEND_ACHIEVEMENT_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
 		MainWindow.INSTANCE.grabFocus();
 	}
 }

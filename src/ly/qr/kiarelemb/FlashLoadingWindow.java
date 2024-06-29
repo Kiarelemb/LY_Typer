@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb;
 
-import ly.qr.kiarelemb.component.data.BallTempData;
+import ly.qr.kiarelemb.data.BallTempData;
 import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;

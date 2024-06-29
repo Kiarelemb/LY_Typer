@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.text.send;
 
 import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.component.menu.send.*;
+import ly.qr.kiarelemb.menu.send.*;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRLoggerUtils;

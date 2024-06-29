@@ -41,9 +41,6 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
             label.setOpaque(false);
         }
         if (mapSize == 0) {
-//            for (QRLabel label : labelList) {
-//                label.setOpaque(false);
-//            }
             return;
         }
         List<Float> list = new ArrayList<>(mapSize);
@@ -71,6 +68,7 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         int normalFactor;
         float nextValue = list.get(1);
         boolean diffObvious = list.get(0) > 2 * nextValue;
+        // 当最高占比的数据和第二高占比的数据相差明显时，设置第二高占比的倍数，以显著提高其他占比较低的红色显示
         if (diffObvious) {
             float normalTmp = nextValue;
             while (normalTmp < max) {
@@ -170,13 +168,13 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
 
         @Override
         protected void thisTabSelectChangeAction(QRTabSelectEvent event) {
-            QRComponentUtils.runLater(100,e->{
+            QRComponentUtils.runLater(100, e -> {
                 otherKeyBoardPanel.labelList.forEach(label -> label.setBackground(new Color(1, 0, 0, 0)));
                 ArrayList<Runnable> runs = new ArrayList<>(keyBoardPanel.runs);
                 // 为线程乱序
                 Object[] objects = QRArrayUtils.getRandomObject(runs);
                 for (Object run : objects) {
-                    Thread t = new Thread((Runnable)run);
+                    Thread t = new Thread((Runnable) run);
                     t.start();
                     // 为每个键的显示时间添加间隔
                     QRSleepUtils.sleep(15);

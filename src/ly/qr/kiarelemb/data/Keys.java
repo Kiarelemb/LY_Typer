@@ -219,10 +219,6 @@ public class Keys {
      */
     public static final String TYPE_DIVE_MODEL = "type.dive.model";
     /**
-     * 字数是否自动保存，{@code false} 不启用，{@code true} （默认）启用
-     */
-    public static final String TYPE_WORD_AUTO_SAVE = "type.word.auto.save";
-    /**
      * 跟打数据是否已折叠，{@code false} （默认）不折叠，{@code true} 折叠
      */
     public static final String WINDOW_COLUMN_FOLD_TYPING_STATISTICS = "window.column.fold.typing.statistics";
@@ -328,6 +324,10 @@ public class Keys {
      */
     public static final String QUICK_KEY_RESTART = "quick.key.restart";
     /**
+     * 暂停快捷键，默认为  {@code F9}
+     */
+    public static final String QUICK_KEY_PAUSE = "quick.key.pause";
+    /**
      * 菜单快捷键之载文，默认为 {@code F4}
      */
     public static final String QUICK_KEY_MENU_TYPE_TEXT_LOAD = "quick.key.menu.type.text.load";
@@ -430,7 +430,6 @@ public class Keys {
             put(TEXT_TYPE_BACKSPACE_AUTO_RESTART, "false");
             put(TYPE_SILKY_MODEL, "false");
             put(TYPE_DIVE_MODEL, "false");
-            put(TYPE_WORD_AUTO_SAVE, "true");
             put(WINDOW_COLUMN_FOLD_TYPING_STATISTICS, "false");
             put(WINDOW_COLUMN_FOLD_STATE_INFO, "false");
             put(WINDOW_COLUMN_FOLD_PARA_INFO, "false");

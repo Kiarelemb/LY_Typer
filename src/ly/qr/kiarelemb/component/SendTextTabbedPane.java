@@ -1,8 +1,8 @@
 package ly.qr.kiarelemb.component;
 
-import ly.qr.kiarelemb.component.menu.send.panel.InnerArticleTextTabbedPanel;
-import ly.qr.kiarelemb.component.menu.send.panel.LocalTextSendTextTabbedPanel;
-import ly.qr.kiarelemb.component.menu.send.panel.SingleSendTextTabbedPanel;
+import ly.qr.kiarelemb.menu.send.panel.InnerArticleTextTabbedPanel;
+import ly.qr.kiarelemb.menu.send.panel.LocalTextSendTextTabbedPanel;
+import ly.qr.kiarelemb.menu.send.panel.SingleSendTextTabbedPanel;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.send.SendWindow;
 import swing.qr.kiarelemb.QRSwing;
