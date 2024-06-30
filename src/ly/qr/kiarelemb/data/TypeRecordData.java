@@ -53,7 +53,7 @@ public record TypeRecordData(long time, int length) {
         if (!TypingData.typing) {
             return null;
         }
-        int size = typeWordsDiffLists.size();
+        int size = TYPE_LIST_DATA.size();
         if (size == 0) {
             return null;
         }
@@ -85,24 +85,20 @@ public record TypeRecordData(long time, int length) {
 
         // 多于 10 次上屏
 
-        // 对所有上屏时间排序，去首末，算平均
+        // 对所有上屏时间排序，去极端首末，算平均
         LinkedList<Long> list = listClearAction();
         long avgTime = list.stream().mapToLong(Long::longValue).sum() / list.size();
 
-//        logger.info("平均上屏时间：" + avgTime);
         // 边界上屏时间。从最后上屏开始遍历三次，若其中一次上屏时间超过 5 倍平均时间，则打断不再统计
         long bound = avgTime * 5;
         TypeRecordData next = iterator.next();
-        int times = 1;
         wordLengthToCount = next.length();
         timeDiffToCount = endTime - next.time();
-//        QRLoggerUtils.log(logger, Level.INFO, "当前上屏时间间隔：%d", timeDiffToCount);
         if (timeDiffToCount > bound) {
             return new TypeRecordData(timeDiffToCount, wordLengthToCount);
         }
         length += next.length();
         for (int i = 0; i < 3; i++) {
-            times++;
             long foreTime = next.time();
             next = iterator.next();
             if (foreTime == next.time()) {
@@ -111,7 +107,6 @@ public record TypeRecordData(long time, int length) {
                 continue;
             }
             long diff = foreTime - next.time();
-//            QRLoggerUtils.log(logger, Level.INFO, "当前第 %d 次上屏时间间隔：%d", times, timeDiffToCount);
             if (diff > bound) {
                 break;
             }
