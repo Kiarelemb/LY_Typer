@@ -21,7 +21,6 @@ import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.component.combination.QRContractiblePanel;
 import swing.qr.kiarelemb.component.listener.QRMouseListener;
-import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
@@ -197,12 +196,12 @@ public class ContractiblePanel extends QRContractiblePanel {
         QRLabel stanSingleLabelTip = new QRLabel("标顶 : 单字");
         QRLabel firstMultiLabelTip = new QRLabel("首选 : 选重");
         QRLabel singlePhraseLabelTip = new QRLabel("单量 : 词量");
-        QRLabel separator1 = new QRLineSeparatorLabel();
+        QRLabel separator1 = new LineSeparatorLabel();
         QRLabel oneLabelTip = new QRLabel("一首 : 一重");
         QRLabel twoLabelTip = new QRLabel("二首 : 二重");
         QRLabel threeLabelTip = new QRLabel("三首 : 三重");
         QRLabel fourLabelTip = new QRLabel("四首 : 四重");
-        QRLabel separator2 = new QRLineSeparatorLabel();
+        QRLabel separator2 = new LineSeparatorLabel();
         QRLabel allSpaceLabelTip = new QRLabel("总键 : 空格");
         QRLabel leftRightLabelTip = new QRLabel("左手 : 右手");
 

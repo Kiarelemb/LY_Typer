@@ -2,6 +2,7 @@ package ly.qr.kiarelemb.setting.panel;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.CheckBox;
+import ly.qr.kiarelemb.component.LineSeparatorLabel;
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.setting.SettingWindow;
 import method.qr.kiarelemb.utils.QRFileUtils;
@@ -13,7 +14,6 @@ import swing.qr.kiarelemb.component.basic.*;
 import swing.qr.kiarelemb.component.listener.QRMouseListener;
 import swing.qr.kiarelemb.component.utils.QRFilePathTextField;
 import swing.qr.kiarelemb.component.utils.QRFileSelectButton;
-import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.resource.QRSwingInfo;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
@@ -37,7 +37,7 @@ public class WindowPanel extends SettingPanel {
         CheckBox windowRoundCheckBox = new CheckBox("启用窗体圆角", QRSwing.WINDOW_ROUND);
         CheckBox windowOnTopCheckBox = new CheckBox("启用窗体置顶", QRSwing.WINDOW_ALWAYS_TOP);
         CheckBox windowTitleMenu = new CheckBox("菜单置于窗体标题", QRSwing.WINDOW_TITLE_MENU);
-        QRLineSeparatorLabel splitSeparator = new QRLineSeparatorLabel(0.8d);
+        QRLabel splitSeparator = new LineSeparatorLabel();
         //WINDOW_TRANSPARENCY_ENABLE
         QRLabel windowTransLabel = new QRLabel("设置窗体透明");
         QRSlider windowTransSlider = new QRSlider();

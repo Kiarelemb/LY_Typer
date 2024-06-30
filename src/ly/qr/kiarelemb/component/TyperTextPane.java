@@ -155,13 +155,18 @@ public class TyperTextPane extends QRTextPane {
             TypingData.leftCounts++;
         } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
             TypingData.rightCounts++;
-        } else if (!flag) {
+        }else if (!flag) {
             QRLoggerUtils.log(logger, Level.WARNING, "未知按键：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             keyChar = '⊗';
         }
         if (!flag) {
-            TypingData.typedKeyRecord.append(keyChar);
-            DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
+            // TYPE_DISCARD_UNKNOWN_KEY: true 则屏蔽未知按键
+            if (Keys.boolValue(Keys.TYPE_DISCARD_UNKNOWN_KEY)) {
+                TypingData.keyCounts--;
+            } else {
+                TypingData.typedKeyRecord.append(keyChar);
+                DangLangManager.DANG_LANG_MANAGER.put(QRStringUtils.toLowerCase(keyChar), timeDiff);
+            }
         }
         //endregion 按键统计
     }

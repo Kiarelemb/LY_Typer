@@ -81,7 +81,7 @@ public class SettingWindow extends QRDialog {
         InnerInputPanel innerInputPanel = new InnerInputPanel(this);
         treeTabbedPane.addTreeNodePointToPanel(tip, tipSettingPanel);
         treeTabbedPane.addTreeNodePointToPanel(innerInput, innerInputPanel);
-        treeTabbedPane.addTreeNodePointToPanel(typeNode, new JumpPanel(treeTabbedPane, tipSettingPanel, innerInputPanel));
+        treeTabbedPane.addTreeNodePointToPanel(typeNode, new TypeSettingPanel(this));
 
 
         this.mainPanel.add(treeTabbedPane, BorderLayout.CENTER);

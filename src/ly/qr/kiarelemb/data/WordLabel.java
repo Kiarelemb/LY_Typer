@@ -56,6 +56,12 @@ public class WordLabel extends QRLabel {
         return QRStringUtils.stringToInt(word);
     }
 
+    public static void typePlus(int num) {
+        wordLabel.today += num;
+        wordLabel.total += num;
+        wordLabel.setText(wordLabel.today + " / " + wordLabel.total);
+    }
+
     public static void typedOneWord() {
         wordLabel.today++;
         wordLabel.total++;

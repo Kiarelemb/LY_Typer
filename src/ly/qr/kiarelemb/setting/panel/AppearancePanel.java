@@ -16,7 +16,6 @@ import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRRoundButton;
 import swing.qr.kiarelemb.component.event.QRItemEvent;
 import swing.qr.kiarelemb.component.utils.QRFontComboBox;
-import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.theme.QRSwingThemeDesigner;
@@ -47,7 +46,7 @@ public class AppearancePanel extends SettingPanel {
         CheckBox customFontCheckBox = new CheckBox("自定义界面字体", Keys.TEXT_FONT_NAME_GLOBAL_ENABLE);
         QRFontComboBox frameFontsComboBox = new QRFontComboBox(fontBackup.getFontName(), false);
         QRRoundButton fontSelectBtn = new QRRoundButton("选择字体文件");
-        QRLineSeparatorLabel splitLabel = new QRLineSeparatorLabel(0.8d);
+        LineSeparatorLabel splitLabel = new LineSeparatorLabel();
         QRLabel lookFontTipLabel = new QRLabel("看打区字体：");
         QRComboBox lookFontsComboBox = new ComboBox.FontComboBox(Keys.TEXT_FONT_NAME_LOOK) {
 
@@ -71,7 +70,7 @@ public class AppearancePanel extends SettingPanel {
         QRComboBox typeFontsComboBox = new ComboBox.FontComboBox(Keys.TEXT_FONT_NAME_TYPE);
         QRLabel typeFontSizeTip = new QRLabel("大小：");
         Spinner typeSizeSpinner = new Spinner(Keys.TEXT_FONT_SIZE_TYPE);
-        QRLineSeparatorLabel splitLabel2 = new QRLineSeparatorLabel(0.8d);
+        LineSeparatorLabel splitLabel2 = new LineSeparatorLabel();
         QRLabel oneTipLabel = new QRLabel("一简颜色：");
         RGBColorSelectPane oneRgbPanel = new RGBColorSelectPane(TextStyleManager.SIMPLIFIED_ONE, Keys.TEXT_TIP_COLOR_SIMPLIFIED_CODE_ONE, updateAction);
         QRLabel twoTipLabel = new QRLabel("二简颜色：");

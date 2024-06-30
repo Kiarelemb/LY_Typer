@@ -1,10 +1,7 @@
 package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.data.GradeData;
-import ly.qr.kiarelemb.data.Keys;
-import ly.qr.kiarelemb.data.TypingData;
-import ly.qr.kiarelemb.data.WordLabel;
+import ly.qr.kiarelemb.data.*;
 import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.qq.SendText;
@@ -29,7 +26,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -133,6 +132,7 @@ public class TextPane extends QRTextPane {
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     // 用于取消未执行的延迟任务
     private Future<?> futureTask = null;
+    private final AtomicLong lastInputTime = new AtomicLong(0);
 
     /**
      * 统计打词的算法
@@ -141,6 +141,7 @@ public class TextPane extends QRTextPane {
      *          （20毫秒内未再次输入则算单字，否则，算多次。拓展字情况已顺带解决。
      */
     public void insertUpdates(char c) {
+        final long time = System.currentTimeMillis();
         // 确保线程安全
         synchronized (lock) {
             // 取消之前的延迟任务（如果存在）
@@ -158,6 +159,7 @@ public class TextPane extends QRTextPane {
                     if (accumulatedChars.isEmpty()) {
                         return;
                     }
+                    lastInputTime.set(time);
                     insertUpdateExecute(accumulatedChars.toString());
                     TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
                     // 重置累积的字符
@@ -179,11 +181,12 @@ public class TextPane extends QRTextPane {
         boolean thisWordIsRight = text.equals(originText);
         if (thisWordIsRight) {
             if (!TextLoad.TEXT_LOAD.isEnglish() || QRStringUtils.A_WHITE_SPACE.equals(text)) {
-                WordLabel.typedOneWord();
+                WordLabel.typePlus(length);
             }
             if (!ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                 changeTextsStyle(TypingData.currentTypedIndex, length, TextStyleManager.getCorrectStyle(), true);
             }
+            TypeRecordData.putWords(lastInputTime.get(), length);
         } else {
             if (length == 1) {
                 //否则判错，背景颜色改成红色
@@ -195,10 +198,12 @@ public class TextPane extends QRTextPane {
                 for (int i = 0; i < length; i++) {
                     int currentIndex = TypingData.currentTypedIndex + i;
                     String rightWord = TextLoad.TEXT_LOAD.getWordPartsAtIndex(currentIndex);
-                    if (rightWord.equals(textParts[i])) {
+                    if (Objects.equals(rightWord, textParts[i])) {
                         if (!ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                             changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getCorrectStyle(), true);
                         }
+                        TypeRecordData.putWords(lastInputTime.get(), 1);
+                        WordLabel.typedOneWord();
                     } else {
                         if (!ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
                             changeTextsStyle(currentIndex, rightWord.length(), TextStyleManager.getWrongStyle(), true);
@@ -216,17 +221,15 @@ public class TextPane extends QRTextPane {
         if (TextLoad.TEXT_LOAD.wordsLength() != TypingData.currentTypedIndex) {
             return;
         }
-        //0是打完即可，1是打完无错，2是无错智能，3是可错智能
-        if (TypingData.finishModel == TYPING_FINISH_MARK_OVER_DO_NOTING || (TypingData.finishModel == TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
+        if (!Keys.boolValue(Keys.TYPE_END_CONDITION_NO_WRONG) || TypingData.WRONG_WORDS_INDEX.isEmpty())
             //打字结束
             if (!Info.IS_WINDOWS) {
                 MainWindow.INSTANCE.setAlwaysOnTop(false);
             }
-            TypingData.typing = false;
-            TypingData.typeEnd = true;
-            TypingData.shutdown();
-            typingEndThread.execute(this::typeEnding);
-        }
+        TypingData.typing = false;
+        TypingData.typeEnd = true;
+        TypingData.shutdown();
+        typingEndThread.execute(this::typeEnding);
     }
 
     public void deleteUpdates(KeyEvent e) {
@@ -318,6 +321,11 @@ public class TextPane extends QRTextPane {
             TextSendManager.data().addTypedTimes();
             NextParaTextItem.NEXT_PARA_TEXT_ITEM.clickInvokeLater();
             logger.config(TextSendManager.data().toString());
+        } else if (Keys.boolValue(Keys.TYPE_END_MIX_RESTART)) {
+            if (TextLoad.TEXT_LOAD.singleOnly() || TextLoad.TEXT_LOAD.isEnglishPhrase()) {
+                TextLoad.TEXT_LOAD.actualContentMix();
+            }
+            restart();
         }
     }
 

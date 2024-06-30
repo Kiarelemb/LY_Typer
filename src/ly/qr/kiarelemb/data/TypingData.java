@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -40,7 +41,6 @@ public class TypingData {
     public static int phraseLength = 0;
     public static int bCounts;
     public static int currentTypedIndex = 0;
-    public static int finishModel = 3;
     public static float lineSpacing = 3;
     public static StringBuilder typedKeyRecord = new StringBuilder();
     public static boolean pausing = false;
@@ -49,23 +49,20 @@ public class TypingData {
     public static int pausedTimes = 0;
     public static int lookfontSize = 0;
     public static int typefontSize = 0;
-    public static int wordSaveInterval = 0;
     public static int bModel;
     public static int spaceModel;
     public static int tipWindowLocation;
     public static String fontName;
     public static final String LEFT = "FVGTXE2AWSDCRZQ13456⇧↑\t`fvgtxe2awsdcrzqᐃ";
     public static final String RIGHT = "HLUIYOKMJNP，=；、[;/.,。']↵←\n\\\"7890-hluiyokmjnp";
-    public static String grade;
-    public static double currentSpeed = 0;
     public static boolean paintSelection = false;
     public static boolean paintCode = false;
     public static boolean charEnable = false;
     public static boolean tipEnable = false;
-    public static boolean tipPanelEnable = false;
     public static boolean tipWindowEnable = false;
     public static boolean backspaceAutoRestart = false;
     public static boolean textLoadIntelli;
+    public static boolean instantaneous;
     public static long restTime;
     private static long pauseStartTime;
     private static long pauseEndTime;
@@ -114,7 +111,6 @@ public class TypingData {
         phraseLength = 0;
         bCounts = 0;
         currentTypedIndex = 0;
-        currentSpeed = 0;
         pausedTimes = 0;
         bModel = 0;
         spaceModel = 0;
@@ -132,6 +128,7 @@ public class TypingData {
             case 2 -> restTime = 5000L;
             default -> restTime = 100L;
         }
+
         statisticUpdate = tre_statistics.submit(() -> typingStatisticsUpdate(restTime));
     }
 
@@ -151,16 +148,14 @@ public class TypingData {
      * 每次载文都会更新
      */
     public static void dataUpdate() {
-        finishModel = Keys.intValue(Keys.TYPE_FINISH_MODEL);
-        wordSaveInterval = Keys.intValue(Keys.TYPE_WORD_AUTO_SAVE_MINUTE);
         paintSelection = Keys.boolValue(Keys.TEXT_TIP_PAINT_SELECTION);
         paintCode = Keys.boolValue(Keys.TEXT_TIP_PAINT_CODE);
         charEnable = Keys.boolValue(Keys.TEXT_TIP_CHAR_ENABLE);
         tipEnable = Keys.boolValue(Keys.TEXT_TIP_ENABLE);
-        tipPanelEnable = Keys.boolValue(Keys.TEXT_TIP_PANEL_ENABLE);
         tipWindowEnable = Keys.boolValue(Keys.TEXT_TIP_WINDOW_ENABLE);
         backspaceAutoRestart = Keys.boolValue(Keys.TEXT_TYPE_BACKSPACE_AUTO_RESTART);
         textLoadIntelli = Keys.boolValue(Keys.TEXT_LOAD_INTELLI);
+        instantaneous = Keys.boolValue(Keys.TYPE_DATA_INSTANTANEOUS_VELOCITY);
         lookfontSize = Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK);
         typefontSize = Keys.intValue(Keys.TEXT_FONT_SIZE_TYPE);
         tipWindowLocation = Keys.intValue(Keys.TEXT_TIP_WINDOW_LOCATION);
@@ -174,9 +169,7 @@ public class TypingData {
         if (MainWindow.INSTANCE.backgroundImageSet()) {
             QRComponentUtils.runLater(10, e -> {
                 while (typing) {
-                    if (!pausing) {
-                        windowFresh();
-                    }
+                    if (!pausing) windowFresh();
                     QRSleepUtils.sleep(5);
                 }
             });
@@ -194,14 +187,24 @@ public class TypingData {
             double totalTimeInSec = (endTime - startTime) / 1000.0;
             //用时_分
             double totalTimeInMin = totalTimeInSec / 60;
-            currentSpeed = ((currentTypedIndex - 5 * WRONG_WORDS_INDEX.size()) / totalTimeInMin);
             //速度
-            String speeds;
-            if (!WRONG_WORDS_INDEX.isEmpty()) {
-                speeds = String.format("%.2f",
-                        (Math.max(currentTypedIndex - 5 * WRONG_WORDS_INDEX.size(), 0) / totalTimeInMin));
+            String speeds = "0.00";
+            if (instantaneous) {
+                // 瞬时速度
+                try {
+                    TypeRecordData recordData = TypeRecordData.updateData(endTime);
+                    if (recordData != null) {
+                        speeds = String.format("%.2f", recordData.length() / (recordData.time() / 60000f));
+                    }
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "error", e);
+                }
             } else {
-                speeds = String.format("%.2f", currentTypedIndex / totalTimeInMin);
+                if (!WRONG_WORDS_INDEX.isEmpty()) {
+                    speeds = String.format("%.2f", (Math.max(currentTypedIndex - WRONG_WORDS_INDEX.size() * 5, 0) / totalTimeInMin));
+                } else {
+                    speeds = String.format("%.2f", currentTypedIndex / totalTimeInMin);
+                }
             }
             //击键
             String keyStrokes = String.format("%.2f", keyCounts / totalTimeInSec);
@@ -213,6 +216,7 @@ public class TypingData {
             ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
             windowFresh();
         }
+        windowFresh();
     }
 
     public synchronized static void windowFresh() {
@@ -223,6 +227,7 @@ public class TypingData {
 
     /**
      * 全局唯一开始计时的地方
+     *
      * @param startTime
      */
     public static void startTyping(long startTime) {

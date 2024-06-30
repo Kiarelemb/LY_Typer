@@ -17,7 +17,6 @@ import swing.qr.kiarelemb.component.basic.QRComboBox;
 import swing.qr.kiarelemb.component.basic.QRLabel;
 import swing.qr.kiarelemb.component.basic.QRTextField;
 import swing.qr.kiarelemb.component.utils.QRFileSelectRoundButton;
-import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
 import java.io.File;
@@ -37,13 +36,13 @@ public class TipSettingPanel extends SettingPanel {
         super(window, "词提...");
         CheckBox tipEnableCheckBox = new CheckBox("启用词提", Keys.TEXT_TIP_ENABLE);
         CheckBox tipEnhanceModelCheckBox = new CheckBox("启用增强型词提", Keys.TEXT_TIP_ENHANCE);
-        QRLineSeparatorLabel lineA = new QRLineSeparatorLabel();
+        LineSeparatorLabel lineA = new LineSeparatorLabel();
         QRLabel tipFilePathLabel = new Label(Keys.TEXT_TIP_FILE_PATH);
         QRFileSelectRoundButton tipFileSelectBtn = new QRFileSelectRoundButton("选择", window, "词提文件", "txt");
         QRLabel multiLabel = new QRLabel("选重：");
         QRTextField selectionTextField = new TextField(Keys.TEXT_TIP_SELECTION);
         QRComboBox codeLengthCheckBox = new ComboBox(Keys.TEXT_TIP_CODE_LENGTH, "四码方案", "三码方案", "三码42顶");
-        QRLineSeparatorLabel lineB = new QRLineSeparatorLabel();
+        LineSeparatorLabel lineB = new LineSeparatorLabel();
         QRLabel showModelLabel = new QRLabel("显示模式：");
         CheckBox paintColorCheckBox = new CheckBox("启用着色", Keys.TEXT_TIP_PAINT_COLOR);
         CheckBox paintSelectionCheckBox = new CheckBox("显示选重", Keys.TEXT_TIP_PAINT_SELECTION);

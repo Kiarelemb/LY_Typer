@@ -1,9 +1,14 @@
 package ly.qr.kiarelemb.data;
 
+import ly.qr.kiarelemb.res.Info;
+import method.qr.kiarelemb.utils.QRFileUtils;
+import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRTimeUtils;
-import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.resource.QRSwingInfo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -80,13 +85,9 @@ public class Keys {
      */
     public static final String TEXT_FONT_SIZE_TYPE = "text.font.size.type";
     /**
-     * 跟打数据的更新，{@code 0} （默认）实时更新，{@code 1} 每秒更新，{@code 2} 每五更新
+     * 跟打数据的更新，{@code 0} （默认）实时更新，{@code 1} 每秒更新，{@code 2} 每五秒更新
      */
     public static final String TYPE_STATISTICS_UPDATE = "type.statistics.update";
-    /**
-     * 跟打结束后的操作，{@code 0} 打完即可，{@code 1} 打完无错，{@code 2} 无错智能，{@code 3} （默认）是可错智能
-     */
-    public static final String TYPE_FINISH_MODEL = "type.finish.model";
     /**
      * 总打字个数
      */
@@ -99,6 +100,11 @@ public class Keys {
      * 字数自动保存的时间间隔（单位：分钟），默认值为 {@code 5}
      */
     public static final String TYPE_WORD_AUTO_SAVE_MINUTE = "type.word.auto.save.minute";
+    /**
+     * 瞬时速度统计的个数，默认值为 {@code 3}
+     */
+    public static final String TYPE_WORD_SPEED_COUNT = "type.word.speed.count";
+
     /**
      * 键法之空格，{@code 0} （默认）左手空格，{@code 1} 右手空格，{@code 2} 不统计
      */
@@ -203,6 +209,14 @@ public class Keys {
      */
     public static final String WINDOW_PAUSE_MINIMIZE = "window.pause.minimize";
     /**
+     * 全文无错，{@code false} （默认）不启用，{@code true} 启用
+     */
+    public static final String TYPE_END_CONDITION_NO_WRONG = "type.end.condition.no.wrong";
+    /**
+     * 重打或乱序，{@code false} 不启用，{@code true} （默认）启用
+     */
+    public static final String TYPE_END_MIX_RESTART = "type.end.mix.restart";
+    /**
      * 看打模式，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String TYPE_MODEL_LOOK = "type.model.look";
@@ -215,9 +229,17 @@ public class Keys {
      */
     public static final String TYPE_SILKY_MODEL = "type.silky.model";
     /**
+     * 瞬时计算，{@code false} 不启用，{@code true} （默认）启用
+     */
+    public static final String TYPE_DATA_INSTANTANEOUS_VELOCITY = "type.data.instantaneous.velocity";
+    /**
      * 潜水模式，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String TYPE_DIVE_MODEL = "type.dive.model";
+    /**
+     * 屏蔽未知按键，{@code false} （默认）不启用，{@code true} 启用
+     */
+    public static final String TYPE_DISCARD_UNKNOWN_KEY = "type.discard.unknown.key";
     /**
      * 跟打数据是否已折叠，{@code false} （默认）不折叠，{@code true} 折叠
      */
@@ -238,10 +260,6 @@ public class Keys {
      * 全局的界面字体，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String TEXT_FONT_NAME_GLOBAL_ENABLE = "text.font.name.global.enable";
-    /**
-     * 启用窗体背景图片，{@code false} （默认）不启用，{@code true} 启用
-     */
-    public static final String WINDOW_BACKGROUND_IMAGE_ENABLE = "window.background.image.enable";
     /**
      * 单字发文时，是否随机抽取，{@code false} （默认）不启用
      */
@@ -380,92 +398,17 @@ public class Keys {
 
     public static final Map<String, String> DEFAULT_MAP = new TreeMap<>() {
         {
-            QRSwing.getDefaultSettingsProp().forEach((k, v) -> put(String.valueOf(k), String.valueOf(v)));
-            put(TEXT_SIMPLE_TRADITIONAL_CONVERT, "0");
-            put(TEXT_TIP_CODE_LENGTH, "0");
-            put(TEXT_FONT_SIZE_LOOK, "28");
-            put(TEXT_FONT_SIZE_TYPE, "28");
-            put(TYPE_STATISTICS_UPDATE, "0");
-            put(TYPE_WORD_TOTAL, "0");
-            put(TYPE_WORD_TODAY, "0");
-            put(TYPE_FINISH_MODEL, "3");
-            put(TYPE_WORD_AUTO_SAVE_MINUTE, "5");
-            put(TYPE_KEY_METHOD_SPACE, "0");
-            put(TYPE_KEY_METHOD_B, "0");
-            put(TEXT_TIP_PANEL_LOCATION, "1");
-            put(TEXT_TIP_WINDOW_LOCATION, "0");
-            put(SEND_TEXT_NEW_WINDOW_TAB_INDEX, "0");
-            put(TEXT_SEND_START_PARA, "0");
-            put(TEXT_SEND_START_WORD_NUM, "50");
-            put(SEND_MINIMALISM, "false");
-            put(SEND_CRYPTOGRAPHIC, "false");
-            put(SEND_BACK_CHANGE, "true");
-            put(SEND_BACKSPACE, "true");
-            put(SEND_ENTER_COUNT, "true");
-            put(SEND_METHOD_INPUT, "true");
-            put(SEND_KEY_ACCURACY, "true");
-            put(SEND_KEY_METHOD, "true");
-            put(SEND_TIMES_PAUSE, "true");
-            put(SEND_TIMES_RETYPE, "true");
-            put(SEND_KEY_NUM, "true");
-            put(SEND_KEYBOARD, "false");
-            put(SEND_METHOD_KEY, "false");
-            put(SEND_SIGNATURE, "false");
-            put(SEND_SYSTEM_VERSION, "true");
-            put(SEND_TIME_COST, "true");
-            put(SEND_WORDS_NUM, "true");
-            put(SEND_WORD_WRONG, "true");
-            put(TEXT_LOAD_INTELLI, "true");
-            put(SEND_METHOD_TYPE, "false");
-            put(TEXT_TIP_ENABLE, "false");
-            put(TEXT_TIP_ENHANCE, "false");
-            put(TEXT_TIP_DIVIDE, "true");
-            put(TEXT_TIP_PANEL_ENABLE, "false");
-            put(TEXT_TIP_PAINT_COLOR, "true");
-            put(TEXT_TIP_PAINT_SELECTION, "true");
-            put(TEXT_TIP_PAINT_CODE, "false");
-            put(TEXT_TIP_CHAR_ENABLE, "false");
-            put(WINDOW_PAUSE_MINIMIZE, "true");
-            put(TYPE_MODEL_LOOK, "false");
-            put(TEXT_TYPE_BACKSPACE_AUTO_RESTART, "false");
-            put(TYPE_SILKY_MODEL, "false");
-            put(TYPE_DIVE_MODEL, "false");
-            put(WINDOW_COLUMN_FOLD_TYPING_STATISTICS, "false");
-            put(WINDOW_COLUMN_FOLD_STATE_INFO, "false");
-            put(WINDOW_COLUMN_FOLD_PARA_INFO, "false");
-            put(WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, "true");
-            put(TEXT_FONT_NAME_GLOBAL_ENABLE, "false");
-            put(TEXT_SEND_SINGLE_RANDOM_PICK, "false");
-            put(TEXT_SEND_SINGLE_RANDOM_TEXT, "true");
-            put(TEXT_SEND_SINGLE_CUSTOM_TEXT, "false");
-            put(TEXT_FONT_NAME_LOOK, "阿里巴巴普惠体 R");
-            put(TEXT_FONT_NAME_TYPE, "阿里巴巴普惠体 R");
-            put(TEXT_FONT_NAME_GLOBAL, "阿里巴巴普惠体 R");
-            put(TEXT_TIP_FILE_PATH, "当前未选择词提文件");
-            put(TEXT_TIP_SELECTION, "_234567890");
-            put(TEXT_TIP_COLOR_SIMPLIFIED_CODE_ONE, "255, 255, 0");
-            put(TEXT_TIP_COLOR_SIMPLIFIED_CODE_TWO, "255, 51, 102");
-            put(TEXT_TIP_COLOR_SIMPLIFIED_CODE_THREE, "0, 220, 220");
-            put(TEXT_TIP_COLOR_CODE_ALL, "0, 153, 255");
-            put(TYPE_WORD_TOTAL_LAST_UPDATE, QRTimeUtils.getDateNow());
-            put(TYPE_METHOD_INPUT, "");
-            put(TYPE_METHOD_KEYBOARD, "");
-            put(TYPE_SIGNATURE, "");
-            put(INPUT_CODE_DICT_PATH, "");
-            put(QUICK_KEY_NEW_SEND, "F2, alt 2");
-            put(QUICK_KEY_RESTART, "F3, alt 3");
-            put(QUICK_KEY_MENU_TYPE_TEXT_LOAD, "F4, alt 4");
-            put(QUICK_KEY_GROUP, "F5, alt 5");
-            put(QUICK_KEY_TEXT_MIX, "F8, alt 8");
-            put(QUICK_KEY_SEND_CONTINUE, "F9, alt 9");
-            put(QUICK_KEY_SEND_PARA_FORE, "ctrl f");
-            put(QUICK_KEY_SEND_NEXT_PARA, "F10, alt 0, ctrl n");
-            put(QUICK_KEY_SETTING_WINDOW, "ctrl z");
-            put(QUICK_KEY_DANG_LIANG_WINDOW, "ctrl d");
-            put(QUICK_KEY_INNER_INPUT_WINDOW, "ctrl i");
-            put(QUICK_KEY_SEND_END, "ctrl e");
-            put(TEXT_LINE_SPACE, "0.8");
-            put(WINDOW_SPLIT_WEIGHT, "300");
+            try {
+                URL defaultSettings = Info.loadURL("default_settings.properties");
+                InputStream inputStream = defaultSettings.openStream();
+                QRFileUtils.fileReaderWithUtf8(inputStream, (lineText -> {
+                    String[] split = QRStringUtils.stringSplit(lineText, '=', true);
+                    put(split[0], split[1]);
+                }));
+                put(TYPE_WORD_TOTAL_LAST_UPDATE, QRTimeUtils.getDateNow());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     };
 }
