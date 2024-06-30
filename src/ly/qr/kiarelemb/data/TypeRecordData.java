@@ -1,13 +1,11 @@
 package ly.qr.kiarelemb.data;
 
 import ly.qr.kiarelemb.component.TextPane;
-import method.qr.kiarelemb.utils.QRLoggerUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
-import java.util.logging.Logger;
 
 /**
  * @param time   打字上屏的时间
@@ -19,7 +17,6 @@ import java.util.logging.Logger;
  * @create 2024/6/29 下午10:28
  */
 public record TypeRecordData(long time, int length) {
-    private static final Logger logger = QRLoggerUtils.getLogger(TypingData.class);
     private static final LinkedList<TypeRecordData> TYPE_LIST_DATA = new LinkedList<>();
     private static TreeSet<Long> typeWordsDiffLists = new TreeSet<>();
     private static ArrayList<Long> typeKeyDiffLists = new ArrayList<>();
@@ -86,7 +83,7 @@ public record TypeRecordData(long time, int length) {
         // 多于 10 次上屏
 
         // 对所有上屏时间排序，去极端首末，算平均
-        LinkedList<Long> list = listClearAction();
+        LinkedList<Long> list = listCleanAction();
         long avgTime = list.stream().mapToLong(Long::longValue).sum() / list.size();
 
         // 边界上屏时间。从最后上屏开始遍历三次，若其中一次上屏时间超过 5 倍平均时间，则打断不再统计
@@ -124,7 +121,7 @@ public record TypeRecordData(long time, int length) {
      *
      * @return 经过清理操作后的 LinkedList<Long> ，包含满足条件的元素。
      */
-    private static LinkedList<Long> listClearAction() {
+    private static LinkedList<Long> listCleanAction() {
         // 初始化一个链表，其初始元素来自typeWordsDiffLists，并移除第一个元素。
         LinkedList<Long> list = new LinkedList<>(typeWordsDiffLists);
         list.removeFirst();
@@ -149,5 +146,4 @@ public record TypeRecordData(long time, int length) {
         // 返回经过清理操作后的链表。
         return list;
     }
-
 }
