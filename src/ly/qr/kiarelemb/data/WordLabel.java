@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class WordLabel extends QRLabel {
     private int today;
     private int total;
+    private boolean updated = false;
     private final Logger logger = QRLoggerUtils.getLogger(WordLabel.class);
     private String todayDate = QRTimeUtils.getDateNow();
     public final QRTimeCountUtil wordUpdateTimeCount = new QRTimeCountUtil(Keys.intValue(Keys.TYPE_WORD_AUTO_SAVE_MINUTE));
@@ -57,12 +58,14 @@ public class WordLabel extends QRLabel {
     }
 
     public static void typePlus(int num) {
+        WordLabel.wordLabel.updated = true;
         wordLabel.today += num;
         wordLabel.total += num;
         wordLabel.setText(wordLabel.today + " / " + wordLabel.total);
     }
 
     public static void typedOneWord() {
+        WordLabel.wordLabel.updated = true;
         wordLabel.today++;
         wordLabel.total++;
         wordLabel.setText(wordLabel.today + " / " + wordLabel.total);
@@ -81,8 +84,9 @@ public class WordLabel extends QRLabel {
             if (!QRTimeUtils.getDateNow().equals(todayDate)) {
                 todayWordFresh();
             }
-            if (wordUpdateTimeCount.isPassedLongTime()) {
+            if (wordUpdateTimeCount.isPassedLongTime() && updated) {
                 wordSave();
+                updated = false;
             }
         });
         timer.start();
