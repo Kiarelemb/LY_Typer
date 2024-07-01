@@ -140,8 +140,8 @@ public class TipSettingPanel extends SettingPanel {
         QRComponentUtils.setBoundsAndAddToComponent(this, lineB, 25, 265, 455, 22);
         QRComponentUtils.setBoundsAndAddToComponent(this, showModelLabel, 25, 300, 95, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, paintColorCheckBox, 55, 345, 110, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, paintSelectionCheckBox, 55, 385, 110, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, paintCodeCheckBox, 55, 425, 110, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, paintCodeCheckBox, 55, 385, 110, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, paintSelectionCheckBox, 55, 425, 110, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, charModelEnableCheckBox, 55, 465, 110, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelEnableCheckBox, 220, 345, 190, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, tipPanelLocationLabel, 245, 400, 65, 30);
