@@ -3,11 +3,11 @@ package ly.qr.kiarelemb.dl;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRStringUtils;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRScrollPane;
-import swing.qr.kiarelemb.component.basic.QRTextArea;
-import swing.qr.kiarelemb.component.listener.QRWindowListener;
+import swing.qr.kiarelemb.basic.QRScrollPane;
+import swing.qr.kiarelemb.basic.QRTextArea;
+import swing.qr.kiarelemb.listener.QRWindowListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 import swing.qr.kiarelemb.window.basic.QRFrame;
 

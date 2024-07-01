@@ -7,9 +7,9 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRPanel;
-import swing.qr.kiarelemb.component.basic.QRTextPane;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRPanel;
+import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
 import javax.swing.border.EmptyBorder;

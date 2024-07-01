@@ -9,11 +9,11 @@ import ly.qr.kiarelemb.text.TextWash;
 import ly.qr.kiarelemb.text.send.SendWindow;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRRoundButton;
-import swing.qr.kiarelemb.component.basic.QRTextField;
-import swing.qr.kiarelemb.component.utils.QRClearableTextField;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRRoundButton;
+import swing.qr.kiarelemb.basic.QRTextField;
+import swing.qr.kiarelemb.utils.QRClearableTextField;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
 import java.awt.*;

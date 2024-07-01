@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.component;
 
-import swing.qr.kiarelemb.component.basic.QRTree;
+import swing.qr.kiarelemb.basic.QRTree;
 import swing.qr.kiarelemb.resource.QRSwingInfo;
 
 import javax.swing.*;

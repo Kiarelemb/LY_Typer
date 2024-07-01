@@ -3,8 +3,8 @@ package ly.qr.kiarelemb.type;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.KeyBoardPanel;
 import ly.qr.kiarelemb.data.KeyTypedRecordData;
-import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
-import swing.qr.kiarelemb.component.combination.QRTabbedPane;
+import swing.qr.kiarelemb.combination.QRTabbedContentPanel;
+import swing.qr.kiarelemb.combination.QRTabbedPane;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
 import javax.swing.*;

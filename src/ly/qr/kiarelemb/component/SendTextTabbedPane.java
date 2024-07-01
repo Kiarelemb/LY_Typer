@@ -6,8 +6,8 @@ import ly.qr.kiarelemb.menu.send.panel.SingleSendTextTabbedPanel;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.text.send.SendWindow;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
-import swing.qr.kiarelemb.component.combination.QRTabbedPane;
+import swing.qr.kiarelemb.combination.QRTabbedContentPanel;
+import swing.qr.kiarelemb.combination.QRTabbedPane;
 
 import java.awt.*;
 

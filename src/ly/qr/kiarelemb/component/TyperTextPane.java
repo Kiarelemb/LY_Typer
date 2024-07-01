@@ -7,12 +7,12 @@ import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRScrollPane;
-import swing.qr.kiarelemb.component.basic.QRTextPane;
-import swing.qr.kiarelemb.component.listener.QRGlobalKeyboardHookListener;
+import swing.qr.kiarelemb.basic.QRScrollPane;
+import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.listener.QRGlobalKeyboardHookListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
 import javax.swing.text.AttributeSet;

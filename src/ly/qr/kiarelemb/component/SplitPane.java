@@ -5,11 +5,11 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.TipPanel;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRPanel;
-import swing.qr.kiarelemb.component.basic.QRSplitPane;
+import swing.qr.kiarelemb.basic.QRPanel;
+import swing.qr.kiarelemb.basic.QRSplitPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
 import javax.swing.border.Border;

@@ -5,12 +5,12 @@ import ly.qr.kiarelemb.component.Tree;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.setting.panel.*;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.assembly.QRMutableTreeNode;
-import swing.qr.kiarelemb.component.basic.QRPanel;
-import swing.qr.kiarelemb.component.basic.QRRoundButton;
-import swing.qr.kiarelemb.component.combination.QRTreeTabbedPane;
+import swing.qr.kiarelemb.assembly.QRMutableTreeNode;
+import swing.qr.kiarelemb.basic.QRPanel;
+import swing.qr.kiarelemb.basic.QRRoundButton;
+import swing.qr.kiarelemb.combination.QRTreeTabbedPane;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
 import javax.swing.border.EmptyBorder;

@@ -7,7 +7,7 @@ import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
-import swing.qr.kiarelemb.component.basic.QRTextPane;
+import swing.qr.kiarelemb.basic.QRTextPane;
 
 import javax.swing.plaf.basic.BasicTextPaneUI;
 import javax.swing.text.*;

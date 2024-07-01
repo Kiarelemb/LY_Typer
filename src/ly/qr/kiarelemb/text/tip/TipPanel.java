@@ -9,8 +9,8 @@ import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRPanel;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRPanel;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
 import javax.swing.text.StyleConstants;

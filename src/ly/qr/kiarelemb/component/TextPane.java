@@ -12,11 +12,11 @@ import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.*;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRScrollPane;
-import swing.qr.kiarelemb.component.basic.QRTextPane;
+import swing.qr.kiarelemb.basic.QRScrollPane;
+import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import javax.swing.*;
@@ -311,7 +311,6 @@ public class TextPane extends QRTextPane {
         ContractiblePanel.CODE_LEN_LABEL.setText(String.valueOf(codeLength));
         TypingData.windowFresh();
         GradeData gradeData = new GradeData(totalTimeInMin, speed, keyStroke, codeLength, timeCost);
-
         String grade = gradeData.getSetGrade();
 
         QRLoggerUtils.log(logger, Level.INFO, "跟打按键：[%s]", QRStringUtils.toLowerCase(TypingData.typedKeyRecord.toString()));

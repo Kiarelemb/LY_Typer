@@ -3,8 +3,8 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRCheckBox;
+import swing.qr.kiarelemb.basic.QRCheckBox;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import java.awt.event.ActionEvent;
 

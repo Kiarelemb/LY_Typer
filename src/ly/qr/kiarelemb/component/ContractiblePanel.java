@@ -16,11 +16,11 @@ import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRRoundButton;
-import swing.qr.kiarelemb.component.combination.QRContractiblePanel;
-import swing.qr.kiarelemb.component.listener.QRMouseListener;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRRoundButton;
+import swing.qr.kiarelemb.combination.QRContractiblePanel;
+import swing.qr.kiarelemb.listener.QRMouseListener;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 

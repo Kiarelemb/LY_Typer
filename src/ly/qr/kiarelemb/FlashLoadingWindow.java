@@ -5,8 +5,8 @@ import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
 import method.qr.kiarelemb.utils.QRTimeCountUtil;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRPanel;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRPanel;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.window.basic.QREmptyDialog;
 
