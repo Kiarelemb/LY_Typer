@@ -30,6 +30,19 @@ public final class TipCharStyleData implements TipStyleData {
         this.bold = bold;
     }
 
+    public String word() {
+        return word;
+    }
+
+    public boolean shortPhrase() {
+        return false;
+    }
+
+    @Override
+    public void clearStyle() {
+        style = null;
+    }
+
     @Override
     public SimpleAttributeSet getStyle() {
         if (style == null) {
@@ -37,10 +50,6 @@ public final class TipCharStyleData implements TipStyleData {
             return style;
         }
         return style;
-    }
-
-    public String word() {
-        return word;
     }
 
     @Override

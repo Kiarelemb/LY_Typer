@@ -30,19 +30,26 @@ public final class TipPhraseStyleData implements TipStyleData {
         this.shortPhrase = shortPhrase;
     }
 
+    public String phrase() {
+        return this.phrase;
+    }
+
+    @Override
+    public boolean shortPhrase() {
+        return this.shortPhrase;
+    }
+
+    @Override
+    public void clearStyle() {
+        style = null;
+    }
+
+    @Override
     public SimpleAttributeSet getStyle() {
         if (this.style == null) {
             this.style = (SimpleAttributeSet) TextStyleManager.getDefinedStyle(this.type, this.bold, this.phrase, this.shortPhrase).copyAttributes();
         }
         return this.style;
-    }
-
-    public String phrase() {
-        return this.phrase;
-    }
-
-    public boolean shortPhrase() {
-        return this.shortPhrase;
     }
 
     @Override
