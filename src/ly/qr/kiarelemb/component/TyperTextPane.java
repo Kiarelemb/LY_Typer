@@ -95,7 +95,7 @@ public class TyperTextPane extends QRTextPane {
             return true;
         }
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_WINDOWS || e.getModifiersEx() == KeyEvent.META_DOWN_MASK
+        if (keyCode == KeyEvent.VK_WINDOWS || (e.getModifiersEx() == KeyEvent.META_DOWN_MASK && !QRSystemUtils.IS_OSX)
             || keyCode == KeyEvent.VK_SHIFT || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12
             || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
             return true;
