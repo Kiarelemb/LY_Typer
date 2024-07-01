@@ -2,7 +2,6 @@ package ly.qr.kiarelemb.qq;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
-import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
 
@@ -49,7 +48,7 @@ public class SendText {
 	 */
 	public static void gradeSend() {
 //        tpe.execute(() -> {
-		if (!Info.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
+		if (!QRSystemUtils.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			return;
 		}
 		if (ContractiblePanel.DIVE_CHECKBOX.isSelected()) {
@@ -71,7 +70,7 @@ public class SendText {
 	}
 
 	public static void sendText(String texts) {
-		if (!Info.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
+		if (!QRSystemUtils.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			return;
 		}
 		if (ContractiblePanel.DIVE_CHECKBOX.checked()) {

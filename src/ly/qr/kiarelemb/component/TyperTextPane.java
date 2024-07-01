@@ -155,13 +155,13 @@ public class TyperTextPane extends QRTextPane {
             TypingData.leftCounts++;
         } else if (TypingData.RIGHT.indexOf(keyChar) != -1) {
             TypingData.rightCounts++;
-        }else if (!flag) {
+        } else if (!flag) {
             QRLoggerUtils.log(logger, Level.WARNING, "未知按键：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             keyChar = '⊗';
         }
         if (!flag) {
             // TYPE_DISCARD_UNKNOWN_KEY: true 则屏蔽未知按键
-            if (Keys.boolValue(Keys.TYPE_DISCARD_UNKNOWN_KEY)) {
+            if (Keys.boolValue(Keys.TYPE_DISCARD_UNKNOWN_KEY) && keyChar == '⊗') {
                 TypingData.keyCounts--;
             } else {
                 TypingData.typedKeyRecord.append(keyChar);
@@ -180,7 +180,11 @@ public class TyperTextPane extends QRTextPane {
                 if (e.getID() != KeyEvent.KEY_LAST) {
                     return false;
                 }
-                keyPressAction(QRStringUtils.getKeyStroke(e), System.currentTimeMillis());
+                try {
+                    keyPressAction(QRStringUtils.getKeyStroke(e), System.currentTimeMillis());
+                } catch (Exception ex) {
+                    logger.log(Level.SEVERE, "timeCountInit", ex);
+                }
                 return true;
             });
         }
@@ -216,7 +220,7 @@ public class TyperTextPane extends QRTextPane {
             }
             TextPane.TEXT_PANE.insertUpdates(keyChar);
         } catch (Exception e1) {
-            logger.log(Level.WARNING, "keyType", e1);
+            logger.log(Level.SEVERE, "keyType", e1);
         }
     }
 
@@ -276,10 +280,14 @@ public class TyperTextPane extends QRTextPane {
         super.componentFresh();
     }
 
-    class KeyListener extends QRGlobalKeyboardHookListener {
+    public class KeyListener extends QRGlobalKeyboardHookListener {
         @Override
         protected void keyPress(KeyStroke keyStroke) {
-            keyPressAction(keyStroke, System.currentTimeMillis());
+            try {
+                keyPressAction(keyStroke, System.currentTimeMillis());
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "timeCountInit", e);
+            }
         }
     }
 }

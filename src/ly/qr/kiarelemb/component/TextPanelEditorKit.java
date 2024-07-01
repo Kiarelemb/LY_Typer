@@ -127,7 +127,9 @@ public class TextPanelEditorKit extends StyledEditorKit {
 
     private static void fillTipData(TipStyleData thisData) {
         SimpleAttributeSet singleStyle = thisData.getStyle();
-        boolean condition = TypingData.charEnable && thisData.type() % 2 == 0;
+        boolean first = thisData.type()% 2  == 0;
+        boolean condition = (TypingData.charEnable || thisData instanceof TipPhraseStyleData data && data.shortPhrase())
+                            && thisData.type() % 2 == 0;
         if (TypingData.paintCode) {
             if (condition) {
                 singleStyle.addAttribute("UnderlineOpen", true);

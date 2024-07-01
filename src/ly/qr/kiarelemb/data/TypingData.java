@@ -128,7 +128,6 @@ public class TypingData {
             case 2 -> restTime = 5000L;
             default -> restTime = 100L;
         }
-
         statisticUpdate = tre_statistics.submit(() -> typingStatisticsUpdate(restTime));
     }
 
@@ -232,11 +231,15 @@ public class TypingData {
      */
     public static void startTyping(long startTime) {
         if (!typing && TextLoad.TEXT_LOAD != null) {
-            TypingData.startTime = startTime;
-            typing = true;
-            START_TYPING_LISTENER.actionPerformed(null);
-            typedKeyRecord = new StringBuilder();
-            runTyping();
+            try {
+                TypingData.startTime = startTime;
+                typing = true;
+                START_TYPING_LISTENER.actionPerformed(null);
+                typedKeyRecord = new StringBuilder();
+                runTyping();
+            } catch (Exception e) {
+               logger.log(Level.SEVERE, "startTyping", e);
+            }
             logger.info("********** 开始跟打 **********");
         }
     }
@@ -244,7 +247,7 @@ public class TypingData {
     public static void pauseTyping() {
         pauseStartTime = System.currentTimeMillis();
         pausedTimes++;
-        if (Info.IS_WINDOWS && Keys.boolValue(Keys.WINDOW_PAUSE_MINIMIZE)) {
+        if (QRSystemUtils.IS_WINDOWS && Keys.boolValue(Keys.WINDOW_PAUSE_MINIMIZE)) {
             SystemTray st = SystemTray.getSystemTray();
             try {
                 TrayIcon ti = new TrayIcon(Info.loadImage(Info.ICON_TRAY_PATH).getImage());
@@ -262,7 +265,7 @@ public class TypingData {
                 });
                 MainWindow.INSTANCE.setVisible(false);
             } catch (Exception e) {
-                QRTools.doNothing(e);
+                logger.log(Level.SEVERE, "pauseTyping", e);
             }
         }
     }

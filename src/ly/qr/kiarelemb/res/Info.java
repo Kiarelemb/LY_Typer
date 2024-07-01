@@ -30,8 +30,6 @@ public class Info {
 	public static final String SOFTWARE_VERSION = "v24.07";
 	public static final String SYSTEM_NAME = QRSystemUtils.getSystemName();
 	//    public static final boolean isWindows = SYSTEM_NAME.contains("Windows");
-	public static final boolean IS_WINDOWS = SYSTEM_NAME.contains("Windows");
-	public static final boolean IS_MAC = SYSTEM_NAME.toLowerCase().contains("mac");
 	public static final String FLASH_PATH = "flash.png";
 	public static final String SINGLES_PATH = "singles.txt";
 	public static final String ICON_PNG_PATH = "icon.png";

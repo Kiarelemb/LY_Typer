@@ -5,7 +5,6 @@ import ly.qr.kiarelemb.data.*;
 import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.qq.SendText;
-import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.send.TextSendManager;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
@@ -27,7 +26,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,11 +42,7 @@ import java.util.logging.Logger;
  **/
 public class TextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TextPane.class);
-    private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
-    public static final int TYPING_FINISH_MARK_OVER_DO_NOTING = 0;
-    public static final int TYPING_FINISH_MARK_OVER_NO_WRONG = 1;
-    public static final int TYPING_FINISH_MARK_OVER_NO_WRONG_INTELLIGENCE = 2;
-    public static final int TYPING_FINISH_MARK_OVER_CAN_WRONG_INTELLIGENCE = 3;
+//    private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
     private boolean writeBlock = false;
     private final LinkedList<QRActionRegister> setTextBeforeActions = new LinkedList<>();
     private final LinkedList<QRActionRegister> setTextFinishedActions = new LinkedList<>();
@@ -97,7 +95,7 @@ public class TextPane extends QRTextPane {
         if (length == 1) {
             logger.info(String.format("已载入文本：[%s]", text));
         } else {
-            logger.info(String.format("已载入文本："));
+            logger.info("已载入文本：");
             for (String line : lines) {
                 logger.info("\t" + line);
             }
@@ -159,11 +157,15 @@ public class TextPane extends QRTextPane {
                     if (accumulatedChars.isEmpty()) {
                         return;
                     }
-                    lastInputTime.set(time);
-                    insertUpdateExecute(accumulatedChars.toString());
-                    TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
-                    // 重置累积的字符
-                    accumulatedChars.setLength(0);
+                    try {
+                        lastInputTime.set(time);
+                        insertUpdateExecute(accumulatedChars.toString());
+                        TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
+                        // 重置累积的字符
+                        accumulatedChars.setLength(0);
+                    } catch (Exception e) {
+                        logger.log(Level.SEVERE, "insertUpdateExecute", e);
+                    }
                 }
             }, shortestInputTimeDiff, TimeUnit.MILLISECONDS);
         }
@@ -218,18 +220,21 @@ public class TextPane extends QRTextPane {
         TypingData.currentTypedIndex += length;
         setCaretPosition(TypingData.currentTypedIndex);
         setCaretUnblock();
+        // 未结束
         if (TextLoad.TEXT_LOAD.wordsLength() != TypingData.currentTypedIndex) {
             return;
         }
-        if (!Keys.boolValue(Keys.TYPE_END_CONDITION_NO_WRONG) || TypingData.WRONG_WORDS_INDEX.isEmpty())
+        if (!Keys.boolValue(Keys.TYPE_END_CONDITION_NO_WRONG) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
             //打字结束
-            if (!Info.IS_WINDOWS) {
+            if (!QRSystemUtils.IS_WINDOWS) {
                 MainWindow.INSTANCE.setAlwaysOnTop(false);
             }
-        TypingData.typing = false;
-        TypingData.typeEnd = true;
-        TypingData.shutdown();
-        typingEndThread.execute(this::typeEnding);
+            TypingData.typing = false;
+            TypingData.typeEnd = true;
+            TypingData.shutdown();
+            QRComponentUtils.runLater(10, e-> typeEnding());
+//            typingEndThread.execute(this::typeEnding);
+        }
     }
 
     public void deleteUpdates(KeyEvent e) {
