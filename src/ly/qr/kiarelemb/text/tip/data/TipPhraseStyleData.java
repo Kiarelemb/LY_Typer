@@ -40,11 +40,6 @@ public final class TipPhraseStyleData implements TipStyleData {
     }
 
     @Override
-    public void clearStyle() {
-        style = null;
-    }
-
-    @Override
     public SimpleAttributeSet getStyle() {
         if (this.style == null) {
             this.style = (SimpleAttributeSet) TextStyleManager.getDefinedStyle(this.type, this.bold, this.phrase, this.shortPhrase).copyAttributes();

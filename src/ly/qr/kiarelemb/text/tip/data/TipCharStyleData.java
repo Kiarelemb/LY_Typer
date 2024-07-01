@@ -39,11 +39,6 @@ public final class TipCharStyleData implements TipStyleData {
     }
 
     @Override
-    public void clearStyle() {
-        style = null;
-    }
-
-    @Override
     public SimpleAttributeSet getStyle() {
         if (style == null) {
             style = new SimpleAttributeSet(TextStyleManager.getDefinedStyle(this.type, this.bold, this.word, false));
