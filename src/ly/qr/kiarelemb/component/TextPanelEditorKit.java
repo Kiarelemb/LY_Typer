@@ -127,17 +127,16 @@ public class TextPanelEditorKit extends StyledEditorKit {
 
     private static void fillTipData(TipStyleData thisData) {
         SimpleAttributeSet singleStyle = thisData.getStyle();
-        boolean first = thisData.type()% 2  == 0;
-        boolean condition = (TypingData.charEnable || thisData instanceof TipPhraseStyleData data && data.shortPhrase())
-                            && thisData.type() % 2 == 0;
+        boolean charOrPhrase = TypingData.charEnable || thisData.shortPhrase();
         if (TypingData.paintCode) {
-            if (condition) {
+            if (charOrPhrase) {
                 singleStyle.addAttribute("UnderlineOpen", true);
                 singleStyle.addAttribute("Underline-Color", Color.red);
                 singleStyle.addAttribute("Number", thisData.code());
             }
         } else if (TypingData.paintSelection) {
-            if (condition) {
+            boolean first = thisData.type() % 2 == 0;
+            if (charOrPhrase && first) {
                 singleStyle.addAttribute("UnderlineOpen", true);
                 singleStyle.addAttribute("Underline-Color", Color.red);
                 singleStyle.addAttribute("Number", thisData.lastChar());

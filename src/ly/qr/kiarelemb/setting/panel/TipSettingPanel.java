@@ -50,6 +50,15 @@ public class TipSettingPanel extends SettingPanel {
         CheckBox charModelEnableCheckBox = new CheckBox("单字启用", Keys.TEXT_TIP_CHAR_ENABLE);
         CheckBox singlePhraseDevideCheckBox = new CheckBox("字词分行", Keys.TEXT_TIP_DIVIDE);
 
+        // 两个勾选框互斥，且全码优先选重
+        if (paintCodeCheckBox.checked()) {
+            paintSelectionCheckBox.setSelected(false);
+        }
+        if (paintSelectionCheckBox.checked()) {
+            paintCodeCheckBox.setSelected(false);
+        }
+        QRActionRegister paintActionRegister = anotherCheckBox -> ((QRCheckBox) anotherCheckBox).setSelected(false);
+
         QRCheckBox tipPanelEnableCheckBox = new CheckBox("启用编码提示面板", Keys.TEXT_TIP_PANEL_ENABLE);
         QRLabel tipPanelLocationLabel = new QRLabel("位置：");
         QRComboBox tipPanelComboBox = new ComboBox(Keys.TEXT_TIP_PANEL_LOCATION, "看打区上方", "看打区下方", "跟打区上方", "跟打区下方");
@@ -57,16 +66,20 @@ public class TipSettingPanel extends SettingPanel {
         QRLabel tipWindowLocationLabel = new QRLabel("位置：");
         QRComboBox tipWindowComboBox = new ComboBox(Keys.TEXT_TIP_WINDOW_LOCATION, "跟随光标", "固定于窗体上方居中");
 
-        QRActionRegister tipUpdate = es->{
+        QRActionRegister tipUpdate = es -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.update", e -> {
             if (TextLoad.TEXT_LOAD != null) {
                 TextLoad.TEXT_LOAD.updateTipsWithoutEnable();
+                // 延迟一秒后刷新文本
+                QRComponentUtils.runLater(1000, ee -> TextPane.TEXT_PANE.simpleRestart());
             }
-        };
+        });
         paintColorCheckBox.addClickAction(tipUpdate);
         paintSelectionCheckBox.addClickAction(tipUpdate);
         paintCodeCheckBox.addClickAction(tipUpdate);
         charModelEnableCheckBox.addClickAction(tipUpdate);
         singlePhraseDevideCheckBox.addClickAction(tipUpdate);
+        paintSelectionCheckBox.addClickAction(e -> paintActionRegister.action(paintCodeCheckBox));
+        paintCodeCheckBox.addClickAction(e -> paintActionRegister.action(paintSelectionCheckBox));
 
         QRActionRegister tipLoadAction = es -> {
             TextTip.TEXT_TIP.release();
