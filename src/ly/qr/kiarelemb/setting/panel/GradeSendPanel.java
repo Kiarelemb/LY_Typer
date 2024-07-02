@@ -5,12 +5,12 @@ import ly.qr.kiarelemb.component.ComboBox;
 import ly.qr.kiarelemb.component.TextField;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.setting.SettingWindow;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRButton;
-import swing.qr.kiarelemb.component.basic.QRComboBox;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRTextField;
+import swing.qr.kiarelemb.basic.QRButton;
+import swing.qr.kiarelemb.basic.QRComboBox;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRTextField;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 /**
  * @author Kiarelemb QR

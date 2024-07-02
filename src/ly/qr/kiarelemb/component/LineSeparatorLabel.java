@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.component;
 
-import swing.qr.kiarelemb.component.utils.QRLineSeparatorLabel;
+import swing.qr.kiarelemb.utils.QRLineSeparatorLabel;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
 /**

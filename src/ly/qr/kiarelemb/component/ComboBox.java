@@ -5,9 +5,9 @@ import ly.qr.kiarelemb.data.Keys;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.basic.QRComboBox;
-import swing.qr.kiarelemb.component.event.QRItemEvent;
-import swing.qr.kiarelemb.component.utils.QRFontComboBox;
+import swing.qr.kiarelemb.basic.QRComboBox;
+import swing.qr.kiarelemb.event.QRItemEvent;
+import swing.qr.kiarelemb.utils.QRFontComboBox;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

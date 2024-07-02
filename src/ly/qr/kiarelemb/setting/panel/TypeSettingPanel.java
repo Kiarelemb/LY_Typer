@@ -5,10 +5,10 @@ import ly.qr.kiarelemb.component.ComboBox;
 import ly.qr.kiarelemb.component.LineSeparatorLabel;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.setting.SettingWindow;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRCheckBox;
-import swing.qr.kiarelemb.component.basic.QRComboBox;
-import swing.qr.kiarelemb.component.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRCheckBox;
+import swing.qr.kiarelemb.basic.QRComboBox;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 /**
  * @author Kiarelemb

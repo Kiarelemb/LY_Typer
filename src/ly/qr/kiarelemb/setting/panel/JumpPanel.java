@@ -1,11 +1,11 @@
 package ly.qr.kiarelemb.setting.panel;
 
 import method.qr.kiarelemb.utils.QRFontUtils;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.basic.QRPanel;
-import swing.qr.kiarelemb.component.combination.QRTreeTabbedPane;
-import swing.qr.kiarelemb.component.utils.QRHandLabel;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRPanel;
+import swing.qr.kiarelemb.combination.QRTreeTabbedPane;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
+import swing.qr.kiarelemb.utils.QRHandLabel;
 
 import java.awt.event.MouseEvent;
 

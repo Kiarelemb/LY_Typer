@@ -4,12 +4,12 @@ import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRMathUtils;
 import method.qr.kiarelemb.utils.QRSleepUtils;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
-import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
-import swing.qr.kiarelemb.component.event.QRTabSelectEvent;
-import swing.qr.kiarelemb.component.utils.QRKeyBoardPanel;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.combination.QRTabbedContentPanel;
+import swing.qr.kiarelemb.event.QRTabSelectEvent;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
+import swing.qr.kiarelemb.utils.QRKeyBoardPanel;
 
 import java.awt.*;
 import java.util.List;

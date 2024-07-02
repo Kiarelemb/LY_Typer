@@ -10,10 +10,10 @@ import ly.qr.kiarelemb.text.send.data.TypedData;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
-import swing.qr.kiarelemb.component.basic.QRComboBox;
-import swing.qr.kiarelemb.component.combination.QRTabbedContentPanel;
-import swing.qr.kiarelemb.component.event.QRItemEvent;
-import swing.qr.kiarelemb.component.event.QRTabSelectEvent;
+import swing.qr.kiarelemb.basic.QRComboBox;
+import swing.qr.kiarelemb.combination.QRTabbedContentPanel;
+import swing.qr.kiarelemb.event.QRItemEvent;
+import swing.qr.kiarelemb.event.QRTabSelectEvent;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
 import javax.swing.*;

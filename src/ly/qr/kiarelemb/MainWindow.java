@@ -17,7 +17,7 @@ import ly.qr.kiarelemb.text.tip.TipWindow;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.basic.QRButton;
+import swing.qr.kiarelemb.basic.QRButton;
 import swing.qr.kiarelemb.window.basic.QRFrame;
 
 import java.awt.*;

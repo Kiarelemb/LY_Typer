@@ -1,8 +1,8 @@
 package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.menu.type.SettingsItem;
-import swing.qr.kiarelemb.component.event.QRColorChangedEvent;
-import swing.qr.kiarelemb.component.utils.QRRGBColorPane;
+import swing.qr.kiarelemb.event.QRColorChangedEvent;
+import swing.qr.kiarelemb.utils.QRRGBColorPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 
 import java.awt.*;

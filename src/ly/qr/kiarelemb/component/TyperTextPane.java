@@ -7,12 +7,12 @@ import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.input.InputManager;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.basic.QRScrollPane;
-import swing.qr.kiarelemb.component.basic.QRTextPane;
-import swing.qr.kiarelemb.component.listener.QRGlobalKeyboardHookListener;
+import swing.qr.kiarelemb.basic.QRScrollPane;
+import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.listener.QRGlobalKeyboardHookListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
 import javax.swing.text.AttributeSet;
@@ -103,10 +103,10 @@ public class TyperTextPane extends QRTextPane {
         if (TypingData.typing) {
             return e.isControlDown() || e.isAltDown();
         }
-        return TypingData.typeEnd;
+        return false;
     }
 
-    /**
+     /**
      * 每输入或回改事件，即光标移动事件
      */
     public void runTypedActions() {
@@ -121,9 +121,9 @@ public class TyperTextPane extends QRTextPane {
         int keyCode = keyStroke.getKeyCode();
         char keyChar = (char) keyCode;
         int modifiers = keyStroke.getModifiers();
-        if (modifiers != 0 || (keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
-            || (keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
-                || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) && !TypingData.typing) {
+         if ((keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12) || (keyCode == KeyEvent.VK_ALT
+             || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
+             || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) && (!TypingData.typing && TypingData.typeEnd)) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }

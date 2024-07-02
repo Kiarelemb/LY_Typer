@@ -11,7 +11,7 @@ import method.qr.kiarelemb.utils.QRBloomFilter;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.basic.QRTextArea;
+import swing.qr.kiarelemb.basic.QRTextArea;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.window.basic.QREmptyDialog;
 

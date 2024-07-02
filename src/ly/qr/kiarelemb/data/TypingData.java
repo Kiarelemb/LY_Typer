@@ -7,9 +7,9 @@ import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.QRComponentUtils;
-import swing.qr.kiarelemb.component.listener.QRActionListener;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.listener.QRActionListener;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

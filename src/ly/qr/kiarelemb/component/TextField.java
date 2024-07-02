@@ -2,7 +2,7 @@ package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
-import swing.qr.kiarelemb.component.basic.QRTextField;
+import swing.qr.kiarelemb.basic.QRTextField;
 
 import javax.swing.event.DocumentEvent;
 

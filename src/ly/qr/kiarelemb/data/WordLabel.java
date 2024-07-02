@@ -2,7 +2,7 @@ package ly.qr.kiarelemb.data;
 
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.component.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRLabel;
 
 import javax.swing.*;
 import java.util.logging.Level;

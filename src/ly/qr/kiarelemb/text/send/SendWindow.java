@@ -2,7 +2,7 @@ package ly.qr.kiarelemb.text.send;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.SendTextTabbedPane;
-import swing.qr.kiarelemb.component.combination.QRTabbedPane;
+import swing.qr.kiarelemb.combination.QRTabbedPane;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
 import java.awt.*;

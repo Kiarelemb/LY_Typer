@@ -2,7 +2,7 @@ package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRFontUtils;
-import swing.qr.kiarelemb.component.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRLabel;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
 import java.awt.*;

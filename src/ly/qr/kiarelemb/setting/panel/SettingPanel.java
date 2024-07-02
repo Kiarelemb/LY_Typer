@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.setting.panel;
 
 import ly.qr.kiarelemb.setting.SettingWindow;
-import swing.qr.kiarelemb.component.basic.QRPanel;
+import swing.qr.kiarelemb.basic.QRPanel;
 
 /**
  * @author Kiarelemb QR

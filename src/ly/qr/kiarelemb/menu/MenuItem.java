@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.menu;
 
 import ly.qr.kiarelemb.data.Keys;
-import swing.qr.kiarelemb.component.basic.QRMenuItem;
+import swing.qr.kiarelemb.basic.QRMenuItem;
 
 /**
  * @author Kiarelemb QR
