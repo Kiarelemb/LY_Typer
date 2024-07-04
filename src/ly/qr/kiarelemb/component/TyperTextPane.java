@@ -32,12 +32,13 @@ import java.util.logging.Logger;
  **/
 public class TyperTextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
-    public KeyListener globalKeyListener = null;
+    public QRGlobalKeyboardHookListener globalKeyListener = null;
+    public KeyboardFocusManager keyboardFocusManager = null;
     private final LinkedList<QRActionRegister> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
 
     private final Map<Integer, Character> specialKeyMap = Map.of(
-            (int) 'B', 'b',
+            (int) 'B', 'B',
             (int) ' ', '_',
             KeyEvent.VK_ENTER, '↵',
             KeyEvent.VK_SHIFT, '↑',
@@ -106,7 +107,7 @@ public class TyperTextPane extends QRTextPane {
         return false;
     }
 
-     /**
+    /**
      * 每输入或回改事件，即光标移动事件
      */
     public void runTypedActions() {
@@ -120,14 +121,15 @@ public class TyperTextPane extends QRTextPane {
         //屏蔽组合键
         int keyCode = keyStroke.getKeyCode();
         char keyChar = (char) keyCode;
-        int modifiers = keyStroke.getModifiers();
-         if ((keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12) || (keyCode == KeyEvent.VK_ALT
-             || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
-             || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) && (!TypingData.typing && TypingData.typeEnd)) {
+        if ((keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
+             || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
+            && !TypingData.typing && TypingData.typeEnd) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
-        if (TypingData.typeEnd) {
+        int modifiers = keyStroke.getModifiers();
+        if (modifiers != 0 && !TypingData.typing || TypingData.typeEnd) {
+            QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
 
@@ -173,20 +175,28 @@ public class TyperTextPane extends QRTextPane {
 
     private void timeCountInit() {
         if (QRSystemUtils.IS_WINDOWS) {
-            this.globalKeyListener = new KeyListener();
+            this.globalKeyListener = new QRGlobalKeyboardHookListener();
+            this.globalKeyListener.addKeyListenerAction(true, e -> {
+                KeyStroke keyStroke = (KeyStroke) e;
+                keyPressLoad(keyStroke);
+            });
         } else {
-            KeyboardFocusManager keyRecord = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-            keyRecord.addKeyEventPostProcessor(e -> {
+            this.keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            this.keyboardFocusManager.addKeyEventPostProcessor(e -> {
                 if (e.getID() != KeyEvent.KEY_LAST) {
                     return false;
                 }
-                try {
-                    keyPressAction(QRStringUtils.getKeyStroke(e), System.currentTimeMillis());
-                } catch (Exception ex) {
-                    logger.log(Level.SEVERE, "timeCountInit", ex);
-                }
+                keyPressLoad(QRStringUtils.getKeyStroke(e));
                 return true;
             });
+        }
+    }
+
+    private void keyPressLoad(KeyStroke e) {
+        try {
+            keyPressAction(e, System.currentTimeMillis());
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "keyPressLoad", ex);
         }
     }
 
@@ -278,16 +288,5 @@ public class TyperTextPane extends QRTextPane {
     public void componentFresh() {
         this.textFont = QRColorsAndFonts.STANDARD_FONT_TEXT.deriveFont((float) Keys.intValue(Keys.TEXT_FONT_SIZE_TYPE));
         super.componentFresh();
-    }
-
-    public class KeyListener extends QRGlobalKeyboardHookListener {
-        @Override
-        protected void keyPress(KeyStroke keyStroke) {
-            try {
-                keyPressAction(keyStroke, System.currentTimeMillis());
-            } catch (Exception e) {
-                logger.log(Level.SEVERE, "timeCountInit", e);
-            }
-        }
     }
 }

@@ -44,6 +44,8 @@ public class Enter {
         logger.config("当前系统：" + QRSystemUtils.getSystemName());
         if (QRSystemUtils.IS_WINDOWS) {
             QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.globalKeyListener, MainWindow.INSTANCE);
+        }else{
+
         }
 
         flw.setVisible(false);
