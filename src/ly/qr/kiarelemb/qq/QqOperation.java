@@ -6,8 +6,8 @@ import com.sun.jna.platform.win32.WinDef;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.TyperTextPane;
+import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRSleepUtils;
-import method.qr.kiarelemb.utils.QRSystemUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import java.awt.*;
@@ -91,8 +91,8 @@ public class QqOperation {
 	}
 
 	public static boolean textCanSend() {
-		if (!QRSystemUtils.IS_WINDOWS) {
-			QRSmallTipShow.display(MainWindow.INSTANCE, "载文仅支持Windows！");
+		if (!Info.IS_WINDOWS) {
+			QRSmallTipShow.display(MainWindow.INSTANCE, "载文仅支持 Windows！");
 			return false;
 		}
 		if (!ContractiblePanel.GROUP_BUTTON.groupLinked()) {

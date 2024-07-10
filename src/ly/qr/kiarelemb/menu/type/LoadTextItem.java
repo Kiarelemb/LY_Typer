@@ -6,7 +6,7 @@ import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.MenuItem;
 import ly.qr.kiarelemb.qq.LoadText;
-import method.qr.kiarelemb.utils.QRSystemUtils;
+import ly.qr.kiarelemb.res.Info;
 
 import java.awt.event.ActionEvent;
 
@@ -21,7 +21,7 @@ public class LoadTextItem extends MenuItem {
 
 	private LoadTextItem() {
 		super("载文", Keys.QUICK_KEY_MENU_TYPE_TEXT_LOAD);
-		setEnabled(QRSystemUtils.IS_WINDOWS);
+		setEnabled(Info.IS_WINDOWS);
 	}
 
 	@Override

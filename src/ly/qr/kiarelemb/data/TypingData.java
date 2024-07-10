@@ -173,6 +173,7 @@ public class TypingData {
                 }
             });
         }
+        int index = 0;
         while (typing && !pausing) {
             QRSleepUtils.sleep(restTime);
             if (typing && ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked()) {
@@ -187,32 +188,36 @@ public class TypingData {
             //用时_分
             double totalTimeInMin = totalTimeInSec / 60;
             //速度
-            String speeds = "0.00";
+            double speeds = 0.00;
             if (instantaneous) {
                 // 瞬时速度
                 try {
                     TypeRecordData recordData = TypeRecordData.updateData(endTime);
                     if (recordData != null) {
-                        speeds = String.format("%.2f", recordData.length() / (recordData.time() / 60000f));
+                        speeds = recordData.length() / (recordData.time() / 60000f);
                     }
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, "error", e);
                 }
             } else {
                 if (!WRONG_WORDS_INDEX.isEmpty()) {
-                    speeds = String.format("%.2f", (Math.max(currentTypedIndex - WRONG_WORDS_INDEX.size() * 5, 0) / totalTimeInMin));
+                    speeds = (Math.max(currentTypedIndex - WRONG_WORDS_INDEX.size() * 5, 0) / totalTimeInMin);
                 } else {
-                    speeds = String.format("%.2f", currentTypedIndex / totalTimeInMin);
+                    speeds = currentTypedIndex / totalTimeInMin;
                 }
             }
             //击键
             String keyStrokes = String.format("%.2f", keyCounts / totalTimeInSec);
             //码长
             String codeLengths = String.format("%.2f", keyCounts / (double) (currentTypedIndex));
-            ContractiblePanel.SPEED_LABEL.setText(speeds);
+            ContractiblePanel.SPEED_LABEL.setText(String.format("%.2f", speeds));
             ContractiblePanel.KEY_STROKE_LABEL.setText(keyStrokes);
             ContractiblePanel.CODE_LEN_LABEL.setText(codeLengths);
             ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
+            if(index != currentTypedIndex){
+                index = currentTypedIndex;
+
+            }
             windowFresh();
         }
         windowFresh();
@@ -238,7 +243,7 @@ public class TypingData {
                 typedKeyRecord = new StringBuilder();
                 runTyping();
             } catch (Exception e) {
-               logger.log(Level.SEVERE, "startTyping", e);
+                logger.log(Level.SEVERE, "startTyping", e);
             }
             logger.info("********** 开始跟打 **********");
         }
@@ -247,7 +252,7 @@ public class TypingData {
     public static void pauseTyping() {
         pauseStartTime = System.currentTimeMillis();
         pausedTimes++;
-        if (QRSystemUtils.IS_WINDOWS && Keys.boolValue(Keys.WINDOW_PAUSE_MINIMIZE)) {
+        if (Info.IS_WINDOWS && Keys.boolValue(Keys.WINDOW_PAUSE_MINIMIZE)) {
             SystemTray st = SystemTray.getSystemTray();
             try {
                 TrayIcon ti = new TrayIcon(Info.loadImage(Info.ICON_TRAY_PATH).getImage());

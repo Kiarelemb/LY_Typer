@@ -48,39 +48,38 @@ public class TipPanel extends QRPanel {
 
 
     public void tipUpdate() {
-        if (TypingData.tipEnable) {
-            TipData data = TextLoad.TEXT_LOAD.tipData;
-            if (data != null) {
-                int index = TypingData.currentTypedIndex;
-                ArrayList<TipCharStyleData> tcsd = data.tcsd;
-                if (tcsd.size() <= index) {
-                    return;
-                }
-                ArrayList<TipPhraseStyleData> tpsd = data.tpsd;
-                TipCharStyleData charData = tcsd.get(index);
-                TipPhraseStyleData phraseData = tpsd.get(index);
-                if (charData != null) {
-                    //更新字体
-                    final String tpC = StyleConstants.getFontFamily(charData.getStyle());
-                    Font font = QRFontUtils.FONT_MAP.computeIfAbsent(tpC, t -> QRFontUtils.getFont(t, 20));
-                    if (this.singleWordLabel.getFont() != font) {
-                        this.singleWordLabel.setFont(font);
-                        this.phraseWordLabel.setFont(font);
-                    }
-                    this.singleWordLabel.setText(charData.word());
-                    this.singleWordCodeLabel.setText(charData.code());
+        if (!TypingData.tipEnable || TextLoad.TEXT_LOAD.tipData == null) {
+            return;
+        }
+        TipData data = TextLoad.TEXT_LOAD.tipData;
+        int index = TypingData.currentTypedIndex;
+        ArrayList<TipCharStyleData> tcsd = data.tcsd;
+        if (tcsd.size() <= index) {
+            return;
+        }
+        ArrayList<TipPhraseStyleData> tpsd = data.tpsd;
+        TipCharStyleData charData = tcsd.get(index);
+        TipPhraseStyleData phraseData = tpsd.get(index);
+        if (charData != null) {
+            //更新字体
+            final String tpC = StyleConstants.getFontFamily(charData.getStyle());
+            Font font = QRFontUtils.FONT_MAP.computeIfAbsent(tpC, t -> QRFontUtils.getFont(t, 20));
+            if (this.singleWordLabel.getFont() != font) {
+                this.singleWordLabel.setFont(font);
+                this.phraseWordLabel.setFont(font);
+            }
+            this.singleWordLabel.setText(charData.word());
+            this.singleWordCodeLabel.setText(charData.code());
 
-                    if (phraseData != null && !phraseData.phrase().equals(charData.word())) {
-                        this.phraseWordLabel.setText(phraseData.phrase());
-                        this.phraseWordCodeLabel.setText(phraseData.code());
-                    } else {
-                        this.phraseWordLabel.setText(null);
-                        this.phraseWordCodeLabel.setText(null);
-                    }
-                }
-                pack();
+            if (phraseData != null && !phraseData.phrase().equals(charData.word())) {
+                this.phraseWordLabel.setText(phraseData.phrase());
+                this.phraseWordCodeLabel.setText(phraseData.code());
+            } else {
+                this.phraseWordLabel.setText(null);
+                this.phraseWordCodeLabel.setText(null);
             }
         }
+        pack();
     }
 
     public void layoutUpdate() {

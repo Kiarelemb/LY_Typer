@@ -1,10 +1,9 @@
 package ly.qr.kiarelemb.component;
 
-import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
-import ly.qr.kiarelemb.input.InputManager;
+import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.basic.QRScrollPane;
@@ -111,11 +110,13 @@ public class TyperTextPane extends QRTextPane {
      * 每输入或回改事件，即光标移动事件
      */
     public void runTypedActions() {
+
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(this.typeActions));
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
-        if (!MainWindow.INSTANCE.isFocused() && !InputManager.INPUT_MANAGER.isLoaded() || TextLoad.TEXT_LOAD == null) {
+        TypingData.windowFresh();
+        if (!this.hasFocus() || TextLoad.TEXT_LOAD == null) {
             return;
         }
         //屏蔽组合键
@@ -123,7 +124,7 @@ public class TyperTextPane extends QRTextPane {
         char keyChar = (char) keyCode;
         if ((keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
              || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
-            && !TypingData.typing && TypingData.typeEnd) {
+            && !TypingData.typing) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
@@ -174,11 +175,11 @@ public class TyperTextPane extends QRTextPane {
     }
 
     private void timeCountInit() {
-        if (QRSystemUtils.IS_WINDOWS) {
+        if (Info.IS_WINDOWS) {
             this.globalKeyListener = new QRGlobalKeyboardHookListener();
             this.globalKeyListener.addKeyListenerAction(true, e -> {
                 KeyStroke keyStroke = (KeyStroke) e;
-                keyPressLoad(keyStroke);
+                keyPressLead(keyStroke);
             });
         } else {
             this.keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -186,13 +187,13 @@ public class TyperTextPane extends QRTextPane {
                 if (e.getID() != KeyEvent.KEY_LAST) {
                     return false;
                 }
-                keyPressLoad(QRStringUtils.getKeyStroke(e));
+                keyPressLead(QRStringUtils.getKeyStroke(e));
                 return true;
             });
         }
     }
 
-    private void keyPressLoad(KeyStroke e) {
+    private void keyPressLead(KeyStroke e) {
         try {
             keyPressAction(e, System.currentTimeMillis());
         } catch (Exception ex) {

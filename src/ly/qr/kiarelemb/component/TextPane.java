@@ -5,6 +5,7 @@ import ly.qr.kiarelemb.data.*;
 import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.qq.SendText;
+import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.send.TextSendManager;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
@@ -226,7 +227,7 @@ public class TextPane extends QRTextPane {
         }
         if (!Keys.boolValue(Keys.TYPE_END_CONDITION_NO_WRONG) || TypingData.WRONG_WORDS_INDEX.isEmpty()) {
             //打字结束
-            if (!QRSystemUtils.IS_WINDOWS) {
+            if (!Info.IS_WINDOWS) {
                 MainWindow.INSTANCE.setAlwaysOnTop(false);
             }
             TypingData.typing = false;

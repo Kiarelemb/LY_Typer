@@ -42,10 +42,10 @@ public class Enter {
         variousLoad();
 
         logger.config("当前系统：" + QRSystemUtils.getSystemName());
-        if (QRSystemUtils.IS_WINDOWS) {
+        if (Info.IS_WINDOWS) {
             QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.globalKeyListener, MainWindow.INSTANCE);
-        }else{
-
+        } else {
+            QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.keyboardFocusManager, MainWindow.INSTANCE);
         }
 
         flw.setVisible(false);
