@@ -5,7 +5,7 @@ import ly.qr.kiarelemb.component.TextPanelEditorKit;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
-import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
+import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipStyleData;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import swing.qr.kiarelemb.basic.QRLabel;
@@ -15,11 +15,9 @@ import swing.qr.kiarelemb.window.basic.QRDialog;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class StandardTipWindow extends QRDialog {
@@ -76,19 +74,10 @@ public class StandardTipWindow extends QRDialog {
 
     @Override
     public void windowOpened(WindowEvent e) {
+        // 备份数据
         boolean paintCode = TypingData.paintCode;
         boolean charEnable = TypingData.charEnable;
-
-        //不为 null
-        ArrayList<TipPhraseStyleData> tpsd = TextLoad.TEXT_LOAD.tipData.tpsd;
-        tpsd.stream().filter(Objects::nonNull).forEachOrdered(tp -> {
-            try {
-                centerTextPane.getDocument().insertString(tp.index(), tp.phrase(), tp.getStyle());
-            } catch (BadLocationException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
+        centerTextPane.print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
         TypingData.paintCode = true;
         TypingData.charEnable = true;
         textPanelEditorKit.changeFontColor();
