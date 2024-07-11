@@ -1,6 +1,8 @@
 package ly.qr.kiarelemb.component;
 
 import method.qr.kiarelemb.utils.QRStringUtils;
+import swing.qr.kiarelemb.basic.QRScrollBar;
+import swing.qr.kiarelemb.basic.QRScrollPane;
 import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.combination.QRTabbedContentPanel;
 import swing.qr.kiarelemb.combination.QRTabbedPane;
@@ -38,11 +40,16 @@ public class TypeTabbedPane extends QRTabbedPane {
         QRTextPane tip = new TextPane();
         tip.setLineWrap(false);
 
-        String[] tips = {"段号", "速度", "击键", "码长", "字数", "回改", "退格", "回车", "错字", "键数", "键准", "键法", "用时", "正文"};
+        String[] tips = {"段号", "速度", "击键", "码长", "字数", "回改", "退格", "回车", "错字", "键数", "键准", "键法", "用时", "正文  "};
         tip.setText(QRStringUtils.join(tips, "\t"));
 
-        history.add(tip, BorderLayout.NORTH);
-        history.add(HistoryGradePane.HISTORY_GRADE_PANE.addScrollPane(), BorderLayout.CENTER);
+        QRScrollPane tipScrollPane = tip.addScrollPane();
+        QRScrollPane historyScrollPane = HistoryGradePane.HISTORY_GRADE_PANE.addScrollPane();
+        ((QRScrollBar)tipScrollPane.getHorizontalScrollBar()).setExistButVisibleFalse();
+        historyScrollPane.addFollowedToScrollPane(tipScrollPane);
+        ((QRScrollBar)historyScrollPane.getHorizontalScrollBar()).addSynchronisedScrollBor(tipScrollPane.getHorizontalScrollBar());
+        history.add(tipScrollPane, BorderLayout.NORTH);
+        history.add(historyScrollPane, BorderLayout.CENTER);
 
 
     }
