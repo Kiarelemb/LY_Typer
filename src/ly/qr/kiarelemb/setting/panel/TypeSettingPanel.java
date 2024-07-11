@@ -41,7 +41,6 @@ public class TypeSettingPanel extends SettingPanel {
         instantaneousCheckBox.setToolTipText("如速度与击键采用瞬时速度与击键，但并不影响最终的成绩");
         noWrongCheckBox.setToolTipText("该项作为判断条件，影响下一项“单字乱序文章重打”是否执行。不勾选，则表示有错也会进入到下一项。");
         mixOrRestartCheckBox.setToolTipText("如勾选，则跟打结束后，单字将自动乱序，文章则自动重打。不勾选，则什么也不做。");
-        setLayout(null);
 
         QRComponentUtils.setBoundsAndAddToComponent(this, typeStartLabel, 25, 25, 125, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, textFormatCheckBox, 50, 70, 205, 30);

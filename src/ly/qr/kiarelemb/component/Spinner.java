@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.component;
 
-import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.menu.type.SettingsItem;
 import swing.qr.kiarelemb.basic.QRSpinner;
 
 /**
@@ -16,7 +16,7 @@ public class Spinner extends QRSpinner {
 		addChangeListener(e -> {
 			String value = getValue().toString();
 			SettingsItem.CHANGE_MAP.put(key, value);
-			SettingsItem.SAVE_ACTIONS.putIfAbsent(key, es -> TextPane.TEXT_PANE.restart());
+			SettingsItem.SAVE_ACTIONS.putIfAbsent(key, es -> TextViewPane.TEXT_VIEW_PANE.restart());
 		});
 	}
 }

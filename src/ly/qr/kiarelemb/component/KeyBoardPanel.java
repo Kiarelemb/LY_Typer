@@ -163,9 +163,9 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         private final KeyBoardPanel otherKeyBoardPanel;
 
         public TabContentPanel(KeyBoardPanel keyBoardPanel, KeyBoardPanel otherKeyBoardPanel) {
+            super(new BorderLayout());
             this.keyBoardPanel = keyBoardPanel;
             this.otherKeyBoardPanel = otherKeyBoardPanel;
-            setLayout(new BorderLayout());
             add(keyBoardPanel);
         }
 

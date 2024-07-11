@@ -1,8 +1,8 @@
 package ly.qr.kiarelemb.menu.type;
 
-import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.menu.MenuItem;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.menu.MenuItem;
 
 import java.awt.event.ActionEvent;
 
@@ -21,6 +21,6 @@ public class RetypeItem extends MenuItem {
 
 	@Override
 	protected void actionEvent(ActionEvent o) {
-		TextPane.TEXT_PANE.restart();
+		TextViewPane.TEXT_VIEW_PANE.restart();
 	}
 }

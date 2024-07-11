@@ -9,7 +9,6 @@ import swing.qr.kiarelemb.basic.QRPanel;
 import swing.qr.kiarelemb.basic.QRSplitPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
-import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -27,6 +26,8 @@ import java.awt.*;
 public class SplitPane extends QRSplitPane {
     public final SplitTipPanel tipPanel;
     public static final SplitPane SPLIT_PANE = new SplitPane();
+    private final QRPanel topPanel;
+    private final QRPanel bottomPanel;
 
     private SplitPane() {
         super(JSplitPane.VERTICAL_SPLIT);
@@ -35,9 +36,14 @@ public class SplitPane extends QRSplitPane {
         //底部的面板需要放词提
         this.tipPanel = new SplitTipPanel();
         this.tipPanel.setPreferredSize(200, 100);
+        topPanel = new QRPanel(false, new BorderLayout());
+        bottomPanel = new QRPanel(false, new BorderLayout());
 
-        setTopComponent(TextPane.TEXT_PANE.addScrollPane());
-        setBottomComponent(TyperTextPane.TYPER_TEXT_PANE.addScrollPane());
+        topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(), BorderLayout.CENTER);
+        bottomPanel.add(TypeTabbedPane.TYPE_TABBED_PANE, BorderLayout.CENTER);
+
+        setTopComponent(topPanel);
+        setBottomComponent(bottomPanel);
 
         int value;
         try {
@@ -59,11 +65,8 @@ public class SplitPane extends QRSplitPane {
         // 若未启用词提面板
         if (!Keys.boolValue(Keys.TEXT_TIP_PANEL_ENABLE)) {
             if (this.tipPanel.getParent() != null) {
-                // 用循环移除 SPLIT_PANE
-                QRActionRegister loopToRemove =
-                        component -> QRComponentUtils.componentLoop((QRPanel) component, SplitTipPanel.class,
-                                e -> ((QRPanel) component).remove((SplitTipPanel) e));
-                QRComponentUtils.componentLoop(this, QRPanel.class, loopToRemove::action);
+                topPanel.remove(this.tipPanel);
+                bottomPanel.remove(this.tipPanel);
                 this.revalidate();
                 this.repaint();
                 TypingData.windowFresh();
@@ -71,28 +74,19 @@ public class SplitPane extends QRSplitPane {
             return;
         }
         this.tipPanel.pack();
+        // 编码提示面板的位置，0 看打区上方，1 （默认）看打区下方，2 跟打区上方，3 跟打区下方
         int value = Keys.intValue(Keys.TEXT_TIP_PANEL_LOCATION);
         this.tipPanel.setOnNorth(value % 2 == 0);
         // 获取分割线位置
         final int i = getDividerLocation();
         if (value < 2) {
-            setTopComponent(null);
-            QRPanel panel = new QRPanel(false);
-            panel.setLayout(new BorderLayout());
-            panel.add(TextPane.TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
-            panel.add(this.tipPanel, value == 0 ? BorderLayout.NORTH : BorderLayout.SOUTH);
+            topPanel.add(this.tipPanel, value == 0 ? BorderLayout.NORTH : BorderLayout.SOUTH);
             // 设置顶层大小能避免分割线位置变化
-            TextPane.TEXT_PANE.addScrollPane().setPreferredSize(new Dimension(100, i - this.tipPanel.getHeight()));
-            setTopComponent(panel);
+            topPanel.setPreferredSize(new Dimension(100, i - this.tipPanel.getHeight()));
         } else {
-            setBottomComponent(null);
-            QRPanel panel = new QRPanel(false);
-            panel.setLayout(new BorderLayout());
-            panel.add(TyperTextPane.TYPER_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
-            panel.add(this.tipPanel, value == 3 ? BorderLayout.SOUTH : BorderLayout.NORTH);
+            bottomPanel.add(this.tipPanel, value == 3 ? BorderLayout.SOUTH : BorderLayout.NORTH);
             // 设置顶层大小能避免分割线位置变化
-            TextPane.TEXT_PANE.addScrollPane().setPreferredSize(new Dimension(100, i));
-            setBottomComponent(panel);
+            bottomPanel.setPreferredSize(new Dimension(100, i));
         }
     }
 
@@ -104,7 +98,7 @@ public class SplitPane extends QRSplitPane {
         }
     }
 
-    public class SplitTipPanel extends TipPanel {
+    public static class SplitTipPanel extends TipPanel {
         private boolean isOnNorth = false;
 
         @Override
@@ -138,7 +132,7 @@ public class SplitPane extends QRSplitPane {
             // 注册跟打进度条刷新
             QRActionRegister repaintAction = e -> divider.repaint();
             TyperTextPane.TYPER_TEXT_PANE.addTypeActions(repaintAction);
-            TextPane.TEXT_PANE.addSetTextFinishedAction(repaintAction);
+            TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(repaintAction);
         }
 
 

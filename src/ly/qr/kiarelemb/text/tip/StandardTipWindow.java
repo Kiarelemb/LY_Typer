@@ -37,8 +37,7 @@ public class StandardTipWindow extends QRDialog {
         addWindowListener();
         //顶部面板
 
-        QRPanel topPanel = new QRPanel();
-        topPanel.setLayout(new BorderLayout());
+        QRPanel topPanel = new QRPanel(new BorderLayout());
 
         String methodName = Keys.strValue(Keys.TYPE_METHOD_INPUT);
         QRLabel method = new QRLabel("方案：" + (methodName == null || methodName.isBlank() ? "未定义" : methodName));
@@ -57,8 +56,8 @@ public class StandardTipWindow extends QRDialog {
 
             @Override
             public void componentFresh() {
-                this.textFont = QRFontUtils.getFontInSize(Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
                 super.componentFresh();
+                this.textFont = QRFontUtils.getFontInSize(Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
                 setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
 
             }

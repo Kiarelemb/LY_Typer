@@ -1,8 +1,8 @@
 package ly.qr.kiarelemb.menu.send;
 
-import ly.qr.kiarelemb.component.TextPane;
-import ly.qr.kiarelemb.menu.MenuItem;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.menu.MenuItem;
 import ly.qr.kiarelemb.text.send.TextSendManager;
 
 import java.awt.event.ActionEvent;
@@ -26,7 +26,7 @@ public class ForeParaTextItem extends MenuItem {
 	protected void actionEvent(ActionEvent o) {
 		if (TextSendManager.sendingText()) {
 			String text = TextSendManager.data().gotoForePara().foreParaText();
-			TextPane.TEXT_PANE.setTypeText(text);
+			TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
 		}
 	}
 }

@@ -2,10 +2,13 @@ package ly.qr.kiarelemb.data;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
-import method.qr.kiarelemb.utils.*;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
+import method.qr.kiarelemb.utils.QRMathUtils;
+import method.qr.kiarelemb.utils.QRSleepUtils;
+import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.listener.QRActionListener;
@@ -73,7 +76,7 @@ public class TypingData {
     private static final ThreadPoolExecutor tre_statistics = QRThreadBuilder.singleThread("statistics");
 
     static {
-        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> typeEnd = false);
+        TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> typeEnd = false);
         QRSwing.registerSystemExitAction(event -> {
             if (!typedKeyRecord.isEmpty()) {
                 KeyTypedRecordData.fresh(typedKeyRecord.toString());

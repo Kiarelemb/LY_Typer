@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.text.send;
 
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.menu.send.*;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.send.data.TypedData;
@@ -84,7 +84,7 @@ public class TextSendManager {
 
     public static void setTypedData(TypedData data) {
         setData(data);
-        TextPane.TEXT_PANE.setTypeText(data.nextParaText());
+        TextViewPane.TEXT_VIEW_PANE.setTypeText(data.nextParaText());
         TextSendManager.control(true);
         logger.info("开始发文：" + data);
         //TODO 在此处添加跟打结束事件

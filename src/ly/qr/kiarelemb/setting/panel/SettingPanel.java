@@ -13,7 +13,7 @@ public abstract class SettingPanel extends QRPanel {
 	public final SettingWindow window;
 
 	public SettingPanel(SettingWindow window, String name) {
-		setLayout(null);
+		super(null);
 		this.window = window;
 		setName(name);
 	}

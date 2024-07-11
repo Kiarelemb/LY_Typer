@@ -71,6 +71,7 @@ public class WindowPanel extends SettingPanel {
             float alpha = value / 100f;
             QRSystemUtils.setWindowTrans(window, alpha);
             SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_TRANSPARENCY, String.valueOf(alpha));
+            SettingsItem.SAVE_ACTIONS.put("window.alpha", es -> QRSystemUtils.setWindowTrans(MainWindow.INSTANCE, alpha));
         });
 
         windowTransSlider.setEnabled(!windowBackgroundImageSetCheckBox.checked());
@@ -105,7 +106,7 @@ public class WindowPanel extends SettingPanel {
             this.mainPanel.addMouseAction(QRMouseListener.TYPE.CLICK, e -> BackgroundImageSelectDialog.this.mainPanel.grabFocus());
 
             QRRoundButton sureBtn = new QRRoundButton("确定");
-            QRPanel backgroundImagePanel = new QRPanel() {
+            QRPanel backgroundImagePanel = new QRPanel(new BorderLayout()) {
                 @Override
                 public void setBorder(Border border) {
                     super.setBorder(border);
@@ -114,7 +115,6 @@ public class WindowPanel extends SettingPanel {
                     }
                 }
             };
-            backgroundImagePanel.setLayout(new BorderLayout());
             QRTextArea area = new QRTextArea();
             area.setEditable(false);
             backgroundImagePanel.add(area.addScrollPane());

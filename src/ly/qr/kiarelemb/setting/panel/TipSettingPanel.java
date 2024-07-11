@@ -70,7 +70,7 @@ public class TipSettingPanel extends SettingPanel {
             if (TextLoad.TEXT_LOAD != null) {
                 TextLoad.TEXT_LOAD.updateTipsWithoutEnable();
                 // 延迟一秒后刷新文本
-                QRComponentUtils.runLater(1000, ee -> TextPane.TEXT_PANE.simpleRestart());
+                QRComponentUtils.runLater(1000, ee -> TextViewPane.TEXT_VIEW_PANE.simpleRestart());
             }
         });
         paintColorCheckBox.addClickAction(tipUpdate);

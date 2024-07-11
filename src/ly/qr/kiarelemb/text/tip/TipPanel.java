@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.text.tip;
 
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
@@ -43,7 +43,7 @@ public class TipPanel extends QRPanel {
         //每次输入或回改需要更改词提
         QRActionRegister updateAction = e -> tipUpdate();
         TyperTextPane.TYPER_TEXT_PANE.addTypeActions(updateAction);
-        TextPane.TEXT_PANE.addSetTextFinishedAction(updateAction);
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(updateAction);
     }
 
 
