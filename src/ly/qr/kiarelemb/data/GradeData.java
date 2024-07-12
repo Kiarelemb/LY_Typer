@@ -175,7 +175,7 @@ public final class GradeData {
 
     @Override
     public String toString() {
-        Object[] objects = {TextLoad.TEXT_LOAD.paragraph(), this.speed, this.keyStroke, this.codeLength, TextLoad.TEXT_LOAD.wordsLength(), backDeleteCount, backSpaceCount, enterCount, WRONG_WORDS_INDEX.size() + getWrongWords(), keyCounts, keyAccuracyNum(), keyMethod(), this.timeCost, TextLoad.TEXT_LOAD.textMD5Short()};
+        Object[] objects = {TextLoad.TEXT_LOAD.paragraph(), this.speed, this.keyStroke, this.codeLength, ContractiblePanel.STANDARD_LEN_LABEL.getText(), TextLoad.TEXT_LOAD.wordsLength(), backDeleteCount, backSpaceCount, enterCount, WRONG_WORDS_INDEX.size() + getWrongWords(), keyCounts, keyAccuracy(), keyMethod() + "%", this.timeCost, TextLoad.TEXT_LOAD.textMD5Short()};
         StringJoiner joiner = new StringJoiner("\t");
         Arrays.stream(objects).map(String::valueOf).forEach(joiner::add);
         return joiner.toString();

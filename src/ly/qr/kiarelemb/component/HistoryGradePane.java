@@ -1,5 +1,7 @@
 package ly.qr.kiarelemb.component;
 
+import java.awt.*;
+
 /**
  * @author Kiarelemb
  * @projectName LYTyper
@@ -14,5 +16,7 @@ public class HistoryGradePane extends TextPane {
         setEditableFalseButCursorEdit();
         setLineWrap(false);
         setLineSpacing(0.5f);
+        setMargin(new Insets(0, 10, 0, 10));
+
     }
 }

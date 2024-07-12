@@ -257,6 +257,12 @@ public class Keys {
      */
     public static final String WINDOW_COLUMN_FOLD_STANDARD_STATISTICS = "window.column.fold.standard.statistics";
     /**
+     * 背景图的高强度刷新，{@code false} （默认）不启用，{@code true} 启用
+     */
+    public static final String WINDOW_BACKGROUND_FRESH_ENHANCEMENT = "window.background.fresh.enhancement";
+
+
+    /**
      * 全局的界面字体，{@code false} （默认）不启用，{@code true} 启用
      */
     public static final String TEXT_FONT_NAME_GLOBAL_ENABLE = "text.font.name.global.enable";

@@ -1,5 +1,6 @@
 package ly.qr.kiarelemb;
 
+import ly.qr.kiarelemb.component.LogTextPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
@@ -29,6 +30,7 @@ public class Enter {
         QRLoggerUtils.initLogger(Level.INFO, Level.CONFIG);
         QRLoggerUtils.classMsgMaxLength = 120;
         logger = QRLoggerUtils.getLogger(Enter.class);
+        LogTextPane.LOG_TEXT_PANE.init();
         logger.info("************************************** 揽月开始启动 **************************************");
         QRTimeCountUtil qcu = new QRTimeCountUtil();
         QRSwing.start("res/settings/setting.properties", "res/settings/window.properties");

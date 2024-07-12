@@ -10,6 +10,7 @@ import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.TextTipEnhance;
 import ly.qr.kiarelemb.text.tip.TipWindow;
+import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.basic.QRCheckBox;
 import swing.qr.kiarelemb.basic.QRComboBox;
@@ -66,13 +67,16 @@ public class TipSettingPanel extends SettingPanel {
         QRLabel tipWindowLocationLabel = new QRLabel("位置：");
         QRComboBox tipWindowComboBox = new ComboBox(Keys.TEXT_TIP_WINDOW_LOCATION, "跟随光标", "固定于窗体上方居中");
 
-        QRActionRegister tipUpdate = es -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.update", e -> {
+        QRActionRegister tipUpdateActions = e -> {
             if (TextLoad.TEXT_LOAD != null) {
+                TextStyleManager.updateAll();
                 TextLoad.TEXT_LOAD.updateTipsWithoutEnable();
                 // 延迟一秒后刷新文本
                 QRComponentUtils.runLater(1000, ee -> TextViewPane.TEXT_VIEW_PANE.simpleRestart());
             }
-        });
+        };
+
+        QRActionRegister tipUpdate = es -> SettingsItem.SAVE_ACTIONS.put("tip.update", tipUpdateActions);
         paintColorCheckBox.addClickAction(tipUpdate);
         paintSelectionCheckBox.addClickAction(tipUpdate);
         paintCodeCheckBox.addClickAction(tipUpdate);

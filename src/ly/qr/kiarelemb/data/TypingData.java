@@ -168,7 +168,7 @@ public class TypingData {
     }
 
     private static void typingStatisticsUpdate(long restTime) {
-        if (MainWindow.INSTANCE.backgroundImageSet()) {
+        if (MainWindow.INSTANCE.backgroundImageSet() && !Keys.boolValue(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT)) {
             QRComponentUtils.runLater(10, e -> {
                 while (typing) {
                     if (!pausing) windowFresh();
@@ -217,7 +217,7 @@ public class TypingData {
             ContractiblePanel.KEY_STROKE_LABEL.setText(keyStrokes);
             ContractiblePanel.CODE_LEN_LABEL.setText(codeLengths);
             ContractiblePanel.TIME_LABEL.setText(QRMathUtils.doubleFormat(totalTimeInSec));
-            if(index != currentTypedIndex){
+            if (index != currentTypedIndex) {
                 index = currentTypedIndex;
 
             }

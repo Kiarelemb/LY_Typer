@@ -27,9 +27,7 @@ public class TextSendManager {
     }
 
     public static void setData(TypedData data) {
-        if (data != null && TextSendManager.data != data) {
-            TextSendManager.data = data;
-        }
+        TextSendManager.data = data;
     }
 
     public static void save() {

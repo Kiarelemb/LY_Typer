@@ -43,7 +43,7 @@ import java.util.logging.Logger;
  **/
 public class TextViewPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TextViewPane.class);
-//    private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
+    //    private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
     private boolean writeBlock = false;
     private final LinkedList<QRActionRegister> setTextBeforeActions = new LinkedList<>();
     private final LinkedList<QRActionRegister> setTextFinishedActions = new LinkedList<>();
@@ -96,10 +96,7 @@ public class TextViewPane extends QRTextPane {
         if (length == 1) {
             logger.info(String.format("已载入文本：[%s]", text));
         } else {
-            logger.info("已载入文本：");
-            for (String line : lines) {
-                logger.info("\t" + line);
-            }
+            logger.info(String.format("已载入文本：[%s]", text.replaceAll("\n", "\\n")));
         }
         textFresh();
     }
@@ -110,8 +107,8 @@ public class TextViewPane extends QRTextPane {
         // 消除 alt+3 带来的瞬间红字
         print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
         printTextStyleAfterSetText();
-        TypingData.windowFresh();
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextViewPane.TEXT_VIEW_PANE.setTextFinishedActions));
+        TypingData.windowFresh();
     }
 
     private void printTextStyleAfterSetText() {
@@ -233,7 +230,7 @@ public class TextViewPane extends QRTextPane {
             TypingData.typing = false;
             TypingData.typeEnd = true;
             TypingData.shutdown();
-            QRComponentUtils.runLater(10, e-> typeEnding());
+            QRComponentUtils.runLater(10, e -> typeEnding());
 //            typingEndThread.execute(this::typeEnding);
         }
     }
