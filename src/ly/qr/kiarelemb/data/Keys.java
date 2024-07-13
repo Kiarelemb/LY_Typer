@@ -89,6 +89,10 @@ public class Keys {
      */
     public static final String TYPE_STATISTICS_UPDATE = "type.statistics.update";
     /**
+     * 发文回车键，{@code 0} （默认）Enter，{@code 1} Ctrl Enter
+     */
+    public static final String TYPE_SEND_KEY = "type.send.key";
+    /**
      * 总打字个数
      */
     public static final String TYPE_WORD_TOTAL = "type.word.total";

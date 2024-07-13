@@ -52,7 +52,6 @@ public class TyperTextPane extends QRTextPane {
         timeCountInit();
         setOpaque(false);
         addScrollPane().setOpaque(false);
-        this.typeActions.add(e -> scrollUpdate());
         TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> {
             clear();
             this.caret.setVisible(true);
@@ -62,31 +61,6 @@ public class TyperTextPane extends QRTextPane {
 
     public void addTypeActions(QRActionRegister ar) {
         this.typeActions.add(ar);
-    }
-
-    private void scrollUpdate() {
-        JScrollBar verticalScrollBar = TextViewPane.TEXT_VIEW_PANE.addScrollPane().getVerticalScrollBar();
-        if (!verticalScrollBar.isVisible()) {
-            return;
-        }
-        //更新模式
-        final int[] lineAndRow = TextViewPane.TEXT_VIEW_PANE.currentLineAndRow(TypingData.currentTypedIndex);
-        final int currentLine = lineAndRow[0];
-        final double currentRow = lineAndRow[1];
-        boolean updateCondition = currentRow == 0;
-        //行尾更新
-        if (!updateCondition) {
-            return;
-        }
-        final int lineWords = TextViewPane.TEXT_VIEW_PANE.lineWords();
-        double startUpdateLine = 3;
-        if (currentLine >= startUpdateLine) {
-            QRComponentUtils.runLater(100, e -> {
-                int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
-                double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * TextViewPane.TEXT_VIEW_PANE.linePerHeight();
-                verticalScrollBar.setValue((int) (Math.min(value, max)));
-            });
-        }
     }
 
     private static boolean keyCheck(KeyEvent e) {
@@ -110,7 +84,6 @@ public class TyperTextPane extends QRTextPane {
      * 每输入或回改事件，即光标移动事件
      */
     public void runTypedActions() {
-
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(this.typeActions));
     }
 

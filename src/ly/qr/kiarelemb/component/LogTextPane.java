@@ -2,11 +2,8 @@ package ly.qr.kiarelemb.component;
 
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import method.qr.kiarelemb.utils.QRTimeCountUtil;
-import swing.qr.kiarelemb.basic.QRTextArea;
+import swing.qr.kiarelemb.basic.QRTextPane;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.PlainDocument;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -16,15 +13,13 @@ import java.util.concurrent.atomic.AtomicReference;
  * @description TODO
  * @create 2024/7/12 下午10:30
  */
-public class LogTextPane extends QRTextArea {
+public class LogTextPane extends QRTextPane {
     public static final LogTextPane LOG_TEXT_PANE = new LogTextPane();
 
     private LogTextPane() {
-//        setEditableFalseButCursorEdit();
+        setEditableFalseButCursorEdit();
         setLineWrap(false);
-        PlainDocument doc = new PlainDocument();
-        setDocument(doc);
-        doc.putProperty(PlainDocument.tabSizeAttribute, 4);
+        setLineSpacing(0.5f);
     }
 
     public void init() {
@@ -35,12 +30,7 @@ public class LogTextPane extends QRTextArea {
             if (qcu.isPassedMmTime() || !preText.get().equals(clearedStr)) {
                 qcu.getAndUpdate();
                 preText.set(clearedStr);
-                Document d = getDocument();
-                try {
-                    d.insertString(d.getLength(), clearedStr, null);
-                } catch (BadLocationException e) {
-                    throw new RuntimeException(e);
-                }
+                print(clearedStr);
             }
         });
     }

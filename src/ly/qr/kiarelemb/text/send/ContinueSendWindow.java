@@ -32,6 +32,7 @@ public class ContinueSendWindow extends QRDialog {
         super(MainWindow.INSTANCE);
         setTitle("继续发文");
         setTitlePlace(QRDialog.CENTER);
+        setParentWindowNotFollowMove();
         setSize(540, 420);
 
         //获取文件列表

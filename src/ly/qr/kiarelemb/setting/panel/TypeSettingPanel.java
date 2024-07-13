@@ -31,6 +31,8 @@ public class TypeSettingPanel extends SettingPanel {
         QRCheckBox instantaneousCheckBox = new CheckBox("跟打数据采用瞬时计算", Keys.TYPE_DATA_INSTANTANEOUS_VELOCITY);
         QRLabel updateFrequencyLabel = new QRLabel("跟打数据更新频率：");
         QRComboBox updateFrequencyComboBox = new ComboBox(Keys.TYPE_STATISTICS_UPDATE, "实时更新", "每秒更新", "每五秒更新");
+        QRLabel sendKeyStrokeLabel = new QRLabel("QQ发送键：");
+        QRComboBox sendKeyStrokeComboBox = new ComboBox(Keys.TYPE_SEND_KEY, "Enter", "Ctrl Enter");
 
         LineSeparatorLabel separatorLabelB = new LineSeparatorLabel();
 
@@ -48,13 +50,15 @@ public class TypeSettingPanel extends SettingPanel {
         QRComponentUtils.setBoundsAndAddToComponent(this, typingLabel, 25, 160, 125, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, discardUnknownKeyCheckBox, 50, 205, 205, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, instantaneousCheckBox, 50, 250, 205, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, updateFrequencyLabel, 50, 295, 150, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, updateFrequencyComboBox, 210, 295, 145, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, updateFrequencyLabel, 50, 295, 205, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, updateFrequencyComboBox, 265, 295, 145, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, separatorLabelB, 25, 340, 500, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, typeEndLabel, 25, 385, 125, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, noWrongCheckBox, 50, 430, 205, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, mixOrRestartCheckBox, 50, 475, 205, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, sendKeyStrokeLabel, 50, 520, 205, 30);
+        QRComponentUtils.setBoundsAndAddToComponent(this, sendKeyStrokeComboBox, 265, 520, 145, 30);
 
-        setPreferredSize(505, 520);
+        setPreferredSize(505, 585);
     }
 }

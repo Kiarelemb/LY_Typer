@@ -96,7 +96,7 @@ public class TextViewPane extends QRTextPane {
         if (length == 1) {
             logger.info(String.format("已载入文本：[%s]", text));
         } else {
-            logger.info(String.format("已载入文本：[%s]", text.replaceAll("\n", "\\n")));
+            logger.info(String.format("已载入文本：[%s]", text.replaceAll("\n", "\\\\n")));
         }
         textFresh();
     }
@@ -138,6 +138,8 @@ public class TextViewPane extends QRTextPane {
      */
     public void insertUpdates(char c) {
         final long time = System.currentTimeMillis();
+        // 更新滚动条
+        scrollUpdate();
         // 确保线程安全
         synchronized (lock) {
             // 取消之前的延迟任务（如果存在）
@@ -150,21 +152,21 @@ public class TextViewPane extends QRTextPane {
             accumulatedChars.append(c);
             // 设置延迟任务在 15 毫秒后执行
             futureTask = scheduler.schedule(() -> {
-                synchronized (lock) {
-                    // 执行累积的字符操作
-                    if (accumulatedChars.isEmpty()) {
-                        return;
-                    }
-                    try {
-                        lastInputTime.set(time);
-                        insertUpdateExecute(accumulatedChars.toString());
-                        TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
-                        // 重置累积的字符
-                        accumulatedChars.setLength(0);
-                    } catch (Exception e) {
-                        logger.log(Level.SEVERE, "insertUpdateExecute", e);
-                    }
+//                synchronized (lock) {
+                // 执行累积的字符操作
+                if (accumulatedChars.isEmpty()) {
+                    return;
                 }
+                try {
+                    lastInputTime.set(time);
+                    insertUpdateExecute(accumulatedChars.toString());
+                    TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
+                    // 重置累积的字符
+                    accumulatedChars.setLength(0);
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "insertUpdateExecute", e);
+                }
+//                }
             }, shortestInputTimeDiff, TimeUnit.MILLISECONDS);
         }
     }
@@ -250,12 +252,6 @@ public class TextViewPane extends QRTextPane {
         setCaretBlock();
         TypingData.currentTypedIndex--;
         int length = deleteText.length();
-//        if (TextLoad.TEXT_LOAD.isExtra()) {
-//            int offset = index - length;
-//            changeTextsStyle(offset, length, TextStyleManager.getDefaultStyle(), true);
-//            setCaretPosition(offset);
-//            TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(TypingData.currentTypedIndex));
-//        } else {
         TypingData.WRONG_WORDS_INDEX.remove(Integer.valueOf(preIndex));
         if (!TextTip.TEXT_TIP.loaded() || TextLoad.TEXT_LOAD.tipData == null) {
             changeTextsStyle(preIndex, length, TextStyleManager.getDefaultStyle(), true);
@@ -331,6 +327,32 @@ public class TextViewPane extends QRTextPane {
                 TextLoad.TEXT_LOAD.actualContentMix();
             }
             restart();
+        }
+    }
+
+
+    private void scrollUpdate() {
+        JScrollBar verticalScrollBar = addScrollPane().getVerticalScrollBar();
+        if (!verticalScrollBar.isVisible()) {
+            return;
+        }
+        //更新模式
+        final int[] lineAndRow = currentLineAndRow(TypingData.currentTypedIndex);
+        final int currentLine = lineAndRow[0];
+        final double currentRow = lineAndRow[1];
+        boolean updateCondition = currentRow == 0;
+        //行尾更新
+        if (!updateCondition) {
+            return;
+        }
+        final int lineWords = lineWords();
+        double startUpdateLine = 3;
+        if (currentLine >= startUpdateLine) {
+            QRComponentUtils.runLater(100, e -> {
+                int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
+                double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * linePerHeight();
+                verticalScrollBar.setValue((int) (Math.min(value, max)));
+            });
         }
     }
 
