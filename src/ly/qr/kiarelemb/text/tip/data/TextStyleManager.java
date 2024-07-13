@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.text.tip.data;
 
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.res.Info;
@@ -98,7 +98,7 @@ public class TextStyleManager {
             correctStyle = new SimpleAttributeSet();
             StyleConstants.setFontFamily(correctStyle, fontName);
             StyleConstants.setFontSize(correctStyle, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-            StyleConstants.setBackground(correctStyle, english ? QRColorsAndFonts.TEXT_COLOR_BACK : QRColorsAndFonts.CORRECT_COLOR_BACK);
+            StyleConstants.setBackground(correctStyle, english ? QRColorsAndFonts.FRAME_COLOR_BACK : QRColorsAndFonts.CORRECT_COLOR_BACK);
             StyleConstants.setForeground(correctStyle, QRColorsAndFonts.CORRECT_COLOR_FORE);
         }
         return correctStyle;
@@ -115,7 +115,7 @@ public class TextStyleManager {
             defaultStyle = new SimpleAttributeSet();
             StyleConstants.setFontFamily(defaultStyle, fontName);
             StyleConstants.setFontSize(defaultStyle, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-            StyleConstants.setBackground(defaultStyle, QRColorsAndFonts.TEXT_COLOR_BACK);
+            StyleConstants.setBackground(defaultStyle, QRColorsAndFonts.FRAME_COLOR_BACK);
         }
         return defaultStyle;
     }
@@ -146,7 +146,7 @@ public class TextStyleManager {
         SimpleAttributeSet sas = new SimpleAttributeSet();
         StyleConstants.setFontFamily(sas, fontName);
         StyleConstants.setFontSize(sas, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-        StyleConstants.setBackground(sas, QRColorsAndFonts.TEXT_COLOR_BACK);
+        StyleConstants.setBackground(sas, QRColorsAndFonts.FRAME_COLOR_BACK);
         attributeCopy(s, sas, StyleConstants.Foreground);
         attributeCopy(s, sas, StyleConstants.Bold);
         attributeCopy(s, sas, "tip-color");
@@ -161,7 +161,7 @@ public class TextStyleManager {
         SimpleAttributeSet sas = new SimpleAttributeSet();
         StyleConstants.setFontFamily(sas, fontName);
         StyleConstants.setFontSize(sas, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-        StyleConstants.setBackground(sas, QRColorsAndFonts.TEXT_COLOR_BACK);
+        StyleConstants.setBackground(sas, QRColorsAndFonts.FRAME_COLOR_BACK);
         StyleConstants.setBold(sas, bold);
         switch (type) {
             case 2, 1 -> {
@@ -264,12 +264,12 @@ public class TextStyleManager {
         final boolean isEnglishTyping = TextLoad.TEXT_LOAD != null && TextLoad.TEXT_LOAD.isEnglish();
         if (isEnglishTyping) {
             freshToEnglishModelStyle();
-            TextPane.TEXT_PANE.caret.setFontName(PREFERRED_ENGLISH_FONT_NAME).update();
+            TextViewPane.TEXT_VIEW_PANE.caret.setFontName(PREFERRED_ENGLISH_FONT_NAME).update();
             Font font = QRFontUtils.getFont(Keys.strValue(Keys.TEXT_FONT_NAME_LOOK), Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
             TyperTextPane.TYPER_TEXT_PANE.setFont(font);
         } else {
             freshToChineseModelStyle();
-            TextPane.TEXT_PANE.caret.setFontName(PREFERRED_CHINESE_FONT_NAME).update();
+            TextViewPane.TEXT_VIEW_PANE.caret.setFontName(PREFERRED_CHINESE_FONT_NAME).update();
         }
         logger.info(String.format("字体已刷新，当前是%s，字体名是%s", isEnglishTyping ? "英文" : "中文", PREFERRED_CHINESE_FONT_NAME));
     }

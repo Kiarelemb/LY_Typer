@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.input;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
@@ -209,7 +209,7 @@ public class InputManager {
             TyperTextPane.TYPER_TEXT_PANE.caret.setVisible(false);
         };
         TyperTextPane.TYPER_TEXT_PANE.addTypeActions(locationUpdate);
-        TextPane.TEXT_PANE.addSetTextFinishedAction(locationUpdate);
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(locationUpdate);
         loaded = true;
         inputWindow.setVisible(true);
     }
@@ -244,7 +244,7 @@ public class InputManager {
                 if (r != null) {
                     JScrollBar scrollBar = TyperTextPane.TYPER_TEXT_PANE.addScrollPane().getVerticalScrollBar();
                     int x = location.x + r.x;
-                    int y = location.y + r.y + r.height + TextPane.INSECT - (scrollBar.isVisible() ? scrollBar.getValue() : 0) - 5;
+                    int y = location.y + r.y + r.height + TextViewPane.INSECT - (scrollBar.isVisible() ? scrollBar.getValue() : 0) - 5;
                     setLocation(x, y);
                 } else {
                     //位于跟打面板底部
@@ -302,7 +302,7 @@ public class InputManager {
                     if (list != null) {
                         String input = list.get(0);
                         TyperTextPane.TYPER_TEXT_PANE.print(input, TypingData.currentTypedIndex);
-                        TextPane.TEXT_PANE.insertUpdateExecute(input);
+                        TextViewPane.TEXT_VIEW_PANE.insertUpdateExecute(input);
                         if (find(parts.getLast(), index)) {
                             clear();
                             e.consume();
@@ -322,7 +322,7 @@ public class InputManager {
                     if (list != null) {
                         String input = list.get(0);
                         TyperTextPane.TYPER_TEXT_PANE.print(input, TypingData.currentTypedIndex);
-                        TextPane.TEXT_PANE.insertUpdateExecute(input);
+                        TextViewPane.TEXT_VIEW_PANE.insertUpdateExecute(input);
                         setText(parts.getLast());
                         return;
                     }
@@ -366,7 +366,7 @@ public class InputManager {
 
         private void inputText(String input) {
             TyperTextPane.TYPER_TEXT_PANE.print(input, TypingData.currentTypedIndex);
-            TextPane.TEXT_PANE.insertUpdateExecute(input);
+            TextViewPane.TEXT_VIEW_PANE.insertUpdateExecute(input);
             clear();
         }
 

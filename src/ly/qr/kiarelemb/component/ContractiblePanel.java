@@ -17,13 +17,18 @@ import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRMenuItem;
 import swing.qr.kiarelemb.basic.QRRoundButton;
 import swing.qr.kiarelemb.combination.QRContractiblePanel;
+import swing.qr.kiarelemb.combination.QRPopupMenu;
 import swing.qr.kiarelemb.listener.QRMouseListener;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
+import swing.qr.kiarelemb.window.basic.QRDialog;
+import swing.qr.kiarelemb.window.basic.QRFrame;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -116,8 +121,8 @@ public class ContractiblePanel extends QRContractiblePanel {
         this.paraInfoPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_PARA_INFO, e));
         this.standardDataPanel.column().addFoldAction(e -> QRSwing.setGlobalSetting(Keys.WINDOW_COLUMN_FOLD_STANDARD_STATISTICS, e));
 
-        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> paraInfoUpdate());
-        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> standardDataUpdate());
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> paraInfoUpdate());
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> standardDataUpdate());
     }
 
     private void init_typingStatisticsPanel() {
@@ -137,6 +142,27 @@ public class ContractiblePanel extends QRContractiblePanel {
         QRComponentUtils.setBoundsAndAddToComponent(this.typingStatisticsPanel, STANDARD_LEN_LABEL, 75, 215, 170, 50);
         QRComponentUtils.setBoundsAndAddToComponent(this.typingStatisticsPanel, timeIconLabel, 25, 295, 32, 32);
         QRComponentUtils.setBoundsAndAddToComponent(this.typingStatisticsPanel, TIME_LABEL, 75, 280, 170, 50);
+
+        this.typingStatisticsPanel.column().addMouseListener();
+        this.typingStatisticsPanel.column().addMouseAction(QRMouseListener.TYPE.CLICK, e -> {
+            MouseEvent mouseEvent = (MouseEvent) e;
+            if (mouseEvent.getButton() == MouseEvent.BUTTON3 && SwingUtilities.getWindowAncestor(CONTRACTIBLE_PANEL) instanceof QRFrame) {
+                QRPopupMenu popupMenu = new QRPopupMenu(MainWindow.INSTANCE);
+                QRMenuItem removeToWindow = new QRMenuItem("移动到窗口");
+                removeToWindow.addClickAction(es -> {
+                    Container parent = ContractiblePanel.CONTRACTIBLE_PANEL.getParent();
+                    parent.remove(ContractiblePanel.CONTRACTIBLE_PANEL);
+                    parent.revalidate();
+                    parent.repaint();
+                    final int widths = ContractiblePanel.CONTRACTIBLE_PANEL.getWidth();
+                    QRDialog contractibleDialog = new ContractDialog(widths);
+                    contractibleDialog.setVisible(true);
+                });
+
+                popupMenu.add(removeToWindow);
+                popupMenu.show(this.typingStatisticsPanel.column(), mouseEvent.getX(), mouseEvent.getY());
+            }
+        });
     }
 
     private void init_stateInfoPanel() {
@@ -335,19 +361,12 @@ public class ContractiblePanel extends QRContractiblePanel {
 
         @Override
         protected void actionEvent(ActionEvent o) {
-            if (TextLoad.TEXT_LOAD == null) {
+            if (TextLoad.TEXT_LOAD == null || TextLoad.TEXT_LOAD.tipData == null
+                || !TextLoad.TEXT_LOAD.isText() || TextLoad.TEXT_LOAD.isEnglish()) {
                 return;
             }
-            if (TextLoad.TEXT_LOAD.tipData == null) {
-                return;
-            }
-            if (TextLoad.TEXT_LOAD.isText()) {
-                if (TextLoad.TEXT_LOAD.isEnglish()) {
-                    return;
-                }
-                StandardTipWindow stw = new StandardTipWindow();
-                stw.setVisible(true);
-            }
+            StandardTipWindow stw = new StandardTipWindow();
+            stw.setVisible(true);
         }
     }
 
@@ -443,4 +462,5 @@ public class ContractiblePanel extends QRContractiblePanel {
             this.groupLinked = groupLinked;
         }
     }
+
 }

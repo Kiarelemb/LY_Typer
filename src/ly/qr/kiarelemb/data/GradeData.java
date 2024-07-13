@@ -8,7 +8,9 @@ import ly.qr.kiarelemb.text.tip.data.TipCharStyleData;
 import method.qr.kiarelemb.utils.QRMathUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static ly.qr.kiarelemb.data.TypingData.*;
 import static method.qr.kiarelemb.utils.QRStringUtils.A_WHITE_SPACE;
@@ -173,7 +175,10 @@ public final class GradeData {
 
     @Override
     public String toString() {
-        return "#" + TextLoad.TEXT_LOAD.paragraph() + A_WHITE_SPACE + this.speed + A_WHITE_SPACE + this.keyStroke + A_WHITE_SPACE + this.codeLength + A_WHITE_SPACE + TextLoad.TEXT_LOAD.wordsLength() + A_WHITE_SPACE + backDeleteCount + A_WHITE_SPACE + backSpaceCount + A_WHITE_SPACE + enterCount + A_WHITE_SPACE + WRONG_WORDS_INDEX + A_WHITE_SPACE + keyCounts + A_WHITE_SPACE + keyAccuracyNum() + A_WHITE_SPACE + keyMethod() + A_WHITE_SPACE + this.timeCost + A_WHITE_SPACE + TextLoad.TEXT_LOAD.textMD5Short();
+        Object[] objects = {TextLoad.TEXT_LOAD.paragraph(), this.speed, this.keyStroke, this.codeLength, ContractiblePanel.STANDARD_LEN_LABEL.getText(), TextLoad.TEXT_LOAD.wordsLength(), backDeleteCount, backSpaceCount, enterCount, WRONG_WORDS_INDEX.size() + getWrongWords(), keyCounts, keyAccuracy(), keyMethod() + "%", this.timeCost, TextLoad.TEXT_LOAD.textMD5Short()};
+        StringJoiner joiner = new StringJoiner("\t");
+        Arrays.stream(objects).map(String::valueOf).forEach(joiner::add);
+        return joiner.toString();
     }
 
     //endregion
@@ -193,12 +198,12 @@ public final class GradeData {
         } else {
             grade =
                     "第" + TextLoad.TEXT_LOAD.paragraph() + "段" + " 速度" + speeds() + " 击键" + keyStrokes() + " 码长" + codeLength() +
-                            (!TextLoad.TEXT_LOAD.isEnglish() && TextTip.TEXT_TIP.loaded() && tipEnable ?
-                                    " 标顶" + ContractiblePanel.STANDARD_LEN_LABEL.getText() : "") + (Keys.boolValue(Keys.SEND_WORDS_NUM) ? TextLoad.TEXT_LOAD.isEnglish() ? " 词数" + TextLoad.TEXT_LOAD.englishWordsNum() : " 字数" + TextLoad.TEXT_LOAD.wordsLength() : "") + (Keys.boolValue(Keys.SEND_BACK_CHANGE) ? " 回改" + backDeleteCount : "") + (Keys.boolValue(Keys.SEND_BACKSPACE) ? " 退格" + backSpaceCount : "") + (Keys.boolValue(Keys.SEND_ENTER_COUNT) ? " 回车" + enterCount : "") + (Keys.boolValue(Keys.SEND_KEY_NUM) ? " 键数" + keyCounts : "") + (Keys.boolValue(Keys.SEND_WORD_WRONG) ? " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() : "") + (Keys.boolValue(Keys.SEND_KEY_ACCURACY) ? " 键准" + keyAccuracy() : "") + (Keys.boolValue(Keys.SEND_TIMES_PAUSE) ? " 暂停" + pausedTimes + "次" : "") + (Keys.boolValue(Keys.SEND_TIMES_RETYPE) ? " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" : "") + (Keys.boolValue(Keys.SEND_TIME_COST) ? " 用时" + timeCost() : "") + (Keys.boolValue(Keys.SEND_KEY_METHOD) ? " 键法" + keyMethods() : "") + (Keys.boolValue(Keys.SEND_METHOD_TYPE) ? " 指法" + typeMethod() : "")
+                    (!TextLoad.TEXT_LOAD.isEnglish() && TextTip.TEXT_TIP.loaded() && tipEnable ?
+                            " 标顶" + ContractiblePanel.STANDARD_LEN_LABEL.getText() : "") + (Keys.boolValue(Keys.SEND_WORDS_NUM) ? TextLoad.TEXT_LOAD.isEnglish() ? " 词数" + TextLoad.TEXT_LOAD.englishWordsNum() : " 字数" + TextLoad.TEXT_LOAD.wordsLength() : "") + (Keys.boolValue(Keys.SEND_BACK_CHANGE) ? " 回改" + backDeleteCount : "") + (Keys.boolValue(Keys.SEND_BACKSPACE) ? " 退格" + backSpaceCount : "") + (Keys.boolValue(Keys.SEND_ENTER_COUNT) ? " 回车" + enterCount : "") + (Keys.boolValue(Keys.SEND_KEY_NUM) ? " 键数" + keyCounts : "") + (Keys.boolValue(Keys.SEND_WORD_WRONG) ? " 错字" + WRONG_WORDS_INDEX.size() + getWrongWords() : "") + (Keys.boolValue(Keys.SEND_KEY_ACCURACY) ? " 键准" + keyAccuracy() : "") + (Keys.boolValue(Keys.SEND_TIMES_PAUSE) ? " 暂停" + pausedTimes + "次" : "") + (Keys.boolValue(Keys.SEND_TIMES_RETYPE) ? " 重打" + TextLoad.TEXT_LOAD.reTypeTimes() + "次" : "") + (Keys.boolValue(Keys.SEND_TIME_COST) ? " 用时" + timeCost() : "") + (Keys.boolValue(Keys.SEND_KEY_METHOD) ? " 键法" + keyMethods() : "") + (Keys.boolValue(Keys.SEND_METHOD_TYPE) ? " 指法" + typeMethod() : "")
 //			        + ((TaipinnguDeeta.highPerformModel || !BetterTyping.loaded || !tsd.tipEnable() || TextLoad
 //			        .TEXT_LOAD.isSingleOnly()) && (!OtherSetting.osd.tipWindowShow() || QRTextPane.tw == null ||
 //			        !QRTextPane.tw.isVisible()) && !TextLoad.TEXT_LOAD.isEnglish() ? "禁词提" : "")
-                            + (Keys.boolValue(Keys.SEND_METHOD_INPUT) ? " 输入法:" + inputMethod() : "") + (Keys.boolValue(Keys.SEND_SIGNATURE) ? " 个签:" + personalSignature() : "") + (Keys.boolValue(Keys.SEND_KEYBOARD) ? " 键盘:" + keyboard() : "") + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + (Keys.boolValue(Keys.SEND_SYSTEM_VERSION) ? A_WHITE_SPACE + systemVersion() : "");
+                    + (Keys.boolValue(Keys.SEND_METHOD_INPUT) ? " 输入法:" + inputMethod() : "") + (Keys.boolValue(Keys.SEND_SIGNATURE) ? " 个签:" + personalSignature() : "") + (Keys.boolValue(Keys.SEND_KEYBOARD) ? " 键盘:" + keyboard() : "") + " 正文:" + TextLoad.TEXT_LOAD.textMD5Short() + " 揽月" + Info.SOFTWARE_VERSION + (Keys.boolValue(Keys.SEND_SYSTEM_VERSION) ? A_WHITE_SPACE + systemVersion() : "");
         }
 //                (ssd.isSimplify() && tsd.title().isEmpty() ? "" : (ssd.title() ? " 称号：" + title() : ""));
         return getGradeContainsCode(grade);
@@ -267,10 +272,10 @@ public final class GradeData {
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (GradeData) obj;
         return Double.doubleToLongBits(this.totalTimeInMin) == Double.doubleToLongBits(that.totalTimeInMin) &&
-                Double.doubleToLongBits(this.speed) == Double.doubleToLongBits(that.speed) &&
-                Double.doubleToLongBits(this.keyStroke) == Double.doubleToLongBits(that.keyStroke) &&
-                Double.doubleToLongBits(this.codeLength) == Double.doubleToLongBits(that.codeLength) &&
-                Objects.equals(this.timeCost, that.timeCost);
+               Double.doubleToLongBits(this.speed) == Double.doubleToLongBits(that.speed) &&
+               Double.doubleToLongBits(this.keyStroke) == Double.doubleToLongBits(that.keyStroke) &&
+               Double.doubleToLongBits(this.codeLength) == Double.doubleToLongBits(that.codeLength) &&
+               Objects.equals(this.timeCost, that.timeCost);
     }
 
     @Override

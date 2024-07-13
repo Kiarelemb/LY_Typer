@@ -2,26 +2,31 @@ package ly.qr.kiarelemb;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.SplitPane;
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
+import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.data.TypingData;
+import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.menu.about.HotMapItem;
 import ly.qr.kiarelemb.menu.send.*;
 import ly.qr.kiarelemb.menu.type.LoadTextItem;
 import ly.qr.kiarelemb.menu.type.RetypeItem;
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.menu.type.TextMixItem;
-import ly.qr.kiarelemb.data.Keys;
-import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
+import method.qr.kiarelemb.utils.QRSleepUtils;
+import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRButton;
 import swing.qr.kiarelemb.window.basic.QRFrame;
 
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
 
 /**
@@ -98,6 +103,36 @@ public class MainWindow extends QRFrame {
         });
     }
 
+    private ThreadPoolExecutor WINDOW_FRESH_THREAD = QRThreadBuilder.singleThread("window.fresh");
+
+    public void startFreshening() {
+        if (!Keys.boolValue(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT)) {
+            return;
+        }
+        stopFreshening();
+        WINDOW_FRESH_THREAD = QRThreadBuilder.singleThread("window.fresh");
+        if (WINDOW_FRESH_THREAD.getQueue().isEmpty()) {
+            Future<Object> fresh = WINDOW_FRESH_THREAD.submit(() -> {
+                logger.config("进入高速刷新模式");
+                while ("true".equals(QRSwing.GLOBAL_PROP.get(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT))) {
+                    try {
+                        QRSleepUtils.sleep(2);
+                        TypingData.windowFresh();
+                    } catch (Exception ignore) {
+                    }
+                }
+                return null;
+            });
+        }
+    }
+
+    public void stopFreshening() {
+        if (!WINDOW_FRESH_THREAD.getQueue().isEmpty()) {
+            WINDOW_FRESH_THREAD.shutdownNow();
+            logger.config("退出高速刷新模式");
+        }
+    }
+
     public void grabFocus() {
         TyperTextPane.TYPER_TEXT_PANE.grabFocus();
     }
@@ -106,13 +141,14 @@ public class MainWindow extends QRFrame {
     public void windowOpened(WindowEvent e) {
         //加载一下词提窗口
         TipWindow.TIP_WINDOW.updateTipWindowLocation();
+        startFreshening();
     }
 
     @Override
     public void componentFresh() {
         super.componentFresh();
         TextStyleManager.updateAll();
-        TextPane.TEXT_PANE.simpleRestart();
+        TextViewPane.TEXT_VIEW_PANE.simpleRestart();
         if (MainWindow.INSTANCE.backgroundImageSet() && QRSwing.windowBackgroundImagePath != null) {
             String path = QRSwing.windowBackgroundImagePath;
             MainWindow.INSTANCE.setBackgroundImage(null);

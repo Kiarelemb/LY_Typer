@@ -1,6 +1,6 @@
 package ly.qr.kiarelemb.data;
 
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,7 +22,7 @@ public record TypeRecordData(long time, int length) {
     private static ArrayList<Long> typeKeyDiffLists = new ArrayList<>();
 
     static {
-        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> {
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> {
             TYPE_LIST_DATA.clear();
             typeWordsDiffLists.clear();
             typeKeyDiffLists.clear();

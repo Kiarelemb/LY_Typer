@@ -1,12 +1,12 @@
 package ly.qr.kiarelemb.menu.type;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.MenuItem;
 import ly.qr.kiarelemb.qq.LoadText;
-import method.qr.kiarelemb.utils.QRSystemUtils;
+import ly.qr.kiarelemb.res.Info;
 
 import java.awt.event.ActionEvent;
 
@@ -21,7 +21,7 @@ public class LoadTextItem extends MenuItem {
 
 	private LoadTextItem() {
 		super("载文", Keys.QUICK_KEY_MENU_TYPE_TEXT_LOAD);
-		setEnabled(QRSystemUtils.IS_WINDOWS);
+		setEnabled(Info.IS_WINDOWS);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class LoadTextItem extends MenuItem {
 		if (ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			String text = LoadText.getLoadText();
 			if (text != null && !text.isEmpty()) {
-				TextPane.TEXT_PANE.setTypeText(text);
+				TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
 				return;
 			}
 		}

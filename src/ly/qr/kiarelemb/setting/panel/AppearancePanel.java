@@ -82,7 +82,7 @@ public class AppearancePanel extends SettingPanel {
 
         lookSizeSpinner.addChangeListener(e -> {
             SettingsItem.SAVE_ACTIONS.put("look.font.size", ar -> {
-                TextPane.TEXT_PANE.componentFresh();
+                TextViewPane.TEXT_VIEW_PANE.componentFresh();
                 updateAction.action(null);
                 QRLoggerUtils.log(logger, Level.INFO, "设置看打区字体大小为： %s", lookSizeSpinner.getValue());
             });

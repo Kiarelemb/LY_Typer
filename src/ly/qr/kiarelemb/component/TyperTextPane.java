@@ -1,10 +1,9 @@
 package ly.qr.kiarelemb.component;
 
-import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
-import ly.qr.kiarelemb.input.InputManager;
+import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.basic.QRScrollPane;
@@ -32,12 +31,13 @@ import java.util.logging.Logger;
  **/
 public class TyperTextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
-    public KeyListener globalKeyListener = null;
+    public QRGlobalKeyboardHookListener globalKeyListener = null;
+    public KeyboardFocusManager keyboardFocusManager = null;
     private final LinkedList<QRActionRegister> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
 
     private final Map<Integer, Character> specialKeyMap = Map.of(
-            (int) 'B', 'b',
+            (int) 'B', 'B',
             (int) ' ', '_',
             KeyEvent.VK_ENTER, '↵',
             KeyEvent.VK_SHIFT, '↑',
@@ -52,8 +52,7 @@ public class TyperTextPane extends QRTextPane {
         timeCountInit();
         setOpaque(false);
         addScrollPane().setOpaque(false);
-        this.typeActions.add(e -> scrollUpdate());
-        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> {
+        TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> {
             clear();
             this.caret.setVisible(true);
             setFont(QRFontUtils.getFont(TypingData.fontName, TypingData.typefontSize));
@@ -62,31 +61,6 @@ public class TyperTextPane extends QRTextPane {
 
     public void addTypeActions(QRActionRegister ar) {
         this.typeActions.add(ar);
-    }
-
-    private void scrollUpdate() {
-        JScrollBar verticalScrollBar = TextPane.TEXT_PANE.addScrollPane().getVerticalScrollBar();
-        if (!verticalScrollBar.isVisible()) {
-            return;
-        }
-        //更新模式
-        final int[] lineAndRow = TextPane.TEXT_PANE.currentLineAndRow(TypingData.currentTypedIndex);
-        final int currentLine = lineAndRow[0];
-        final double currentRow = lineAndRow[1];
-        boolean updateCondition = currentRow == 0;
-        //行尾更新
-        if (!updateCondition) {
-            return;
-        }
-        final int lineWords = TextPane.TEXT_PANE.lineWords();
-        double startUpdateLine = 3;
-        if (currentLine >= startUpdateLine) {
-            QRComponentUtils.runLater(100, e -> {
-                int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
-                double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * TextPane.TEXT_PANE.linePerHeight();
-                verticalScrollBar.setValue((int) (Math.min(value, max)));
-            });
-        }
     }
 
     private static boolean keyCheck(KeyEvent e) {
@@ -106,7 +80,7 @@ public class TyperTextPane extends QRTextPane {
         return false;
     }
 
-     /**
+    /**
      * 每输入或回改事件，即光标移动事件
      */
     public void runTypedActions() {
@@ -114,20 +88,22 @@ public class TyperTextPane extends QRTextPane {
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
-        if (!MainWindow.INSTANCE.isFocused() && !InputManager.INPUT_MANAGER.isLoaded() || TextLoad.TEXT_LOAD == null) {
+        TypingData.windowFresh();
+        if (!this.hasFocus() || TextLoad.TEXT_LOAD == null) {
             return;
         }
         //屏蔽组合键
         int keyCode = keyStroke.getKeyCode();
         char keyChar = (char) keyCode;
-        int modifiers = keyStroke.getModifiers();
-         if ((keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12) || (keyCode == KeyEvent.VK_ALT
-             || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
-             || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS) && (!TypingData.typing && TypingData.typeEnd)) {
+        if ((keyCode == KeyEvent.VK_ALT || keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_SHIFT
+             || keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_WINDOWS || keyCode >= KeyEvent.VK_F1 && keyCode <= KeyEvent.VK_F12)
+            && !TypingData.typing) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
-        if (TypingData.typeEnd) {
+        int modifiers = keyStroke.getModifiers();
+        if (modifiers != 0 && !TypingData.typing || TypingData.typeEnd) {
+            QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
 
@@ -172,21 +148,29 @@ public class TyperTextPane extends QRTextPane {
     }
 
     private void timeCountInit() {
-        if (QRSystemUtils.IS_WINDOWS) {
-            this.globalKeyListener = new KeyListener();
+        if (Info.IS_WINDOWS) {
+            this.globalKeyListener = new QRGlobalKeyboardHookListener();
+            this.globalKeyListener.addKeyListenerAction(true, e -> {
+                KeyStroke keyStroke = (KeyStroke) e;
+                keyPressLead(keyStroke);
+            });
         } else {
-            KeyboardFocusManager keyRecord = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-            keyRecord.addKeyEventPostProcessor(e -> {
+            this.keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            this.keyboardFocusManager.addKeyEventPostProcessor(e -> {
                 if (e.getID() != KeyEvent.KEY_LAST) {
                     return false;
                 }
-                try {
-                    keyPressAction(QRStringUtils.getKeyStroke(e), System.currentTimeMillis());
-                } catch (Exception ex) {
-                    logger.log(Level.SEVERE, "timeCountInit", ex);
-                }
+                keyPressLead(QRStringUtils.getKeyStroke(e));
                 return true;
             });
+        }
+    }
+
+    private void keyPressLead(KeyStroke e) {
+        try {
+            keyPressAction(e, System.currentTimeMillis());
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "keyPressLoad", ex);
         }
     }
 
@@ -215,10 +199,10 @@ public class TyperTextPane extends QRTextPane {
         try {
             char keyChar = e.getKeyChar();
             if (keyChar == KeyEvent.VK_BACK_SPACE) {
-                TextPane.TEXT_PANE.deleteUpdates(e);
+                TextViewPane.TEXT_VIEW_PANE.deleteUpdates(e);
                 return;
             }
-            TextPane.TEXT_PANE.insertUpdates(keyChar);
+            TextViewPane.TEXT_VIEW_PANE.insertUpdates(keyChar);
         } catch (Exception e1) {
             logger.log(Level.SEVERE, "keyType", e1);
         }
@@ -250,7 +234,7 @@ public class TyperTextPane extends QRTextPane {
         if (QRStringUtils.markCount(text, '\n') == 1) {
             text = "剪贴板\n" + text;
         }
-        TextPane.TEXT_PANE.setTypeText(text);
+        TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
     }
 
     @Override
@@ -278,16 +262,5 @@ public class TyperTextPane extends QRTextPane {
     public void componentFresh() {
         this.textFont = QRColorsAndFonts.STANDARD_FONT_TEXT.deriveFont((float) Keys.intValue(Keys.TEXT_FONT_SIZE_TYPE));
         super.componentFresh();
-    }
-
-    public class KeyListener extends QRGlobalKeyboardHookListener {
-        @Override
-        protected void keyPress(KeyStroke keyStroke) {
-            try {
-                keyPressAction(keyStroke, System.currentTimeMillis());
-            } catch (Exception e) {
-                logger.log(Level.SEVERE, "timeCountInit", e);
-            }
-        }
     }
 }

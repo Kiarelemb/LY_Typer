@@ -67,7 +67,7 @@ public abstract class AbstractTextTip {
             } else {
                 QRLoggerUtils.log(logger, Level.WARNING, "词提文件不存在，路径：[%s]", filePath);
             }
-            QRLoggerUtils.log(logger, Level.CONFIG, "词提实例化完成，实体类名字：[%s]，词提数据：[%s]", TEXT_TIP.getClass().getSimpleName(), this);
+            QRLoggerUtils.log(logger, Level.CONFIG, "词提实例化完成，实体类名字：[%s]，%s", TEXT_TIP.getClass().getSimpleName(), this);
         }
     }
 
@@ -442,7 +442,7 @@ public abstract class AbstractTextTip {
         return this.loaded;
     }
 
-    static class SubscriptInstance {
+    protected static class SubscriptInstance {
         private final HashMap<Integer, PreInfo> preInfoMap;
         private int next;//下一跳
         private String word;

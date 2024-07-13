@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.text.tip;
 
 import ly.qr.kiarelemb.MainWindow;
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
@@ -35,7 +35,7 @@ public class TipWindow extends QREmptyDialog {
             }
         });
 
-        TextPane.TEXT_PANE.addSetTextFinishedAction(e -> {
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> {
             if (TypingData.tipEnable && TextLoad.TEXT_LOAD.tipData != null) {
                 if (TypingData.tipWindowEnable) {
                     setVisible(true);
@@ -50,20 +50,20 @@ public class TipWindow extends QREmptyDialog {
 
     @Override
     public void updateLocation() {
-        if (TextPane.TEXT_PANE.isShowing()) {
+        if (TextViewPane.TEXT_VIEW_PANE.isShowing()) {
             SwingUtilities.invokeLater(() -> {
                 pack();
-                Point location = TextPane.TEXT_PANE.getLocationOnScreen();
+                Point location = TextViewPane.TEXT_VIEW_PANE.getLocationOnScreen();
                 //位置跟随光标
                 if (TypingData.tipWindowLocation == 0) {
-                    Rectangle2D r2 = TextPane.TEXT_PANE.positionRectangle(TypingData.currentTypedIndex);
+                    Rectangle2D r2 = TextViewPane.TEXT_VIEW_PANE.positionRectangle(TypingData.currentTypedIndex);
                     if (r2 != null) {
                         Rectangle r = r2.getBounds();
                         int x = location.x + r.x;
                         int y = location.y + r.y - getHeight() - 5;
                         setLocation(x, y);
                     } else {
-                        setLocation(location.x + TextPane.INSECT, location.y + TextPane.INSECT - getHeight());
+                        setLocation(location.x + TextViewPane.INSECT, location.y + TextViewPane.INSECT - getHeight());
                     }
                 } else {
                     setLocation(MainWindow.INSTANCE.getX() + (MainWindow.INSTANCE.getWidth() - getWidth()) / 2, MainWindow.INSTANCE.getY() + 3);

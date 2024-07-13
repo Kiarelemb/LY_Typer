@@ -7,6 +7,8 @@ public interface TipStyleData {
 
     SimpleAttributeSet getStyle();
 
+    void clearStyle();
+
     String lastChar();
 
     int index();

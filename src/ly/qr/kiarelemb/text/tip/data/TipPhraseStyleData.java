@@ -48,6 +48,11 @@ public final class TipPhraseStyleData implements TipStyleData {
     }
 
     @Override
+    public void clearStyle() {
+        style = null;
+    }
+
+    @Override
     public int hashCode() {
         int result = this.index;
         result = 31 * result + this.phrase.hashCode();

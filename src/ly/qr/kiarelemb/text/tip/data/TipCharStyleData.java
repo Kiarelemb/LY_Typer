@@ -48,6 +48,11 @@ public final class TipCharStyleData implements TipStyleData {
     }
 
     @Override
+    public void clearStyle() {
+        style = null;
+    }
+
+    @Override
     public String lastChar() {
         return QRStringUtils.lastChar(this.code);
     }

@@ -43,6 +43,8 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         if (mapSize == 0) {
             return;
         }
+        // 去除特殊字符
+        map.remove('⊗');
         List<Float> list = new ArrayList<>(mapSize);
         float totalKeyCount = map.values().stream().mapToInt(Integer::intValue).sum();
         map.forEach((c, i) -> {
@@ -50,6 +52,7 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
             list.add(count);
             dataMap.put(c, count);
         });
+        // 降序排序
         list.sort(Comparator.reverseOrder());
 
         // factor: 需要扩大的倍数，以对于高占比的数据能实现爆红
@@ -160,15 +163,16 @@ public class KeyBoardPanel extends QRKeyBoardPanel {
         private final KeyBoardPanel otherKeyBoardPanel;
 
         public TabContentPanel(KeyBoardPanel keyBoardPanel, KeyBoardPanel otherKeyBoardPanel) {
+            super(new BorderLayout());
             this.keyBoardPanel = keyBoardPanel;
             this.otherKeyBoardPanel = otherKeyBoardPanel;
-            setLayout(new BorderLayout());
             add(keyBoardPanel);
         }
 
         @Override
         protected void thisTabSelectChangeAction(QRTabSelectEvent event) {
             QRComponentUtils.runLater(100, e -> {
+                // 清除另一个键盘的所有键背景色
                 otherKeyBoardPanel.labelList.forEach(label -> label.setBackground(new Color(1, 0, 0, 0)));
                 ArrayList<Runnable> runs = new ArrayList<>(keyBoardPanel.runs);
                 // 为线程乱序

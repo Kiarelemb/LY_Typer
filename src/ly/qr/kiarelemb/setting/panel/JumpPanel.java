@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
  **/
 public class JumpPanel extends QRPanel {
     public JumpPanel(QRTreeTabbedPane treeTabbedPane, SettingPanel... panels) {
-        setLayout(null);
+        super(null);
         for (int i = 0; i < panels.length; i++) {
             QRPanel panel = panels[i];
             QRLabel label = new QRHandLabel(panel.getName()) {

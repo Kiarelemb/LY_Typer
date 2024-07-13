@@ -1,7 +1,7 @@
 package ly.qr.kiarelemb.text;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
-import ly.qr.kiarelemb.component.TextPane;
+import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.text.tip.AbstractTextTip;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
@@ -303,7 +303,7 @@ public class TextLoad {
         //更新
         textUpdate();
         updateTipsWithoutEnable();
-        TextPane.TEXT_PANE.textFresh();
+        TextViewPane.TEXT_VIEW_PANE.textFresh();
         this.isMixing = true;
     }
 
