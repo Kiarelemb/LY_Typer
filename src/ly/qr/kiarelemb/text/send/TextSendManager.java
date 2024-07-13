@@ -94,6 +94,8 @@ public class TextSendManager {
     public static void endSendText() {
         setData(null);
         control(false);
+        //TODO 更新剩余字数
+
         logger.info("发文结束！");
     }
 

@@ -1,6 +1,7 @@
 package ly.qr.kiarelemb.text.tip;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  * @author Kiarelemb QR
@@ -13,6 +14,9 @@ public class TextTip extends AbstractTextTip {
     @Override
     public void changeColorTip(String article) {
         int articleLength = article.length();
+        if (articleLength == 0) {
+            return;
+        }
         String symbol = "。，";
         String codeTemp;
         int maxLen = this.codeLength + 1;
@@ -28,8 +32,8 @@ public class TextTip extends AbstractTextTip {
                 } else {
                     int codeLen = codeTemp.length();
                     if (articleLength > i + 1 && codeTemp.endsWith("_")
-                            && symbol.contains(this.subscriptInstances[i + 1].getWord()) && !(articleLength > i + 2
-                            && this.symbolEntry.contains(this.subscriptInstances[i + 1].getWord() + this.subscriptInstances[i + 2].getWord()))) {
+                        && symbol.contains(this.subscriptInstances[i + 1].getWord()) && !(articleLength > i + 2
+                                                                                          && this.symbolEntry.contains(this.subscriptInstances[i + 1].getWord() + this.subscriptInstances[i + 2].getWord()))) {
                         codeTemp = codeTemp.substring(0, codeLen - 1);
                     } else if (articleLength > i + 1 && codeTemp.endsWith("_") && ((three42 && codeLen == 3) || (!three42 && codeLen == maxLen))) {
                         codeTemp = codeTemp.substring(0, codeLen - 1);
@@ -120,7 +124,7 @@ public class TextTip extends AbstractTextTip {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "changeColorTip", e);
         }
     }
 }

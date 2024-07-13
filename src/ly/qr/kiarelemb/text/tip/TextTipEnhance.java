@@ -4,6 +4,7 @@ import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  * @author 取自长流，QR狂改
@@ -140,7 +141,7 @@ public class TextTipEnhance extends AbstractTextTip {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "changeColorTip", e);
 		}
 	}
 }

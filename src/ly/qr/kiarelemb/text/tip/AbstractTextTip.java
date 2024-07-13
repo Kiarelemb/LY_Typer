@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  * @create 2023-02-03 12:31
  **/
 public abstract class AbstractTextTip {
+    protected final Logger logger = QRLoggerUtils.getLogger(AbstractTextTip.class);
     protected AbstractTextTip.SubscriptInstance[] subscriptInstances;
     protected HashMap<String, String> wordCode;
     protected ArrayList<String> symbolEntry;
@@ -30,11 +31,13 @@ public abstract class AbstractTextTip {
     protected boolean loaded = false;
     protected boolean three42 = false;
     protected String filePath;
+    private int pieces = 0;
+    private int fileReadableLines = 0;
+    private int fileLines = 0;
 
     private final ArrayList<QRActionRegister> loadActions = new ArrayList<>();
     private final ArrayList<QRActionRegister> disloadActions = new ArrayList<>();
     public static AbstractTextTip TEXT_TIP;
-    protected static Logger logger = QRLoggerUtils.getLogger(AbstractTextTip.class);
 
     static {
         if (Keys.boolValue(Keys.TEXT_TIP_ENHANCE)) {
@@ -391,7 +394,9 @@ public abstract class AbstractTextTip {
             this.wordsCodeList.add(moreTipHash);
         }
         QRFileUtils.fileReaderWithUtf8(tipFilePath, "\t", ((lineText, split) -> {
+            fileLines++;
             if (split.length == 2) {
+                fileReadableLines++;
                 final String ch = split[0];
                 final String bm = split[1];
                 String temp;
@@ -406,9 +411,11 @@ public abstract class AbstractTextTip {
                     if (this.wordCode.containsKey(ch)) {
                         if (this.wordCode.get(ch).length() > length) {
                             this.wordCode.put(ch, bm);
+                            pieces++;
                         }
                     } else {
                         this.wordCode.put(ch, bm);
+                        pieces++;
                     }
                 } else if (chLength >= 2) {
                     final int thisLen = chLength - 2;
@@ -425,9 +432,11 @@ public abstract class AbstractTextTip {
                     if (this.wordsCodeList.get(i).containsKey(split[0])) {
                         if (this.wordsCodeList.get(i).get(ch).length() > length) {
                             this.wordsCodeList.get(i).put(ch, bm);
+                            pieces++;
                         }
                     } else {
                         this.wordsCodeList.get(i).put(ch, bm);
+                        pieces++;
                     }
                 }
                 if (topSymbol.contains(ch.substring(0, 1))) {
@@ -435,7 +444,9 @@ public abstract class AbstractTextTip {
                 }
             }
         }));
-        this.loaded = true;
+        if (pieces > 5000) {
+            this.loaded = true;
+        }
     }
 
     public boolean loaded() {
@@ -581,11 +592,14 @@ public abstract class AbstractTextTip {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", "词提各项数据：[", "]")
+        return new StringJoiner("；", "词提各项数据：[", "]")
                 .add("加载状态：" + (loaded ? "成功" : "失败"))
                 .add("方案最大长度：" + codeLength)
                 .add("选重键：'" + selection + "'")
-                .add("是否是42顶：" + (three42 ? "是" : "否"))
+                .add("42顶：" + (three42 ? "是" : "否"))
+                .add("词提行数：" + fileLines)
+                .add("词提有效行数：" + fileReadableLines)
+                .add("载入条数：" + pieces)
                 .add("码表路径：'" + filePath + "'")
                 .toString();
     }
