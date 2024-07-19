@@ -24,7 +24,6 @@ import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -68,9 +67,9 @@ public class TextViewPane extends QRTextPane {
         });
         this.setTextFinishedActions.add(e -> {
             setCaretPosition(0);
-            indexesUpdate();
             TextViewPane.TEXT_VIEW_PANE.scrollPane.locationFresh();
             MainWindow.INSTANCE.grabFocus();
+            QRComponentUtils.runLater(200, es -> indexesUpdate());
         });
     }
 
@@ -329,6 +328,7 @@ public class TextViewPane extends QRTextPane {
         }
     }
 
+    private int preLine = -1;
 
     private void scrollUpdate() {
         JScrollBar verticalScrollBar = addScrollPane().getVerticalScrollBar();
@@ -336,13 +336,10 @@ public class TextViewPane extends QRTextPane {
             return;
         }
         final int[] lineAndRow = currentLineAndRow(TyperTextPane.TYPER_TEXT_PANE.caret.getDot());
-         final int currentLine = lineAndRow[0];
+        final int currentLine = lineAndRow[0];
         final double currentRow = lineAndRow[1];
-        Rectangle2D rectangle2D = positionRectangle(TyperTextPane.TYPER_TEXT_PANE.caret.getDot());
-        boolean updateCondition = false;
-        if (rectangle2D != null) {
-            updateCondition = rectangle2D.getX() == 10;
-        }
+        boolean updateCondition = currentLine > preLine;
+        preLine = currentLine;
         //行尾更新
         if (!updateCondition) {
             return;
@@ -432,7 +429,6 @@ public class TextViewPane extends QRTextPane {
     @Override
     protected void mousePress(MouseEvent e) {
         caretPositionAdjust();
-        MainWindow.INSTANCE.grabFocus();
     }
 
     private boolean paintLock = false;

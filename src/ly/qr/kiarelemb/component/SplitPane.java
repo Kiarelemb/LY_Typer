@@ -73,11 +73,11 @@ public class SplitPane extends QRSplitPane {
             }
         };
 
-        topPanel.add(tip, BorderLayout.CENTER);
+        topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(1), BorderLayout.CENTER);
         bottomPanel.add(TypeTabbedPane.TYPE_TABBED_PANE, BorderLayout.CENTER);
 
 
-        setTopComponent(topPanel);
+        setTopComponent(tip);
         setBottomComponent(bottomPanel);
 
         //更新编码提示的位置
@@ -89,8 +89,8 @@ public class SplitPane extends QRSplitPane {
     public void switchTipPanel() {
         if (notSwitched) {
             notSwitched = false;
-            topPanel.remove(0);
-            topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(1), BorderLayout.CENTER);
+            setTopComponent(null);
+            setTopComponent(topPanel);
         }
     }
 
