@@ -1,5 +1,7 @@
 package ly.qr.kiarelemb.component;
 
+import swing.qr.kiarelemb.basic.QRTextPane;
+
 import java.awt.*;
 
 /**
@@ -9,7 +11,7 @@ import java.awt.*;
  * @description TODO
  * @create 2024/7/11 下午9:52
  */
-public class HistoryGradePane extends TextPane {
+public class HistoryGradePane extends QRTextPane {
     public static final HistoryGradePane HISTORY_GRADE_PANE = new HistoryGradePane();
 
     private HistoryGradePane() {

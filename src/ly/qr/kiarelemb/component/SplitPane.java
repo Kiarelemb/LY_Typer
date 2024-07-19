@@ -5,10 +5,12 @@ import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.TipPanel;
 import swing.qr.kiarelemb.QRSwing;
+import swing.qr.kiarelemb.basic.QRLabel;
 import swing.qr.kiarelemb.basic.QRPanel;
 import swing.qr.kiarelemb.basic.QRSplitPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,6 +18,8 @@ import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author Kiarelemb QR
@@ -26,24 +30,11 @@ import java.awt.*;
 public class SplitPane extends QRSplitPane {
     public final SplitTipPanel tipPanel;
     public static final SplitPane SPLIT_PANE = new SplitPane();
-    private final QRPanel topPanel;
-    private final QRPanel bottomPanel;
+    public final QRPanel topPanel;
+    public final QRPanel bottomPanel;
 
     private SplitPane() {
         super(JSplitPane.VERTICAL_SPLIT);
-
-        setOpaque(false);
-        //底部的面板需要放词提
-        this.tipPanel = new SplitTipPanel();
-        this.tipPanel.setPreferredSize(200, 100);
-        topPanel = new QRPanel(false, new BorderLayout());
-        bottomPanel = new QRPanel(false, new BorderLayout());
-
-        topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(), BorderLayout.CENTER);
-        bottomPanel.add(TypeTabbedPane.TYPE_TABBED_PANE, BorderLayout.CENTER);
-
-        setTopComponent(topPanel);
-        setBottomComponent(bottomPanel);
 
         int value;
         try {
@@ -54,8 +45,53 @@ public class SplitPane extends QRSplitPane {
         }
         setUI(new SplitPaneUI());
         setDividerLocation(value);
+
+        setOpaque(false);
+        //底部的面板需要放词提
+        this.tipPanel = new SplitTipPanel();
+        topPanel = new QRPanel(false, new BorderLayout());
+        bottomPanel = new QRPanel(false, new BorderLayout());
+        topPanel.setPreferredSize(new Dimension(100, value));
+
+
+        QRLabel tip = new QRLabel() {
+            final Font f = QRColorsAndFonts.DEFAULT_FONT_MENU.deriveFont((float) Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
+
+            @Override
+            public void paintBorder(Graphics g) {
+
+                String[] split = "F2 | 跟打器发文\nF4 | 载文\nF5 | 换群\nCtrl V | 粘贴载文\nCtrl Z | 设置".split("\n");
+                int height = getDividerLocation();
+                int size = f.getSize();
+                float rest = height - 5 * size;
+                float div = rest / 6;
+                float[] y = {(-size - div) * 2, -size - div, 0, size + div, (size + div) * 2};
+                for (int i = 0; i < split.length; i++) {
+                    String s = split[i];
+                    QRComponentUtils.componentStringDraw(this, g, s, f, QRColorsAndFonts.TEXT_COLOR_FORE, height / 2f + y[i]);
+                }
+            }
+        };
+
+        topPanel.add(tip, BorderLayout.CENTER);
+        bottomPanel.add(TypeTabbedPane.TYPE_TABBED_PANE, BorderLayout.CENTER);
+
+
+        setTopComponent(topPanel);
+        setBottomComponent(bottomPanel);
+
         //更新编码提示的位置
         updateTipPaneLocation();
+    }
+
+    private boolean notSwitched = true;
+
+    public void switchTipPanel() {
+        if (notSwitched) {
+            notSwitched = false;
+            topPanel.remove(0);
+            topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(1), BorderLayout.CENTER);
+        }
     }
 
     /**
@@ -69,7 +105,6 @@ public class SplitPane extends QRSplitPane {
                 bottomPanel.remove(this.tipPanel);
                 this.revalidate();
                 this.repaint();
-                TypingData.windowFresh();
             }
             return;
         }
@@ -139,11 +174,31 @@ public class SplitPane extends QRSplitPane {
         @Override
         public BasicSplitPaneDivider createDefaultDivider() {
             return new BasicSplitPaneDivider(this) {
+                {
+                    {
+                        addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                                divider.setCursor(Cursor.getDefaultCursor());
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                                int orientation = getOrientation();
+                                Cursor cursor = new Cursor(orientation == JSplitPane.VERTICAL_SPLIT ? Cursor.N_RESIZE_CURSOR : Cursor.W_RESIZE_CURSOR);
+                                divider.setCursor(cursor);
+                            }
+                        });
+                    }
+                }
+
                 public void setBorder(Border b) {
                 }
 
                 @Override
                 public void paint(Graphics g) {
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, QRSwing.windowImageSet ? 0.5f : 1f));
                     g.setColor(QRColorsAndFonts.LINE_COLOR);
                     Dimension size = getSize();
                     g.fillRect(0, 0, size.width, size.height);
@@ -153,7 +208,6 @@ public class SplitPane extends QRSplitPane {
                         int width = size.width * TypingData.currentTypedIndex / TextLoad.TEXT_LOAD.wordsLength();
                         g.fillRect(0, size.height / 2, width, size.height - size.height / 2);
                     }
-                    super.paint(g);
                 }
             };
         }

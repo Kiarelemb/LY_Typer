@@ -263,6 +263,7 @@ public class Keys {
     /**
      * 背景图的高强度刷新，{@code false} （默认）不启用，{@code true} 启用
      */
+    @Deprecated
     public static final String WINDOW_BACKGROUND_FRESH_ENHANCEMENT = "window.background.fresh.enhancement";
 
 

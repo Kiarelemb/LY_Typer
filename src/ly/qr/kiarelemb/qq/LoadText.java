@@ -22,7 +22,7 @@ public class LoadText {
         }
         //复制群内消息
         QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
-        QRSleepUtils.sleep(100);
+        QRSleepUtils.sleep(1500);
         //取得剪贴板内容
         String text = QRSystemUtils.getSysClipboardText();
         if (text == null || text.isEmpty()) {
@@ -30,6 +30,7 @@ public class LoadText {
             return null;
         }
         if (ContractiblePanel.GROUP_BUTTON.isQQNT()) {
+            System.out.println("QQ NT: " + text);
             return text;
         } else {
             //将内容分割成段

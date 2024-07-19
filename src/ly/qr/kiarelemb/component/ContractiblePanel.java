@@ -123,6 +123,7 @@ public class ContractiblePanel extends QRContractiblePanel {
 
         TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> paraInfoUpdate());
         TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> standardDataUpdate());
+
     }
 
     private void init_typingStatisticsPanel() {
@@ -432,8 +433,7 @@ public class ContractiblePanel extends QRContractiblePanel {
                     }
                 }
                 this.setGroupLinked(true);
-                TypingData.windowFresh();
-            });
+                            });
         }
 
         /**

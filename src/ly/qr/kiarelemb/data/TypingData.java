@@ -228,7 +228,7 @@ public class TypingData {
 
     public synchronized static void windowFresh() {
         if (MainWindow.INSTANCE.backgroundImageSet()) {
-            MainWindow.INSTANCE.getContentPane().repaint();
+//            MainWindow.INSTANCE.getContentPane().repaint();
         }
     }
 

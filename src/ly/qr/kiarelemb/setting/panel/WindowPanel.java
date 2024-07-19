@@ -3,14 +3,15 @@ package ly.qr.kiarelemb.setting.panel;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.CheckBox;
 import ly.qr.kiarelemb.component.LineSeparatorLabel;
-import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.setting.SettingWindow;
 import method.qr.kiarelemb.utils.QRFileUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
 import swing.qr.kiarelemb.QRSwing;
-import swing.qr.kiarelemb.assembly.QRBackgroundBorder;
-import swing.qr.kiarelemb.basic.*;
+import swing.qr.kiarelemb.basic.QRLabel;
+import swing.qr.kiarelemb.basic.QRRoundButton;
+import swing.qr.kiarelemb.basic.QRSlider;
+import swing.qr.kiarelemb.combination.QRBorderContentPanel;
 import swing.qr.kiarelemb.listener.QRMouseListener;
 import swing.qr.kiarelemb.resource.QRSwingInfo;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
@@ -18,8 +19,6 @@ import swing.qr.kiarelemb.utils.QRFilePathTextField;
 import swing.qr.kiarelemb.utils.QRFileSelectButton;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 
@@ -45,7 +44,6 @@ public class WindowPanel extends SettingPanel {
         CheckBox windowScreenAdsorbCheckBox = new CheckBox("启用屏幕吸附", QRSwing.WINDOW_ABSORB);
         CheckBox windowBackgroundImageSetCheckBox = new CheckBox("启用背景图", QRSwing.WINDOW_IMAGE_ENABLE);
         QRRoundButton backgroundImageSetBtn = new QRRoundButton("背景图设置");
-        CheckBox freshEnhancementCheckBox = new CheckBox("启用高强度刷新", Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT);
 
         windowRoundCheckBox.setToolTipText("启用后，包括禅出的对话框在内，窗体都将采用圆角。");
         windowOnTopCheckBox.setToolTipText("启用后，主窗体将置顶。可能对于一些中文输入法来说，该功能不太支持。");
@@ -76,17 +74,6 @@ public class WindowPanel extends SettingPanel {
             SettingsItem.SAVE_ACTIONS.put("window.alpha", es -> QRSystemUtils.setWindowTrans(MainWindow.INSTANCE, alpha));
         });
 
-        freshEnhancementCheckBox.addClickAction(e -> {
-            boolean checked = freshEnhancementCheckBox.checked();
-            SettingsItem.SAVE_ACTIONS.put("window.fresh.enhancement", es -> {
-                if (checked) {
-                    MainWindow.INSTANCE.startFreshening();
-                } else {
-                    MainWindow.INSTANCE.stopFreshening();
-                }
-            });
-        });
-
         windowTransSlider.setEnabled(!windowBackgroundImageSetCheckBox.checked());
         backgroundImageSetBtn.setEnabled(windowBackgroundImageSetCheckBox.checked());
 
@@ -100,14 +87,14 @@ public class WindowPanel extends SettingPanel {
         QRComponentUtils.setBoundsAndAddToComponent(this, windowScreenAdsorbCheckBox, 50, 295, 140, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, windowBackgroundImageSetCheckBox, 50, 340, 140, 30);
         QRComponentUtils.setBoundsAndAddToComponent(this, backgroundImageSetBtn, 200, 340, 125, 30);
-        QRComponentUtils.setBoundsAndAddToComponent(this, freshEnhancementCheckBox, 50, 385, 140, 30);
 
-        setPreferredSize(480, 435);
+        setPreferredSize(480, 400);
     }
 
     class BackgroundImageSelectDialog extends QRDialog {
         private final QRFilePathTextField textField;
         private final String backgroundImagePathBackup = QRSwing.windowBackgroundImagePath;
+        private final QRBorderContentPanel backgroundImagePanel;
 
         private BackgroundImageSelectDialog() {
             super(WindowPanel.this.window);
@@ -115,24 +102,19 @@ public class WindowPanel extends SettingPanel {
             setTitlePlace(QRDialog.CENTER);
             setSize(640, 515);
 
-            this.mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
             this.mainPanel.addMouseListener();
             this.mainPanel.addMouseAction(QRMouseListener.TYPE.CLICK, e -> BackgroundImageSelectDialog.this.mainPanel.grabFocus());
 
             QRRoundButton sureBtn = new QRRoundButton("确定");
-            QRPanel backgroundImagePanel = new QRPanel(new BorderLayout()) {
-                @Override
-                public void setBorder(Border border) {
-                    super.setBorder(border);
-                    if (border != null) {
-                        QRComponentUtils.windowFresh(this);
-                    }
-                }
-            };
-            QRTextArea area = new QRTextArea();
-            area.setEditable(false);
-            backgroundImagePanel.add(area.addScrollPane());
-            QRComponentUtils.loopComsForBackgroundSetting(backgroundImagePanel);
+
+            backgroundImagePanel = new QRBorderContentPanel(null);
+            QRLabel area = new QRLabel();
+            area.setText("在工作或学习中遇到不开心的时候，不妨静下来好好想想，自己到底是对是错。生活中不是你对别人好，别人就该对你好，你要明白这个道理，每个人都有自己的原则，有人功利，有人善良，你不可能要求别人什么。有时间的话，不妨到处走走，在雄伟的高山之间，放声大喊，一吐心中的阴郁，在浪漫的大海之间，看潮起潮落，感悟人生的起伏跌宕，在落日余晖中感受天地的宁静，洗涤心中的贪念。");
+            area.setSize(569, 343);
+            area.setPreferredSize(new Dimension(569, 243));
+            area.setLocation(5, 10);
+            area.wrapText();
+            backgroundImagePanel.add(area);
 
             this.textField = new QRFilePathTextField() {
                 @Override
@@ -154,8 +136,8 @@ public class WindowPanel extends SettingPanel {
             if (fileExists) {
                 backgroundImagePanel.setToolTipText(null);
                 Image image = QRSwingInfo.loadImage(this.backgroundImagePathBackup);
-                QRBackgroundBorder backgroundBorder = new QRBackgroundBorder(image);
-                backgroundImagePanel.setBorder(backgroundBorder);
+                backgroundImagePanel.setImage(image);
+                backgroundImagePanel.setAlpha(QRSwing.windowBackgroundImageAlpha);
                 this.textField.setText(this.backgroundImagePathBackup);
             }
 
@@ -167,8 +149,7 @@ public class WindowPanel extends SettingPanel {
                 public void successAction(File selectedFile, String selectedFilePath) {
                     backgroundImagePanel.setToolTipText(null);
                     Image image = QRSwingInfo.loadImage(selectedFilePath);
-                    QRBackgroundBorder backgroundBorder = new QRBackgroundBorder(image);
-                    backgroundImagePanel.setBorder(backgroundBorder);
+                    backgroundImagePanel.setImage(image);
                     BackgroundImageSelectDialog.this.textField.setText(selectedFilePath);
                     sureBtn.setEnabled(true);
                 }
@@ -179,7 +160,7 @@ public class WindowPanel extends SettingPanel {
                     sureBtn.setEnabled(false);
                 }
             };
-            QRSlider alphaSlider = getAlphaSlider(backgroundImagePanel);
+            QRSlider alphaSlider = getAlphaSlider();
 
             QRComponentUtils.setBoundsAndAddToComponent(this.mainPanel, backgroundImagePanel, 36, 10, 569, 343);
             QRComponentUtils.setBoundsAndAddToComponent(this.mainPanel, alphaSlider, 405, 360, 200, 40);
@@ -188,21 +169,18 @@ public class WindowPanel extends SettingPanel {
             QRComponentUtils.setBoundsAndAddToComponent(this.mainPanel, sureBtn, 530, 420, 75, 30);
         }
 
-        private static QRSlider getAlphaSlider(QRPanel backgroundImagePanel) {
+        private QRSlider getAlphaSlider() {
             QRSlider alphaSlider = new QRSlider();
-            alphaSlider.setBoundValue(50, 95);
+            alphaSlider.setBoundValue(40, 95);
             float alphaBackup = QRSwing.windowBackgroundImageAlpha;
             alphaSlider.setValue((int) (100 * QRSwing.windowBackgroundImageAlpha));
             alphaSlider.addChangeListener(e -> {
-                Border border = backgroundImagePanel.getBorder();
-                if (border instanceof QRBackgroundBorder b) {
-                    int v = alphaSlider.getValue();
-                    float alpha = v / 100f;
-                    b.setAlpha(alpha);
-                    QRComponentUtils.windowFreshRightNow(backgroundImagePanel);
-                    SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, String.valueOf(alpha));
-                    SettingsItem.CANCEL_ACTIONS.putIfAbsent(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, es -> QRSwing.setWindowBackgroundImageAlpha(alphaBackup));
-                }
+                int v = alphaSlider.getValue();
+                float alpha = v / 100f;
+                backgroundImagePanel.setAlpha(alpha);
+                QRComponentUtils.windowFreshRightNow(backgroundImagePanel);
+                SettingsItem.CHANGE_MAP.put(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, String.valueOf(alpha));
+                SettingsItem.CANCEL_ACTIONS.putIfAbsent(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA, es -> QRSwing.setWindowBackgroundImageAlpha(alphaBackup));
             });
             return alphaSlider;
         }

@@ -12,6 +12,7 @@ import method.qr.kiarelemb.utils.QRSleepUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
@@ -39,61 +40,63 @@ public class QqOperation {
             return;
         }
         WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, Name);
-        genda = User32.INSTANCE.FindWindow(null, MainWindow.INSTANCE.getTitle());
-        double SCALE = (double) Toolkit.getDefaultToolkit().getScreenResolution() / 96;
-        QRSleepUtils.sleep(50);
-        if (hWnd != null) {
-            User32.INSTANCE.SetForegroundWindow(hWnd);
-            WinDef.RECT rect = new WinDef.RECT();
-            User32.INSTANCE.GetWindowRect(hWnd, rect);
-            String title = WindowUtils.getWindowTitle(hWnd);
-            boolean isQQNT = title != null && title.equals("QQ");
-            if (model == GET_ARTICLE_MODEL) {
-                if (!isQQNT) {
-                    robot.mouseMove((int) ((rect.left + rect.right) / 2 / SCALE), (int) ((rect.top + rect.bottom) / 2 / SCALE));
-                }
-                robot.mousePress(16);
-                robot.mouseRelease(16);
-                if (!isQQNT) {
+//        QRComponentUtils.runLater(10, e -> {
+            genda = User32.INSTANCE.FindWindow(null, MainWindow.INSTANCE.getTitle());
+            double SCALE = (double) Toolkit.getDefaultToolkit().getScreenResolution() / 96;
+            QRSleepUtils.sleep(50);
+            if (hWnd != null) {
+                User32.INSTANCE.SetForegroundWindow(hWnd);
+                WinDef.RECT rect = new WinDef.RECT();
+                User32.INSTANCE.GetWindowRect(hWnd, rect);
+                String title = WindowUtils.getWindowTitle(hWnd);
+                boolean isQQNT = title != null && title.equals("QQ");
+                if (model == GET_ARTICLE_MODEL) {
+                    if (!isQQNT) {
+                        robot.mouseMove((int) ((rect.left + rect.right) / 2 / SCALE), (int) ((rect.top + rect.bottom) / 2 / SCALE));
+                    }
+                    robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                    QRSleepUtils.sleep(30);
+                    robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                    QRSleepUtils.sleep(80);
                     robot.keyPress(VK_CONTROL);
-                    robot.keyPress(VK_A);
-                    robot.keyRelease(VK_A);
+                    QRSleepUtils.sleep(80);
+//                    if (!isQQNT) {
+                        robot.keyPress(VK_A);
+                        QRSleepUtils.sleep(80);
+                        robot.keyRelease(VK_A);
+                        QRSleepUtils.sleep(80);
+//                    }
+                    robot.keyPress(VK_C);
+                    QRSleepUtils.sleep(80);
+                    robot.keyRelease(VK_C);
                     robot.keyRelease(VK_CONTROL);
-                }
-                QRSleepUtils.sleep(20);
-                robot.keyPress(VK_CONTROL);
-                robot.keyPress(VK_C);
-                robot.keyRelease(VK_C);
-                robot.keyRelease(VK_CONTROL);
-                Point location = TyperTextPane.TYPER_TEXT_PANE.getLocationOnScreen();
-                robot.mouseMove((int) ((location.x + TyperTextPane.TYPER_TEXT_PANE.getWidth() / 2) / SCALE), (int) ((location.getY() + TyperTextPane.TYPER_TEXT_PANE.getHeight() / 2) / SCALE));
-            } else if (model == SEND_ACHIEVEMENT_MODEL) {
-                robot.keyPress(VK_CONTROL);
-                robot.keyPress(VK_V);
-                robot.keyRelease(VK_V);
-                robot.keyRelease(VK_CONTROL);
+//                    Point location = TyperTextPane.TYPER_TEXT_PANE.getLocationOnScreen();
+//                    robot.mouseMove((int) ((location.x + TyperTextPane.TYPER_TEXT_PANE.getWidth() / 2) / SCALE), (int) ((location.getY() + TyperTextPane.TYPER_TEXT_PANE.getHeight() / 2) / SCALE));
+                } else if (model == SEND_ACHIEVEMENT_MODEL) {
+                    robot.keyPress(VK_CONTROL);
+                    robot.keyPress(VK_V);
+                    robot.keyRelease(VK_V);
+                    robot.keyRelease(VK_CONTROL);
 
-                boolean ctrlEnter = Keys.intValue(Keys.TYPE_SEND_KEY) == 1;
-                if (ctrlEnter) {
-                    robot.keyPress(VK_CONTROL);
-                }
-                robot.keyPress(VK_ENTER);
-                QRSleepUtils.sleep(50);
-                robot.keyRelease(VK_ENTER);
-                if (isQQNT) {
+                    boolean ctrlEnter = Keys.intValue(Keys.TYPE_SEND_KEY) == 1;
+                    if (ctrlEnter) {
+                        robot.keyPress(VK_CONTROL);
+                    }
+                    QRSleepUtils.sleep(120);
                     robot.keyPress(VK_ENTER);
-                    QRSleepUtils.sleep(50);
+                    QRSleepUtils.sleep(30);
                     robot.keyRelease(VK_ENTER);
+
+                    if (ctrlEnter) {
+                        robot.keyRelease(VK_CONTROL);
+                    }
+                    Point location = TyperTextPane.TYPER_TEXT_PANE.getLocationOnScreen();
+                    robot.mouseMove((int) ((location.x + TyperTextPane.TYPER_TEXT_PANE.getWidth() / 2) / SCALE), (int) ((location.getY() + TyperTextPane.TYPER_TEXT_PANE.getHeight() / 2) / SCALE));
                 }
-                if (ctrlEnter) {
-                    robot.keyRelease(VK_CONTROL);
-                }
-                Point location = TyperTextPane.TYPER_TEXT_PANE.getLocationOnScreen();
-                robot.mouseMove((int) ((location.x + TyperTextPane.TYPER_TEXT_PANE.getWidth() / 2) / SCALE), (int) ((location.getY() + TyperTextPane.TYPER_TEXT_PANE.getHeight() / 2) / SCALE));
+                //将跟打器置顶
+                User32.INSTANCE.SetForegroundWindow(genda);
             }
-            //将跟打器置顶
-            User32.INSTANCE.SetForegroundWindow(genda);
-        }
+//        });
     }
 
     public static boolean textCanSend() {

@@ -6,7 +6,6 @@ import ly.qr.kiarelemb.dl.DangLangManager;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
-import swing.qr.kiarelemb.basic.QRScrollPane;
 import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.listener.QRGlobalKeyboardHookListener;
@@ -14,7 +13,6 @@ import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -48,10 +46,7 @@ public class TyperTextPane extends QRTextPane {
 
     private TyperTextPane() {
         addKeyListener();
-        addMouseListener();
         timeCountInit();
-        setOpaque(false);
-        addScrollPane().setOpaque(false);
         TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> {
             clear();
             this.caret.setVisible(true);
@@ -88,7 +83,6 @@ public class TyperTextPane extends QRTextPane {
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
-        TypingData.windowFresh();
         if (!this.hasFocus() || TextLoad.TEXT_LOAD == null) {
             return;
         }
@@ -245,17 +239,6 @@ public class TyperTextPane extends QRTextPane {
     @Override
     protected void mouseClick(MouseEvent e) {
         caretPositionAdjust();
-    }
-
-    @Override
-    public void changeTextsStyle(int offset, int length, AttributeSet attrs, boolean replace) {
-        super.changeTextsStyle(offset, length, attrs, replace);
-        TypingData.windowFresh();
-    }
-
-    @Override
-    public QRScrollPane addScrollPane() {
-        return super.addScrollPane(1);
     }
 
     @Override

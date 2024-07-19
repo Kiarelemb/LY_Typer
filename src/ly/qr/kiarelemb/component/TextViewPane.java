@@ -13,7 +13,6 @@ import ly.qr.kiarelemb.text.tip.TextTip;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import ly.qr.kiarelemb.text.tip.data.TipPhraseStyleData;
 import method.qr.kiarelemb.utils.*;
-import swing.qr.kiarelemb.basic.QRScrollPane;
 import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
@@ -25,6 +24,7 @@ import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -82,6 +82,7 @@ public class TextViewPane extends QRTextPane {
         if (!tls.isText()) {
             return;
         }
+        SplitPane.SPLIT_PANE.switchTipPanel();
         if (TextLoad.TEXT_LOAD == null) {
             TextLoad.TEXT_LOAD = tls;
         } else if (!TextLoad.TEXT_LOAD.textNotIsChanged(tls.formattedActualText())) {
@@ -108,7 +109,6 @@ public class TextViewPane extends QRTextPane {
         print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
         printTextStyleAfterSetText();
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextViewPane.TEXT_VIEW_PANE.setTextFinishedActions));
-        TypingData.windowFresh();
     }
 
     private void printTextStyleAfterSetText() {
@@ -303,7 +303,6 @@ public class TextViewPane extends QRTextPane {
         ContractiblePanel.SPEED_LABEL.setText(String.valueOf(speed));
         ContractiblePanel.KEY_STROKE_LABEL.setText(String.valueOf(keyStroke));
         ContractiblePanel.CODE_LEN_LABEL.setText(String.valueOf(codeLength));
-        TypingData.windowFresh();
         GradeData gradeData = new GradeData(totalTimeInMin, speed, keyStroke, codeLength, timeCost);
         String grade = gradeData.getSetGrade();
 
@@ -336,11 +335,14 @@ public class TextViewPane extends QRTextPane {
         if (!verticalScrollBar.isVisible()) {
             return;
         }
-        //更新模式
-        final int[] lineAndRow = currentLineAndRow(TypingData.currentTypedIndex);
-        final int currentLine = lineAndRow[0];
+        final int[] lineAndRow = currentLineAndRow(TyperTextPane.TYPER_TEXT_PANE.caret.getDot());
+         final int currentLine = lineAndRow[0];
         final double currentRow = lineAndRow[1];
-        boolean updateCondition = currentRow == 0;
+        Rectangle2D rectangle2D = positionRectangle(TyperTextPane.TYPER_TEXT_PANE.caret.getDot());
+        boolean updateCondition = false;
+        if (rectangle2D != null) {
+            updateCondition = rectangle2D.getX() == 10;
+        }
         //行尾更新
         if (!updateCondition) {
             return;
@@ -348,7 +350,7 @@ public class TextViewPane extends QRTextPane {
         final int lineWords = lineWords();
         double startUpdateLine = 3;
         if (currentLine >= startUpdateLine) {
-            QRComponentUtils.runLater(100, e -> {
+            QRComponentUtils.runLater(200, e -> {
                 int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
                 double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * linePerHeight();
                 verticalScrollBar.setValue((int) (Math.min(value, max)));
@@ -455,11 +457,6 @@ public class TextViewPane extends QRTextPane {
             lineSpacing = 0.8f;
         }
         super.setLineSpacing(lineSpacing);
-    }
-
-    @Override
-    public QRScrollPane addScrollPane() {
-        return super.addScrollPane(1);
     }
 
     @Override
