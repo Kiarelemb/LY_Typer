@@ -7,7 +7,6 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.MenuItem;
 import ly.qr.kiarelemb.qq.LoadText;
 import ly.qr.kiarelemb.qq.QqOperation;
-import ly.qr.kiarelemb.res.Info;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import java.awt.event.ActionEvent;
@@ -23,7 +22,6 @@ public class LoadTextItem extends MenuItem {
 
     private LoadTextItem() {
         super("载文", Keys.QUICK_KEY_MENU_TYPE_TEXT_LOAD, false);
-        setEnabled(Info.IS_WINDOWS);
     }
 
     @Override
