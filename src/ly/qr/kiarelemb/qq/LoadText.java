@@ -8,6 +8,7 @@ import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * @author Kiarelemb QR
@@ -16,21 +17,21 @@ import java.util.ArrayList;
  * @create 2023-01-25 14:59
  **/
 public class LoadText {
+    private static Logger logger = QRLoggerUtils.getLogger(LoadText.class);
     public static String getLoadText() {
-        if (!QqOperation.textCanSend()) {
-            return null;
-        }
+//        if (!QqOperation.textCanSend()) {
+//            return null;
+//        }
         //复制群内消息
-        QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
-        QRSleepUtils.sleep(1500);
-        //取得剪贴板内容
         String text = QRSystemUtils.getSysClipboardText();
+        logger.info("text = " + text);
+        //取得剪贴板内容
         if (text == null || text.isEmpty()) {
             QRSmallTipShow.display(MainWindow.INSTANCE, "复制失败！");
             return null;
         }
         if (ContractiblePanel.GROUP_BUTTON.isQQNT()) {
-            System.out.println("QQ NT: " + text);
+//            System.out.println("QQ NT: " + text);
             return text;
         } else {
             //将内容分割成段

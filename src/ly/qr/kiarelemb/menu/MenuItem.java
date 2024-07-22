@@ -11,6 +11,10 @@ import swing.qr.kiarelemb.basic.QRMenuItem;
  **/
 public class MenuItem extends QRMenuItem {
     public MenuItem(String text, String key) {
-        super(text, key == null ? null : Keys.strValue(key));
+        super(text, key == null ? null : Keys.strValue(key), true);
+    }
+
+    public MenuItem(String text, String key, boolean mainWindowFocus) {
+        super(text, key == null ? null : Keys.strValue(key), mainWindowFocus);
     }
 }

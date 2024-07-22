@@ -7,19 +7,13 @@ import ly.qr.kiarelemb.text.tip.TipPanel;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRLabel;
 import swing.qr.kiarelemb.basic.QRPanel;
-import swing.qr.kiarelemb.basic.QRSplitPane;
+import swing.qr.kiarelemb.combination.QRTransparentSplitPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
-import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * @author Kiarelemb QR
@@ -27,14 +21,15 @@ import java.awt.event.MouseEvent;
  * @description:
  * @create 2023-01-27 22:33
  **/
-public class SplitPane extends QRSplitPane {
+public class SplitPane extends QRTransparentSplitPane {
     public final SplitTipPanel tipPanel;
     public static final SplitPane SPLIT_PANE = new SplitPane();
     public final QRPanel topPanel;
     public final QRPanel bottomPanel;
 
     private SplitPane() {
-        super(JSplitPane.VERTICAL_SPLIT);
+//        super(JSplitPane.VERTICAL_SPLIT);
+        super();
 
         int value;
         try {
@@ -43,10 +38,9 @@ public class SplitPane extends QRSplitPane {
             value = 300;
             QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT, value);
         }
-        setUI(new SplitPaneUI());
+//        setUI(new SplitPaneUI());
         setDividerLocation(value);
 
-        setOpaque(false);
         //底部的面板需要放词提
         this.tipPanel = new SplitTipPanel();
         topPanel = new QRPanel(false, new BorderLayout());
@@ -76,12 +70,23 @@ public class SplitPane extends QRSplitPane {
         topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(1), BorderLayout.CENTER);
         bottomPanel.add(TypeTabbedPane.TYPE_TABBED_PANE, BorderLayout.CENTER);
 
-
         setTopComponent(tip);
         setBottomComponent(bottomPanel);
+//        add(topPanel, BorderLayout.CENTER);
+//        add(bottomPanel, BorderLayout.SOUTH);
 
+//        setTopComponent(tip);
+//        setTopComponent(tip);
+//        setBottomComponent(bottomPanel);
+//        setBottomComponent(new QRTextPane().addScrollPane(1));
         //更新编码提示的位置
         updateTipPaneLocation();
+
+        QRActionRegister repaintAction = e -> divider.repaint();
+        TyperTextPane.TYPER_TEXT_PANE.addTypeActions(repaintAction);
+        TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(repaintAction);
+
+//        setOpaque(true);
     }
 
     private boolean notSwitched = true;
@@ -89,7 +94,6 @@ public class SplitPane extends QRSplitPane {
     public void switchTipPanel() {
         if (notSwitched) {
             notSwitched = false;
-            setTopComponent(null);
             setTopComponent(topPanel);
         }
     }
@@ -113,15 +117,31 @@ public class SplitPane extends QRSplitPane {
         int value = Keys.intValue(Keys.TEXT_TIP_PANEL_LOCATION);
         this.tipPanel.setOnNorth(value % 2 == 0);
         // 获取分割线位置
-        final int i = getDividerLocation();
+//        final int i = getDividerLocation();
         if (value < 2) {
             topPanel.add(this.tipPanel, value == 0 ? BorderLayout.NORTH : BorderLayout.SOUTH);
             // 设置顶层大小能避免分割线位置变化
-            topPanel.setPreferredSize(new Dimension(100, i - this.tipPanel.getHeight()));
+//            topPanel.setPreferredSize(new Dimension(100, i - this.tipPanel.getHeight()));
         } else {
             bottomPanel.add(this.tipPanel, value == 3 ? BorderLayout.SOUTH : BorderLayout.NORTH);
             // 设置顶层大小能避免分割线位置变化
-            bottomPanel.setPreferredSize(new Dimension(100, i));
+//            bottomPanel.setPreferredSize(new Dimension(100, i));
+        }
+    }
+
+    @Override
+    protected void paintDivider(Graphics2D g) {
+//        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        super.paintDivider(g);
+//        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, QRSwing.windowImageSet ? 0.5f : 1f));
+        g.setColor(QRColorsAndFonts.LINE_COLOR);
+        Dimension size = divider.getSize();
+        g.fillRect(0, 0, size.width, size.height);
+        // 绘制当前跟打进度条
+        if (TextLoad.TEXT_LOAD != null && TypingData.currentTypedIndex > 0) {
+            g.setColor(QRColorsAndFonts.DEFAULT_COLOR_LABEL);
+            int width = size.width * TypingData.currentTypedIndex / TextLoad.TEXT_LOAD.wordsLength();
+            g.fillRect(0, size.height / 2, width, size.height - size.height / 2);
         }
     }
 
@@ -158,58 +178,6 @@ public class SplitPane extends QRSplitPane {
         public void componentFresh() {
             super.componentFresh();
             borderUpdate();
-        }
-    }
-
-    static class SplitPaneUI extends BasicSplitPaneUI {
-
-        public SplitPaneUI() {
-            // 注册跟打进度条刷新
-            QRActionRegister repaintAction = e -> divider.repaint();
-            TyperTextPane.TYPER_TEXT_PANE.addTypeActions(repaintAction);
-            TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(repaintAction);
-        }
-
-
-        @Override
-        public BasicSplitPaneDivider createDefaultDivider() {
-            return new BasicSplitPaneDivider(this) {
-                {
-                    {
-                        addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseExited(MouseEvent e) {
-                                divider.setCursor(Cursor.getDefaultCursor());
-                            }
-
-                            @Override
-                            public void mouseEntered(MouseEvent e) {
-                                int orientation = getOrientation();
-                                Cursor cursor = new Cursor(orientation == JSplitPane.VERTICAL_SPLIT ? Cursor.N_RESIZE_CURSOR : Cursor.W_RESIZE_CURSOR);
-                                divider.setCursor(cursor);
-                            }
-                        });
-                    }
-                }
-
-                public void setBorder(Border b) {
-                }
-
-                @Override
-                public void paint(Graphics g) {
-                    Graphics2D g2 = (Graphics2D) g;
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, QRSwing.windowImageSet ? 0.5f : 1f));
-                    g.setColor(QRColorsAndFonts.LINE_COLOR);
-                    Dimension size = getSize();
-                    g.fillRect(0, 0, size.width, size.height);
-                    // 绘制当前跟打进度条
-                    if (TextLoad.TEXT_LOAD != null && TypingData.currentTypedIndex > 0) {
-                        g.setColor(QRColorsAndFonts.DEFAULT_COLOR_LABEL);
-                        int width = size.width * TypingData.currentTypedIndex / TextLoad.TEXT_LOAD.wordsLength();
-                        g.fillRect(0, size.height / 2, width, size.height - size.height / 2);
-                    }
-                }
-            };
         }
     }
 }

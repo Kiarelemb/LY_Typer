@@ -3,7 +3,6 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRFontUtils;
 import swing.qr.kiarelemb.basic.QRLabel;
-import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 
 import java.awt.*;
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class LCDNumberLabel extends QRLabel {
 
 	@Override
 	public void componentFresh() {
-		setForeground(QRColorsAndFonts.MENU_COLOR);
+		super.componentFresh();
 		setFont(LCD_FONT);
 	}
 }

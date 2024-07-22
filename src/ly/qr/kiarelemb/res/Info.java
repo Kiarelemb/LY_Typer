@@ -32,6 +32,7 @@ public class Info {
 	//    public static final boolean isWindows = SYSTEM_NAME.contains("Windows");
 	public static final boolean IS_WINDOWS = QRSystemUtils.IS_WINDOWS;
 	public static final boolean IS_MACOS = QRSystemUtils.IS_OSX;
+	public static final boolean IS_LINUX = QRSystemUtils.IS_LINUX;
 	public static final String FLASH_PATH = "flash.png";
 	public static final String SINGLES_PATH = "singles.txt";
 	public static final String ICON_PNG_PATH = "icon.png";

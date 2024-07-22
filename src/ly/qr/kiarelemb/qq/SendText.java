@@ -49,7 +49,7 @@ public class SendText {
 	 */
 	public static void gradeSend() {
 //        tpe.execute(() -> {
-		if (!Info.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
+		if (!ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			return;
 		}
 		if (ContractiblePanel.DIVE_CHECKBOX.isSelected()) {

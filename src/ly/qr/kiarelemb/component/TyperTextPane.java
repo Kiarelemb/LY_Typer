@@ -1,14 +1,16 @@
 package ly.qr.kiarelemb.component;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
-import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.basic.QRTextPane;
+import swing.qr.kiarelemb.event.QRNativeKeyEvent;
 import swing.qr.kiarelemb.inter.QRActionRegister;
-import swing.qr.kiarelemb.listener.QRGlobalKeyboardHookListener;
+import swing.qr.kiarelemb.listener.QRNativeKeyListener;
+import swing.qr.kiarelemb.listener.key.QRNativeKeyTypedListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
@@ -29,7 +31,7 @@ import java.util.logging.Logger;
  **/
 public class TyperTextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
-    public QRGlobalKeyboardHookListener globalKeyListener = null;
+    public QRNativeKeyListener globalKeyListener = null;
     public KeyboardFocusManager keyboardFocusManager = null;
     private final LinkedList<QRActionRegister> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
@@ -46,6 +48,7 @@ public class TyperTextPane extends QRTextPane {
 
     private TyperTextPane() {
         addKeyListener();
+        setOpaque(false);
         timeCountInit();
         TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> {
             clear();
@@ -83,7 +86,7 @@ public class TyperTextPane extends QRTextPane {
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
-        if (!this.hasFocus() || TextLoad.TEXT_LOAD == null) {
+        if (!this.hasFocus() || TextLoad.TEXT_LOAD == null || keyStroke == null) {
             return;
         }
         //屏蔽组合键
@@ -96,7 +99,7 @@ public class TyperTextPane extends QRTextPane {
             return;
         }
         int modifiers = keyStroke.getModifiers();
-        if (modifiers != 0 && !TypingData.typing || TypingData.typeEnd) {
+        if ((modifiers != 0 && (!TypingData.typing || TypingData.typeEnd)) && keyStroke.getModifiers() != 65) {
             QRLoggerUtils.log(logger, Level.INFO, "按键屏蔽：[%s]", QRStringUtils.getKeyStrokeString(keyStroke));
             return;
         }
@@ -142,27 +145,14 @@ public class TyperTextPane extends QRTextPane {
     }
 
     private void timeCountInit() {
-        if (Info.IS_WINDOWS) {
-            this.globalKeyListener = new QRGlobalKeyboardHookListener();
-            this.globalKeyListener.addKeyListenerAction(true, e -> {
-                KeyStroke keyStroke = (KeyStroke) e;
-                keyPressLead(keyStroke);
-            });
-        } else {
-            this.keyboardFocusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-            this.keyboardFocusManager.addKeyEventPostProcessor(e -> {
-                if (e.getID() != KeyEvent.KEY_LAST) {
-                    return false;
-                }
-                keyPressLead(QRStringUtils.getKeyStroke(e));
-                return true;
-            });
-        }
+        this.globalKeyListener = new QRNativeKeyTypedListener();
+        GlobalScreen.addNativeKeyListener(this.globalKeyListener);
+        this.globalKeyListener.add(true, e -> keyPressLead((QRNativeKeyEvent) e));
     }
 
-    private void keyPressLead(KeyStroke e) {
+    private void keyPressLead(QRNativeKeyEvent e) {
         try {
-            keyPressAction(e, System.currentTimeMillis());
+            keyPressAction(e.getKeyStroke(), System.currentTimeMillis());
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "keyPressLoad", ex);
         }

@@ -48,7 +48,7 @@ public class TypingData {
     public static StringBuilder typedKeyRecord = new StringBuilder();
     public static boolean pausing = false;
     public static boolean typing = false;
-    public static boolean typeEnd = false;
+    public static boolean typeEnd = true;
     public static int pausedTimes = 0;
     public static int lookfontSize = 0;
     public static int typefontSize = 0;
@@ -238,7 +238,7 @@ public class TypingData {
      * @param startTime
      */
     public static void startTyping(long startTime) {
-        if (!typing && TextLoad.TEXT_LOAD != null) {
+        if (!typing && !typeEnd && TextLoad.TEXT_LOAD != null) {
             try {
                 TypingData.startTime = startTime;
                 typing = true;

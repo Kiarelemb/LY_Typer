@@ -28,7 +28,6 @@ public class TextPanelEditorKit extends StyledEditorKit {
     }
 
     public static class CustomUI extends BasicTextPaneUI {
-
         @Override
         public View create(Element elem) {
             View result;

@@ -19,9 +19,6 @@ import java.awt.*;
  */
 public class TextPane extends QRTextPane {
     public TextPane() {
-        setEditableFalseButCursorEdit();
-        setLineSpacing(0.5f);
-        setLineWrap(false);
         SimpleAttributeSet s = QRComponentUtils.getSimpleAttributeSet(textFont, QRColorsAndFonts.TEXT_COLOR_FORE, QRColorsAndFonts.TEXT_COLOR_BACK);
         this.sas = new SimpleAttributeSet();
         StyleConstants.setFontSize(this.sas, textFont.getSize());
@@ -29,6 +26,11 @@ public class TextPane extends QRTextPane {
         StyleConstants.setBold(this.sas, false);
         if (!QRSwing.windowImageSet) StyleConstants.setBackground(sas, QRColorsAndFonts.TEXT_COLOR_BACK);
         TextStyleManager.attributeCopy(s, this.sas, StyleConstants.Foreground);
+
+        setEditableFalseButCursorEdit();
+        setLineWrap(false);
+        setOpaque(false);
+        setLineSpacing(0.5f);
     }
 
     private final SimpleAttributeSet sas;

@@ -43,13 +43,6 @@ public class Enter {
 
         variousLoad();
 
-        logger.config("当前系统：" + QRSystemUtils.getSystemName());
-        if (Info.IS_WINDOWS) {
-            QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.globalKeyListener, MainWindow.INSTANCE);
-        } else {
-            QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.keyboardFocusManager, MainWindow.INSTANCE);
-        }
-
         flw.setVisible(false);
 
         logger.info("-------------------------------------- 配置加载完毕 --------------------------------------");
@@ -57,6 +50,10 @@ public class Enter {
     }
 
     private static void variousLoad() {
+        logger.config("当前系统：" + QRSystemUtils.getSystemName());
+        QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.globalKeyListener);
+
+        QRSwing.registerGlobalEventWindow(MainWindow.INSTANCE);
 
         //region 全局界面字体
         Font font = null;

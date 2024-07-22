@@ -8,10 +8,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.menu.about.HotMapItem;
 import ly.qr.kiarelemb.menu.send.*;
-import ly.qr.kiarelemb.menu.type.LoadTextItem;
-import ly.qr.kiarelemb.menu.type.RetypeItem;
-import ly.qr.kiarelemb.menu.type.SettingsItem;
-import ly.qr.kiarelemb.menu.type.TextMixItem;
+import ly.qr.kiarelemb.menu.type.*;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
@@ -44,8 +41,9 @@ public class MainWindow extends QRFrame {
         menuInit();
 
         //region 中心面板
-//        this.mainPanel.add(new TextPane(), BorderLayout.CENTER);
+//        this.mainPanel.add(new QRTextPane().addScrollPane(), BorderLayout.CENTER);
         this.mainPanel.add(SplitPane.SPLIT_PANE, BorderLayout.CENTER);
+//        this.mainPanel.add(LogTextPane.LOG_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
         //endregion
 
         //region 左侧
@@ -65,6 +63,7 @@ public class MainWindow extends QRFrame {
         QRButton toolMenu = this.titleMenuPanel.add("工具");
         QRButton aboutMenu = this.titleMenuPanel.add("关于");
 
+        typeMenu.add(GroupMenuItem.GROUP_MENU_ITEM);
         typeMenu.add(LoadTextItem.LOAD_TEXT_ITEM);
         typeMenu.add(RetypeItem.RETYPE_ITEM);
         typeMenu.add(TextMixItem.TEXT_MIX_ITEM);

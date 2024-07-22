@@ -52,10 +52,10 @@ public class TextViewPane extends QRTextPane {
     private TextViewPane() {
         addMouseListener();
         addKeyListener();
-        setOpaque(false);
         textPanelEditorKit = new TextPanelEditorKit(this);
         setEditorKit(textPanelEditorKit);
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
+        setOpaque(false);
         this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));
         this.setTextBeforeActions.add(e -> {
             //更新数据
@@ -228,10 +228,9 @@ public class TextViewPane extends QRTextPane {
             if (!Info.IS_WINDOWS) {
                 MainWindow.INSTANCE.setAlwaysOnTop(false);
             }
-            TypingData.typing = false;
-            TypingData.typeEnd = true;
             TypingData.shutdown();
-            QRComponentUtils.runLater(10, e -> typeEnding());
+//           ;
+            QRComponentUtils.runLater(10, e ->  typeEnding());
 //            typingEndThread.execute(this::typeEnding);
         }
     }
@@ -273,6 +272,8 @@ public class TextViewPane extends QRTextPane {
 
     public void typeEnding() {
         long time = TypingData.endTime - TypingData.startTime;
+        TypingData.typing = false;
+        TypingData.typeEnd = true;
         double totalTimeInSec = time / 1000.0D;
         String totalTimeInSecs = String.format("%.2f", totalTimeInSec);
         //用时_分
