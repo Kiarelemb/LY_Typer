@@ -149,7 +149,7 @@ public class ContractiblePanel extends QRContractiblePanel {
 
         this.typingStatisticsPanel.column().addMouseListener();
         this.typingStatisticsPanel.column().addMouseAction(QRMouseListener.TYPE.CLICK, e -> {
-            MouseEvent mouseEvent = (MouseEvent) e;
+            MouseEvent mouseEvent = e;
             if (mouseEvent.getButton() == MouseEvent.BUTTON3 && SwingUtilities.getWindowAncestor(CONTRACTIBLE_PANEL) instanceof QRFrame) {
                 QRPopupMenu popupMenu = new QRPopupMenu(MainWindow.INSTANCE);
                 QRMenuItem removeToWindow = new QRMenuItem("移动到窗口");

@@ -110,7 +110,7 @@ public class TipSettingPanel extends SettingPanel {
 
         selectionTextField.setTextCenter();
         tipFileSelectBtn.addSuccessAction(e -> {
-            File file = (File) e;
+            File file = e;
             String path = file.getAbsolutePath();
             if (path.equals(tipFilePathLabel.getText())) {
                 return;

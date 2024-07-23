@@ -18,8 +18,8 @@ import java.util.TreeSet;
  */
 public record TypeRecordData(long time, int length) {
     private static final LinkedList<TypeRecordData> TYPE_LIST_DATA = new LinkedList<>();
-    private static TreeSet<Long> typeWordsDiffLists = new TreeSet<>();
-    private static ArrayList<Long> typeKeyDiffLists = new ArrayList<>();
+    private static final TreeSet<Long> typeWordsDiffLists = new TreeSet<>();
+    private static final ArrayList<Long> typeKeyDiffLists = new ArrayList<>();
 
     static {
         TextViewPane.TEXT_VIEW_PANE.addSetTextFinishedAction(e -> {

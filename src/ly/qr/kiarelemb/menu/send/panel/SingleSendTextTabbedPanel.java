@@ -19,7 +19,6 @@ import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
 import javax.swing.*;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -106,7 +105,7 @@ public class SingleSendTextTabbedPanel extends ly.qr.kiarelemb.menu.send.panel.S
                 @Override
                 public void run() {
                     String name = values[index];
-                    int clickCount = ((MouseEvent) e).getClickCount();
+                    int clickCount = e.getClickCount();
                     boolean isMix = ContentMixCheckBox.isSelected();
                     if (clickCount == 2 && customContentCheckBox.isSelected()) {
                         String text = contentPreviewPane.getText();

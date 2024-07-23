@@ -33,7 +33,7 @@ public class TyperTextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
     public QRNativeKeyListener globalKeyListener = null;
     public KeyboardFocusManager keyboardFocusManager = null;
-    private final LinkedList<QRActionRegister> typeActions = new LinkedList<>();
+    private final LinkedList<QRActionRegister<Integer>> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
 
     private final Map<Integer, Character> specialKeyMap = Map.of(
@@ -57,7 +57,7 @@ public class TyperTextPane extends QRTextPane {
         });
     }
 
-    public void addTypeActions(QRActionRegister ar) {
+    public void addTypeActions(QRActionRegister<Integer> ar) {
         this.typeActions.add(ar);
     }
 
@@ -81,8 +81,8 @@ public class TyperTextPane extends QRTextPane {
     /**
      * 每输入或回改事件，即光标移动事件
      */
-    public void runTypedActions() {
-        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(this.typeActions));
+    public void runTypedActions(int currentIndex) {
+        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(this.typeActions, currentIndex));
     }
 
     public void keyPressAction(KeyStroke keyStroke, long time) {
@@ -147,7 +147,7 @@ public class TyperTextPane extends QRTextPane {
     private void timeCountInit() {
         this.globalKeyListener = new QRNativeKeyTypedListener();
         GlobalScreen.addNativeKeyListener(this.globalKeyListener);
-        this.globalKeyListener.add(true, e -> keyPressLead((QRNativeKeyEvent) e));
+        this.globalKeyListener.add(true, this::keyPressLead);
     }
 
     private void keyPressLead(QRNativeKeyEvent e) {

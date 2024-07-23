@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @create 2023-01-25 14:59
  **/
 public class LoadText {
-    private static Logger logger = QRLoggerUtils.getLogger(LoadText.class);
+    private static final Logger logger = QRLoggerUtils.getLogger(LoadText.class);
     public static String getLoadText() {
 //        if (!QqOperation.textCanSend()) {
 //            return null;

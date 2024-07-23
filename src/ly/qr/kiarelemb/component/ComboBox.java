@@ -1,12 +1,11 @@
 package ly.qr.kiarelemb.component;
 
-import ly.qr.kiarelemb.menu.type.SettingsItem;
 import ly.qr.kiarelemb.data.Keys;
+import ly.qr.kiarelemb.menu.type.SettingsItem;
 import method.qr.kiarelemb.utils.QRArrayUtils;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRComboBox;
-import swing.qr.kiarelemb.event.QRItemEvent;
 import swing.qr.kiarelemb.utils.QRFontComboBox;
 
 import java.util.logging.Level;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
  **/
 public class ComboBox extends QRComboBox {
 
-    private static Logger logger = QRLoggerUtils.getLogger(ComboBox.class);
+    private static final Logger logger = QRLoggerUtils.getLogger(ComboBox.class);
 
     /**
      * 在设置中使用的
@@ -31,8 +30,7 @@ public class ComboBox extends QRComboBox {
     public ComboBox(String key, String... array) {
         super(array);
         addItemChangeListener(e -> {
-            QRItemEvent event = (QRItemEvent) e;
-            int index = QRArrayUtils.objectIndexOf(array, event.after());
+            int index = QRArrayUtils.objectIndexOf(array, e.after());
             SettingsItem.CHANGE_MAP.put(key, String.valueOf(index));
         });
         int index = Keys.intValue(key);
@@ -46,8 +44,7 @@ public class ComboBox extends QRComboBox {
     public ComboBox(int i, String key, String... array) {
         super(array);
         addItemChangeListener(e -> {
-            QRItemEvent event = (QRItemEvent) e;
-            int index = QRArrayUtils.objectIndexOf(array, event.after());
+            int index = QRArrayUtils.objectIndexOf(array, e.after());
             QRSwing.setGlobalSetting(key, String.valueOf(index));
         });
         int index = Keys.intValue(key);
@@ -67,9 +64,8 @@ public class ComboBox extends QRComboBox {
                 setText(value);
             }
             addItemChangeListener(e -> {
-                QRItemEvent event = (QRItemEvent) e;
-                SettingsItem.CHANGE_MAP.put(key, event.after());
-                logger.log(Level.CONFIG, "已选择字体: %s", event.after());
+                SettingsItem.CHANGE_MAP.put(key, e.after());
+                logger.log(Level.CONFIG, "已选择字体: %s", e.after());
             });
         }
     }

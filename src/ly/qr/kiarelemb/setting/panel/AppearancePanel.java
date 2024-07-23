@@ -100,7 +100,7 @@ public class AppearancePanel extends SettingPanel {
         themeComboBox.setText(QRSwing.theme);
         themeComboBox.addItemChangeListener(e -> {
             setCursorWait();
-            QRItemEvent event = (QRItemEvent) e;
+            QRItemEvent event = e;
             String after = event.after();
             if (QRSwing.theme.equals(after)) {
                 setCursorDefault();
@@ -141,7 +141,7 @@ public class AppearancePanel extends SettingPanel {
         });
 
         frameFontsComboBox.addItemChangeListener(e -> {
-            QRItemEvent event = (QRItemEvent) e;
+            QRItemEvent event = e;
             SettingsItem.CHANGE_MAP.put(Keys.TEXT_FONT_NAME_GLOBAL, event.after());
             QRLoggerUtils.log(logger, Level.INFO, "设置默认字体为： %s", event.after());
             QRSwing.customFontName(event.after());

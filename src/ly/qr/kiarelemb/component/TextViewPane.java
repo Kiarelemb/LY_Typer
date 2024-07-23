@@ -43,8 +43,8 @@ public class TextViewPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TextViewPane.class);
     //    private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
     private boolean writeBlock = false;
-    private final LinkedList<QRActionRegister> setTextBeforeActions = new LinkedList<>();
-    private final LinkedList<QRActionRegister> setTextFinishedActions = new LinkedList<>();
+    private final LinkedList<QRActionRegister<Objects>> setTextBeforeActions = new LinkedList<>();
+    private final LinkedList<QRActionRegister<Objects>> setTextFinishedActions = new LinkedList<>();
     public static final TextViewPane TEXT_VIEW_PANE = new TextViewPane();
     private final TextPanelEditorKit textPanelEditorKit;
 
@@ -101,12 +101,12 @@ public class TextViewPane extends QRTextPane {
     }
 
     public void textFresh() {
-        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextViewPane.TEXT_VIEW_PANE.setTextBeforeActions));
+        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextViewPane.TEXT_VIEW_PANE.setTextBeforeActions, null));
         super.setText(null);
         // 消除 alt+3 带来的瞬间红字
         print(TextLoad.TEXT_LOAD.formattedActualText(), TextStyleManager.getDefaultStyle(), 0);
         printTextStyleAfterSetText();
-        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextViewPane.TEXT_VIEW_PANE.setTextFinishedActions));
+        SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(TextViewPane.TEXT_VIEW_PANE.setTextFinishedActions, null));
     }
 
     private void printTextStyleAfterSetText() {
@@ -158,7 +158,6 @@ public class TextViewPane extends QRTextPane {
                 try {
                     lastInputTime.set(time);
                     insertUpdateExecute(accumulatedChars.toString());
-                    TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
                     // 重置累积的字符
                     accumulatedChars.setLength(0);
                 } catch (Exception e) {
@@ -217,6 +216,7 @@ public class TextViewPane extends QRTextPane {
         //更新位置
         TypingData.currentTypedIndex += length;
         setCaretPosition(TypingData.currentTypedIndex);
+        TyperTextPane.TYPER_TEXT_PANE.runTypedActions(TypingData.currentTypedIndex);
         setCaretUnblock();
         // 未结束
         if (TextLoad.TEXT_LOAD.wordsLength() != TypingData.currentTypedIndex) {
@@ -262,7 +262,7 @@ public class TextViewPane extends QRTextPane {
         setCaretPosition(preIndex);
         TypingData.backDeleteCount++;
         setCaretUnblock();
-        TyperTextPane.TYPER_TEXT_PANE.runTypedActions();
+        TyperTextPane.TYPER_TEXT_PANE.runTypedActions(TypingData.currentTypedIndex);
         writeBlock = false;
     }
 

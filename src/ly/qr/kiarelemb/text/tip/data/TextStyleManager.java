@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class TextStyleManager {
 
-    private static Logger logger = QRLoggerUtils.getLogger(TextStyleManager.class);
+    private static final Logger logger = QRLoggerUtils.getLogger(TextStyleManager.class);
 
     static {
 //        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> updateAll());

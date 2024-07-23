@@ -29,12 +29,7 @@ public class LoadTextItem extends MenuItem {
         if (ContractiblePanel.GROUP_BUTTON.groupLinked()) {
             QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
             QRComponentUtils.runLater(500, e -> {
-                String text = null;
-//                if (ContractiblePanel.GROUP_BUTTON.isQQNT) {
-
-//                } else {
-                    text = LoadText.getLoadText();
-//                }
+                String text = LoadText.getLoadText();
                 if (text != null && !text.isEmpty()) {
                     TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
                 }
