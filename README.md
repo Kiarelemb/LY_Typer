@@ -1,4 +1,4 @@
-# 揽月跟打器 QQ群：[【跟打器终结者】小启 ＆ 揽月](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)
+# 揽月跟打器 QQ群：[跟打｜键指启航・萃月浸享](https://qm.qq.com/cgi-bin/qm/qr?k=S12N8cwh3IxEu6dLCB7egmnUOTh476mm&jump_from=webapi&authKey=N6bS9Xu+PsBljT6DOTBnFqXO6E/4DRuKKVaJMHYbFlBVGKJ2oAlnV8DI83Lug3sh)
 
 > 中文打字圈开源跟打器。本跟打器基于作者 **[QR](https://github.com/Kiarelemb)**
 > 自研的开源界面框架 [QR_Swing](https://github.com/Kiarelemb/QR_Swing)
