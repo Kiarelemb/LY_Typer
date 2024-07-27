@@ -47,6 +47,7 @@ public class QqOperation {
                 return;
             }
             genda = User32.INSTANCE.FindWindow(null, MainWindow.INSTANCE.getTitle());
+
             SCALE = (double) Toolkit.getDefaultToolkit().getScreenResolution() / 96;
             QRSleepUtils.sleep(50);
             User32.INSTANCE.SetForegroundWindow(hWnd);

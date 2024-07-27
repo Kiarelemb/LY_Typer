@@ -5,6 +5,7 @@
       <element id="module-output" name="LY_Typer" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Swing/QR_Swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../QR_Method/QR_Method.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jnativehook/jnativehook.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

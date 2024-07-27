@@ -35,8 +35,8 @@ public abstract class AbstractTextTip {
     private int fileReadableLines = 0;
     private int fileLines = 0;
 
-    private final ArrayList<QRActionRegister> loadActions = new ArrayList<>();
-    private final ArrayList<QRActionRegister> disloadActions = new ArrayList<>();
+    private final ArrayList<QRActionRegister<Object>> loadActions = new ArrayList<>();
+    private final ArrayList<QRActionRegister<Object>> disloadActions = new ArrayList<>();
     public static AbstractTextTip TEXT_TIP;
 
     static {
@@ -65,7 +65,7 @@ public abstract class AbstractTextTip {
                         this.three42 = value == 2;
                     }
                     loadFile(filePath);
-                    QRComponentUtils.runActions(this.loadActions);
+                    QRComponentUtils.runActions(this.loadActions, null);
                 }
             } else {
                 QRLoggerUtils.log(logger, Level.WARNING, "词提文件不存在，路径：[%s]", filePath);
@@ -85,7 +85,7 @@ public abstract class AbstractTextTip {
             System.gc();
         }
         if (!Keys.boolValue(Keys.TEXT_TIP_ENABLE)) {
-            QRComponentUtils.runActions(this.disloadActions);
+            QRComponentUtils.runActions(this.disloadActions, null);
         }
     }
 

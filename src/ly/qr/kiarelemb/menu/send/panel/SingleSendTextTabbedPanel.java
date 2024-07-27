@@ -19,6 +19,7 @@ import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -174,7 +175,7 @@ public class SingleSendTextTabbedPanel extends ly.qr.kiarelemb.menu.send.panel.S
 
         // 确定按钮的控制
         contentPreviewPane.addDocumentListener();
-        QRActionRegister textChangedAction = event -> {
+        QRActionRegister<DocumentEvent> textChangedAction = event -> {
             String temp = contentPreviewPane.getText();
             startBtn.setEnabled(!temp.isEmpty());
             if (contentLock) {

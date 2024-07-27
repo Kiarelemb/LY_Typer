@@ -37,7 +37,7 @@ class ContractDialog extends QRDialog {
     }
 
     @Override
-    public void ownerMoved() {
-        setLocation(MainWindow.INSTANCE.getX() - widths - 10, MainWindow.INSTANCE.getY());
+    public void ownerMoved(Point parentWindowLocation) {
+        setLocation(parentWindowLocation.x - widths - 10, parentWindowLocation.y);
     }
 }

@@ -20,6 +20,7 @@ import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.utils.QRFileSelectRoundButton;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +59,7 @@ public class TipSettingPanel extends SettingPanel {
         if (paintSelectionCheckBox.checked()) {
             paintCodeCheckBox.setSelected(false);
         }
-        QRActionRegister paintActionRegister = anotherCheckBox -> ((QRCheckBox) anotherCheckBox).setSelected(false);
+        QRActionRegister<QRCheckBox> paintActionRegister = anotherCheckBox -> anotherCheckBox.setSelected(false);
 
         QRCheckBox tipPanelEnableCheckBox = new CheckBox("启用编码提示面板", Keys.TEXT_TIP_PANEL_ENABLE);
         QRLabel tipPanelLocationLabel = new QRLabel("位置：");
@@ -67,7 +68,7 @@ public class TipSettingPanel extends SettingPanel {
         QRLabel tipWindowLocationLabel = new QRLabel("位置：");
         QRComboBox tipWindowComboBox = new ComboBox(Keys.TEXT_TIP_WINDOW_LOCATION, "跟随光标", "固定于窗体上方居中");
 
-        QRActionRegister tipUpdateActions = e -> {
+        QRActionRegister<Object> tipUpdateActions = e -> {
             if (TextLoad.TEXT_LOAD != null) {
                 TextStyleManager.updateAll();
                 TextLoad.TEXT_LOAD.updateTipsWithoutEnable();
@@ -76,7 +77,7 @@ public class TipSettingPanel extends SettingPanel {
             }
         };
 
-        QRActionRegister tipUpdate = es -> SettingsItem.SAVE_ACTIONS.put("tip.update", tipUpdateActions);
+        QRActionRegister<ActionEvent> tipUpdate = es -> SettingsItem.SAVE_ACTIONS.put("tip.update", tipUpdateActions);
         paintColorCheckBox.addClickAction(tipUpdate);
         paintSelectionCheckBox.addClickAction(tipUpdate);
         paintCodeCheckBox.addClickAction(tipUpdate);
@@ -85,7 +86,7 @@ public class TipSettingPanel extends SettingPanel {
         paintSelectionCheckBox.addClickAction(e -> paintActionRegister.action(paintCodeCheckBox));
         paintCodeCheckBox.addClickAction(e -> paintActionRegister.action(paintSelectionCheckBox));
 
-        QRActionRegister tipLoadAction = es -> {
+        QRActionRegister<Object> tipLoadAction = es -> {
             TextTip.TEXT_TIP.release();
             TextTip.TEXT_TIP.load();
             QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
@@ -96,17 +97,15 @@ public class TipSettingPanel extends SettingPanel {
 
         tipEnableCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.load", tipLoadAction));
 
-        tipEnhanceModelCheckBox.addClickAction(e -> {
-            SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable.enhance", es -> {
-                if (!Keys.boolValue(Keys.TEXT_TIP_ENHANCE) || !(AbstractTextTip.TEXT_TIP instanceof TextTip)) {
-                    return;
-                }
-                AbstractTextTip.TEXT_TIP.release();
-                AbstractTextTip.TEXT_TIP = new TextTipEnhance();
-                AbstractTextTip.TEXT_TIP.load();
-                QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
-            });
-        });
+        tipEnhanceModelCheckBox.addClickAction(e -> SettingsItem.SAVE_ACTIONS.putIfAbsent("tip.enable.enhance", es -> {
+            if (!Keys.boolValue(Keys.TEXT_TIP_ENHANCE) || !(AbstractTextTip.TEXT_TIP instanceof TextTip)) {
+                return;
+            }
+            AbstractTextTip.TEXT_TIP.release();
+            AbstractTextTip.TEXT_TIP = new TextTipEnhance();
+            AbstractTextTip.TEXT_TIP.load();
+            QRLoggerUtils.log(logger, Level.INFO, "词提重新加载，路径：[%s]，%s", Keys.strValue(Keys.TEXT_TIP_FILE_PATH), TextTip.TEXT_TIP.toString());
+        }));
 
         selectionTextField.setTextCenter();
         tipFileSelectBtn.addSuccessAction(e -> {

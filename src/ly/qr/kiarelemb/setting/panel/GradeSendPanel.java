@@ -12,6 +12,8 @@ import swing.qr.kiarelemb.basic.QRTextField;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
+import java.awt.event.ActionEvent;
+
 /**
  * @author Kiarelemb QR
  * @program: 揽月跟打器
@@ -56,7 +58,7 @@ public class GradeSendPanel extends SettingPanel {
 		QRLabel bTipLabel = new QRLabel("B");
 
 		simplifyModelCheckBox.setToolTipText("极简模式的成绩单只有一行，能尽最大可能减少刷屏程度。");
-		QRActionRegister action = e -> {
+		QRActionRegister<ActionEvent> action = e -> {
 			boolean b = !simplifyModelCheckBox.checked();
 			for (CheckBox box : boxes) {
 				box.setEnabled(b);

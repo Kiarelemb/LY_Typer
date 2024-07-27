@@ -195,7 +195,7 @@ public class WindowPanel extends SettingPanel {
             if (SettingsItem.CHANGE_MAP.containsKey(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA)) {
                 float alpha = Float.parseFloat(SettingsItem.CHANGE_MAP.get(QRSwing.WINDOW_BACKGROUND_IMAGE_ALPHA));
                 SettingsItem.SAVE_ACTIONS.put("window.image.alpha", e -> {
-                    MainWindow.INSTANCE.setBackgroundBorderAlpha(alpha);
+                    MainWindow.INSTANCE.setBackgroundImageAlpha(alpha);
                 });
                 QRSwing.windowBackgroundImageAlpha = alpha;
             }

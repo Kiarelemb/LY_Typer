@@ -19,6 +19,7 @@ import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import javax.swing.*;
+import javax.swing.text.Highlighter;
 import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -43,8 +44,8 @@ public class TextViewPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TextViewPane.class);
     //    private static final ThreadPoolExecutor typingEndThread = QRThreadBuilder.singleThread("typingEnd");
     private boolean writeBlock = false;
-    private final LinkedList<QRActionRegister<Objects>> setTextBeforeActions = new LinkedList<>();
-    private final LinkedList<QRActionRegister<Objects>> setTextFinishedActions = new LinkedList<>();
+    private final LinkedList<QRActionRegister<Object>> setTextBeforeActions = new LinkedList<>();
+    private final LinkedList<QRActionRegister<Object>> setTextFinishedActions = new LinkedList<>();
     public static final TextViewPane TEXT_VIEW_PANE = new TextViewPane();
     private final TextPanelEditorKit textPanelEditorKit;
 
@@ -55,6 +56,7 @@ public class TextViewPane extends QRTextPane {
         setEditorKit(textPanelEditorKit);
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
         setOpaque(false);
+        Highlighter highlighter = getHighlighter();
         this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));
         this.setTextBeforeActions.add(e -> {
             //更新数据
@@ -384,11 +386,11 @@ public class TextViewPane extends QRTextPane {
         }
     }
 
-    public void addSetTextBeforeAction(QRActionRegister ar) {
+    public void addSetTextBeforeAction(QRActionRegister<Object> ar) {
         this.setTextBeforeActions.add(ar);
     }
 
-    public void addSetTextFinishedAction(QRActionRegister ar) {
+    public void addSetTextFinishedAction(QRActionRegister<Object> ar) {
         this.setTextFinishedActions.add(ar);
     }
 

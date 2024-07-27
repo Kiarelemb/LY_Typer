@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="QR_Swing" level="project" />
+    <orderEntry type="library" name="jnativehook" level="project" />
   </component>
 </module>
