@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="ui-automation">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../ui-automation/ui_automation/ui-automation.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../ui-automation/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

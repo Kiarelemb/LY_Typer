@@ -205,7 +205,7 @@ public class InputManager {
         inputWindow = new InputWindow();
         tipUpdate();
         QRActionRegister locationUpdate = e -> {
-            inputWindow.updateLocation();
+            inputWindow.updateLocation(null);
             TyperTextPane.TYPER_TEXT_PANE.caret.setVisible(false);
         };
         TyperTextPane.TYPER_TEXT_PANE.addTypeActions(locationUpdate);
@@ -231,11 +231,11 @@ public class InputManager {
             add(inputArea, BorderLayout.CENTER);
             inputArea.setPreferredSize(new Dimension(65, 40));
             pack();
-            updateLocation();
+            updateLocation(null);
         }
 
         @Override
-        public void updateLocation() {
+        public void updateLocation(Point parentWindowLocation) {
             if (TyperTextPane.TYPER_TEXT_PANE.isShowing()) {
                 pack();
                 //位置跟随光标

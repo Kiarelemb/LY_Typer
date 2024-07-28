@@ -10,7 +10,7 @@ import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.event.QRNativeKeyEvent;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.listener.QRNativeKeyListener;
-import swing.qr.kiarelemb.listener.key.QRNativeKeyTypedListener;
+import swing.qr.kiarelemb.listener.key.QRNativeKeyPressedListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
@@ -145,7 +145,7 @@ public class TyperTextPane extends QRTextPane {
     }
 
     private void timeCountInit() {
-        this.globalKeyListener = new QRNativeKeyTypedListener();
+        this.globalKeyListener = new QRNativeKeyPressedListener();
         GlobalScreen.addNativeKeyListener(this.globalKeyListener);
         this.globalKeyListener.add(true, this::keyPressLead);
     }

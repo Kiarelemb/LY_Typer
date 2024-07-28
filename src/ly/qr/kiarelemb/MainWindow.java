@@ -15,8 +15,10 @@ import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRButton;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.basic.QRFrame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.logging.Logger;
@@ -53,6 +55,7 @@ public class MainWindow extends QRFrame {
         setTitleCenter();
         setCloseButtonSystemExit();
         quickKeyLoad();
+        QRComponentUtils.componentLoopToSetOpaque((JComponent) getContentPane(), !QRSwing.windowImageSet);
     }
 
     private void menuInit() {

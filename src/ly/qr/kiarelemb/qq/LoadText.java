@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.qq;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.data.LoadedTextData;
+import ly.qr.kiarelemb.qq.operation.OperationAbs;
 import ly.qr.kiarelemb.text.TextLoad;
 import method.qr.kiarelemb.utils.*;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
@@ -51,11 +52,11 @@ public class LoadText {
      * @return 所有可跟打的段
      */
     public static ArrayList<LoadedTextData> getLoadTexts() {
-        if (!QqOperation.textCanSend() || ContractiblePanel.GROUP_BUTTON.isQQNT()) {
+    if (!QqOperation.operation.textCanSend(OperationAbs.GET_ARTICLE_MODEL) || ContractiblePanel.GROUP_BUTTON.isQQNT()) {
             return null;
         }
         //复制群内消息
-        QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
+        QqOperation.start(OperationAbs.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
         QRSleepUtils.sleep(100);
         //取得剪贴板内容
         String text = QRSystemUtils.getSysClipboardText();

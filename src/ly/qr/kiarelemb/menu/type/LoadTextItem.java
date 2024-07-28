@@ -7,6 +7,7 @@ import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.menu.MenuItem;
 import ly.qr.kiarelemb.qq.LoadText;
 import ly.qr.kiarelemb.qq.QqOperation;
+import ly.qr.kiarelemb.qq.operation.OperationAbs;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import java.awt.event.ActionEvent;
@@ -27,7 +28,7 @@ public class LoadTextItem extends MenuItem {
     @Override
     protected void actionEvent(ActionEvent o) {
         if (ContractiblePanel.GROUP_BUTTON.groupLinked()) {
-            QqOperation.start(QqOperation.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
+            QqOperation.start(OperationAbs.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
             QRComponentUtils.runLater(500, e -> {
                 String text = LoadText.getLoadText();
                 if (text != null && !text.isEmpty()) {
