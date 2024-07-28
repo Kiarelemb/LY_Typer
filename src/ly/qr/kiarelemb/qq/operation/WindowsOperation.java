@@ -21,7 +21,9 @@ import java.util.ArrayList;
  * @create 2024/7/28 上午8:22
  */
 public class WindowsOperation extends OperationAbs {
-    private static WinDef.HWND genda;
+
+    public WindowsOperation() {
+    }
 
     @Override
     public void start(int model, String nameOrId) {
@@ -41,7 +43,7 @@ public class WindowsOperation extends OperationAbs {
         if (hWnd == null) {
             return;
         }
-        genda = User32.INSTANCE.FindWindow(null, MainWindow.INSTANCE.getTitle());
+        WinDef.HWND genda = User32.INSTANCE.FindWindow(null, MainWindow.INSTANCE.getTitle());
         double SCALE = (double) Toolkit.getDefaultToolkit().getScreenResolution() / 96;
         QRSleepUtils.sleep(50);
         User32.INSTANCE.SetForegroundWindow(hWnd);

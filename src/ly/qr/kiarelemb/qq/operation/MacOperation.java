@@ -12,7 +12,7 @@ import java.awt.*;
  * @description TODO
  * @create 2024/7/28 上午8:29
  */
-public class MacOperation extends OperationAbs{
+public class MacOperation extends OperationAbs {
     @Override
     public void start(int model, String nameOrId) {
         if (!textCanSend(model)) {
@@ -26,6 +26,7 @@ public class MacOperation extends OperationAbs{
             return;
         }
         if (model == GET_ARTICLE_MODEL) {
+            // mac F4 鼠标载文
             pressCopy(robot);
         } else if (model == SEND_ACHIEVEMENT_MODEL) {
             //pressPaste(robot);
@@ -35,7 +36,7 @@ public class MacOperation extends OperationAbs{
 
     @Override
     public boolean textCanSend(int model) {
-        if ( model == GET_ARTICLE_MODEL) {
+        if (model == SEND_ACHIEVEMENT_MODEL) {
             QRSmallTipShow.display(MainWindow.INSTANCE, "与 QQ 联动暂不支持 MacOS");
             return false;
         }

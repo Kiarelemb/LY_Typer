@@ -21,6 +21,7 @@ public class TypeTabbedPane extends QRTabbedPane {
 
     private TypeTabbedPane() {
         super(BorderLayout.SOUTH);
+
         init_typerTextPane();
         init_historyGradePane();
         init_logPane();
@@ -39,7 +40,7 @@ public class TypeTabbedPane extends QRTabbedPane {
     private void init_typerTextPane() {
         QRTabbedContentPanel typer = new QRTabbedContentPanel(new BorderLayout());
         addTab("跟打区", typer);
-        typer.add(TyperTextPane.TYPER_TEXT_PANE.addInternalScrollPane(), BorderLayout.CENTER);
+        typer.add(TyperTextPane.TYPER_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
     }
 
     private void init_historyGradePane() {

@@ -19,6 +19,7 @@ public abstract class OperationAbs implements Operation {
     public static final int GET_ARTICLE_MODEL = 1;
     public static final int SEND_ACHIEVEMENT_MODEL = 2;
     protected void pressCopy(Robot robot){
+        System.out.println("copy");
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         QRSleepUtils.sleep(30);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -33,7 +34,6 @@ public abstract class OperationAbs implements Operation {
         QRSleepUtils.sleep(80);
         robot.keyRelease(VK_C);
         robot.keyRelease(VK_CONTROL);
-        QRSleepUtils.sleep(500);
     }
 
     protected void pressPaste(Robot robot){

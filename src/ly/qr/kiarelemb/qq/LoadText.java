@@ -20,9 +20,6 @@ import java.util.logging.Logger;
 public class LoadText {
     private static final Logger logger = QRLoggerUtils.getLogger(LoadText.class);
     public static String getLoadText() {
-//        if (!QqOperation.textCanSend()) {
-//            return null;
-//        }
         //复制群内消息
         String text = QRSystemUtils.getSysClipboardText();
         logger.info("text = " + text);
@@ -32,7 +29,6 @@ public class LoadText {
             return null;
         }
         if (ContractiblePanel.GROUP_BUTTON.isQQNT()) {
-//            System.out.println("QQ NT: " + text);
             return text;
         } else {
             //将内容分割成段

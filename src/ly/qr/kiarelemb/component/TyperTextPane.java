@@ -15,7 +15,6 @@ import swing.qr.kiarelemb.theme.QRColorsAndFonts;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
@@ -32,7 +31,6 @@ import java.util.logging.Logger;
 public class TyperTextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
     public QRNativeKeyListener globalKeyListener = null;
-    public KeyboardFocusManager keyboardFocusManager = null;
     private final LinkedList<QRActionRegister<Integer>> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
 

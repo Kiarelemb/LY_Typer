@@ -131,7 +131,7 @@ public class TextViewPane extends QRTextPane {
     private final AtomicLong lastInputTime = new AtomicLong(0);
 
     /**
-     * 统计打词的算法
+     * 统计打词的延时上屏算法
      *
      * @param c 程序内部单次接受的字符
      *          （20毫秒内未再次输入则算单字，否则，算多次。拓展字情况已顺带解决。
