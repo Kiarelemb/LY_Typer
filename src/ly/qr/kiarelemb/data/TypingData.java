@@ -12,7 +12,6 @@ import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.listener.QRActionListener;
-import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -168,14 +167,6 @@ public class TypingData {
     }
 
     private static void typingStatisticsUpdate(long restTime) {
-        if (MainWindow.INSTANCE.backgroundImageSet() && !Keys.boolValue(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT)) {
-            QRComponentUtils.runLater(10, e -> {
-                while (typing) {
-                    if (!pausing) windowFresh();
-                    QRSleepUtils.sleep(5);
-                }
-            });
-        }
         int index = 0;
         while (typing && !pausing) {
             QRSleepUtils.sleep(restTime);

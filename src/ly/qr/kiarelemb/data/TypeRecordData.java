@@ -46,7 +46,7 @@ public record TypeRecordData(long time, int length) {
         typeKeyDiffLists.add(SystemTime - TypingData.startTime);
     }
 
-    public static TypeRecordData updateData(long endTime) {
+    public static synchronized TypeRecordData updateData(long endTime) {
         if (!TypingData.typing) {
             return null;
         }

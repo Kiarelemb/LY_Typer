@@ -1,9 +1,7 @@
 package ly.qr.kiarelemb.qq.operation;
 
-import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import method.qr.kiarelemb.utils.QRSleepUtils;
-import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import java.awt.*;
 import java.io.IOException;
@@ -17,17 +15,7 @@ import java.io.IOException;
  */
 public class LinuxOperation extends OperationAbs {
     @Override
-    public void start(int model, String nameOrId) {
-        if (!textCanSend(model)) {
-            return;
-        }
-        Robot robot;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            QRSmallTipShow.display(MainWindow.INSTANCE, "操作失败，请重试！");
-            return;
-        }
+    public void start(int model, String nameOrId, Robot robot) {
         Runtime runtime = Runtime.getRuntime();
         try {
             String command = "xdotool windowactivate " + ContractiblePanel.GroupButton.linuxQQWindowId;

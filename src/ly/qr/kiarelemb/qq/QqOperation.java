@@ -1,10 +1,14 @@
 package ly.qr.kiarelemb.qq;
 
+import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.qq.operation.LinuxOperation;
 import ly.qr.kiarelemb.qq.operation.MacOperation;
 import ly.qr.kiarelemb.qq.operation.Operation;
 import ly.qr.kiarelemb.qq.operation.WindowsOperation;
 import ly.qr.kiarelemb.res.Info;
+import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
+
+import java.awt.*;
 
 /**
  * @author Kiarelemb QR
@@ -20,6 +24,12 @@ public class QqOperation {
     }
 
     public static void start(int model, String Name) {
-        operation.start(model, Name);
+        Robot robot;
+        try {
+            robot = new Robot();
+            operation.start(model, Name, robot);
+        } catch (AWTException e) {
+            QRSmallTipShow.display(MainWindow.INSTANCE,"操作失败，请重试！");
+        }
     }
 }

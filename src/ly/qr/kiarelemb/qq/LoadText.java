@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  **/
 public class LoadText {
     private static final Logger logger = QRLoggerUtils.getLogger(LoadText.class);
+
     public static String getLoadText() {
         //复制群内消息
         String text = QRSystemUtils.getSysClipboardText();
@@ -30,14 +31,13 @@ public class LoadText {
         }
         if (ContractiblePanel.GROUP_BUTTON.isQQNT()) {
             return text;
-        } else {
-            //将内容分割成段
-            String[] para = loadedTextSplitToParagraph(text);
-            //从段中分析并得到发文内容
-            ArrayList<LoadedTextData> textData = paraTextSplitToData(para, true);
-            if (!textData.isEmpty()) {
-                return textData.get(0).text();
-            }
+        }
+        //将内容分割成段
+        String[] para = loadedTextSplitToParagraph(text);
+        //从段中分析并得到发文内容
+        ArrayList<LoadedTextData> textData = paraTextSplitToData(para, true);
+        if (!textData.isEmpty()) {
+            return textData.get(0).text();
         }
         return text;
     }
@@ -48,7 +48,7 @@ public class LoadText {
      * @return 所有可跟打的段
      */
     public static ArrayList<LoadedTextData> getLoadTexts() {
-    if (!QqOperation.operation.textCanSend(OperationAbs.GET_ARTICLE_MODEL) || ContractiblePanel.GROUP_BUTTON.isQQNT()) {
+        if (!QqOperation.operation.textCanSend(OperationAbs.GET_ARTICLE_MODEL) || ContractiblePanel.GROUP_BUTTON.isQQNT()) {
             return null;
         }
         //复制群内消息

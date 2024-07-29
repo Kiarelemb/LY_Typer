@@ -26,18 +26,8 @@ public class WindowsOperation extends OperationAbs {
     }
 
     @Override
-    public void start(int model, String nameOrId) {
-        if (!textCanSend(model)) {
-            return;
-        }
+    public void start(int model, String nameOrId, Robot robot) {
         Main.main(null);
-        Robot robot;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            QRSmallTipShow.display(MainWindow.INSTANCE, "操作失败，请重试！");
-            return;
-        }
         boolean isQQNT = ContractiblePanel.GROUP_BUTTON.isQQNT;
         WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, nameOrId);
         if (hWnd == null) {

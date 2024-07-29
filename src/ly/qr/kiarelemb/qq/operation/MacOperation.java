@@ -14,17 +14,7 @@ import java.awt.*;
  */
 public class MacOperation extends OperationAbs {
     @Override
-    public void start(int model, String nameOrId) {
-        if (!textCanSend(model)) {
-            return;
-        }
-        Robot robot;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            QRSmallTipShow.display(MainWindow.INSTANCE, "操作失败，请重试！");
-            return;
-        }
+    public void start(int model, String nameOrId, Robot robot) {
         if (model == GET_ARTICLE_MODEL) {
             // mac F4 鼠标载文
             pressCopy(robot);
