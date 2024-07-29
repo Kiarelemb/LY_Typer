@@ -5,28 +5,22 @@ import ly.qr.kiarelemb.component.SplitPane;
 import ly.qr.kiarelemb.component.TextViewPane;
 import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
-import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.menu.about.HotMapItem;
 import ly.qr.kiarelemb.menu.send.*;
-import ly.qr.kiarelemb.menu.type.LoadTextItem;
-import ly.qr.kiarelemb.menu.type.RetypeItem;
-import ly.qr.kiarelemb.menu.type.SettingsItem;
-import ly.qr.kiarelemb.menu.type.TextMixItem;
+import ly.qr.kiarelemb.menu.type.*;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.tip.TipWindow;
 import ly.qr.kiarelemb.text.tip.data.TextStyleManager;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
-import method.qr.kiarelemb.utils.QRSleepUtils;
-import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRButton;
+import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.basic.QRFrame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
 
 /**
@@ -49,7 +43,9 @@ public class MainWindow extends QRFrame {
         menuInit();
 
         //region 中心面板
+//        this.mainPanel.add(new QRTextPane().addScrollPane(), BorderLayout.CENTER);
         this.mainPanel.add(SplitPane.SPLIT_PANE, BorderLayout.CENTER);
+//        this.mainPanel.add(LogTextPane.LOG_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
         //endregion
 
         //region 左侧
@@ -59,6 +55,7 @@ public class MainWindow extends QRFrame {
         setTitleCenter();
         setCloseButtonSystemExit();
         quickKeyLoad();
+        QRComponentUtils.componentLoopToSetOpaque((JComponent) getContentPane(), !QRSwing.windowImageSet);
     }
 
     private void menuInit() {
@@ -69,6 +66,7 @@ public class MainWindow extends QRFrame {
         QRButton toolMenu = this.titleMenuPanel.add("工具");
         QRButton aboutMenu = this.titleMenuPanel.add("关于");
 
+        typeMenu.add(GroupMenuItem.GROUP_MENU_ITEM);
         typeMenu.add(LoadTextItem.LOAD_TEXT_ITEM);
         typeMenu.add(RetypeItem.RETYPE_ITEM);
         typeMenu.add(TextMixItem.TEXT_MIX_ITEM);
@@ -103,36 +101,6 @@ public class MainWindow extends QRFrame {
         });
     }
 
-    private ThreadPoolExecutor WINDOW_FRESH_THREAD = QRThreadBuilder.singleThread("window.fresh");
-
-    public void startFreshening() {
-        if (!Keys.boolValue(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT)) {
-            return;
-        }
-        stopFreshening();
-        WINDOW_FRESH_THREAD = QRThreadBuilder.singleThread("window.fresh");
-        if (WINDOW_FRESH_THREAD.getQueue().isEmpty()) {
-            Future<Object> fresh = WINDOW_FRESH_THREAD.submit(() -> {
-                logger.config("进入高速刷新模式");
-                while ("true".equals(QRSwing.GLOBAL_PROP.get(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT))) {
-                    try {
-                        QRSleepUtils.sleep(2);
-                        TypingData.windowFresh();
-                    } catch (Exception ignore) {
-                    }
-                }
-                return null;
-            });
-        }
-    }
-
-    public void stopFreshening() {
-        if (!WINDOW_FRESH_THREAD.getQueue().isEmpty()) {
-            WINDOW_FRESH_THREAD.shutdownNow();
-            logger.config("退出高速刷新模式");
-        }
-    }
-
     public void grabFocus() {
         TyperTextPane.TYPER_TEXT_PANE.grabFocus();
     }
@@ -141,7 +109,8 @@ public class MainWindow extends QRFrame {
     public void windowOpened(WindowEvent e) {
         //加载一下词提窗口
         TipWindow.TIP_WINDOW.updateTipWindowLocation();
-        startFreshening();
+//        SplitPane.SPLIT_PANE.resetToPreferredSizes();
+//        startFreshening();
     }
 
     @Override

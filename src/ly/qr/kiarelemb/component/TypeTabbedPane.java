@@ -21,6 +21,7 @@ public class TypeTabbedPane extends QRTabbedPane {
 
     private TypeTabbedPane() {
         super(BorderLayout.SOUTH);
+
         init_typerTextPane();
         init_historyGradePane();
         init_logPane();
@@ -31,8 +32,8 @@ public class TypeTabbedPane extends QRTabbedPane {
 
     private void init_logPane() {
         QRTabbedContentPanel log = new QRTabbedContentPanel(new BorderLayout());
-        addTab("日志", log);
         log.add(LogTextPane.LOG_TEXT_PANE.addScrollPane(), BorderLayout.CENTER);
+        addTab("日志", log);
 
     }
 
@@ -45,7 +46,8 @@ public class TypeTabbedPane extends QRTabbedPane {
     private void init_historyGradePane() {
         QRTabbedContentPanel history = new QRTabbedContentPanel(new BorderLayout());
         addTab("跟打历史", history);
-        QRTextPane tip = new TextPane();
+
+        QRTextPane tip = new QRTextPane();
         tip.setEditable(false);
         tip.setLineWrap(false);
         tip.setMargin(new Insets(5, 10, 5, 10));
@@ -60,9 +62,9 @@ public class TypeTabbedPane extends QRTabbedPane {
         historyScrollPane.verticalScrollBar().setExistButVisibleFalse();
         historyScrollPane.addFollowedToScrollPane(tipScrollPane);
         historyScrollPane.horizontalScrollBar().addSynchronisedScrollBor(tipScrollPane.horizontalScrollBar());
+
         history.add(tipScrollPane, BorderLayout.NORTH);
         history.add(historyScrollPane, BorderLayout.CENTER);
-
 
     }
 }

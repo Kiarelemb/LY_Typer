@@ -33,6 +33,7 @@ public class TipPanel extends QRPanel {
     private final QRLabel phraseWordCodeLabel = new QRLabel("abcd");
     private final int gap = 5;
 
+    @SuppressWarnings("unchecked")
     public TipPanel() {
         addMouseListener();
         this.singlePanel.add(this.singleWordLabel);

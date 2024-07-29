@@ -20,8 +20,8 @@ import java.util.TreeMap;
 public class SettingsItem extends MenuItem {
 
 	public static final Map<String, String> CHANGE_MAP = new TreeMap<>();
-	public static final Map<String, QRActionRegister> SAVE_ACTIONS = new TreeMap<>();
-	public static final Map<String, QRActionRegister> CANCEL_ACTIONS = new TreeMap<>();
+	public static final Map<String, QRActionRegister<Object>> SAVE_ACTIONS = new TreeMap<>();
+	public static final Map<String, QRActionRegister<Object>> CANCEL_ACTIONS = new TreeMap<>();
 	public static final SettingsItem SETTINGS_ITEM = new SettingsItem();
 
 	private SettingsItem() {

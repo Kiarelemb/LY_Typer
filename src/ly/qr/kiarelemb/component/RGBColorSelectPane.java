@@ -2,8 +2,8 @@ package ly.qr.kiarelemb.component;
 
 import ly.qr.kiarelemb.menu.type.SettingsItem;
 import swing.qr.kiarelemb.event.QRColorChangedEvent;
-import swing.qr.kiarelemb.utils.QRRGBColorPane;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.utils.QRRGBColorPane;
 
 import java.awt.*;
 
@@ -16,12 +16,12 @@ import java.awt.*;
 public class RGBColorSelectPane extends QRRGBColorPane {
 
     public RGBColorSelectPane(Color color, String key) {
-        super(color, event -> SettingsItem.CHANGE_MAP.put(key, QRRGBColorPane.getColor(((QRColorChangedEvent) event).to())));
+        super(color, event -> SettingsItem.CHANGE_MAP.put(key, QRRGBColorPane.getColor(event.to())));
     }
 
-    public RGBColorSelectPane(Color color, String key, QRActionRegister e) {
+    public RGBColorSelectPane(Color color, String key, QRActionRegister<QRColorChangedEvent> e) {
         super(color, event -> {
-            SettingsItem.CHANGE_MAP.put(key, QRRGBColorPane.getColor(((QRColorChangedEvent) event).to()));
+            SettingsItem.CHANGE_MAP.put(key, QRRGBColorPane.getColor(event.to()));
             e.action(event);
         });
     }

@@ -2,6 +2,7 @@ package ly.qr.kiarelemb.qq;
 
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.component.ContractiblePanel;
+import ly.qr.kiarelemb.qq.operation.OperationAbs;
 import ly.qr.kiarelemb.res.Info;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
@@ -49,7 +50,7 @@ public class SendText {
 	 */
 	public static void gradeSend() {
 //        tpe.execute(() -> {
-		if (!Info.IS_WINDOWS || !ContractiblePanel.GROUP_BUTTON.groupLinked()) {
+		if (!ContractiblePanel.GROUP_BUTTON.groupLinked()) {
 			return;
 		}
 		if (ContractiblePanel.DIVE_CHECKBOX.isSelected()) {
@@ -64,7 +65,7 @@ public class SendText {
 //			}
 //		} else {
 		//发送成绩
-		QqOperation.start(QqOperation.SEND_ACHIEVEMENT_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
+		QqOperation.start(OperationAbs.SEND_ACHIEVEMENT_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
 //		}
 		MainWindow.INSTANCE.grabFocus();
 //        });
@@ -81,7 +82,7 @@ public class SendText {
 			texts = textCoding(texts, true);
 		}
 		QRSystemUtils.putTextToClipboard(texts);
-		QqOperation.start(QqOperation.SEND_ACHIEVEMENT_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
+		QqOperation.start(OperationAbs.SEND_ACHIEVEMENT_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
 		MainWindow.INSTANCE.grabFocus();
 	}
 }

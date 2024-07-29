@@ -13,10 +13,6 @@ public class HistoryGradePane extends TextPane {
     public static final HistoryGradePane HISTORY_GRADE_PANE = new HistoryGradePane();
 
     private HistoryGradePane() {
-        setEditableFalseButCursorEdit();
-        setLineWrap(false);
-        setLineSpacing(0.5f);
         setMargin(new Insets(0, 10, 0, 10));
-
     }
 }

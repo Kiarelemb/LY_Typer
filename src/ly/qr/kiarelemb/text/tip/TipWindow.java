@@ -31,7 +31,7 @@ public class TipWindow extends QREmptyDialog {
         this.contentPane.add(this.tipPanel);
         TyperTextPane.TYPER_TEXT_PANE.addTypeActions(e -> {
             if (TypingData.tipWindowEnable) {
-                updateLocation();
+                updateLocation(null);
             }
         });
 
@@ -39,7 +39,7 @@ public class TipWindow extends QREmptyDialog {
             if (TypingData.tipEnable && TextLoad.TEXT_LOAD.tipData != null) {
                 if (TypingData.tipWindowEnable) {
                     setVisible(true);
-                    updateLocation();
+                    updateLocation(null);
                     return;
                 }
             }
@@ -49,7 +49,7 @@ public class TipWindow extends QREmptyDialog {
     }
 
     @Override
-    public void updateLocation() {
+    public void updateLocation(Point parentWindowLocation) {
         if (TextViewPane.TEXT_VIEW_PANE.isShowing()) {
             SwingUtilities.invokeLater(() -> {
                 pack();
@@ -76,7 +76,7 @@ public class TipWindow extends QREmptyDialog {
     public void updateTipWindowLocation() {
         if (Keys.boolValue(Keys.TEXT_TIP_WINDOW_ENABLE)) {
             setVisible(true);
-            updateLocation();
+            updateLocation(null);
         } else {
             setVisible(false);
         }

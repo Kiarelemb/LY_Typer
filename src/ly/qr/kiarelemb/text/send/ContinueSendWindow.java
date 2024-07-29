@@ -56,7 +56,7 @@ public class ContinueSendWindow extends QRDialog {
             dispose();
         });
         listTabbedPane.addTabSelectChangedAction(event -> {
-            QRTabSelectEvent e = (QRTabSelectEvent) event;
+            QRTabSelectEvent e = event;
             if (e.after() != -1) {
                 sureButton.setEnabled(true);
             }

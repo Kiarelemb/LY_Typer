@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class TextStyleManager {
 
-    private static Logger logger = QRLoggerUtils.getLogger(TextStyleManager.class);
+    private static final Logger logger = QRLoggerUtils.getLogger(TextStyleManager.class);
 
     static {
 //        TextPane.TEXT_PANE.addSetTextBeforeAction(e -> updateAll());
@@ -98,7 +98,8 @@ public class TextStyleManager {
             correctStyle = new SimpleAttributeSet();
             StyleConstants.setFontFamily(correctStyle, fontName);
             StyleConstants.setFontSize(correctStyle, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-            StyleConstants.setBackground(correctStyle, english ? QRColorsAndFonts.FRAME_COLOR_BACK : QRColorsAndFonts.CORRECT_COLOR_BACK);
+            if (!QRSwing.windowImageSet)
+                StyleConstants.setBackground(correctStyle, english ? QRColorsAndFonts.TEXT_COLOR_BACK : QRColorsAndFonts.CORRECT_COLOR_BACK);
             StyleConstants.setForeground(correctStyle, QRColorsAndFonts.CORRECT_COLOR_FORE);
         }
         return correctStyle;
@@ -115,7 +116,8 @@ public class TextStyleManager {
             defaultStyle = new SimpleAttributeSet();
             StyleConstants.setFontFamily(defaultStyle, fontName);
             StyleConstants.setFontSize(defaultStyle, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-            StyleConstants.setBackground(defaultStyle, QRColorsAndFonts.FRAME_COLOR_BACK);
+            if (!QRSwing.windowImageSet) StyleConstants.setBackground(defaultStyle, QRColorsAndFonts.TEXT_COLOR_BACK);
+            StyleConstants.setForeground(defaultStyle, QRColorsAndFonts.TEXT_COLOR_FORE);
         }
         return defaultStyle;
     }
@@ -129,8 +131,8 @@ public class TextStyleManager {
             WrongStyle = new SimpleAttributeSet();
             StyleConstants.setFontFamily(WrongStyle, fontName);
             StyleConstants.setFontSize(WrongStyle, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-            StyleConstants.setBackground(WrongStyle, Color.RED);
-            StyleConstants.setForeground(WrongStyle, QRColorsAndFonts.TEXT_COLOR_FORE);
+            if (!QRSwing.windowImageSet) StyleConstants.setBackground(WrongStyle, Color.RED);
+            StyleConstants.setForeground(WrongStyle, QRSwing.windowImageSet ? Color.RED : QRColorsAndFonts.TEXT_COLOR_FORE);
         }
         return WrongStyle;
     }
@@ -146,14 +148,14 @@ public class TextStyleManager {
         SimpleAttributeSet sas = new SimpleAttributeSet();
         StyleConstants.setFontFamily(sas, fontName);
         StyleConstants.setFontSize(sas, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-        StyleConstants.setBackground(sas, QRColorsAndFonts.FRAME_COLOR_BACK);
+        if (!QRSwing.windowImageSet) StyleConstants.setBackground(sas, QRColorsAndFonts.TEXT_COLOR_BACK);
         attributeCopy(s, sas, StyleConstants.Foreground);
         attributeCopy(s, sas, StyleConstants.Bold);
         attributeCopy(s, sas, "tip-color");
         return sas;
     }
 
-    private static void attributeCopy(SimpleAttributeSet from, SimpleAttributeSet to, Object attributeName) {
+    public static void attributeCopy(SimpleAttributeSet from, SimpleAttributeSet to, Object attributeName) {
         to.addAttribute(attributeName, from.getAttribute(attributeName));
     }
 
@@ -161,7 +163,7 @@ public class TextStyleManager {
         SimpleAttributeSet sas = new SimpleAttributeSet();
         StyleConstants.setFontFamily(sas, fontName);
         StyleConstants.setFontSize(sas, Keys.intValue(Keys.TEXT_FONT_SIZE_LOOK));
-        StyleConstants.setBackground(sas, QRColorsAndFonts.FRAME_COLOR_BACK);
+        if (!QRSwing.windowImageSet) StyleConstants.setBackground(sas, QRColorsAndFonts.TEXT_COLOR_BACK);
         StyleConstants.setBold(sas, bold);
         switch (type) {
             case 2, 1 -> {
@@ -236,7 +238,6 @@ public class TextStyleManager {
         String fontFamily = StyleConstants.getFontFamily(a);
         Font font = QRFontUtils.getFont(fontFamily, 10);
         if (!QRFontUtils.fontCanAllDisplay(str, font)) {
-//            System.out.println("Can't display....");
             //有拓展字
             final String[] chineseExtraPhrase = QRStringUtils.getChineseExtraPhrase(str);
             for (String aChineseWord : chineseExtraPhrase) {

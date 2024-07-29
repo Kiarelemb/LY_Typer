@@ -146,9 +146,9 @@ public class TipData {
                '}';
     }
 
-    public static record StandardData(int first, int multi, int singleCounts, double phraseTypeCounts, int oneFirst,
-                                      int oneMulti, int twoFirst, int twoMulti, int threeFirst, int threeMulti,
-                                      int fourFirst, int fourMulti, int totalCounts, int leftCounts, int rightCounts,
-                                      int spaceCounts) {
+    public record StandardData(int first, int multi, int singleCounts, double phraseTypeCounts, int oneFirst,
+                               int oneMulti, int twoFirst, int twoMulti, int threeFirst, int threeMulti,
+                               int fourFirst, int fourMulti, int totalCounts, int leftCounts, int rightCounts,
+                               int spaceCounts) {
     }
 }

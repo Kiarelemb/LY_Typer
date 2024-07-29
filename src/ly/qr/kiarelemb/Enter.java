@@ -30,10 +30,10 @@ public class Enter {
         QRLoggerUtils.initLogger(Level.INFO, Level.CONFIG);
         QRLoggerUtils.classMsgMaxLength = 120;
         logger = QRLoggerUtils.getLogger(Enter.class);
-        LogTextPane.LOG_TEXT_PANE.init();
-        logger.info("************************************** 揽月开始启动 **************************************");
         QRTimeCountUtil qcu = new QRTimeCountUtil();
         QRSwing.start("res/settings/setting.properties", "res/settings/window.properties");
+        LogTextPane.LOG_TEXT_PANE.init();
+        logger.info("************************************** 揽月开始启动 **************************************");
         logger.info("QRSwing 框架加载完毕，" + qcu.endAndGet());
         // 设置窗口图标
         QRSwing.windowIcon = Info.loadImage(Info.ICON_PNG_PATH);
@@ -43,13 +43,6 @@ public class Enter {
 
         variousLoad();
 
-        logger.config("当前系统：" + QRSystemUtils.getSystemName());
-        if (Info.IS_WINDOWS) {
-            QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.globalKeyListener, MainWindow.INSTANCE);
-        } else {
-            QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.keyboardFocusManager, MainWindow.INSTANCE);
-        }
-
         flw.setVisible(false);
 
         logger.info("-------------------------------------- 配置加载完毕 --------------------------------------");
@@ -57,6 +50,10 @@ public class Enter {
     }
 
     private static void variousLoad() {
+        logger.config("当前系统：" + QRSystemUtils.getSystemName());
+        QRSwing.setGlobalKeyEventsListener(TyperTextPane.TYPER_TEXT_PANE.globalKeyListener);
+
+        QRSwing.registerGlobalEventWindow(MainWindow.INSTANCE);
 
         //region 全局界面字体
         Font font = null;

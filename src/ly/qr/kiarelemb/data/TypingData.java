@@ -12,7 +12,6 @@ import method.qr.kiarelemb.utils.QRThreadBuilder;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.inter.QRActionRegister;
 import swing.qr.kiarelemb.listener.QRActionListener;
-import swing.qr.kiarelemb.utils.QRComponentUtils;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -48,7 +47,7 @@ public class TypingData {
     public static StringBuilder typedKeyRecord = new StringBuilder();
     public static boolean pausing = false;
     public static boolean typing = false;
-    public static boolean typeEnd = false;
+    public static boolean typeEnd = true;
     public static int pausedTimes = 0;
     public static int lookfontSize = 0;
     public static int typefontSize = 0;
@@ -168,14 +167,6 @@ public class TypingData {
     }
 
     private static void typingStatisticsUpdate(long restTime) {
-        if (MainWindow.INSTANCE.backgroundImageSet() && !Keys.boolValue(Keys.WINDOW_BACKGROUND_FRESH_ENHANCEMENT)) {
-            QRComponentUtils.runLater(10, e -> {
-                while (typing) {
-                    if (!pausing) windowFresh();
-                    QRSleepUtils.sleep(5);
-                }
-            });
-        }
         int index = 0;
         while (typing && !pausing) {
             QRSleepUtils.sleep(restTime);
@@ -228,7 +219,7 @@ public class TypingData {
 
     public synchronized static void windowFresh() {
         if (MainWindow.INSTANCE.backgroundImageSet()) {
-            MainWindow.INSTANCE.getContentPane().repaint();
+//            MainWindow.INSTANCE.getContentPane().repaint();
         }
     }
 
@@ -238,7 +229,7 @@ public class TypingData {
      * @param startTime
      */
     public static void startTyping(long startTime) {
-        if (!typing && TextLoad.TEXT_LOAD != null) {
+        if (!typing && !typeEnd && TextLoad.TEXT_LOAD != null) {
             try {
                 TypingData.startTime = startTime;
                 typing = true;
