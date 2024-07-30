@@ -125,7 +125,6 @@ public class LoadText {
             String actualContent = lineTextSplit.get(lineCounts - 2);
             final LoadedTextData textData = new LoadedTextData(time, user, foreText, actualContent, endText);
             lineTexts.add(textData);
-//            System.out.println(textData);
         }
         //以此返回的内容都是发文的格式化内容
         return lineTexts;

@@ -1,6 +1,7 @@
 package ly.qr.kiarelemb.qq.operation;
 
 import ly.qr.kiarelemb.component.ContractiblePanel;
+import ly.qr.kiarelemb.component.GroupButton;
 import method.qr.kiarelemb.utils.QRSleepUtils;
 
 import java.awt.*;
@@ -18,7 +19,7 @@ public class LinuxOperation extends OperationAbs {
     public void start(int model, String nameOrId, Robot robot) {
         Runtime runtime = Runtime.getRuntime();
         try {
-            String command = "xdotool windowactivate " + ContractiblePanel.GroupButton.linuxQQWindowId;
+            String command = "xdotool windowactivate " + GroupButton.linuxQQWindowId;
             runtime.exec(command);
             QRSleepUtils.sleep(100);
         } catch (IOException e) {
@@ -31,10 +32,10 @@ public class LinuxOperation extends OperationAbs {
 
         }
         //将跟打器置顶
-        if (ContractiblePanel.GroupButton.linuxLYWindowId != null) {
+        if (GroupButton.linuxLYWindowId != null) {
             runtime = Runtime.getRuntime();
             try {
-                runtime.exec("xdotool windowactivate " + ContractiblePanel.GroupButton.linuxLYWindowId);
+                runtime.exec("xdotool windowactivate " + GroupButton.linuxLYWindowId);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -45,7 +46,7 @@ public class LinuxOperation extends OperationAbs {
     public boolean textCanSend(int model) {
         if (!ContractiblePanel.GROUP_BUTTON.groupLinked()) {
             ContractiblePanel.GROUP_BUTTON.clickInvokeLater();
-            return ContractiblePanel.GroupButton.linuxQQWindowId != null;
+            return GroupButton.linuxQQWindowId != null;
         }
         return true;
     }

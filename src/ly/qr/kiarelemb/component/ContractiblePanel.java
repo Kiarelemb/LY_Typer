@@ -1,17 +1,16 @@
 package ly.qr.kiarelemb.component;
 
-import com.sun.jna.platform.win32.User32;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TipData;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.data.WordLabel;
 import ly.qr.kiarelemb.menu.about.HotMapItem;
-import ly.qr.kiarelemb.qq.WindowAPI;
 import ly.qr.kiarelemb.res.Info;
 import ly.qr.kiarelemb.text.TextLoad;
 import ly.qr.kiarelemb.text.tip.StandardTipWindow;
-import method.qr.kiarelemb.utils.*;
+import method.qr.kiarelemb.utils.QRMathUtils;
+import method.qr.kiarelemb.utils.QRStringUtils;
 import swing.qr.kiarelemb.QRSwing;
 import swing.qr.kiarelemb.basic.QRLabel;
 import swing.qr.kiarelemb.basic.QRMenuItem;
@@ -22,23 +21,12 @@ import swing.qr.kiarelemb.listener.QRMouseListener;
 import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.basic.QRDialog;
 import swing.qr.kiarelemb.window.basic.QRFrame;
-import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 import swing.qr.kiarelemb.window.utils.QRResizableTextShowDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.OptionalInt;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Kiarelemb QR
@@ -371,139 +359,6 @@ public class ContractiblePanel extends QRContractiblePanel {
             }
             StandardTipWindow stw = new StandardTipWindow();
             stw.setVisible(true);
-        }
-    }
-
-    public static class GroupButton extends QRRoundButton {
-        private static final ThreadPoolExecutor GROUP_CHANGE = QRThreadBuilder.singleThread("groupChange");
-
-        private GroupButton() {
-            String key = Keys.strValue(Keys.QUICK_KEY_GROUP);
-            String[] keys = key.split(",");
-            setText(keys[0] + " / 点击换群");
-            setToolTipText(key + " / 点击换群");
-        }
-
-        private final ArrayList<String> windows = new ArrayList<>();
-        /**
-         * 是否已找到群聊
-         */
-        private boolean groupLinked = false;
-        /**
-         * 找到的群聊名
-         */
-        private String groupName;
-        /**
-         * 是否为QQ NT
-         */
-        public boolean isQQNT = false;
-        private int groupIndex = -1;
-        public static String linuxQQWindowId;
-        public static String linuxLYWindowId;
-
-        @Override
-        protected void actionEvent(ActionEvent o) {
-            //放线程就不会卡
-            if (Info.IS_WINDOWS) {
-                GROUP_CHANGE.submit(() -> {
-                    ArrayList<String> windows = WindowAPI.getQQWindows();
-                    if (!QRArrayUtils.isEqualList(this.windows, windows)) {
-                        if (this.groupName() != null) {
-                            this.groupIndex = windows.indexOf(this.groupName());
-                        }
-                        this.windows.clear();
-                        this.windows.addAll(windows);
-                    }
-                    int size = this.windows.size();
-                    if (size == 0) {
-                        this.setGroupLinked(false);
-                        QRSmallTipShow.display(MainWindow.INSTANCE, "没有找到群聊");
-                        return;
-                    }
-                    this.groupIndex++;
-                    if (this.groupIndex == size) {
-                        this.groupIndex = 0;
-                    }
-                    this.setGroupName(this.windows.get(this.groupIndex));
-                    Matcher matcher = Pattern.compile("等[0-9]+个会话").matcher(this.groupName());
-                    if (matcher.find()) {
-                        setText(this.groupName().substring(0, matcher.start()));
-                    } else {
-                        if ("QQ".equals(this.groupName()) && User32.INSTANCE.FindWindow("TXGuiFoundation", "QQ") == null) {
-                            setText("QQ NT");
-                            this.isQQNT = true;
-                        } else {
-                            setText(this.groupName());
-                            this.isQQNT = false;
-                        }
-                    }
-                    this.setGroupLinked(true);
-                });
-            } else {
-                OptionalInt first = null;
-                try {
-                    first = QRSystemUtils.getSystemProcessInfo().stream()
-                            .filter(info -> info.getName().equals("qq"))
-                            .mapToInt(info -> Integer.parseInt(info.getPid()))
-                            .sorted()
-                            .findFirst();
-                } catch (Exception e) {
-                    QRSmallTipShow.display(MainWindow.INSTANCE, "没有找到群聊");
-                    return;
-                }
-                if (first.isEmpty()) {
-                    QRSmallTipShow.display(MainWindow.INSTANCE, "没有找到群聊");
-                    return;
-                }
-
-                int pid = first.getAsInt();
-                Runtime runtime = Runtime.getRuntime();
-                try {
-                    Process exec = runtime.exec("xdotool search --onlyvisible --pid " + pid);
-                    InputStream stream = exec.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
-                    linuxQQWindowId = reader.readLine();
-                    reader.close();
-                    if (linuxQQWindowId != null) {
-                        this.setGroupLinked(true);
-                        this.isQQNT = true;
-                        setText("QQ");
-                        InputStream inputStream = runtime.exec("xdotool search --name 揽月").getInputStream();
-                        reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                        linuxLYWindowId = reader.readLine();
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    QRSmallTipShow.display(MainWindow.INSTANCE, "没有找到群聊");
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
-        /**
-         * 找到的群聊名
-         */
-        public String groupName() {
-            return this.groupName;
-        }
-
-        public boolean isQQNT() {
-            return this.isQQNT;
-        }
-
-        private void setGroupName(String groupName) {
-            this.groupName = groupName;
-        }
-
-        /**
-         * 是否已找到群聊
-         */
-        public boolean groupLinked() {
-            return this.groupLinked;
-        }
-
-        private void setGroupLinked(boolean groupLinked) {
-            this.groupLinked = groupLinked;
         }
     }
 

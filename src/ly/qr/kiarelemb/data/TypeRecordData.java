@@ -58,7 +58,7 @@ public record TypeRecordData(long time, int length) {
         int length = 0;
         int wordLengthToCount;
         long timeDiffToCount;
-        Iterator<TypeRecordData> iterator = TYPE_LIST_DATA.iterator();
+        Iterator<TypeRecordData> iterator = new ArrayList<>(TYPE_LIST_DATA).iterator();
         // 少于 3 次上屏
         if (size < 3) {
             while (iterator.hasNext()) {

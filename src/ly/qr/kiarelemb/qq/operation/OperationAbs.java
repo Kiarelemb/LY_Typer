@@ -19,7 +19,6 @@ public abstract class OperationAbs implements Operation {
     public static final int GET_ARTICLE_MODEL = 1;
     public static final int SEND_ACHIEVEMENT_MODEL = 2;
     protected void pressCopy(Robot robot){
-        System.out.println("copy");
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         QRSleepUtils.sleep(30);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);

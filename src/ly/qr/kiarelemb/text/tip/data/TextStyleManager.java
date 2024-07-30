@@ -109,8 +109,6 @@ public class TextStyleManager {
         return getDefaultStyle(Keys.strValue(Keys.TEXT_FONT_NAME_LOOK));
     }
 
-    //endregion
-
     public static SimpleAttributeSet getDefaultStyle(String fontName) {
         if (defaultStyle == null) {
             defaultStyle = new SimpleAttributeSet();
@@ -144,6 +142,7 @@ public class TextStyleManager {
         return tipStyle;
     }
 
+    //endregion
     public static SimpleAttributeSet createFontNameStyleFromCurrentStyle(String fontName, SimpleAttributeSet s) {
         SimpleAttributeSet sas = new SimpleAttributeSet();
         StyleConstants.setFontFamily(sas, fontName);
@@ -195,36 +194,27 @@ public class TextStyleManager {
     }
 
     private static void freshToEnglishModelStyle() {
-        STYLES.clear();
-        final int maxSize = 16;
-        for (int i = 0; i < maxSize; i++) {
-            final boolean bold = i > 6;
-            STYLES.add(getStyle(bold ? i - 7 : i, bold, PREFERRED_ENGLISH_FONT_NAME));
-        }
-        correctStyle = null;
-        WrongStyle = null;
-        defaultStyle = null;
-        tipStyle = null;
-        getCorrectStyle(PREFERRED_ENGLISH_FONT_NAME, true);
-        getWrongStyle(PREFERRED_ENGLISH_FONT_NAME);
-        getDefaultStyle(PREFERRED_ENGLISH_FONT_NAME);
-        getTipStyleFont();
+        freshLead(PREFERRED_ENGLISH_FONT_NAME, true);
     }
 
     private static void freshToChineseModelStyle() {
+        freshLead(PREFERRED_CHINESE_FONT_NAME, false);
+    }
+
+    private static void freshLead(String preferredFontName, boolean isEnglish) {
         STYLES.clear();
         final int maxSize = 16;
         for (int i = 0; i < maxSize; i++) {
-            final boolean bold = i > 8;
-            STYLES.add(getStyle(bold ? i - 8 : i, bold, PREFERRED_CHINESE_FONT_NAME));
+            final boolean bold = i >= 7;
+            STYLES.add(getStyle(bold ? i - 7 : i, bold, preferredFontName));
         }
         correctStyle = null;
         WrongStyle = null;
         defaultStyle = null;
         tipStyle = null;
-        getCorrectStyle(PREFERRED_CHINESE_FONT_NAME, false);
-        getWrongStyle(PREFERRED_CHINESE_FONT_NAME);
-        getDefaultStyle(PREFERRED_CHINESE_FONT_NAME);
+        getCorrectStyle(preferredFontName, isEnglish);
+        getWrongStyle(preferredFontName);
+        getDefaultStyle(preferredFontName);
         getTipStyleFont();
     }
 
@@ -241,20 +231,22 @@ public class TextStyleManager {
             //有拓展字
             final String[] chineseExtraPhrase = QRStringUtils.getChineseExtraPhrase(str);
             for (String aChineseWord : chineseExtraPhrase) {
-                if (!QRFontUtils.fontCanAllDisplay(aChineseWord, font)) {
-                    final Font canDisplayFont = QRFontUtils.getCanDisplayFont(aChineseWord);
-                    if (canDisplayFont != null) {
-                        final SimpleAttributeSet simpleAttributeSet = EXTRA_STYLE.get(canDisplayFont.getFamily());
-                        if (simpleAttributeSet != null) {
-                            //如果这个字体样式已经建立了
-                            return simpleAttributeSet;
-                        } else {
-                            final SimpleAttributeSet styleFromFontName = TextStyleManager.createFontNameStyleFromCurrentStyle(canDisplayFont.getFamily(), a);
-                            //放入这个字体样式
-                            EXTRA_STYLE.put(canDisplayFont.getFamily(), styleFromFontName);
-                            return styleFromFontName;
-                        }
-                    }
+                if (QRFontUtils.fontCanAllDisplay(aChineseWord, font)) {
+                    continue;
+                }
+                final Font canDisplayFont = QRFontUtils.getCanDisplayFont(aChineseWord);
+                if (canDisplayFont == null) {
+                    continue;
+                }
+                final SimpleAttributeSet simpleAttributeSet = EXTRA_STYLE.get(canDisplayFont.getFamily());
+                if (simpleAttributeSet != null) {
+                    //如果这个字体样式已经建立了
+                    return simpleAttributeSet;
+                } else {
+                    final SimpleAttributeSet styleFromFontName = TextStyleManager.createFontNameStyleFromCurrentStyle(canDisplayFont.getFamily(), a);
+                    //放入这个字体样式
+                    EXTRA_STYLE.put(canDisplayFont.getFamily(), styleFromFontName);
+                    return styleFromFontName;
                 }
             }
         }
