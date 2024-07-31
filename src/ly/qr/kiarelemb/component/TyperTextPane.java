@@ -40,6 +40,7 @@ public class TyperTextPane extends QRTextPane {
     public static final Map<Integer, Character> specialKeyMap = Map.of(
             (int) 'B', 'B',
             (int) ' ', '_',
+            222, '\'',
             KeyEvent.VK_ENTER, '↵',
             KeyEvent.VK_SHIFT, '↑',
             KeyEvent.VK_ALT, 'ᐃ',
@@ -199,28 +200,11 @@ public class TyperTextPane extends QRTextPane {
             e.consume();
         }
     }
-//
-//    @Override
-//    protected void pasteAction() {
-//        String text = QRSystemUtils.getSysClipboardText();
-//        if (text == null || text.isBlank()) {
-//            return;
-//        }
-//        text = text.trim();
-//        final int lastIndexOf = text.lastIndexOf(QRStringUtils.AN_ENTER);
-//        int diIndex = text.indexOf(TextLoad.DI, lastIndexOf);
-//        int duanIndex = text.indexOf(TextLoad.DUAN, diIndex + 1);
-//        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1, duanIndex))) {
-//            if (lastIndexOf != -1 && text.indexOf(QRStringUtils.AN_ENTER) < lastIndexOf) {
-//                text = QRStringUtils.lineSeparatorClear(text, true);
-//            }
-//            text += "\n-----第" + QRRandomUtils.getRandomInt(999999) + "段";
-//        }
-//        if (QRStringUtils.markCount(text, '\n') == 1) {
-//            text = "剪贴板\n" + text;
-//        }
-//        TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
-//    }
+
+    @Override
+    protected void pasteAction() {
+        TextViewPane.TEXT_VIEW_PANE.pasteAction();
+    }
 
     @Override
     protected void mouseEnter(MouseEvent e) {

@@ -57,8 +57,6 @@ public class TextViewPane extends QRTextPane {
         setEditorKit(textPanelEditorKit);
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
         setOpaque(false);
-//        TyperTextPane.timeCountInit();
-//        Highlighter highlighter = getHighlighter();
         this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));
         this.setTextBeforeActions.add(e -> {
             //更新数据
@@ -331,14 +329,15 @@ public class TextViewPane extends QRTextPane {
     private int preLine = -1;
 
     private void scrollUpdate() {
-        JScrollBar verticalScrollBar = addScrollPane().getVerticalScrollBar();
+        var verticalScrollBar = addScrollPane().verticalScrollBar();
         if (!verticalScrollBar.isVisible()) {
             return;
         }
-        final int[] lineAndRow = currentLineAndRow(TyperTextPane.TYPER_TEXT_PANE.caret.getDot());
+        // 要注意 currentLineAndRow 方法的传入参数
+        final int[] lineAndRow = currentLineAndRow(TypingData.currentTypedIndex);
         final int currentLine = lineAndRow[0];
         final double currentRow = lineAndRow[1];
-        boolean updateCondition = currentLine > preLine;
+        var updateCondition = currentLine > preLine;
         preLine = currentLine;
         //行尾更新
         if (!updateCondition) {
@@ -347,7 +346,7 @@ public class TextViewPane extends QRTextPane {
         final int lineWords = lineWords();
         double startUpdateLine = 3;
         if (currentLine >= startUpdateLine) {
-            QRComponentUtils.runLater(200, e -> {
+            QRComponentUtils.runLater(100, e -> {
                 int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
                 double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * linePerHeight();
                 verticalScrollBar.setValue((int) (Math.min(value, max)));
