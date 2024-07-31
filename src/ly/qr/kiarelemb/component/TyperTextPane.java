@@ -4,14 +4,15 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
+import ly.qr.kiarelemb.key.ActionLibrary;
 import ly.qr.kiarelemb.text.TextLoad;
-import method.qr.kiarelemb.utils.QRFontUtils;
 import method.qr.kiarelemb.utils.QRLoggerUtils;
 import method.qr.kiarelemb.utils.QRStringUtils;
 import method.qr.kiarelemb.utils.QRSystemUtils;
 import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.event.QRNativeKeyEvent;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.listener.QRKeyListener.TYPE;
 import swing.qr.kiarelemb.listener.QRNativeKeyListener;
 import swing.qr.kiarelemb.listener.key.QRNativeKeyPressedListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
@@ -52,11 +53,8 @@ public class TyperTextPane extends QRTextPane {
         addKeyListener();
         setOpaque(false);
         timeCountInit();
-        TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> {
-            clear();
-            this.caret.setVisible(true);
-            setFont(QRFontUtils.getFont(TypingData.fontName, TypingData.typefontSize));
-        });
+        TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(ActionLibrary.TYPER_TEXT_PANE_UPDATE_ACTION);
+        addKeyListenerAction(TYPE.TYPE, ActionLibrary.KEY_TYPE_ACTION);
     }
 
     public void addTypeActions(QRActionRegister<Integer> ar) {
@@ -178,20 +176,7 @@ public class TyperTextPane extends QRTextPane {
      */
     @Override
     public void keyType(KeyEvent e) {
-/*        if (TextLoad.TEXT_LOAD == null || keyCheck(e) || !TypingData.typing) {
-            e.consume();
-            return;
-        }
-        try {
-            char keyChar = e.getKeyChar();
-            if (keyChar == KeyEvent.VK_BACK_SPACE) {
-                TextViewPane.TEXT_VIEW_PANE.deleteUpdates(e);
-                return;
-            }
-            TextViewPane.TEXT_VIEW_PANE.insertUpdates(keyChar);
-        } catch (Exception e1) {
-            logger.log(Level.SEVERE, "keyType", e1);
-        }*/
+
     }
 
     @Override

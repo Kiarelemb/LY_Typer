@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.*;
 import ly.qr.kiarelemb.dl.DangLangManager;
+import ly.qr.kiarelemb.key.ActionLibrary;
 import ly.qr.kiarelemb.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -58,17 +59,11 @@ public class TextViewPane extends QRTextPane {
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
         setOpaque(false);
         this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));
-        this.setTextBeforeActions.add(e -> {
-            //更新数据
-            TypingData.dataUpdate();
-            //重置数据
-            TypingData.clear();
-            boolean visible = ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked();
-            this.caret.setVisible(visible);
-        });
+
+        this.setTextBeforeActions.add(ActionLibrary.TEXT_VIEW_PANE_UPDATE_ACTION);
         this.setTextFinishedActions.add(e -> {
-            setCaretPosition(0);
-            TextViewPane.TEXT_VIEW_PANE.scrollPane.locationFresh();
+            TextViewPane.TEXT_VIEW_PANE.setCaretPosition(0);
+            TextViewPane.TEXT_VIEW_PANE.addScrollPane().locationFresh();
             MainWindow.INSTANCE.grabFocus();
             QRComponentUtils.runLater(200, es -> indexesUpdate());
         });
@@ -405,11 +400,6 @@ public class TextViewPane extends QRTextPane {
     public void setText(String text) {
     }
 
-//    @Override
-//    protected void pasteAction() {
-//        TyperTextPane.TYPER_TEXT_PANE.paste();
-//    }
-
     @Override
     protected void keyPress(KeyEvent e) {
 //        if (!TypingData.typing) {
@@ -427,19 +417,6 @@ public class TextViewPane extends QRTextPane {
     @Override
     protected void keyType(KeyEvent e) {
         e.consume();
-        if (TextLoad.TEXT_LOAD == null || keyCheck(e) || !TypingData.typing) {
-            return;
-        }
-        try {
-            char keyChar = e.getKeyChar();
-            if (keyChar == KeyEvent.VK_BACK_SPACE) {
-                TextViewPane.TEXT_VIEW_PANE.deleteUpdates(e);
-                return;
-            }
-            TextViewPane.TEXT_VIEW_PANE.insertUpdates(keyChar);
-        } catch (Exception e1) {
-            logger.log(Level.SEVERE, "keyType", e1);
-        }
     }
 
 
