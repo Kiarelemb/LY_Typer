@@ -65,6 +65,5 @@ public class TypeTabbedPane extends QRTabbedPane {
 
         history.add(tipScrollPane, BorderLayout.NORTH);
         history.add(historyScrollPane, BorderLayout.CENTER);
-
     }
 }

@@ -28,7 +28,6 @@ public class LoadTextItem extends MenuItem {
     @Override
     protected void actionEvent(ActionEvent o) {
         if (ContractiblePanel.GROUP_BUTTON.groupLinked()) {
-            System.out.println(System.currentTimeMillis());
             QqOperation.start(OperationAbs.GET_ARTICLE_MODEL, ContractiblePanel.GROUP_BUTTON.groupName());
             QRComponentUtils.runLater(500, e -> {
                 String text = LoadText.getLoadText();

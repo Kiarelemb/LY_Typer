@@ -12,7 +12,6 @@ import java.util.List;
 public class WindowAPI {
     public static ArrayList<String> getQQWindows() {
         ArrayList<String> allWindows = getAllWindows();
-//        return allWindows;
         ArrayList<String> QQWindows = new ArrayList<>();
         for (String window : allWindows) {
             if (window.equals("QQ")) {

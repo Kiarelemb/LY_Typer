@@ -3,7 +3,6 @@ package ly.qr.kiarelemb;
 import ly.qr.kiarelemb.component.ContractiblePanel;
 import ly.qr.kiarelemb.component.SplitPane;
 import ly.qr.kiarelemb.component.TextViewPane;
-import ly.qr.kiarelemb.component.TyperTextPane;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.dl.DangLangWindow;
 import ly.qr.kiarelemb.menu.about.HotMapItem;
@@ -66,12 +65,14 @@ public class MainWindow extends QRFrame {
         QRButton toolMenu = this.titleMenuPanel.add("工具");
         QRButton aboutMenu = this.titleMenuPanel.add("关于");
 
+        // 为“跟打”菜单添加子菜单
         typeMenu.add(GroupMenuItem.GROUP_MENU_ITEM);
         typeMenu.add(LoadTextItem.LOAD_TEXT_ITEM);
         typeMenu.add(RetypeItem.RETYPE_ITEM);
         typeMenu.add(TextMixItem.TEXT_MIX_ITEM);
         typeMenu.add(SettingsItem.SETTINGS_ITEM);
 
+        // 为“发文”菜单添加子菜单
         sendMenu.add(NewSendTextItem.NEW_SEND_TEXT_ITEM);
         sendMenu.add(ContinueSendTextItem.CONTINUE_SEND_TEXT_ITEM);
         sendMenu.add(EndSendTextItem.END_SEND_TEXT_ITEM);
@@ -81,7 +82,6 @@ public class MainWindow extends QRFrame {
         aboutMenu.add(HotMapItem.HOT_MAP_ITEM);
 
     }
-
 
     /**
      * 加载快捷键
@@ -102,7 +102,8 @@ public class MainWindow extends QRFrame {
     }
 
     public void grabFocus() {
-        TyperTextPane.TYPER_TEXT_PANE.grabFocus();
+//        TyperTextPane.TYPER_TEXT_PANE.grabFocus();
+
     }
 
     @Override

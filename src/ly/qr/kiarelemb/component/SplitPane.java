@@ -30,7 +30,6 @@ public class SplitPane extends QRTransparentSplitPane {
     public final QRPanel bottomPanel;
 
     private SplitPane() {
-//        super(JSplitPane.VERTICAL_SPLIT);
         super();
 
         int value;
@@ -40,7 +39,6 @@ public class SplitPane extends QRTransparentSplitPane {
             value = 300;
             QRSwing.setGlobalSetting(Keys.WINDOW_SPLIT_WEIGHT, value);
         }
-//        setUI(new SplitPaneUI());
         setDividerLocation(value);
 
         //底部的面板需要放词提
@@ -52,7 +50,9 @@ public class SplitPane extends QRTransparentSplitPane {
         topPanel.add(TextViewPane.TEXT_VIEW_PANE.addScrollPane(1), BorderLayout.CENTER);
         bottomPanel.add(TypeTabbedPane.TYPE_TABBED_PANE, BorderLayout.CENTER);
 
-        setTopComponent(init_tipLabel());
+//        var label = init_tipLabel();
+
+        setTopComponent(topPanel);
         setBottomComponent(bottomPanel);
         //更新编码提示的位置
         updateTipPaneLocation();
@@ -86,7 +86,7 @@ public class SplitPane extends QRTransparentSplitPane {
         tip.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                TyperTextPane.TYPER_TEXT_PANE.grabFocus();
+//                TyperTextPane.TYPER_TEXT_PANE.grabFocus();
             }
         });
         return tip;

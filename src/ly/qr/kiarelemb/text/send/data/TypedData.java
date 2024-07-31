@@ -120,11 +120,10 @@ public final class TypedData implements Serializable {
             String fileText = QRFileUtils.fileReaderWithUtf8All(filePath);
             String[] singleParts = QRStringUtils.getChineseExtraPhrase(fileText);
             StringBuilder text = new StringBuilder();
-            int length = data.totalWordsNum;
             int word = data.perLength;
             Set<Integer> parts = new HashSet<>(word);
             while (parts.size() < word) {
-                int i = QRRandomUtils.getRandomInt(0, length);
+                int i = QRRandomUtils.getRandomInt(0, data.totalWordsNum);
                 if (parts.add(i)) {
                     text.append(singleParts[i]);
                 }
@@ -143,10 +142,10 @@ public final class TypedData implements Serializable {
         String fore = fileName + "\n";
         String ends;
         if (TextSendManager.data().randomPick) {
-            ends = "\n-----第" + paraNum + "段 " + TextSendManager.data().perLength + "字 单字随机抽取";
+            ends = String.format("\n-----第%d段 %d字 单字随机抽取", paraNum, TextSendManager.data().perLength);
         } else {
-            ends = "\n-----第" + paraNum + "段 " + currentText.length() + "字 进度"
-                   + QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2) + "%";
+            ends = String.format("\n-----第%d段 %d字 进度%s%%", paraNum, currentText.length(),
+                    QRMathUtils.doubleFormat((totalWordsNum - remainingWordsCount) * 100d / totalWordsNum, 2));
         }
         TextSendManager.save();
         String text = fore + currentText + ends;

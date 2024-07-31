@@ -3,6 +3,7 @@ package ly.qr.kiarelemb.component;
 import ly.qr.kiarelemb.MainWindow;
 import ly.qr.kiarelemb.data.*;
 import ly.qr.kiarelemb.dl.DangLangManager;
+import ly.qr.kiarelemb.key.ActionLibrary;
 import ly.qr.kiarelemb.menu.send.NextParaTextItem;
 import ly.qr.kiarelemb.qq.SendText;
 import ly.qr.kiarelemb.text.TextLoad;
@@ -19,7 +20,6 @@ import swing.qr.kiarelemb.utils.QRComponentUtils;
 import swing.qr.kiarelemb.window.enhance.QRSmallTipShow;
 
 import javax.swing.*;
-import javax.swing.text.Highlighter;
 import javax.swing.text.SimpleAttributeSet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -33,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static ly.qr.kiarelemb.component.TyperTextPane.keyCheck;
 
 /**
  * @author Kiarelemb QR
@@ -56,19 +58,12 @@ public class TextViewPane extends QRTextPane {
         setEditorKit(textPanelEditorKit);
         setLineSpacing(Keys.floatValue(Keys.TEXT_LINE_SPACE));
         setOpaque(false);
-        Highlighter highlighter = getHighlighter();
         this.caret.setVisible(Keys.boolValue(Keys.TYPE_SILKY_MODEL) && !Keys.boolValue(Keys.TYPE_MODEL_LOOK));
-        this.setTextBeforeActions.add(e -> {
-            //更新数据
-            TypingData.dataUpdate();
-            //重置数据
-            TypingData.clear();
-            boolean visible = ContractiblePanel.SILKY_MODEL_CHECK_BOX.checked() && !ContractiblePanel.LOOK_MODEL_CHECK_BOX.checked();
-            this.caret.setVisible(visible);
-        });
+
+        this.setTextBeforeActions.add(ActionLibrary.TEXT_VIEW_PANE_UPDATE_ACTION);
         this.setTextFinishedActions.add(e -> {
-            setCaretPosition(0);
-            TextViewPane.TEXT_VIEW_PANE.scrollPane.locationFresh();
+            TextViewPane.TEXT_VIEW_PANE.setCaretPosition(0);
+            TextViewPane.TEXT_VIEW_PANE.addScrollPane().locationFresh();
             MainWindow.INSTANCE.grabFocus();
             QRComponentUtils.runLater(200, es -> indexesUpdate());
         });
@@ -229,11 +224,12 @@ public class TextViewPane extends QRTextPane {
             TypingData.typing = false;
             TypingData.typeEnd = true;
             TypingData.shutdown();
-            QRComponentUtils.runLater(10, e ->  typeEnding());
+            QRComponentUtils.runLater(10, e -> typeEnding());
         }
     }
 
     public void deleteUpdates(KeyEvent e) {
+        e.consume();
         int index = this.caret.getDot();
         if (index <= 1 || TypingData.backspaceAutoRestart) {
             restart();
@@ -328,14 +324,15 @@ public class TextViewPane extends QRTextPane {
     private int preLine = -1;
 
     private void scrollUpdate() {
-        JScrollBar verticalScrollBar = addScrollPane().getVerticalScrollBar();
+        var verticalScrollBar = addScrollPane().verticalScrollBar();
         if (!verticalScrollBar.isVisible()) {
             return;
         }
-        final int[] lineAndRow = currentLineAndRow(TyperTextPane.TYPER_TEXT_PANE.caret.getDot());
+        // 要注意 currentLineAndRow 方法的传入参数
+        final int[] lineAndRow = currentLineAndRow(TypingData.currentTypedIndex);
         final int currentLine = lineAndRow[0];
         final double currentRow = lineAndRow[1];
-        boolean updateCondition = currentLine > preLine;
+        var updateCondition = currentLine > preLine;
         preLine = currentLine;
         //行尾更新
         if (!updateCondition) {
@@ -344,7 +341,7 @@ public class TextViewPane extends QRTextPane {
         final int lineWords = lineWords();
         double startUpdateLine = 3;
         if (currentLine >= startUpdateLine) {
-            QRComponentUtils.runLater(200, e -> {
+            QRComponentUtils.runLater(100, e -> {
                 int max = verticalScrollBar.getMaximum() - verticalScrollBar.getHeight();
                 double value = ((currentLine - startUpdateLine) + currentRow / lineWords) * linePerHeight();
                 verticalScrollBar.setValue((int) (Math.min(value, max)));
@@ -382,7 +379,9 @@ public class TextViewPane extends QRTextPane {
         }
         int caretPosition = getCaretPosition();
         if (TypingData.currentTypedIndex != caretPosition) {
+            this.caretBlock = true;
             setCaretPosition(TypingData.currentTypedIndex);
+            this.caretBlock = false;
         }
     }
 
@@ -402,18 +401,15 @@ public class TextViewPane extends QRTextPane {
     }
 
     @Override
-    protected void cutAction() {
-        copyAction();
-    }
-
-    @Override
-    protected void pasteAction() {
-        TyperTextPane.TYPER_TEXT_PANE.paste();
-    }
-
-    @Override
     protected void keyPress(KeyEvent e) {
-        if (!TypingData.typing) {
+//        if (!TypingData.typing) {
+//            e.consume();
+//        }
+        if (e.getKeyChar() == '\b') {
+            e.consume();
+            return;
+        }
+        if (keyCheck(e)) {
             e.consume();
         }
     }
@@ -421,6 +417,29 @@ public class TextViewPane extends QRTextPane {
     @Override
     protected void keyType(KeyEvent e) {
         e.consume();
+    }
+
+
+    @Override
+    protected void pasteAction() {
+        String text = QRSystemUtils.getSysClipboardText();
+        if (text == null || text.isBlank()) {
+            return;
+        }
+        text = text.trim();
+        final int lastIndexOf = text.lastIndexOf(QRStringUtils.AN_ENTER);
+        int diIndex = text.indexOf(TextLoad.DI, lastIndexOf);
+        int duanIndex = text.indexOf(TextLoad.DUAN, diIndex + 1);
+        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1, duanIndex))) {
+            if (lastIndexOf != -1 && text.indexOf(QRStringUtils.AN_ENTER) < lastIndexOf) {
+                text = QRStringUtils.lineSeparatorClear(text, true);
+            }
+            text += "\n-----第" + QRRandomUtils.getRandomInt(999999) + "段";
+        }
+        if (QRStringUtils.markCount(text, '\n') == 1) {
+            text = "剪贴板\n" + text;
+        }
+        TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
     }
 
     @Override
@@ -432,6 +451,7 @@ public class TextViewPane extends QRTextPane {
 
     @Override
     public synchronized void paint(Graphics g) {
+        // 用于减少重绘 bug 的产生
         if (paintLock) {
             return;
         }

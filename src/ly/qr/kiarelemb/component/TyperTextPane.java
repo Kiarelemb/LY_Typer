@@ -4,11 +4,15 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 import ly.qr.kiarelemb.data.Keys;
 import ly.qr.kiarelemb.data.TypingData;
 import ly.qr.kiarelemb.dl.DangLangManager;
+import ly.qr.kiarelemb.key.ActionLibrary;
 import ly.qr.kiarelemb.text.TextLoad;
-import method.qr.kiarelemb.utils.*;
+import method.qr.kiarelemb.utils.QRLoggerUtils;
+import method.qr.kiarelemb.utils.QRStringUtils;
+import method.qr.kiarelemb.utils.QRSystemUtils;
 import swing.qr.kiarelemb.basic.QRTextPane;
 import swing.qr.kiarelemb.event.QRNativeKeyEvent;
 import swing.qr.kiarelemb.inter.QRActionRegister;
+import swing.qr.kiarelemb.listener.QRKeyListener.TYPE;
 import swing.qr.kiarelemb.listener.QRNativeKeyListener;
 import swing.qr.kiarelemb.listener.key.QRNativeKeyPressedListener;
 import swing.qr.kiarelemb.theme.QRColorsAndFonts;
@@ -30,13 +34,14 @@ import java.util.logging.Logger;
  **/
 public class TyperTextPane extends QRTextPane {
     private static final Logger logger = QRLoggerUtils.getLogger(TyperTextPane.class);
-    public QRNativeKeyListener globalKeyListener = null;
+    public static QRNativeKeyListener globalKeyListener = null;
     private final LinkedList<QRActionRegister<Integer>> typeActions = new LinkedList<>();
     public static final TyperTextPane TYPER_TEXT_PANE = new TyperTextPane();
 
-    private final Map<Integer, Character> specialKeyMap = Map.of(
+    public static final Map<Integer, Character> specialKeyMap = Map.of(
             (int) 'B', 'B',
             (int) ' ', '_',
+            222, '\'',
             KeyEvent.VK_ENTER, '↵',
             KeyEvent.VK_SHIFT, '↑',
             KeyEvent.VK_ALT, 'ᐃ',
@@ -48,18 +53,15 @@ public class TyperTextPane extends QRTextPane {
         addKeyListener();
         setOpaque(false);
         timeCountInit();
-        TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(e -> {
-            clear();
-            this.caret.setVisible(true);
-            setFont(QRFontUtils.getFont(TypingData.fontName, TypingData.typefontSize));
-        });
+        TextViewPane.TEXT_VIEW_PANE.addSetTextBeforeAction(ActionLibrary.TYPER_TEXT_PANE_UPDATE_ACTION);
+        addKeyListenerAction(TYPE.TYPE, ActionLibrary.KEY_TYPE_ACTION);
     }
 
     public void addTypeActions(QRActionRegister<Integer> ar) {
         this.typeActions.add(ar);
     }
 
-    private static boolean keyCheck(KeyEvent e) {
+    public static boolean keyCheck(KeyEvent e) {
         char keyChar = e.getKeyChar();
         if (keyChar == '\n' || keyChar == '\t') {
             return true;
@@ -83,8 +85,8 @@ public class TyperTextPane extends QRTextPane {
         SwingUtilities.invokeLater(() -> QRComponentUtils.runActions(this.typeActions, currentIndex));
     }
 
-    public void keyPressAction(KeyStroke keyStroke, long time) {
-        if (!this.hasFocus() || TextLoad.TEXT_LOAD == null || keyStroke == null) {
+    public static void keyPressAction(KeyStroke keyStroke, long time) {
+        if (/*!TyperTextPane.TYPER_TEXT_PANE.hasFocus() || */TextLoad.TEXT_LOAD == null || keyStroke == null) {
             return;
         }
         //屏蔽组合键
@@ -142,13 +144,13 @@ public class TyperTextPane extends QRTextPane {
         //endregion 按键统计
     }
 
-    private void timeCountInit() {
-        this.globalKeyListener = new QRNativeKeyPressedListener();
-        GlobalScreen.addNativeKeyListener(this.globalKeyListener);
-        this.globalKeyListener.add(true, this::keyPressLead);
+    public static void timeCountInit() {
+        globalKeyListener = new QRNativeKeyPressedListener();
+        GlobalScreen.addNativeKeyListener(globalKeyListener);
+        globalKeyListener.add(true, TyperTextPane::keyPressLead);
     }
 
-    private void keyPressLead(QRNativeKeyEvent e) {
+    private static void keyPressLead(QRNativeKeyEvent e) {
         try {
             keyPressAction(e.getKeyStroke(), System.currentTimeMillis());
         } catch (Exception ex) {
@@ -174,20 +176,7 @@ public class TyperTextPane extends QRTextPane {
      */
     @Override
     public void keyType(KeyEvent e) {
-        if (TextLoad.TEXT_LOAD == null || keyCheck(e) || !TypingData.typing) {
-            e.consume();
-            return;
-        }
-        try {
-            char keyChar = e.getKeyChar();
-            if (keyChar == KeyEvent.VK_BACK_SPACE) {
-                TextViewPane.TEXT_VIEW_PANE.deleteUpdates(e);
-                return;
-            }
-            TextViewPane.TEXT_VIEW_PANE.insertUpdates(keyChar);
-        } catch (Exception e1) {
-            logger.log(Level.SEVERE, "keyType", e1);
-        }
+
     }
 
     @Override
@@ -199,29 +188,12 @@ public class TyperTextPane extends QRTextPane {
 
     @Override
     protected void pasteAction() {
-        String text = QRSystemUtils.getSysClipboardText();
-        if (text == null || text.isBlank()) {
-            return;
-        }
-        text = text.trim();
-        final int lastIndexOf = text.lastIndexOf(QRStringUtils.AN_ENTER);
-        int diIndex = text.indexOf(TextLoad.DI, lastIndexOf);
-        int duanIndex = text.indexOf(TextLoad.DUAN, diIndex + 1);
-        if (diIndex == -1 || duanIndex <= diIndex + 1 || !QRStringUtils.isNumber(text.substring(diIndex + 1, duanIndex))) {
-            if (lastIndexOf != -1 && text.indexOf(QRStringUtils.AN_ENTER) < lastIndexOf) {
-                text = QRStringUtils.lineSeparatorClear(text, true);
-            }
-            text += "\n-----第" + QRRandomUtils.getRandomInt(999999) + "段";
-        }
-        if (QRStringUtils.markCount(text, '\n') == 1) {
-            text = "剪贴板\n" + text;
-        }
-        TextViewPane.TEXT_VIEW_PANE.setTypeText(text);
+        TextViewPane.TEXT_VIEW_PANE.pasteAction();
     }
 
     @Override
     protected void mouseEnter(MouseEvent e) {
-        grabFocus();
+//        grabFocus();
     }
 
     @Override
